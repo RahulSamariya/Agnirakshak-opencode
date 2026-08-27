@@ -1,7 +1,7 @@
 """Weather schemas."""
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 import uuid
 
 
@@ -14,12 +14,11 @@ class WeatherStationBase(BaseModel):
 
 
 class WeatherStationResponse(WeatherStationBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
 
 
 class WeatherObservationBase(BaseModel):
@@ -35,15 +34,16 @@ class WeatherObservationBase(BaseModel):
 
 
 class WeatherObservationResponse(WeatherObservationBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class WeatherForecastRunResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     model_name: str
     run_time: datetime
@@ -53,11 +53,10 @@ class WeatherForecastRunResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class WeatherForecastResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     run_id: uuid.UUID
     grid_cell_id: uuid.UUID
@@ -72,6 +71,3 @@ class WeatherForecastResponse(BaseModel):
     precipitation_probability: Optional[float] = None
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True

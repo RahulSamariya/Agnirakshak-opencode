@@ -1,11 +1,13 @@
 """Risk schemas."""
 from datetime import datetime
 from typing import Optional, Dict, Any, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 import uuid
 
 
 class RiskAssessmentComponentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     risk_assessment_id: uuid.UUID
     component_type: str
@@ -17,11 +19,10 @@ class RiskAssessmentComponentResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class RiskAssessmentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     risk_run_id: uuid.UUID
     grid_cell_id: uuid.UUID
@@ -38,15 +39,14 @@ class RiskAssessmentResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class RiskAssessmentWithComponents(RiskAssessmentResponse):
     components: List[RiskAssessmentComponentResponse] = []
 
 
 class RiskExplanationResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     risk_assessment: RiskAssessmentResponse
     hazard_breakdown: Dict[str, Any]
     vulnerability_top_factors: List[Dict[str, Any]]
@@ -56,6 +56,8 @@ class RiskExplanationResponse(BaseModel):
 
 
 class WardRiskSummaryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     risk_run_id: uuid.UUID
     ward_id: uuid.UUID
@@ -72,11 +74,10 @@ class WardRiskSummaryResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class RiskRunResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     hazard_model_run_id: uuid.UUID
     run_start: datetime
@@ -86,6 +87,3 @@ class RiskRunResponse(BaseModel):
     completed_assessments: Optional[int] = None
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True

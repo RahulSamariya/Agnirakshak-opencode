@@ -1,11 +1,13 @@
 """Scientific model schemas."""
 from datetime import datetime
 from typing import Optional, Dict, Any
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 import uuid
 
 
 class ScientificModelResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     model_type: str
@@ -16,11 +18,10 @@ class ScientificModelResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class ModelRunResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     model_id: uuid.UUID
     run_start: datetime
@@ -33,11 +34,10 @@ class ModelRunResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class ModelConfigurationResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     model_type: str
     version: str
     configuration: Dict[str, Any]

@@ -9,7 +9,7 @@ logger = structlog.get_logger()
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://heatwave:heatwave_secret@localhost:5432/heatwave_db",
+    "postgresql+asyncpg://heatwave:CHANGE_ME@localhost:5432/heatwave_db",
 )
 
 app = Celery("heatwave_worker")

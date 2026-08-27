@@ -1,22 +1,23 @@
 """Wards schemas."""
 from datetime import datetime
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 import uuid
 
 
 class StateResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     code: str
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class CityResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     state_id: uuid.UUID
@@ -24,11 +25,10 @@ class CityResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class WardResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     city_id: uuid.UUID
@@ -37,9 +37,6 @@ class WardResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class WardWithRisk(WardResponse):
     current_risk_category: Optional[str] = None
@@ -47,6 +44,8 @@ class WardWithRisk(WardResponse):
 
 
 class GridCellResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     cell_code: str
     ward_id: Optional[uuid.UUID] = None
@@ -54,6 +53,3 @@ class GridCellResponse(BaseModel):
     longitude: float
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True

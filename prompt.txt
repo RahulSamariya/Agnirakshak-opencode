@@ -1,158 +1,163 @@
-You are continuing an existing project.
+You are continuing work on an existing repository for:
 
-PROJECT:
-Extreme Heatwave Early Warning and Human Thermal Stress Index
+EXTREME HEATWAVE EARLY WARNING AND HUMAN THERMAL STRESS INDEX
 
 ROLE:
-Act as Principal Systems Architect, Senior Backend Engineer, Geospatial Engineer, Data Engineer, and Scientific Software Architect.
-
-IMPORTANT:
-The repository has already been partially scaffolded.
-
-DO NOT rebuild the project from scratch.
-DO NOT delete or unnecessarily rewrite existing working files.
-DO NOT implement the actual UTCI, Vulnerability, Exposure, or HSRI scientific algorithms yet.
-
-Your task is to COMPLETE THE REMAINING PHASE-1 ARCHITECTURAL SCAFFOLDING.
+Act as Principal Systems Architect, Senior Python Backend Engineer, Database Architect, Geospatial Engineer, DevOps Engineer, and Scientific Software Architect.
 
 ============================================================
-CURRENT STATE
+MISSION
 ============================================================
 
-The repository already contains the basic:
+Perform a PHASE-1 HARDENING AND CORRECTION PASS on the existing repository.
 
-- FastAPI backend
-- Next.js frontend
-- PostgreSQL
-- PostGIS
-- TimescaleDB
-- Redis configuration
-- scientific module interfaces
-- scientific configuration YAML files
-- basic health endpoints
-- basic frontend
-- basic scientific interface tests
+The repository already contains most of the intended Phase-1 scaffold.
 
-Inspect the repository before changing anything.
+DO NOT rebuild the repository.
 
-Reuse existing conventions where they are sound.
+DO NOT delete working components.
 
-============================================================
-PRIMARY OBJECTIVE
-============================================================
+DO NOT implement the actual scientific algorithms yet.
 
-Complete the missing architectural skeleton so the repository is ready for implementation of the scientific engine in the next phase.
+DO NOT implement UTCI.
 
-The target architecture is:
+DO NOT implement the Hazard equation.
 
-    apps/
-        api/
-        worker/
-        web/
+DO NOT implement Vulnerability scoring.
 
-    scientific/
-        core/
-        hazard/
-        vulnerability/
-        exposure/
-        risk/
-        thermal_comfort/
-        configuration/
+DO NOT implement Exposure scoring.
 
-    pipelines/
-        weather/
-        vulnerability/
-        exposure/
-        risk/
+DO NOT implement HSRI calculation.
 
-    db/
-        migrations/
-        seeds/
-        sql/
-        fixtures/
+DO NOT implement machine-learning models.
 
-    data/
-        raw/
-        staging/
-        processed/
+DO NOT change the scientific weights or scientific thresholds.
 
-    infra/
-        docker/
-        kubernetes/
-        monitoring/
-
-    scripts/
-
-    docs/
-        architecture/
-        scientific/
-        operations/
-
-    tests/
-        end_to_end/
-        scientific_validation/
-        performance/
+Your purpose is to make the existing Phase-1 architecture internally consistent, reproducible, testable, and ready for the next scientific implementation phase.
 
 ============================================================
-TASK 1 — INSPECT THE REPOSITORY
+PHASE-1 DEFINITION OF DONE
 ============================================================
 
-Before modifying files:
+Phase 1 will be considered complete only when all of the following are true:
 
-1. Inspect the complete repository tree.
-2. Identify what already exists.
-3. Identify missing architectural components.
-4. Identify naming inconsistencies.
-5. Identify duplicate abstractions.
-6. Identify existing tests.
-7. Identify current database configuration.
-8. Identify current Docker configuration.
-9. Identify package/dependency configuration.
-
-Do not guess.
-
-Do not destroy existing work.
-
-After inspection, create a concise implementation plan and then execute it.
-
-============================================================
-TASK 2 — COMPLETE THE BACKEND STRUCTURE
-============================================================
-
-Make sure the FastAPI application has clear separation between:
-
-    api/
-    schemas/
-    services/
-    db/
-    core/
-
-Create missing route modules as skeletons where appropriate:
-
-    forecasts.py
-    hazards.py
-    vulnerability.py
-    exposure.py
-    risk.py
-    wards.py
-    alerts.py
-    models.py
-
-Register them through:
-
-    /api/v1/
-
-These routes may return placeholder responses or "not implemented" responses.
-
-DO NOT implement scientific calculations in route handlers.
-
-Every endpoint must have a clear future responsibility.
+    Repository structure is coherent
+    Backend starts
+    Worker starts
+    Frontend starts/builds
+    PostgreSQL starts
+    PostGIS works
+    TimescaleDB works
+    Alembic migrations work from a fresh database
+    Database schema is internally consistent
+    Timescale hypertables are correctly configured
+    Spatial relationships are correct
+    Test dependencies install correctly
+    Test suite runs from a clean environment
+    Existing tests pass
+    No critical deprecation errors remain
+    No hardcoded production secrets exist
+    Documentation matches actual implementation
+    Docker startup works
+    No scientific algorithms are prematurely implemented
 
 ============================================================
-TASK 3 — DATABASE DOMAIN MODELS
+STEP 1 — INSPECT BEFORE MODIFYING
 ============================================================
 
-Create SQLAlchemy models and relationships for the following concepts.
+First inspect the complete repository.
+
+Review:
+
+    directory tree
+    pyproject.toml
+    requirements.txt
+    package.json
+    Dockerfiles
+    docker-compose.yml
+    .env.example
+    Alembic configuration
+    SQLAlchemy models
+    migrations
+    worker
+    pipelines
+    scientific modules
+    frontend
+    tests
+    Kubernetes manifests
+    monitoring configuration
+    documentation
+
+Identify:
+
+    existing problems
+    duplicate files
+    broken imports
+    missing dependencies
+    database inconsistencies
+    migration inconsistencies
+    security issues
+    architecture drift
+
+Do not blindly overwrite files.
+
+Preserve existing good work.
+
+============================================================
+STEP 2 — FIX PYTHON ENVIRONMENT REPRODUCIBILITY
+============================================================
+
+The current project has tests that import structlog.
+
+Make sure every runtime dependency required by actual code is declared correctly.
+
+Review imports across:
+
+    apps/api
+    apps/worker
+    scientific
+    pipelines
+
+Ensure dependencies are declared in the correct requirements/project files.
+
+The documented installation procedure must create an environment in which:
+
+    pytest
+
+can run successfully without manually installing missing packages.
+
+Do not solve this by suppressing import errors.
+
+Ensure the dependency graph is explicit.
+
+Also ensure test-only dependencies are clearly separated where practical.
+
+============================================================
+STEP 3 — FIX PYDANTIC CONFIGURATION
+============================================================
+
+The project currently contains deprecated Pydantic configuration patterns.
+
+Update them to the current supported Pydantic v2 configuration approach.
+
+Do not change the meaning of configuration.
+
+Verify:
+
+    application settings load
+    environment variables work
+    defaults work
+    validation works
+
+Run tests afterward.
+
+============================================================
+STEP 4 — DATABASE ARCHITECTURE CORRECTION
+============================================================
+
+Review ALL SQLAlchemy models and Alembic migrations.
+
+The database must support:
 
 GEOGRAPHY:
 
@@ -168,7 +173,7 @@ WEATHER:
     weather_forecast_runs
     weather_forecasts
 
-SCIENTIFIC MODEL REGISTRY:
+SCIENTIFIC REGISTRY:
 
     scientific_models
     model_runs
@@ -199,127 +204,189 @@ OPERATIONS:
     alerts
     action_recommendations
 
-Use explicit foreign keys and relationships.
+Verify:
 
-Use UUIDs where appropriate.
+    primary keys
+    foreign keys
+    nullability
+    indexes
+    timestamps
+    relationships
+    geometry types
+    schema naming
+    cascade behavior where appropriate
 
-Use timezone-aware timestamps.
-
-Use PostGIS geometry columns where appropriate.
-
-Use appropriate spatial indexes.
-
-Do not put scientific formulas into ORM models.
-
-============================================================
-TASK 4 — SPATIAL DATABASE DESIGN
-============================================================
-
-Use PostGIS as the spatial system.
-
-Expected spatial hierarchy:
-
-    state
-      ↓
-    city
-      ↓
-    ward
-      ↓
-    grid_cell
-
-The computational grid is approximately:
-
-    333 metres
-
-Do not assume every grid cell belongs exclusively to exactly one ward if that would make the spatial model scientifically inaccurate.
-
-Where appropriate, support spatial relationships or future coverage fractions.
-
-Create:
-
-    db/sql/extensions.sql
-    db/sql/indexes.sql
-    db/sql/hypertables.sql
-
-Enable:
-
-    PostGIS
-    TimescaleDB
-
-Do not duplicate extension creation across random application files.
+Do not add scientific formulas to database models.
 
 ============================================================
-TASK 5 — TIMESCALEDB DESIGN
+STEP 5 — TIMESCALEDB CORRECTION
 ============================================================
 
-Prepare the architecture for high-volume weather time series.
+This is a critical task.
 
-The weather forecast model must distinguish:
+Review the current definitions for:
 
-    forecast run / initialization time
-    valid time
-    lead time
-
-Create the appropriate database structure so that:
-
+    weather_observations
     weather_forecasts
 
-can become a TimescaleDB hypertable.
+They are intended to be TimescaleDB hypertables.
 
-Choose indexes carefully around:
+Do not assume an ordinary PostgreSQL UUID primary key automatically works for a Timescale hypertable.
+
+Design the keys/indexes according to actual TimescaleDB requirements.
+
+The time-series design must support queries by:
 
     valid_time
     grid_cell_id
-    run_id
+    forecast_run_id
 
-Do not create destructive database changes.
+For forecasts, preserve:
 
-Do not use "latest" image tags in production configuration if you encounter them.
+    run_time / initialization time
+    valid_time
+    lead time
 
-Pin infrastructure versions where practical.
+For observations, preserve:
+
+    observed_at
+
+Validate the final schema against the actual TimescaleDB container.
+
+Do not merely make SQL look correct.
+
+Actually run the migration against TimescaleDB.
 
 ============================================================
-TASK 6 — ALEMBIC
+STEP 6 — AUTHORITATIVE DATABASE LIFECYCLE
 ============================================================
 
-Complete Alembic configuration.
+Establish ONE clear database lifecycle.
 
-Create the initial migration for the current domain schema.
+Prefer:
 
-The migration should establish:
+    Alembic = authoritative schema evolution
 
-    tables
-    foreign keys
-    indexes
-    geometry columns
-    required extensions where appropriate
-    TimescaleDB preparation where appropriate
+The project may retain SQL scripts for:
 
-Do not create fake scientific data.
+    extension bootstrap
+    database initialization
+    operational SQL
 
-Create seed scripts separately.
+but they must not create a second contradictory schema lifecycle.
 
-Verify:
+A fresh database should work as:
 
-    fresh database
+    database starts
         ↓
-    migration
+    required extensions
         ↓
-    application startup
+    Alembic upgrade head
+        ↓
+    complete usable schema
 
-works successfully.
+Verify this from a CLEAN database.
+
+Do not rely on an existing developer database.
 
 ============================================================
-TASK 7 — WORKER APPLICATION
+STEP 7 — POSTGIS SPATIAL MODEL CORRECTION
 ============================================================
 
-Create:
+Review the relationship:
+
+    grid_cells ↔ wards
+
+Do not assume a 333m grid cell belongs to exactly one ward unless this is explicitly guaranteed by the repository's grid-generation strategy.
+
+Prefer a robust spatial relationship model such as:
+
+    grid_cells
+        ↓
+    grid_ward_intersections
+        ↓
+    wards
+
+where appropriate fields may include:
+
+    grid_cell_id
+    ward_id
+    intersection_area
+    coverage_fraction
+
+Use PostGIS-compatible geometry and spatial indexes.
+
+The final design must support correct ward aggregation even when a grid cell crosses an administrative boundary.
+
+Do not fake spatial relationships.
+
+============================================================
+STEP 8 — FORECAST TEMPORAL MODEL
+============================================================
+
+Verify the weather forecast temporal model.
+
+It must distinguish:
+
+    forecast/run initialization time
+    valid time
+    lead time
+
+A forecast must never be represented only by one timestamp.
+
+Ensure the schema and application types make this distinction obvious.
+
+Add sensible validation where appropriate.
+
+Examples:
+
+    valid_time >= run_time
+
+Do not over-constrain legitimate forecast workflows.
+
+============================================================
+STEP 9 — MODEL VERSIONING
+============================================================
+
+Review:
+
+    scientific_models
+    model_runs
+
+Ensure a model run can be associated with:
+
+    model name
+    model version
+    run time
+    configuration/version information
+    status
+    timestamps
+
+Where appropriate, support:
+
+    configuration_hash
+    algorithm version
+    input snapshot/reference
+
+Do not invent scientific metadata.
+
+The purpose is reproducibility.
+
+The architecture should eventually allow answering:
+
+    "Which scientific model and configuration produced this result?"
+
+============================================================
+STEP 10 — WORKER VALIDATION
+============================================================
+
+Review:
 
     apps/worker/
 
-It should be a separate Python application/process.
+Verify that the worker can start independently from the API.
 
-Create task/job skeletons for:
+Verify imports for all task modules:
 
     ingest_weather
     calculate_hazard
@@ -327,506 +394,379 @@ Create task/job skeletons for:
     aggregate_wards
     generate_alerts
 
-Also create pipeline orchestration skeletons:
+and pipeline orchestration tasks.
 
-    forecast_pipeline
-    risk_pipeline
+These may remain placeholders.
 
-These are orchestration placeholders only.
+Do not implement scientific calculations.
 
-DO NOT implement scientific equations yet.
-
-The architectural principle is:
-
-    HTTP request
-        ≠
-    long-running scientific computation
+The worker must simply establish a reliable architecture for future asynchronous computation.
 
 ============================================================
-TASK 8 — PIPELINE DIRECTORIES
+STEP 11 — PIPELINE VALIDATION
 ============================================================
 
-Create:
+Verify these structures:
 
     pipelines/weather/
     pipelines/vulnerability/
     pipelines/exposure/
     pipelines/risk/
 
-Add placeholder modules such as:
+Every pipeline module should import successfully.
 
-WEATHER:
+Each module should expose a clear placeholder boundary.
 
-    ingest.py
-    normalize.py
-    quality_control.py
-    spatialize.py
+Keep responsibilities separate:
 
-VULNERABILITY:
+    pipelines = ingestion/transformation/orchestration
 
-    ingest.py
-    anonymize.py
-    aggregate.py
+    scientific = scientific calculation
 
-EXPOSURE:
-
-    ingest.py
-    normalize.py
-    spatialize.py
-
-RISK:
-
-    run.py
-    validate.py
-    publish.py
-
-Each module should contain a clean function/class boundary for future implementation.
-
-Do not put full scientific logic here.
-
-Pipelines move and transform data.
-
-Scientific modules calculate scientific results.
+Do not mix them.
 
 ============================================================
-TASK 9 — SCIENTIFIC MODULE BOUNDARIES
+STEP 12 — SCIENTIFIC MODULE SAFETY
 ============================================================
 
-Do not implement the equations yet.
+Review:
 
-Make sure the repository contains clean boundaries for:
+    scientific/core
+    scientific/hazard
+    scientific/vulnerability
+    scientific/exposure
+    scientific/risk
+    scientific/thermal_comfort
 
-    scientific/hazard/
-    scientific/vulnerability/
-    scientific/exposure/
-    scientific/risk/
-    scientific/thermal_comfort/
+Do not implement the actual scientific equations.
 
-Ensure there are no circular dependencies.
+Ensure:
 
-Scientific modules must not import FastAPI route handlers.
+    imports work
+    interfaces are clean
+    no circular dependencies exist
+    configuration can eventually be injected
+    models are independently testable
 
-Scientific modules must not depend directly on frontend code.
-
-Scientific calculations should eventually be deterministic and independently testable.
-
-============================================================
-TASK 10 — PLUGGABLE THERMAL COMFORT
-============================================================
-
-Complete:
-
-    scientific/thermal_comfort/
-
-Create a clean interface/abstract contract.
-
-It must support future implementations such as:
-
-    UTCI
-    Adaptive Thermal Comfort
-    Future thermal models
-
-Create:
-
-    base.py
-    registry.py
-
-and suitable model placeholders.
-
-Do not implement an alternative comfort model merely for demonstration.
-
-Do not invent formulas.
+The pluggable thermal-comfort architecture must remain intact.
 
 ============================================================
-TASK 11 — MODEL REGISTRY
+STEP 13 — CONFIGURATION HYGIENE
 ============================================================
 
-The project already contains YAML scientific configuration.
+Scientific constants must not be scattered across application code.
 
-Preserve that.
+Preserve the configuration structure:
 
-Create an architectural bridge between:
+    scientific/configuration/
 
-    YAML/configuration
-          ↓
-    scientific model registry
-          ↓
-    model run
-          ↓
-    risk assessment
+including:
 
-The system must eventually be able to answer:
+    hazard_categories.yaml
+    vulnerability_weights.yaml
+    exposure_weights.yaml
+    risk_thresholds.yaml
+    model_registry.yaml
 
-    Which scientific model/version produced this result?
+Do not change their scientific values.
 
-Create the persistence skeleton for:
+Where application code currently hardcodes these values, refactor only the configuration plumbing.
 
-    scientific_models
-    model_runs
-
-Do not invent scientific model versions beyond what is needed as placeholders.
+Do not implement scientific computation.
 
 ============================================================
-TASK 12 — API SCHEMAS
+STEP 14 — SECURITY HARDENING
 ============================================================
 
-Create Pydantic schemas for:
+Inspect:
 
-    weather
-    hazard
-    vulnerability
-    exposure
-    risk
-    wards
-    alerts
-    model metadata
+    docker-compose.yml
+    Kubernetes manifests
+    .env.example
+    application settings
+    frontend configuration
 
-Separate:
+Remove or neutralize actual production secrets.
 
-    database entities
+Development placeholders are acceptable if clearly documented.
 
-from:
+Never commit:
 
-    API request/response schemas
+    real API keys
+    real database passwords
+    tokens
+    credentials
+    private certificates
 
-Do not expose database models directly from API routes.
+Review CORS configuration.
+
+Development may be permissive.
+
+Production configuration must be capable of restricting allowed origins.
 
 ============================================================
-TASK 13 — FRONTEND STRUCTURE
+STEP 15 — DOCKER HARDENING
 ============================================================
 
-Do not build the complete dashboard yet.
+Inspect all Dockerfiles and docker-compose configuration.
 
-Create the architectural pages/components for:
+Do not use unpinned:
+
+    latest
+
+tags for production-oriented infrastructure where practical.
+
+Use reproducible versions.
+
+Ensure the containers can actually start together.
+
+Expected local services include:
+
+    PostgreSQL + PostGIS + TimescaleDB
+    Redis
+    API
+    Worker
+    Web
+
+Do not add unnecessary services.
+
+============================================================
+STEP 16 — FRONTEND VALIDATION
+============================================================
+
+The frontend should remain a scaffold.
+
+Verify:
+
+    Next.js starts
+    TypeScript passes
+    build succeeds
+    existing pages compile
+
+Do not build the full dashboard.
+
+Do not implement scientific visualization yet.
+
+Make sure the frontend structure remains ready for:
 
     Dashboard
     Risk Map
     Ward Explorer
     Forecast Explorer
     Alert Center
-    Model / Scientific Transparency
-
-Set up clear component directories:
-
-    components/map/
-    components/risk/
-    components/weather/
-    components/charts/
-    components/wards/
-    components/common/
-
-Set up:
-
-    TanStack Query
-    API client
-    TypeScript domain types
-    Zod validation
-
-MapLibre can be initialized at the infrastructure/component level, but do not implement the full production map yet.
+    Model Transparency
 
 ============================================================
-TASK 14 — DATA DIRECTORY
+STEP 17 — API VALIDATION
 ============================================================
 
-Create:
+Keep the API domain routes as scaffolding.
 
-    data/raw/
-    data/staging/
-    data/processed/
+Verify:
 
-Add README files explaining that these are development/data-pipeline locations.
+    /api/v1/health
 
-Do not commit sensitive datasets.
+works correctly.
 
-Do not generate fake personal medical records.
+Verify the placeholder route modules import without errors:
 
-============================================================
-TASK 15 — INFRASTRUCTURE
-============================================================
+    forecasts
+    hazards
+    vulnerability
+    exposure
+    risk
+    wards
+    alerts
+    models
 
-Complete the infrastructure skeleton:
-
-    infra/docker/
-    infra/kubernetes/
-    infra/monitoring/
-
-Create placeholder Kubernetes manifests for:
-
-    namespace
-    api
-    worker
-    web
-    ingress
-
-Do not claim production readiness.
-
-Create monitoring placeholders for:
-
-    Prometheus
-    Grafana
-
-Create appropriate Dockerfiles for:
-
-    API
-    worker
-    web
-
-Pin versions where practical.
+Do not implement database-backed business logic yet unless required simply to validate startup.
 
 ============================================================
-TASK 16 — OBSERVABILITY
+STEP 18 — TEST INFRASTRUCTURE
 ============================================================
 
-Create a basic observability architecture.
+The project currently has basic scientific/interface tests.
 
-At minimum support:
+Expand the test infrastructure to include smoke tests for:
 
-    structured logs
-    request correlation
-    application health
-    worker health
-    database health
+    API imports
+    worker imports
+    database connectivity
+    migration
+    scientific imports
+    frontend build/typecheck where practical
 
-Prepare placeholders/configuration for:
-
-    Prometheus
-    Grafana
-    OpenTelemetry
-
-Do not introduce unnecessary complexity.
-
-============================================================
-TASK 17 — SECURITY / CONFIGURATION
-============================================================
-
-Review environment configuration.
-
-Create/update:
-
-    .env.example
-
-Never commit:
-
-    passwords
-    API keys
-    secrets
-    tokens
-
-Use configuration classes rather than scattered environment-variable reads.
-
-Use separate configuration concerns for:
-
-    database
-    Redis
-    application
-    external data sources
-    security
-
-============================================================
-TASK 18 — TESTING
-============================================================
-
-Expand testing infrastructure.
-
-Create:
+Create placeholders for:
 
     tests/end_to_end/
     tests/scientific_validation/
     tests/performance/
 
-Add smoke tests for:
+Do not fabricate scientific validation results.
 
-    API startup
-    health endpoint
-    database connectivity
-    migrations
-    worker import/startup
-    frontend build
-    scientific module imports
-
-DO NOT pretend scientific validation is complete.
-
-Scientific formula tests will be added in a later phase.
-
-Fix existing Python deprecation warnings where practical, especially timezone handling.
+Scientific formula tests will be implemented later.
 
 ============================================================
-TASK 19 — DOCUMENTATION
+STEP 19 — FIX WARNINGS
 ============================================================
 
-Create:
+Review current warnings.
+
+In particular, replace deprecated timezone handling such as:
+
+    datetime.utcnow()
+
+with proper timezone-aware UTC handling.
+
+Use a consistent policy for timestamps across the application.
+
+Do not mix naive and aware datetimes without an explicit reason.
+
+============================================================
+STEP 20 — DOCUMENTATION CONSISTENCY
+============================================================
+
+Compare the documentation against the implementation.
+
+Update:
 
     docs/architecture/system-overview.md
     docs/architecture/data-flow.md
     docs/architecture/database.md
 
-Also create:
+Ensure they describe what actually exists.
 
-    docs/scientific/hazard.md
-    docs/scientific/vulnerability.md
-    docs/scientific/exposure.md
-    docs/scientific/risk.md
+Do not document future features as already implemented.
 
-And:
+Clearly label:
 
-    docs/operations/deployment.md
-    docs/operations/monitoring.md
-    docs/operations/incident-response.md
-
-Document architecture only.
-
-Do not invent scientific results.
+    scaffold
+    implemented
+    future phase
 
 ============================================================
-TASK 20 — ROOT PROJECT FILES
+STEP 21 — RUN A CLEAN VALIDATION
 ============================================================
 
-Ensure the root has appropriate:
+Do not rely only on the current working environment.
 
-    README.md
-    .env.example
-    .gitignore
-    .editorconfig
-    pyproject.toml
-    package.json
-    pnpm-workspace.yaml
-    docker-compose.yml
-    Makefile
+Perform a clean validation as far as the repository allows.
 
-Do not unnecessarily replace working project metadata.
+At minimum:
 
-============================================================
-TASK 21 — DEPENDENCY HYGIENE
-============================================================
+    install dependencies
+    start database
+    enable PostGIS
+    enable TimescaleDB
+    run migrations from clean database
+    start Redis
+    start API
+    start worker
+    build/start frontend
+    run pytest
+    run lint
+    run typecheck where available
 
-Review backend and frontend dependencies.
+If a command fails:
 
-Remove unnecessary duplicates.
+    diagnose the actual cause
+    fix the repository
+    rerun the command
 
-Do not blindly install libraries just because they appear in the original blueprint.
+Do not hide failures.
 
-Only add dependencies that are actually needed for the current scaffold.
-
-Keep scientific/geospatial dependencies isolated and documented.
-
-============================================================
-TASK 22 — DATABASE DESIGN RULES
-============================================================
-
-Follow these rules:
-
-- Geometry is first-class.
-- Time is first-class.
-- Forecast run time and valid time are distinct.
-- Scientific model version is first-class.
-- Risk assessment is traceable.
-- Sensitive vulnerability data is not exposed through public endpoints.
-- High-volume time-series data is designed for TimescaleDB.
-- Spatial queries are designed for PostGIS.
+Do not mark the task complete while known critical startup/test failures remain.
 
 ============================================================
-TASK 23 — DO NOT IMPLEMENT YET
+STEP 22 — NO SCIENCE IMPLEMENTATION
 ============================================================
+
+Again:
 
 DO NOT implement:
 
-    actual UTCI algorithm
-    actual Hazard calculation
-    actual vulnerability scoring
-    actual exposure scoring
-    actual HSRI calculation
-    operational alert thresholds beyond configuration scaffolding
-    machine-learning prediction models
-    AI-generated scientific conclusions
+    UTCI
+    Hazard equation
+    Vulnerability equation
+    Exposure equation
+    HSRI
+    risk thresholds in executable logic
+    machine-learning prediction
 
-Those belong to later implementation phases.
-
-============================================================
-TASK 24 — QUALITY GATE
-============================================================
-
-Before declaring this task complete:
-
-Run the available checks.
-
-At minimum attempt:
-
-    backend tests
-    frontend typecheck/build
-    lint
-    database migration
-    application startup
-
-Verify:
-
-    PostgreSQL starts
-    PostGIS is enabled
-    TimescaleDB is enabled
-    migrations succeed
-    API starts
-    worker starts/imports
-    frontend starts/builds
-    baseline tests pass
-
-If something fails:
-
-    diagnose
-    fix
-    rerun
-
-Do not simply report the failure without attempting a reasonable correction.
+Only establish the interfaces, configuration plumbing, database support, and testing architecture required for those later phases.
 
 ============================================================
-TASK 25 — FINAL REPORT
+STEP 23 — FINAL QUALITY GATE
 ============================================================
 
-At the end, report:
+Before finishing, verify the following checklist:
 
-1. Files created
-2. Files modified
-3. Files intentionally left untouched
-4. Database tables created
-5. Migrations created
-6. Worker tasks created
-7. Pipeline modules created
-8. API routes created
-9. Frontend pages/components created
-10. Tests added
-11. Commands executed
-12. Test/build results
-13. Remaining Phase-1 gaps
-14. Recommended next phase
+[ ] API starts
+[ ] Worker starts
+[ ] Web builds/starts
+[ ] PostgreSQL starts
+[ ] PostGIS works
+[ ] TimescaleDB works
+[ ] Alembic migration succeeds from clean DB
+[ ] Hypertables are actually created
+[ ] Timescale constraints are satisfied
+[ ] Weather time-series schema is valid
+[ ] Grid/ward spatial design is valid
+[ ] All domain ORM models import
+[ ] All API modules import
+[ ] All worker modules import
+[ ] Scientific modules import
+[ ] Dependencies are declared
+[ ] pytest runs from documented environment
+[ ] Existing tests pass
+[ ] Deprecated datetime usage is removed where practical
+[ ] Pydantic v2 configuration is current
+[ ] No real secrets are committed
+[ ] Docker configuration is reproducible
+[ ] Documentation matches actual implementation
+[ ] Scientific equations remain unimplemented
 
-Use exact repository paths.
+============================================================
+FINAL REPORT FORMAT
+============================================================
 
-Do not claim anything is complete unless it actually exists and was verified.
+Return a final report containing:
+
+1. PHASE-1 STATUS
+   PASS / PASS WITH MINOR GAPS / FAIL
+
+2. ARCHITECTURE CHANGES
+   Exact files changed and why.
+
+3. DATABASE
+   Exact tables, indexes, spatial relationships, hypertables, and migrations verified.
+
+4. INFRASTRUCTURE
+   Docker/Redis/API/Worker/Web status.
+
+5. TEST RESULTS
+   Exact commands run.
+   Exact result for each.
+
+6. WARNINGS
+   Remaining non-critical warnings.
+
+7. REMAINING GAPS
+   Anything still preventing Phase 1 from being considered complete.
+
+8. NEXT PHASE
+   Clearly state whether the repository is ready for the scientific-engine implementation phase.
 
 ============================================================
 MOST IMPORTANT RULE
 ============================================================
 
-This is an existing repository.
+Do not merely create files to make the repository look complete.
 
-Inspect first.
+The repository must actually START, MIGRATE, IMPORT, BUILD, and TEST.
 
-Preserve good existing work.
+Verify functionality.
 
-Implement only the missing Phase-1 architecture.
+Do not implement the scientific algorithms during this correction pass.
 
-Do not jump ahead into scientific algorithm implementation.
-
-The goal of this task is to leave the repository in a clean state where Phase 2 can begin with:
-
-    DATABASE
-        ↓
-    DATA PIPELINES
-        ↓
-    SCIENTIFIC ENGINE
-        ↓
-    RISK ENGINE
-        ↓
-    API
-        ↓
-    FRONTEND
-
-Start now by inspecting the repository.
+Start by inspecting the repository now.

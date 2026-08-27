@@ -1,7 +1,6 @@
 """Alerts API endpoint."""
 from fastapi import APIRouter, Query
 from typing import Optional
-from datetime import datetime
 
 router = APIRouter()
 

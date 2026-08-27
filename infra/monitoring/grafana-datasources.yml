@@ -14,4 +14,4 @@ datasources:
     database: heatwave_db
     user: heatwave
     secureJsonData:
-      password: heatwave_secret
+      password: ${GRAFANA_DB_PASSWORD}

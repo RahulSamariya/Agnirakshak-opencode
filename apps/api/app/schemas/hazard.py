@@ -1,11 +1,13 @@
 """Hazard schemas."""
 from datetime import datetime
 from typing import Optional, Dict, Any
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 import uuid
 
 
 class HazardAssessmentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     model_run_id: uuid.UUID
     grid_cell_id: uuid.UUID
@@ -21,16 +23,12 @@ class HazardAssessmentResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class HazardAssessmentBrief(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     grid_cell_id: uuid.UUID
     valid_time: datetime
     hazard_index: float
     hazard_category: str
-
-    class Config:
-        from_attributes = True
