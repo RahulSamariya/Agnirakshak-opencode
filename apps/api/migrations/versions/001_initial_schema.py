@@ -580,8 +580,53 @@ def upgrade() -> None:
         ["alert_id"],
     )
 
+    # Additional indexes for query performance
+    op.create_index(
+        "ix_hazard_assessments_valid_time",
+        "hazard_assessments",
+        ["valid_time"],
+    )
+    op.create_index(
+        "ix_risk_runs_start",
+        "risk_runs",
+        ["run_start"],
+    )
+    op.create_index(
+        "ix_alerts_ward",
+        "alerts",
+        ["ward_id"],
+    )
+    op.create_index(
+        "ix_vulnerability_factors_name",
+        "vulnerability_factors",
+        ["factor_name"],
+    )
+    op.create_index(
+        "ix_exposure_factors_name",
+        "exposure_factors",
+        ["factor_name"],
+    )
+    op.create_index(
+        "ix_risk_components_type",
+        "risk_assessment_components",
+        ["component_type"],
+    )
+    op.create_index(
+        "ix_ward_risk_summaries_valid_time",
+        "ward_risk_summaries",
+        ["valid_time"],
+    )
+
 
 def downgrade() -> None:
+    op.drop_index("ix_ward_risk_summaries_valid_time", "ward_risk_summaries")
+    op.drop_index("ix_risk_components_type", "risk_assessment_components")
+    op.drop_index("ix_exposure_factors_name", "exposure_factors")
+    op.drop_index("ix_vulnerability_factors_name", "vulnerability_factors")
+    op.drop_index("ix_alerts_ward", "alerts")
+    op.drop_index("ix_risk_runs_start", "risk_runs")
+    op.drop_index("ix_hazard_assessments_valid_time", "hazard_assessments")
+    op.drop_index("ix_action_recommendations_alert", "action_recommendations")
     op.drop_table("action_recommendations")
     op.drop_table("alerts")
     op.drop_table("ward_risk_summaries")

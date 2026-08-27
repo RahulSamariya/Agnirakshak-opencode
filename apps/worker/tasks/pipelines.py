@@ -1,6 +1,9 @@
 """Pipeline orchestration tasks."""
 import structlog
-from worker.main import app
+try:
+    from worker.main import app
+except ImportError:
+    from main import app
 
 logger = structlog.get_logger()
 

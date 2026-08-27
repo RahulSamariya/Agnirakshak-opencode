@@ -6,7 +6,7 @@ logger = structlog.get_logger()
 router = APIRouter()
 
 
-@router.get("/health")
+@router.get("/")
 async def health_check():
     logger.info("health_check_requested")
     return {
@@ -16,7 +16,7 @@ async def health_check():
     }
 
 
-@router.get("/health/ready")
+@router.get("/ready")
 async def readiness_check():
     return {
         "status": "ready",

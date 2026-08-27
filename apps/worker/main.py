@@ -30,8 +30,8 @@ app.config_from_object({
 
 app.autodiscover_tasks(["worker.tasks"])
 
-worker_ready.connect(lambda sender: logger.info("worker_started"))
-worker_shutting_down.connect(lambda sender: logger.info("worker_shutting_down"))
+worker_ready.connect(lambda sender, **kwargs: logger.info("worker_started"))
+worker_shutting_down.connect(lambda sender, **kwargs: logger.info("worker_shutting_down"))
 
 
 @app.task(bind=True, name="worker.heartbeat")
