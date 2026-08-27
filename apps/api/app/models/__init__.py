@@ -1,6 +1,6 @@
 """Domain models package."""
 from app.models.base import BaseModel
-from app.models.geography import State, City, Ward, GridCell
+from app.models.geography import State, City, Ward, GridCell, GridWardIntersection
 from app.models.weather import (
     WeatherStation,
     WeatherObservation,
@@ -25,6 +25,7 @@ __all__ = [
     "City",
     "Ward",
     "GridCell",
+    "GridWardIntersection",
     "WeatherStation",
     "WeatherObservation",
     "WeatherForecastRun",

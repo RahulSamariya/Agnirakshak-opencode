@@ -88,6 +88,44 @@ def upgrade() -> None:
     op.create_index("ix_grid_cells_ward_id", "grid_cells", ["ward_id"])
     op.create_index("ix_grid_cells_lat_lon", "grid_cells", ["latitude", "longitude"])
 
+    # Grid-ward intersection table for accurate spatial aggregation
+    op.create_table(
+        "grid_ward_intersections",
+        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column(
+            "grid_cell_id",
+            postgresql.UUID(as_uuid=True),
+            sa.ForeignKey("grid_cells.id"),
+            nullable=False,
+        ),
+        sa.Column(
+            "ward_id",
+            postgresql.UUID(as_uuid=True),
+            sa.ForeignKey("wards.id"),
+            nullable=False,
+        ),
+        sa.Column("intersection_area", sa.Float, nullable=False),
+        sa.Column("coverage_fraction", sa.Float, nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.create_index(
+        "ix_grid_ward_intersections_grid",
+        "grid_ward_intersections",
+        ["grid_cell_id"],
+    )
+    op.create_index(
+        "ix_grid_ward_intersections_ward",
+        "grid_ward_intersections",
+        ["ward_id"],
+    )
+    op.create_index(
+        "ix_grid_ward_intersections_unique",
+        "grid_ward_intersections",
+        ["grid_cell_id", "ward_id"],
+        unique=True,
+    )
+
     # Spatial indexes
     op.execute("CREATE INDEX ix_states_geometry ON states USING GIST (geometry)")
     op.execute("CREATE INDEX ix_cities_geometry ON cities USING GIST (geometry)")
@@ -617,6 +655,10 @@ def upgrade() -> None:
         ["valid_time"],
     )
 
+    # TimescaleDB hypertables for time-series data
+    op.execute("SELECT create_hypertable('weather_observations', 'observation_time', chunk_time_interval => INTERVAL '1 day', if_not_exists => TRUE)")
+    op.execute("SELECT create_hypertable('weather_forecasts', 'valid_time', chunk_time_interval => INTERVAL '1 day', if_not_exists => TRUE)")
+
 
 def downgrade() -> None:
     op.drop_index("ix_ward_risk_summaries_valid_time", "ward_risk_summaries")
@@ -644,6 +686,10 @@ def downgrade() -> None:
     op.drop_table("weather_forecast_runs")
     op.drop_table("weather_observations")
     op.drop_table("weather_stations")
+    op.drop_index("ix_grid_ward_intersections_unique", "grid_ward_intersections")
+    op.drop_index("ix_grid_ward_intersections_ward", "grid_ward_intersections")
+    op.drop_index("ix_grid_ward_intersections_grid", "grid_ward_intersections")
+    op.drop_table("grid_ward_intersections")
     op.drop_table("grid_cells")
     op.drop_table("wards")
     op.drop_table("cities")

@@ -51,8 +51,12 @@ Where:
 ### Spatial Hierarchy
 
 ```
-State → City → Ward → Grid Cell (~333m)
+State → City → Ward ←→ Grid Cell (~333m)
+              ↑           ↓
+              └── GridWardIntersection ──┘
 ```
+
+The `grid_ward_intersections` table supports accurate ward aggregation when grid cells cross administrative boundaries.
 
 ### Data Flow
 

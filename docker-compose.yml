@@ -1,6 +1,6 @@
 services:
   db:
-    image: timescale/timescaledb-ha:pg16-latest
+    image: timescale/timescaledb-ha:pg16.4
     container_name: heatwave_db
     restart: unless-stopped
     ports:
@@ -19,7 +19,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:7-alpine
+    image: redis:7.2.6-alpine
     container_name: heatwave_redis
     restart: unless-stopped
     ports:

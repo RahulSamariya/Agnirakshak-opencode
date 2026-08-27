@@ -61,6 +61,9 @@ class Ward(BaseModel):
 
     city: Mapped["City"] = relationship(back_populates="wards")
     grid_cells: Mapped[List["GridCell"]] = relationship(back_populates="ward")
+    intersections: Mapped[List["GridWardIntersection"]] = relationship(
+        back_populates="ward"
+    )
 
     __table_args__ = (
         Index("ix_wards_city_id", "city_id"),
@@ -86,8 +89,38 @@ class GridCell(BaseModel):
     )
 
     ward: Mapped[Optional["Ward"]] = relationship(back_populates="grid_cells")
+    intersections: Mapped[List["GridWardIntersection"]] = relationship(
+        back_populates="grid_cell"
+    )
 
     __table_args__ = (
         Index("ix_grid_cells_ward_id", "ward_id"),
         Index("ix_grid_cells_lat_lon", "latitude", "longitude"),
+    )
+
+
+class GridWardIntersection(BaseModel):
+    """Spatial intersection between grid cells and wards.
+
+    Supports accurate ward aggregation when grid cells cross administrative boundaries.
+    """
+
+    __tablename__ = "grid_ward_intersections"
+
+    grid_cell_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("grid_cells.id"), nullable=False
+    )
+    ward_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("wards.id"), nullable=False
+    )
+    intersection_area: Mapped[float] = mapped_column(nullable=False)
+    coverage_fraction: Mapped[float] = mapped_column(nullable=False)
+
+    grid_cell: Mapped["GridCell"] = relationship(back_populates="intersections")
+    ward: Mapped["Ward"] = relationship(back_populates="intersections")
+
+    __table_args__ = (
+        Index("ix_grid_ward_intersections_grid", "grid_cell_id"),
+        Index("ix_grid_ward_intersections_ward", "ward_id"),
+        Index("ix_grid_ward_intersections_unique", "grid_cell_id", "ward_id", unique=True),
     )

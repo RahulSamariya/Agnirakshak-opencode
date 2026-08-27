@@ -13,6 +13,7 @@
 - `cities` - Cities within states
 - `wards` - Municipal wards within cities
 - `grid_cells` - 333m computational grid
+- `grid_ward_intersections` - Spatial intersections for accurate ward aggregation
 
 ### Weather
 - `weather_stations` - Meteorological stations
