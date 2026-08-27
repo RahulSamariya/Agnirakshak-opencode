@@ -1,0 +1,26 @@
+exposure_weights:
+  version: "1.0.0"
+  description: "BBWM-derived exposure factor weights"
+  weights:
+    infrastructure_transit: 0.282
+    fluid_intake_activity: 0.282
+    lifestyle: 0.184
+    air_quality: 0.126
+    healthcare_accessibility: 0.125
+  
+  infrastructure_transit_sub:
+    condition: 0.508
+    facilities: 0.492
+  
+  lifestyle_sub:
+    alcohol: 0.341
+    sleep: 0.232
+    tobacco: 0.218
+    caffeine: 0.208
+  
+  scoring:
+    low: 0.33
+    medium: 0.66
+    high: 1.00
+  
+  residual_floor: 0.33

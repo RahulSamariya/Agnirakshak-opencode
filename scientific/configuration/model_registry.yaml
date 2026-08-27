@@ -1,0 +1,24 @@
+models:
+  - name: "utci-v1"
+    type: "thermal_comfort"
+    version: "1.0.0"
+    description: "UTCI thermal comfort model implementation"
+    status: "active"
+  
+  - name: "vulnerability-bbwm-v1"
+    type: "vulnerability"
+    version: "1.0.0"
+    description: "BBWM vulnerability model"
+    status: "active"
+  
+  - name: "exposure-bbwm-v1"
+    type: "exposure"
+    version: "1.0.0"
+    description: "BBWM exposure model"
+    status: "active"
+  
+  - name: "hsri-multiplicative-v1"
+    type: "risk"
+    version: "1.0.0"
+    description: "HSRI = H × V × E multiplicative risk model"
+    status: "active"
