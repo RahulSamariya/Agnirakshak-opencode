@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heatwave-web
+  namespace: heatwave
+  labels:
+    app: heatwave-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: heatwave-web
+  template:
+    metadata:
+      labels:
+        app: heatwave-web
+    spec:
+      containers:
+        - name: web
+          image: heatwave-web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              value: http://heatwave-api:8000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"

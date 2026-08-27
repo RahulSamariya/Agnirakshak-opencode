@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heatwave-worker
+  namespace: heatwave
+  labels:
+    app: heatwave-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: heatwave-worker
+  template:
+    metadata:
+      labels:
+        app: heatwave-worker
+    spec:
+      containers:
+        - name: worker
+          image: heatwave-worker:latest
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: heatwave-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: heatwave-secrets
+                  key: redis-url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"

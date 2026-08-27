@@ -1,0 +1,11 @@
+{
+  "name": "heatwave-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter '*' dev",
+    "build": "pnpm --filter '*' build",
+    "lint": "pnpm --filter '*' lint",
+    "test": "pnpm --filter '*' test"
+  }
+}

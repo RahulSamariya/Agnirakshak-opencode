@@ -1,421 +1,49 @@
-You are the Principal Systems Architect, Lead Data Scientist, Senior Backend Engineer, Senior Frontend Engineer, Geospatial Systems Engineer, and Scientific Software Engineer responsible for building a production-grade platform called:
+You are continuing an existing project.
 
-"Extreme Heatwave Early Warning and Human Thermal Stress Index"
+PROJECT:
+Extreme Heatwave Early Warning and Human Thermal Stress Index
 
-The target domain is the Indian Ministry of Earth Sciences / meteorological and public-health early-warning ecosystem.
+ROLE:
+Act as Principal Systems Architect, Senior Backend Engineer, Geospatial Engineer, Data Engineer, and Scientific Software Architect.
 
-Your job is to build this system carefully, incrementally, scientifically, and production-first.
+IMPORTANT:
+The repository has already been partially scaffolded.
 
-============================================================
-1. PRIMARY OBJECTIVE
-============================================================
+DO NOT rebuild the project from scratch.
+DO NOT delete or unnecessarily rewrite existing working files.
+DO NOT implement the actual UTCI, Vulnerability, Exposure, or HSRI scientific algorithms yet.
 
-Build a modular, scalable, auditable, geospatial early-warning platform that converts meteorological forecasts and observations plus population vulnerability and exposure information into a spatially and temporally resolved Human Thermal Stress / Heat Stress Risk Index.
-
-The central scientific concept is:
-
-    HSRI = H × V × E
-
-where:
-
-    H = Hazard Index
-    V = Vulnerability Index
-    E = Exposure Index
-
-The platform must support:
-
-    Meteorological data
-        ↓
-    Localized environmental field
-        ↓
-    UTCI / thermal-comfort calculation
-        ↓
-    Hazard normalization
-        ↓
-    Vulnerability calculation
-        ↓
-    Exposure calculation
-        ↓
-    HSRI calculation
-        ↓
-    Spatial aggregation
-        ↓
-    Risk classification
-        ↓
-    Early warning
-        ↓
-    Operational recommendations
-
-Do NOT reduce this project to a simple temperature-alert dashboard.
-
-It is an impact-based, spatial, temporal, scientific decision-support platform.
+Your task is to COMPLETE THE REMAINING PHASE-1 ARCHITECTURAL SCAFFOLDING.
 
 ============================================================
-2. SOURCE OF TRUTH
+CURRENT STATE
 ============================================================
 
-The scientific requirements supplied by the project owner are authoritative.
+The repository already contains the basic:
 
-The supplied scientific context describes:
+- FastAPI backend
+- Next.js frontend
+- PostgreSQL
+- PostGIS
+- TimescaleDB
+- Redis configuration
+- scientific module interfaces
+- scientific configuration YAML files
+- basic health endpoints
+- basic frontend
+- basic scientific interface tests
 
-    H = UTCI-derived normalized Hazard Index
+Inspect the repository before changing anything.
 
-    V = BBWM-derived Vulnerability Index
-
-    E = BBWM-derived Exposure Index
-
-    HSRI = H × V × E
-
-It also describes an alternative additive ward-level formulation:
-
-    WardRisk = wh × Hazard + we × Exposure + wv × Vulnerability
-
-The multiplicative model and additive ward model must remain distinct concepts.
-
-DO NOT silently replace the supplied equations with other formulas.
-
-DO NOT invent scientific assumptions.
-
-DO NOT change weights, thresholds, normalization boundaries, or categories without explicit approval.
-
-When a scientific specification is ambiguous, stop and flag the ambiguity rather than inventing a value.
+Reuse existing conventions where they are sound.
 
 ============================================================
-3. SCIENTIFIC HAZARD MODEL
+PRIMARY OBJECTIVE
 ============================================================
 
-The hazard is based on UTCI rather than raw air temperature.
+Complete the missing architectural skeleton so the repository is ready for implementation of the scientific engine in the next phase.
 
-UTCI integrates the relevant meteorological variables including:
-
-    air temperature
-    relative humidity
-    wind speed
-    mean radiant temperature
-
-The localized computational resolution is approximately:
-
-    333 metres
-
-The architecture must therefore support high-resolution spatial meteorological data.
-
-The supplied UTCI thermal-stress normalization is:
-
-    9–26 °C
-        No thermal stress
-        H = 0–0.25
-
-    26–32 °C
-        Moderate heat stress
-        H = 0.25–0.50
-
-    32–38 °C
-        Strong heat stress
-        H = 0.50–0.75
-
-    38–46 °C
-        Very strong heat stress
-        H = 0.75–1.00
-
-    >46 °C
-        Extreme heat stress
-        H = 1.00
-
-Within a category, use the supplied linear interpolation between category boundaries.
-
-Implement the hazard calculation as an independent scientific module.
-
-Do not bury scientific calculations inside API routes.
-
-============================================================
-4. VULNERABILITY MODEL
-============================================================
-
-Vulnerability uses weighted factors with scores based on:
-
-    0.33
-    0.66
-    1.00
-
-The supplied top-level vulnerability weights are:
-
-    Age                    16.0%
-    BMI                    11.7%
-    Economic Status        14.2%
-    Social Isolation        9.2%
-    Education               9.4%
-    Gender / Sex            9.7%
-    Health Issues          19.8%
-    Disability             10.0%
-
-Health Issues is internally composed of:
-
-    Pre-Illness             53.0%
-    Medication              47.0%
-
-The architecture MUST preserve the hierarchy:
-
-    raw attribute
-        ↓
-    factor score
-        ↓
-    subcomponent score
-        ↓
-    weighted vulnerability score
-        ↓
-    V
-
-Do not flatten this into an unexplained single number.
-
-============================================================
-5. EXPOSURE MODEL
-============================================================
-
-Exposure uses the supplied weighted model.
-
-Top-level weights:
-
-    Infrastructure / Transit    28.2%
-    Fluid Intake / Activity    28.2%
-    Lifestyle                  18.4%
-    Air Quality                12.6%
-    Healthcare Accessibility   12.5%
-
-Infrastructure / Transit contains:
-
-    Condition                   50.8%
-    Facilities                  49.2%
-
-Lifestyle contains:
-
-    Alcohol                     34.1%
-    Sleep                       23.2%
-    Tobacco                     21.8%
-    Caffeine                    20.8%
-
-Preserve this hierarchy.
-
-Do not silently normalize or reinterpret scientific values unless explicitly required by the implementation.
-
-============================================================
-6. RESIDUAL RISK
-============================================================
-
-The supplied model specifies that:
-
-    Vulnerability and Exposure have a residual-risk floor of 0.33.
-
-They should not normally collapse to zero.
-
-Hazard may reach zero under appropriate conditions.
-
-The multiplicative interpretation therefore remains:
-
-    if H = 0
-        HSRI = 0
-
-while V and E retain their minimum residual susceptibility/exposure representation.
-
-============================================================
-7. RISK CATEGORIES
-============================================================
-
-The supplied HSRI categories are:
-
-    0 < HSRI ≤ 0.33
-        LOW
-
-    0.33 < HSRI ≤ 0.66
-        MEDIUM
-
-    0.66 < HSRI ≤ 1.00
-        HIGH
-
-Make these configurable and versioned rather than hardcoding them throughout the application.
-
-============================================================
-8. ARCHITECTURAL PRINCIPLES
-============================================================
-
-Follow these principles strictly:
-
-1. Scientific logic must be independent from transport/API logic.
-
-2. Data ingestion must be independent from scientific calculation.
-
-3. Database models must be independent from frontend components.
-
-4. Long-running scientific computation must not block HTTP requests.
-
-5. Every scientific result must be reproducible.
-
-6. Every model run must have a model version.
-
-7. Every forecast must distinguish:
-       forecast initialization time
-       forecast issue time
-       valid time
-       lead time
-
-8. Spatial data must be first-class data.
-
-9. Time-series data must be first-class data.
-
-10. Sensitive population data must be protected and separated from public-facing aggregate outputs.
-
-11. All important scientific configuration must be versioned.
-
-12. Prefer deterministic scientific functions over opaque logic.
-
-13. Design every major subsystem so it can be independently tested.
-
-14. Do not create unnecessary microservices.
-    Start with a modular monolith plus background workers.
-    Extract services later only when justified.
-
-============================================================
-9. REQUIRED TECHNOLOGY STACK
-============================================================
-
-Backend:
-
-    Python
-    FastAPI
-    Pydantic v2
-    SQLAlchemy 2.x
-    Alembic
-    asyncpg
-    GeoAlchemy2
-    NumPy
-    SciPy
-    Pandas and/or Polars
-    xarray
-    Shapely
-    pyproj
-    rasterio
-    httpx
-    pytest
-    pytest-asyncio
-    mypy
-    Ruff
-
-Frontend:
-
-    Next.js
-    React
-    TypeScript
-    Tailwind CSS
-    TanStack Query
-    Zod
-    MapLibre GL JS
-    Recharts or ECharts
-
-Database:
-
-    PostgreSQL
-    PostGIS
-    TimescaleDB
-
-Supporting infrastructure:
-
-    Redis
-    Docker
-    Docker Compose
-
-Production-ready architecture should allow:
-
-    Kubernetes
-    S3-compatible object storage
-    Prometheus
-    Grafana
-    OpenTelemetry
-
-Do not introduce unnecessary technologies unless there is a clear architectural reason.
-
-============================================================
-10. DATABASE ARCHITECTURE
-============================================================
-
-Use PostgreSQL as the system of record.
-
-Use PostGIS for spatial data.
-
-Use TimescaleDB for high-volume time-series data.
-
-Core spatial entities:
-
-    states
-    cities
-    wards
-    grid_cells
-
-The spatial hierarchy is:
-
-    state
-        ↓
-    city
-        ↓
-    ward
-        ↓
-    ~333m grid cell
-
-Core weather entities:
-
-    weather_stations
-    weather_observations
-    weather_forecast_runs
-    weather_forecasts
-
-Critical temporal distinction:
-
-    forecast run time != forecast valid time
-
-Core scientific entities:
-
-    scientific_models
-    model_runs
-    hazard_assessments
-    vulnerability_profiles
-    vulnerability_factors
-    exposure_profiles
-    exposure_factors
-
-Core risk entities:
-
-    risk_runs
-    risk_assessments
-    risk_assessment_components
-    ward_risk_summaries
-
-Operational entities:
-
-    alerts
-    action_recommendations
-
-Every risk assessment should be explainable in terms of:
-
-    H
-    V
-    E
-    HSRI
-    risk category
-    model version
-    calculation/run identifier
-    input validity time
-
-Use spatial indexes such as GiST where appropriate.
-
-Use TimescaleDB hypertables for large time-series tables.
-
-============================================================
-11. REPOSITORY STRUCTURE
-============================================================
-
-Use a monorepo.
-
-Target structure:
-
-heatwave-platform/
+The target architecture is:
 
     apps/
         api/
@@ -465,7 +93,308 @@ heatwave-platform/
         scientific_validation/
         performance/
 
-The important scientific modules are:
+============================================================
+TASK 1 — INSPECT THE REPOSITORY
+============================================================
+
+Before modifying files:
+
+1. Inspect the complete repository tree.
+2. Identify what already exists.
+3. Identify missing architectural components.
+4. Identify naming inconsistencies.
+5. Identify duplicate abstractions.
+6. Identify existing tests.
+7. Identify current database configuration.
+8. Identify current Docker configuration.
+9. Identify package/dependency configuration.
+
+Do not guess.
+
+Do not destroy existing work.
+
+After inspection, create a concise implementation plan and then execute it.
+
+============================================================
+TASK 2 — COMPLETE THE BACKEND STRUCTURE
+============================================================
+
+Make sure the FastAPI application has clear separation between:
+
+    api/
+    schemas/
+    services/
+    db/
+    core/
+
+Create missing route modules as skeletons where appropriate:
+
+    forecasts.py
+    hazards.py
+    vulnerability.py
+    exposure.py
+    risk.py
+    wards.py
+    alerts.py
+    models.py
+
+Register them through:
+
+    /api/v1/
+
+These routes may return placeholder responses or "not implemented" responses.
+
+DO NOT implement scientific calculations in route handlers.
+
+Every endpoint must have a clear future responsibility.
+
+============================================================
+TASK 3 — DATABASE DOMAIN MODELS
+============================================================
+
+Create SQLAlchemy models and relationships for the following concepts.
+
+GEOGRAPHY:
+
+    states
+    cities
+    wards
+    grid_cells
+
+WEATHER:
+
+    weather_stations
+    weather_observations
+    weather_forecast_runs
+    weather_forecasts
+
+SCIENTIFIC MODEL REGISTRY:
+
+    scientific_models
+    model_runs
+
+HAZARD:
+
+    hazard_assessments
+
+VULNERABILITY:
+
+    vulnerability_profiles
+    vulnerability_factors
+
+EXPOSURE:
+
+    exposure_profiles
+    exposure_factors
+
+RISK:
+
+    risk_runs
+    risk_assessments
+    risk_assessment_components
+    ward_risk_summaries
+
+OPERATIONS:
+
+    alerts
+    action_recommendations
+
+Use explicit foreign keys and relationships.
+
+Use UUIDs where appropriate.
+
+Use timezone-aware timestamps.
+
+Use PostGIS geometry columns where appropriate.
+
+Use appropriate spatial indexes.
+
+Do not put scientific formulas into ORM models.
+
+============================================================
+TASK 4 — SPATIAL DATABASE DESIGN
+============================================================
+
+Use PostGIS as the spatial system.
+
+Expected spatial hierarchy:
+
+    state
+      ↓
+    city
+      ↓
+    ward
+      ↓
+    grid_cell
+
+The computational grid is approximately:
+
+    333 metres
+
+Do not assume every grid cell belongs exclusively to exactly one ward if that would make the spatial model scientifically inaccurate.
+
+Where appropriate, support spatial relationships or future coverage fractions.
+
+Create:
+
+    db/sql/extensions.sql
+    db/sql/indexes.sql
+    db/sql/hypertables.sql
+
+Enable:
+
+    PostGIS
+    TimescaleDB
+
+Do not duplicate extension creation across random application files.
+
+============================================================
+TASK 5 — TIMESCALEDB DESIGN
+============================================================
+
+Prepare the architecture for high-volume weather time series.
+
+The weather forecast model must distinguish:
+
+    forecast run / initialization time
+    valid time
+    lead time
+
+Create the appropriate database structure so that:
+
+    weather_forecasts
+
+can become a TimescaleDB hypertable.
+
+Choose indexes carefully around:
+
+    valid_time
+    grid_cell_id
+    run_id
+
+Do not create destructive database changes.
+
+Do not use "latest" image tags in production configuration if you encounter them.
+
+Pin infrastructure versions where practical.
+
+============================================================
+TASK 6 — ALEMBIC
+============================================================
+
+Complete Alembic configuration.
+
+Create the initial migration for the current domain schema.
+
+The migration should establish:
+
+    tables
+    foreign keys
+    indexes
+    geometry columns
+    required extensions where appropriate
+    TimescaleDB preparation where appropriate
+
+Do not create fake scientific data.
+
+Create seed scripts separately.
+
+Verify:
+
+    fresh database
+        ↓
+    migration
+        ↓
+    application startup
+
+works successfully.
+
+============================================================
+TASK 7 — WORKER APPLICATION
+============================================================
+
+Create:
+
+    apps/worker/
+
+It should be a separate Python application/process.
+
+Create task/job skeletons for:
+
+    ingest_weather
+    calculate_hazard
+    calculate_risk
+    aggregate_wards
+    generate_alerts
+
+Also create pipeline orchestration skeletons:
+
+    forecast_pipeline
+    risk_pipeline
+
+These are orchestration placeholders only.
+
+DO NOT implement scientific equations yet.
+
+The architectural principle is:
+
+    HTTP request
+        ≠
+    long-running scientific computation
+
+============================================================
+TASK 8 — PIPELINE DIRECTORIES
+============================================================
+
+Create:
+
+    pipelines/weather/
+    pipelines/vulnerability/
+    pipelines/exposure/
+    pipelines/risk/
+
+Add placeholder modules such as:
+
+WEATHER:
+
+    ingest.py
+    normalize.py
+    quality_control.py
+    spatialize.py
+
+VULNERABILITY:
+
+    ingest.py
+    anonymize.py
+    aggregate.py
+
+EXPOSURE:
+
+    ingest.py
+    normalize.py
+    spatialize.py
+
+RISK:
+
+    run.py
+    validate.py
+    publish.py
+
+Each module should contain a clean function/class boundary for future implementation.
+
+Do not put full scientific logic here.
+
+Pipelines move and transform data.
+
+Scientific modules calculate scientific results.
+
+============================================================
+TASK 9 — SCIENTIFIC MODULE BOUNDARIES
+============================================================
+
+Do not implement the equations yet.
+
+Make sure the repository contains clean boundaries for:
 
     scientific/hazard/
     scientific/vulnerability/
@@ -473,542 +402,431 @@ The important scientific modules are:
     scientific/risk/
     scientific/thermal_comfort/
 
+Ensure there are no circular dependencies.
+
+Scientific modules must not import FastAPI route handlers.
+
+Scientific modules must not depend directly on frontend code.
+
+Scientific calculations should eventually be deterministic and independently testable.
+
 ============================================================
-12. PLUGGABLE SCIENTIFIC ARCHITECTURE
+TASK 10 — PLUGGABLE THERMAL COMFORT
 ============================================================
 
-Thermal comfort models must be pluggable.
+Complete:
 
-Create an abstraction similar in concept to:
+    scientific/thermal_comfort/
 
-    ThermalComfortModel
+Create a clean interface/abstract contract.
 
-and allow implementations such as:
+It must support future implementations such as:
 
     UTCI
     Adaptive Thermal Comfort
-    Future thermal-comfort models
+    Future thermal models
 
-Do not hardcode one adaptive-comfort regression into the platform.
+Create:
 
-The architecture must allow a configuration such as:
+    base.py
+    registry.py
 
-    thermal_model = "utci-v1"
+and suitable model placeholders.
 
-to be replaced later by another scientifically validated implementation.
+Do not implement an alternative comfort model merely for demonstration.
 
-The registry should expose model metadata and version information.
-
-Scientific modules should be deterministic whenever possible.
-
-============================================================
-13. PIPELINE ARCHITECTURE
-============================================================
-
-Build the system around pipelines.
-
-Weather pipeline:
-
-    ingestion
-        ↓
-    validation
-        ↓
-    quality control
-        ↓
-    normalization
-        ↓
-    spatialization
-        ↓
-    UTCI
-        ↓
-    Hazard
-
-Vulnerability pipeline:
-
-    raw data
-        ↓
-    privacy-safe transformation
-        ↓
-    factor scoring
-        ↓
-    BBWM weighting
-        ↓
-    Vulnerability
-
-Exposure pipeline:
-
-    environmental / infrastructure / behavioural data
-        ↓
-    validation
-        ↓
-    normalization
-        ↓
-    spatialization
-        ↓
-    weighted Exposure
-
-Risk pipeline:
-
-    Hazard
-      +
-    Vulnerability
-      +
-    Exposure
-        ↓
-    HSRI
-        ↓
-    risk classification
-        ↓
-    ward aggregation
-        ↓
-    alerts/actions
+Do not invent formulas.
 
 ============================================================
-14. API DESIGN
+TASK 11 — MODEL REGISTRY
 ============================================================
 
-Version all APIs.
+The project already contains YAML scientific configuration.
 
-Base:
+Preserve that.
 
-    /api/v1/
+Create an architectural bridge between:
 
-Create endpoints for:
+    YAML/configuration
+          ↓
+    scientific model registry
+          ↓
+    model run
+          ↓
+    risk assessment
 
-    health
-    forecasts
-    hazards
+The system must eventually be able to answer:
+
+    Which scientific model/version produced this result?
+
+Create the persistence skeleton for:
+
+    scientific_models
+    model_runs
+
+Do not invent scientific model versions beyond what is needed as placeholders.
+
+============================================================
+TASK 12 — API SCHEMAS
+============================================================
+
+Create Pydantic schemas for:
+
+    weather
+    hazard
     vulnerability
     exposure
     risk
     wards
     alerts
-    models
-    spatial/map products
+    model metadata
 
-Example conceptual routes:
+Separate:
 
-    GET /api/v1/health
-    GET /api/v1/forecasts
-    GET /api/v1/hazards
-    GET /api/v1/risk
-    GET /api/v1/wards
-    GET /api/v1/wards/{ward_id}/risk
-    GET /api/v1/alerts
-    GET /api/v1/models
+    database entities
 
-Map endpoints must not dump huge raw datasets directly into the browser.
+from:
 
-Use suitable spatial representations, aggregation, tiling, or generalized geometries.
+    API request/response schemas
+
+Do not expose database models directly from API routes.
 
 ============================================================
-15. FRONTEND ARCHITECTURE
+TASK 13 — FRONTEND STRUCTURE
 ============================================================
 
-The frontend is a decision-support interface.
+Do not build the complete dashboard yet.
 
-Build for:
-
-    scientists
-    meteorologists
-    municipal authorities
-    emergency-management users
-    public-health users
-
-Core screens should eventually include:
+Create the architectural pages/components for:
 
     Dashboard
     Risk Map
     Ward Explorer
     Forecast Explorer
     Alert Center
-    Model/Science Transparency
-    System Health
+    Model / Scientific Transparency
 
-A risk view should allow the user to inspect:
+Set up clear component directories:
 
-    Risk
-    Hazard
-    Vulnerability
-    Exposure
+    components/map/
+    components/risk/
+    components/weather/
+    components/charts/
+    components/wards/
+    components/common/
 
-rather than displaying only one opaque HSRI number.
+Set up:
 
-Maps should support:
+    TanStack Query
+    API client
+    TypeScript domain types
+    Zod validation
 
-    city
-    ward
-    grid
-    hotspot
-    time
-    forecast lead time
-    risk layer
-    hazard layer
-    vulnerability layer
-    exposure layer
+MapLibre can be initialized at the infrastructure/component level, but do not implement the full production map yet.
 
 ============================================================
-16. EXPLAINABILITY
+TASK 14 — DATA DIRECTORY
 ============================================================
-
-Every risk score must be explainable.
-
-Given an assessment, the system should be able to answer:
-
-    Why is this location HIGH risk?
-
-The answer should include:
-
-    UTCI
-    Hazard Index
-    Hazard Category
-    Vulnerability Index
-    Exposure Index
-    highest contributing vulnerability factors
-    highest contributing exposure factors
-    applicable thresholds
-    model version
-    assessment timestamp
-
-Do not build a black-box risk system.
-
-============================================================
-17. MODEL VERSIONING
-============================================================
-
-Treat scientific configuration as versioned data.
-
-Version:
-
-    weights
-    thresholds
-    category boundaries
-    normalization rules
-    scientific algorithms
-    model parameters
-
-Never silently change scientific constants.
-
-An assessment must always be traceable to a precise scientific configuration.
-
-Use configuration files such as:
-
-    hazard_categories.yaml
-    vulnerability_weights.yaml
-    exposure_weights.yaml
-    risk_thresholds.yaml
-    model_registry.yaml
-
-============================================================
-18. DATA PRIVACY
-============================================================
-
-Health, demographic, behavioural, and socioeconomic information may be sensitive.
-
-Design the system using:
-
-    least privilege
-    role-based access
-    encryption where appropriate
-    aggregation
-    pseudonymization
-    audit logging
-
-Do not expose raw individual-level health data through public APIs.
-
-Public maps should be aggregated appropriately.
-
-============================================================
-19. OBSERVABILITY
-============================================================
-
-The final system should support:
-
-    structured logging
-    metrics
-    tracing
-    model-run monitoring
-    pipeline failure monitoring
-    database health monitoring
-
-At minimum expose:
-
-    API health
-    worker health
-    database health
-    latest forecast run
-    latest risk run
-    failed jobs
-    model-run status
-
-============================================================
-20. TESTING STRATEGY
-============================================================
-
-Scientific correctness is more important than superficial test coverage.
 
 Create:
 
-    unit tests
-    scientific validation tests
-    integration tests
-    database tests
-    API tests
-    frontend tests
-    end-to-end tests
-    performance tests
+    data/raw/
+    data/staging/
+    data/processed/
 
-Especially test:
+Add README files explaining that these are development/data-pipeline locations.
 
-    UTCI calculation
-    category boundaries
-    normalization
-    residual-risk behavior
-    vulnerability weighting
-    exposure weighting
-    HSRI multiplication
-    risk thresholds
-    spatial aggregation
-    forecast temporal behavior
+Do not commit sensitive datasets.
 
-Boundary conditions are mandatory tests.
-
-For example:
-
-    UTCI = 26
-    UTCI = 32
-    UTCI = 38
-    UTCI = 46
-
-must be tested explicitly.
+Do not generate fake personal medical records.
 
 ============================================================
-21. DEVELOPMENT STRATEGY
+TASK 15 — INFRASTRUCTURE
 ============================================================
 
-Work incrementally.
+Complete the infrastructure skeleton:
 
-DO NOT generate the entire production system in one giant step.
+    infra/docker/
+    infra/kubernetes/
+    infra/monitoring/
 
-Use phases.
+Create placeholder Kubernetes manifests for:
 
-PHASE 1:
-    Repository scaffolding
-    Docker
-    PostgreSQL
-    PostGIS
-    TimescaleDB
-    FastAPI
-    Next.js
-    migrations
-    basic CI
-    health endpoints
-    scientific interfaces
+    namespace
+    api
+    worker
+    web
+    ingress
 
-PHASE 2:
-    database schema
-    spatial entities
-    weather entities
-    model registry
+Do not claim production readiness.
 
-PHASE 3:
-    UTCI / Hazard engine
+Create monitoring placeholders for:
 
-PHASE 4:
-    Vulnerability engine
+    Prometheus
+    Grafana
 
-PHASE 5:
-    Exposure engine
+Create appropriate Dockerfiles for:
 
-PHASE 6:
-    HSRI engine
+    API
+    worker
+    web
 
-PHASE 7:
-    forecast processing
+Pin versions where practical.
 
-PHASE 8:
-    spatial aggregation
+============================================================
+TASK 16 — OBSERVABILITY
+============================================================
 
-PHASE 9:
-    alerts and operational recommendations
+Create a basic observability architecture.
 
-PHASE 10:
-    visualization
+At minimum support:
 
-PHASE 11:
-    validation
-    performance
+    structured logs
+    request correlation
+    application health
+    worker health
+    database health
+
+Prepare placeholders/configuration for:
+
+    Prometheus
+    Grafana
+    OpenTelemetry
+
+Do not introduce unnecessary complexity.
+
+============================================================
+TASK 17 — SECURITY / CONFIGURATION
+============================================================
+
+Review environment configuration.
+
+Create/update:
+
+    .env.example
+
+Never commit:
+
+    passwords
+    API keys
+    secrets
+    tokens
+
+Use configuration classes rather than scattered environment-variable reads.
+
+Use separate configuration concerns for:
+
+    database
+    Redis
+    application
+    external data sources
     security
-    deployment
-
-Never skip tests between phases.
 
 ============================================================
-22. CODING RULES
+TASK 18 — TESTING
 ============================================================
 
-Use:
+Expand testing infrastructure.
 
-    strong typing
-    clear naming
-    small deterministic functions
-    explicit domain models
-    dependency injection where appropriate
-    configuration objects
-    meaningful error handling
-    structured logging
-    docstrings for scientific algorithms
+Create:
 
-Avoid:
+    tests/end_to_end/
+    tests/scientific_validation/
+    tests/performance/
 
-    giant files
-    god classes
-    hidden global state
-    magic numbers
-    duplicated equations
-    SQL embedded everywhere
-    business logic in React components
-    scientific logic in API controllers
-    hardcoded environment-specific paths
+Add smoke tests for:
 
-Never hardcode scientific constants inside unrelated code.
+    API startup
+    health endpoint
+    database connectivity
+    migrations
+    worker import/startup
+    frontend build
+    scientific module imports
+
+DO NOT pretend scientific validation is complete.
+
+Scientific formula tests will be added in a later phase.
+
+Fix existing Python deprecation warnings where practical, especially timezone handling.
 
 ============================================================
-23. ENGINEERING RULE
+TASK 19 — DOCUMENTATION
 ============================================================
 
-Before implementing a major subsystem:
+Create:
 
-    1. Inspect the existing repository.
-    2. Identify relevant files.
-    3. Explain the intended change.
-    4. Implement the smallest coherent increment.
-    5. Run tests.
-    6. Fix failures.
-    7. Update documentation.
-    8. Only then continue.
+    docs/architecture/system-overview.md
+    docs/architecture/data-flow.md
+    docs/architecture/database.md
 
-Do not overwrite working code unnecessarily.
+Also create:
 
-Do not create duplicate implementations of the same concept.
+    docs/scientific/hazard.md
+    docs/scientific/vulnerability.md
+    docs/scientific/exposure.md
+    docs/scientific/risk.md
 
-Reuse existing abstractions when they are sound.
+And:
 
-============================================================
-24. SCIENTIFIC SAFETY RULE
-============================================================
+    docs/operations/deployment.md
+    docs/operations/monitoring.md
+    docs/operations/incident-response.md
 
-This is an early-warning and decision-support platform.
+Document architecture only.
 
-Do not claim scientific validity merely because code executes.
-
-Separate:
-
-    implementation correctness
-from
-    scientific validation
-
-Mark assumptions explicitly.
-
-When scientific evidence is missing, create an explicit TODO or configuration requirement rather than inventing a scientific value.
+Do not invent scientific results.
 
 ============================================================
-25. FIRST TASK
+TASK 20 — ROOT PROJECT FILES
 ============================================================
 
-Your first task is NOT to implement the complete platform.
+Ensure the root has appropriate:
 
-First inspect the current repository.
+    README.md
+    .env.example
+    .gitignore
+    .editorconfig
+    pyproject.toml
+    package.json
+    pnpm-workspace.yaml
+    docker-compose.yml
+    Makefile
 
-Then determine:
+Do not unnecessarily replace working project metadata.
 
-    what files already exist
-    what framework is already configured
-    what can be reused
-    what is missing
+============================================================
+TASK 21 — DEPENDENCY HYGIENE
+============================================================
 
-Then create a short implementation plan.
+Review backend and frontend dependencies.
 
-After that, scaffold the minimum production structure.
+Remove unnecessary duplicates.
 
-The first milestone must be:
+Do not blindly install libraries just because they appear in the original blueprint.
 
-    repository starts successfully
-    PostgreSQL starts successfully
+Only add dependencies that are actually needed for the current scaffold.
+
+Keep scientific/geospatial dependencies isolated and documented.
+
+============================================================
+TASK 22 — DATABASE DESIGN RULES
+============================================================
+
+Follow these rules:
+
+- Geometry is first-class.
+- Time is first-class.
+- Forecast run time and valid time are distinct.
+- Scientific model version is first-class.
+- Risk assessment is traceable.
+- Sensitive vulnerability data is not exposed through public endpoints.
+- High-volume time-series data is designed for TimescaleDB.
+- Spatial queries are designed for PostGIS.
+
+============================================================
+TASK 23 — DO NOT IMPLEMENT YET
+============================================================
+
+DO NOT implement:
+
+    actual UTCI algorithm
+    actual Hazard calculation
+    actual vulnerability scoring
+    actual exposure scoring
+    actual HSRI calculation
+    operational alert thresholds beyond configuration scaffolding
+    machine-learning prediction models
+    AI-generated scientific conclusions
+
+Those belong to later implementation phases.
+
+============================================================
+TASK 24 — QUALITY GATE
+============================================================
+
+Before declaring this task complete:
+
+Run the available checks.
+
+At minimum attempt:
+
+    backend tests
+    frontend typecheck/build
+    lint
+    database migration
+    application startup
+
+Verify:
+
+    PostgreSQL starts
     PostGIS is enabled
     TimescaleDB is enabled
-    FastAPI starts
-    Next.js starts
-    backend health endpoint works
-    frontend loads
-    database migration system works
-    baseline tests run successfully
-    scientific module interfaces exist
+    migrations succeed
+    API starts
+    worker starts/imports
+    frontend starts/builds
+    baseline tests pass
 
-Do not implement the scientific formulas until the scaffolding is stable.
+If something fails:
 
-============================================================
-26. DEFINITION OF DONE
-============================================================
+    diagnose
+    fix
+    rerun
 
-A subsystem is not considered complete merely because its code exists.
-
-It is complete only when:
-
-    code exists
-    types are defined
-    tests exist
-    tests pass
-    configuration is explicit
-    errors are handled
-    documentation exists
-    logging/observability is appropriate
-    database migrations exist where needed
-    API contracts are defined where needed
-    scientific assumptions are documented
+Do not simply report the failure without attempting a reasonable correction.
 
 ============================================================
-27. IMPORTANT BEHAVIOR
+TASK 25 — FINAL REPORT
 ============================================================
 
-Act as a senior engineer, not a code generator.
+At the end, report:
 
-Think before modifying files.
+1. Files created
+2. Files modified
+3. Files intentionally left untouched
+4. Database tables created
+5. Migrations created
+6. Worker tasks created
+7. Pipeline modules created
+8. API routes created
+9. Frontend pages/components created
+10. Tests added
+11. Commands executed
+12. Test/build results
+13. Remaining Phase-1 gaps
+14. Recommended next phase
 
-Prefer simple architecture over unnecessary complexity.
+Use exact repository paths.
 
-Prefer explicitness over cleverness.
-
-Prefer scientific reproducibility over convenience.
-
-Prefer maintainability over short code.
-
-Never fabricate missing scientific requirements.
-
-Never modify the supplied scientific equations without explicit approval.
-
-When requirements conflict, stop and explain the conflict.
-
-When requirements are ambiguous, identify the ambiguity and propose options.
-
-When implementation choices do not affect the science, use sound engineering judgment and proceed.
+Do not claim anything is complete unless it actually exists and was verified.
 
 ============================================================
-FINAL INSTRUCTION
+MOST IMPORTANT RULE
 ============================================================
 
-Start by inspecting the repository.
+This is an existing repository.
 
-Do not write application-level scientific logic yet.
+Inspect first.
 
-Return:
+Preserve good existing work.
 
-    1. Repository assessment
-    2. Architecture gaps
-    3. Phase-1 implementation plan
-    4. Files you intend to create/change
-    5. Then begin scaffolding Phase 1
+Implement only the missing Phase-1 architecture.
 
-Keep the scientific engine modular, deterministic, versioned, auditable, and independently testable.
+Do not jump ahead into scientific algorithm implementation.
 
-The ultimate target is a production-grade Indian extreme-heat early-warning platform capable of evolving from prototype to operational deployment.
+The goal of this task is to leave the repository in a clean state where Phase 2 can begin with:
+
+    DATABASE
+        ↓
+    DATA PIPELINES
+        ↓
+    SCIENTIFIC ENGINE
+        ↓
+    RISK ENGINE
+        ↓
+    API
+        ↓
+    FRONTEND
+
+Start now by inspecting the repository.
