@@ -72,10 +72,10 @@ def test_interface_implementation():
     model = MultiplicativeHSRIModel()
     assert model.model_name == "hsri-multiplicative-v1"
     result = model.calculate(0.8, 0.75, 0.9)
-    assert 0.0 <= result.hsri <= 1.0
-    assert result.hazard == 0.8
-    assert result.vulnerability == 0.75
-    assert result.exposure == 0.9
+    assert 0.0 <= result.hsri_score <= 1.0
+    assert result.hazard_index == 0.8
+    assert result.vulnerability_index == 0.75
+    assert result.exposure_index == 0.9
 
 
 def test_interface_classify_risk():

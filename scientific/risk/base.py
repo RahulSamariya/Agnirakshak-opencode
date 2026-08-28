@@ -1,25 +1,20 @@
+"""Risk model base class."""
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from scientific.risk.hsri import HSRIOutput
 
 
 class RiskCategory(Enum):
     """HSRI risk categories."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
-
-
-@dataclass
-class RiskResult:
-    """Result from risk calculation."""
-    hsri: float
-    risk_category: RiskCategory
-    hazard: float
-    vulnerability: float
-    exposure: float
-    metadata: dict[str, Any]
 
 
 class RiskModel(ABC):
@@ -44,16 +39,16 @@ class RiskModel(ABC):
         hazard: float,
         vulnerability: float,
         exposure: float,
-    ) -> RiskResult:
+    ) -> HSRIOutput:
         """Calculate Human Stress Risk Index.
 
         Args:
             hazard: Hazard index (0.0 - 1.0).
-            vulnerability: Vulnerability index (0.0 - 1.0).
-            exposure: Exposure index (0.0 - 1.0).
+            vulnerability: Vulnerability index (0.33 - 1.0).
+            exposure: Exposure index (0.33 - 1.0).
 
         Returns:
-            RiskResult with HSRI and risk category.
+            HSRIOutput with HSRI score and risk level.
         """
 
     @abstractmethod

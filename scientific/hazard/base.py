@@ -1,16 +1,11 @@
 """Hazard model base class."""
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING
 
-
-@dataclass
-class HazardResult:
-    """Result from hazard calculation."""
-    utci_value: float
-    hazard_index: float
-    hazard_category: str
-    metadata: dict[str, Any]
+if TYPE_CHECKING:
+    from scientific.hazard.utci.normalization import HazardNormalizationOutput
 
 
 class HazardModel(ABC):
@@ -31,14 +26,14 @@ class HazardModel(ABC):
         """Version of the hazard model."""
 
     @abstractmethod
-    def calculate_hazard(self, utci: float) -> HazardResult:
+    def calculate_hazard(self, utci: float) -> HazardNormalizationOutput:
         """Calculate hazard index from UTCI value.
 
         Args:
             utci: Universal Thermal Climate Index in Celsius.
 
         Returns:
-            HazardResult with normalized hazard index and category.
+            HazardNormalizationOutput with normalized hazard index and category.
         """
 
     @abstractmethod

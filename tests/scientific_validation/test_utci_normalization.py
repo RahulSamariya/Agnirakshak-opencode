@@ -76,8 +76,8 @@ def test_interface_implementation():
     assert model.model_name == "utci-hazard-v1"
     result = model.calculate_hazard(41.2)
     assert 0.0 <= result.hazard_index <= 1.0
-    assert result.utci_value == 41.2
-    assert isinstance(result.hazard_category, str)
+    assert result.utci_c == 41.2
+    assert isinstance(result.category, str)
 
 
 def test_interface_get_hazard_category():

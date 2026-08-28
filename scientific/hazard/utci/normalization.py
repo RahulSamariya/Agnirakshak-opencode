@@ -16,7 +16,7 @@ from enum import StrEnum
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from scientific.configuration.loader import load_hazard_categories
-from scientific.hazard.base import HazardModel, HazardResult
+from scientific.hazard.base import HazardModel
 
 
 class HazardCategory(StrEnum):
@@ -155,14 +155,8 @@ class UTCIHazardModel(HazardModel):
         cfg = load_hazard_categories()
         return cfg.version
 
-    def calculate_hazard(self, utci: float) -> HazardResult:
-        output = normalize_hazard(HazardNormalizationInput(utci_c=utci))
-        return HazardResult(
-            utci_value=utci,
-            hazard_index=output.hazard_index,
-            hazard_category=output.category.value,
-            metadata={"version": self.model_version},
-        )
+    def calculate_hazard(self, utci: float) -> HazardNormalizationOutput:
+        return normalize_hazard(HazardNormalizationInput(utci_c=utci))
 
     def get_hazard_category(self, hazard_index: float) -> str:
         cfg = load_hazard_categories()

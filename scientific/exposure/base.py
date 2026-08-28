@@ -1,15 +1,11 @@
+"""Exposure model base class."""
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-
-@dataclass
-class ExposureResult:
-    """Result from exposure calculation."""
-    exposure_index: float
-    factor_scores: dict[str, float]
-    weighted_scores: dict[str, float]
-    metadata: dict[str, Any]
+if TYPE_CHECKING:
+    from scientific.exposure.scoring import ExposureOutput
 
 
 class ExposureModel(ABC):
@@ -47,14 +43,14 @@ class ExposureModel(ABC):
         """
 
     @abstractmethod
-    def calculate(self, profile: dict[str, Any]) -> ExposureResult:
+    def calculate(self, profile: dict[str, Any]) -> ExposureOutput:
         """Calculate exposure index from profile data.
 
         Args:
             profile: Dictionary containing factor values.
 
         Returns:
-            ExposureResult with index and component scores.
+            ExposureOutput with index and component scores.
         """
 
     def get_residual_floor(self) -> float:

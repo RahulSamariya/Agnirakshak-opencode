@@ -12,7 +12,7 @@ from enum import StrEnum
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from scientific.configuration.loader import load_risk_thresholds
-from scientific.risk.base import RiskCategory, RiskModel, RiskResult
+from scientific.risk.base import RiskCategory, RiskModel
 
 
 class RiskLevel(StrEnum):
@@ -94,21 +94,13 @@ class MultiplicativeHSRIModel(RiskModel):
         hazard: float,
         vulnerability: float,
         exposure: float,
-    ) -> RiskResult:
+    ) -> HSRIOutput:
         data = HSRIInput(
             hazard_index=hazard,
             vulnerability_index=vulnerability,
             exposure_index=exposure,
         )
-        output = calculate_hsri(data)
-        return RiskResult(
-            hsri=output.hsri_score,
-            risk_category=RiskCategory(output.risk_level.value),
-            hazard=output.hazard_index,
-            vulnerability=output.vulnerability_index,
-            exposure=output.exposure_index,
-            metadata={"version": self.model_version},
-        )
+        return calculate_hsri(data)
 
     def classify_risk(self, hsri: float) -> RiskCategory:
         level = classify_hsri(hsri)

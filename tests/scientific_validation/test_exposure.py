@@ -102,4 +102,4 @@ def test_interface_calculate():
     }
     result = model.calculate(profile)
     assert 0.33 <= result.exposure_index <= 1.0
-    assert "infrastructure_transit" in result.factor_scores
+    assert "infrastructure_transit" in result.contributions

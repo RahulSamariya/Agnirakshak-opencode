@@ -1,11 +1,17 @@
+"""Thermal comfort model base class."""
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from scientific.thermal_comfort.utci import UTCIOutput
 
 
 class ThermalStressCategory(Enum):
     """UTCI thermal stress categories."""
+
     NO_STRESS = "no_stress"
     MODERATE_HEAT = "moderate_heat"
     STRONG_HEAT = "strong_heat"
@@ -13,20 +19,11 @@ class ThermalStressCategory(Enum):
     EXTREME_HEAT = "extreme_heat"
 
 
-@dataclass
-class ThermalComfortResult:
-    """Result from thermal comfort calculation."""
-    utci: float
-    category: ThermalStressCategory
-    hazard_index: float
-    metadata: dict[str, Any]
-
-
 class ThermalComfortModel(ABC):
     """Abstract base class for thermal comfort models.
 
     This interface supports pluggable thermal comfort calculations.
-    Current implementation: UTCI
+    Current implementation: UTCI (placeholder — algorithm not yet implemented)
     Future implementations: Adaptive Thermal Comfort, etc.
     """
 
@@ -47,7 +44,7 @@ class ThermalComfortModel(ABC):
         relative_humidity: float,
         wind_speed: float,
         mean_radiant_temperature: float,
-    ) -> ThermalComfortResult:
+    ) -> UTCIOutput:
         """Calculate Universal Thermal Climate Index.
 
         Args:
@@ -57,7 +54,7 @@ class ThermalComfortModel(ABC):
             mean_radiant_temperature: Mean radiant temperature in Celsius.
 
         Returns:
-            ThermalComfortResult with UTCI value and category.
+            UTCIOutput with UTCI value and input echoes.
         """
 
     @abstractmethod

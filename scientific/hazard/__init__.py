@@ -1,4 +1,4 @@
 """Hazard model package."""
-from scientific.hazard.base import HazardModel, HazardResult
+from scientific.hazard.base import HazardModel
 
-__all__ = ["HazardModel", "HazardResult"]
+__all__ = ["HazardModel"]

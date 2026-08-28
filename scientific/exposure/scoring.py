@@ -11,7 +11,7 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from scientific.configuration.loader import load_exposure_weights
-from scientific.exposure.base import ExposureModel, ExposureResult
+from scientific.exposure.base import ExposureModel
 
 _ALLOWED_SCORES: tuple[float, ...] = (0.33, 0.66, 1.00)
 
@@ -172,7 +172,7 @@ class BBWMExposureModel(ExposureModel):
             )
         return value
 
-    def calculate(self, profile: dict[str, Any]) -> ExposureResult:
+    def calculate(self, profile: dict[str, Any]) -> ExposureOutput:
         infra = InfrastructureTransitScores(**profile["infrastructure_transit"])
         lifestyle = LifestyleScores(**profile["lifestyle"])
         data = ExposureInput(
@@ -182,10 +182,4 @@ class BBWMExposureModel(ExposureModel):
             air_quality=profile["air_quality"],
             healthcare_accessibility=profile["healthcare_accessibility"],
         )
-        output = calculate_exposure(data)
-        return ExposureResult(
-            exposure_index=output.exposure_index,
-            factor_scores={k: v.score for k, v in output.contributions.items()},
-            weighted_scores={k: v.contribution for k, v in output.contributions.items()},
-            metadata={"version": self.model_version},
-        )
+        return calculate_exposure(data)
