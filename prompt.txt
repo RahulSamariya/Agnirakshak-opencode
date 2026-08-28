@@ -1,493 +1,71 @@
-PHASE 2 — SCIENTIFIC ENGINE
-STEPS 1–6: CORRECTION, CONFIGURATION, UTCI, VALIDATION, CHAIN INTEGRATION
+We are continuing Phase 2.
 
-ROLE:
-Act as Principal Systems Architect, Lead Scientific Python Developer,
-Numerical Computing Engineer, and Scientific Validation Engineer.
+Do NOT start Phase 3.
+Do NOT implement mortality ML.
+Do NOT implement hospitalization ML.
+Do NOT redesign the architecture.
 
-PROJECT:
-Extreme Heatwave Early Warning and Human Thermal Stress Index
+Perform the following in order:
 
-The Phase-1 architecture is already implemented.
+1. Fix the existing hazard-category bug where H-score values
+   are incorrectly compared against UTCI bounds.
 
-We are now implementing Phase 2 scientific capabilities.
+2. Add semantic tests proving that H values map to the correct
+   hazard categories.
 
-============================================================
-ABSOLUTE RULE
-============================================================
+3. Remove remaining duplicated scientific constants where the
+   same values already exist in scientific/configuration.
 
-Do NOT invent scientific equations.
+4. Tighten configuration validation.
 
-Do NOT approximate UTCI.
+5. Keep Pydantic scientific contracts canonical.
 
-Do NOT substitute Heat Index or WBGT for UTCI.
+6. Update documentation/test counts.
 
-Do NOT copy an undocumented UTCI polynomial from memory.
+7. Then inspect the actual UTCI methodology and reference data
+   available in the repository.
 
-Do NOT silently use a third-party implementation without documenting and
-validating its exact algorithm and provenance.
+8. If an authoritative/reference UTCI algorithm and reference
+   values are available:
+       implement scientific/thermal_comfort/utci.py
+       exactly according to that methodology.
 
-The project's supplied domain-expert scientific specification is authoritative.
+9. If the exact algorithm/reference data is NOT available:
+       DO NOT invent or approximate UTCI.
+       Stop the UTCI implementation and clearly report what is missing.
 
-If the exact UTCI methodology/reference table is unavailable in the repository,
-STOP the UTCI implementation portion and report exactly what is missing.
+10. When the algorithm is available:
+       create tests/scientific_validation/test_utci.py
+       using independent authoritative reference values.
 
-============================================================
-STEP 1 — DEPENDENCY FIX
-============================================================
+11. Validate:
+       temperature
+       relative humidity
+       wind speed
+       mean radiant temperature
+       -> UTCI
 
-Inspect all Python imports across:
+12. Only after UTCI passes its reference tests:
+       connect UTCI -> existing Hazard normalization.
 
-    apps/api
-    apps/worker
-    scientific
-    pipelines
-    tests
+13. Add an integration test:
+       meteorological inputs
+       -> UTCI
+       -> H
 
-Ensure all required runtime and test packages are declared.
+14. Run:
+       pytest -q
+       ruff check .
+       mypy ...
 
-In particular verify:
+Do not claim scientific validity merely because tests pass.
 
-    structlog
+Final status must explicitly say:
 
-is installable in a clean environment.
+    NORMALIZED RISK ENGINE READY
+    or
+    COMPLETE SCIENTIFIC ENGINE READY
+    or
+    UTCI IMPLEMENTATION BLOCKED — REFERENCE METHODOLOGY MISSING
 
-Create or update the documented bootstrap workflow.
-
-Then run:
-
-    pytest -q
-
-Do not suppress failing imports.
-
-If pytest fails because of an undeclared dependency:
-    fix dependency declarations
-    reinstall
-    rerun pytest
-
-============================================================
-STEP 2 — UNIFY SCIENTIFIC CONTRACTS
-============================================================
-
-Inspect:
-
-    scientific/core/
-    scientific/hazard/
-    scientific/vulnerability/
-    scientific/exposure/
-    scientific/risk/
-
-The Phase-1 abstract interfaces exist.
-
-The Phase-2 implementations must actually implement them.
-
-Required concrete implementations:
-
-    UTCIHazardModel or equivalent
-    BBWMVulnerabilityModel
-    BBWMExposureModel
-    MultiplicativeHSRIModel
-
-Pydantic scientific schemas are the canonical public result/input contracts.
-
-Do not maintain competing dataclass result contracts.
-
-If existing dataclass result classes are only internal legacy artifacts,
-remove them only after updating all references safely.
-
-Target architecture:
-
-    Abstract Scientific Model
-            ↓
-    Concrete Scientific Model
-            ↓
-    Pydantic Input
-            ↓
-    deterministic calculation
-            ↓
-    Pydantic Output
-
-============================================================
-STEP 3 — SINGLE SOURCE OF SCIENTIFIC TRUTH
-============================================================
-
-Use:
-
-    scientific/configuration/
-
-as the single source of truth for:
-
-    hazard categories
-    hazard normalization boundaries
-    vulnerability weights
-    vulnerability nested weights
-    exposure weights
-    exposure nested weights
-    residual-risk floor
-    HSRI thresholds
-
-Create strict Pydantic configuration models.
-
-Validate:
-
-    vulnerability top-level weights sum to approximately 1.0
-    exposure top-level weights are internally consistent
-    health nested weights sum to approximately 1.0
-    infrastructure nested weights sum to approximately 1.0
-    lifestyle nested weights sum to approximately 1.0
-
-Use a small configurable tolerance, for example:
-
-    1e-6
-
-Do NOT renormalize published coefficients silently.
-
-If the published rounded coefficients sum to 0.999,
-preserve them and record that fact.
-
-============================================================
-HAZARD CATEGORY VALIDATION
-============================================================
-
-Validate hazard categories are:
-
-    ordered
-    non-overlapping
-    contiguous
-    internally consistent
-
-Expected conceptual bands from the supplied specification:
-
-    9–26
-    26–32
-    32–38
-    38–46
-    >46
-
-Expected hazard-score ranges:
-
-    0–0.25
-    0.25–0.50
-    0.50–0.75
-    0.75–1.00
-    1.00
-
-Do not silently modify these values.
-
-============================================================
-STEP 4 — ACTUAL UTCI ENGINE
-============================================================
-
-Expected interface:
-
-    scientific/thermal_comfort/utci.py
-
-The model must accept the meteorological variables required by the
-scientific specification:
-
-    air temperature
-    relative humidity
-    wind speed
-    mean radiant temperature
-
-Expected conceptual chain:
-
-    meteorological inputs
-          ↓
-         UTCI
-          ↓
-    thermal-stress category
-          ↓
-          H
-
-IMPORTANT:
-
-The current supplied PDF does NOT contain the actual UTCI methodology
-or reference-value table.
-
-Therefore:
-
-    DO NOT IMPLEMENT UTCI FROM ASSUMPTION.
-
-First search the repository for:
-
-    UTCI polynomial
-    UTCI reference table
-    UTCI algorithm
-    UTCI coefficient set
-    authoritative test cases
-    scientific methodology
-
-If the exact methodology and authoritative reference values exist:
-    implement them exactly.
-
-If they do not exist:
-    create ONLY the interface/schema/test placeholders and STOP the
-    algorithm implementation.
-
-Report:
-
-    "UTCI methodology/reference data not available in supplied sources."
-
-Do not fill the gap from memory.
-
-============================================================
-STEP 5 — UTCI VALIDATION
-============================================================
-
-When authoritative reference values are available, create:
-
-    tests/scientific_validation/test_utci.py
-
-Each test should specify:
-
-    air temperature
-    relative humidity
-    wind speed
-    mean radiant temperature
-    expected UTCI
-    allowed numerical tolerance
-    source/reference identifier
-
-Do not use self-generated expected values.
-
-Tests must include multiple regimes:
-
-    cool
-    neutral
-    moderate heat stress
-    strong heat stress
-    very strong heat stress
-    extreme heat stress
-
-Also test invalid inputs.
-
-============================================================
-STEP 6 — CONNECT UTCI TO HAZARD
-============================================================
-
-The final chain must be:
-
-    ThermalComfortModel
-          ↓
-    UTCI result
-          ↓
-    Hazard normalization
-          ↓
-          H
-
-The UTCI calculator must NOT duplicate Hazard normalization.
-
-Keep responsibilities separate:
-
-    UTCI module
-        calculates UTCI
-
-    Hazard normalization module
-        converts UTCI to H
-
-For example:
-
-    utci_result = utci_model.calculate(input)
-
-    hazard_result = hazard_model.calculate(
-        utci_result.utci_c
-    )
-
-The returned result should preserve:
-
-    UTCI
-    category
-    H
-    model/version metadata where applicable
-
-============================================================
-SCIENTIFIC DETERMINISM
-============================================================
-
-For identical inputs and identical configuration:
-
-    identical outputs
-
-No random state.
-
-No current-time dependence.
-
-No hidden global mutable state.
-
-============================================================
-REFERENCE VS PERFORMANCE IMPLEMENTATION
-============================================================
-
-Keep the scalar/reference implementation simple and transparent.
-
-Do not prematurely optimize with NumPy/Pandas if this makes scientific
-verification harder.
-
-After correctness is established, a vectorized implementation may be added.
-
-The vectorized implementation must be checked against the scalar reference.
-
-============================================================
-VULNERABILITY
-============================================================
-
-Preserve the supplied weights:
-
-    Age                 0.160
-    BMI                 0.117
-    Economic Status     0.142
-    Social Isolation    0.092
-    Education           0.094
-    Gender              0.097
-    Health Issues       0.198
-    Disability          0.100
-
-Health Issues:
-
-    Pre-Illness         0.530
-    Medication          0.470
-
-Atomic scores:
-
-    0.33
-    0.66
-    1.00
-
-Do not invent missing raw-data classification rules.
-
-Where raw classification is not explicitly specified,
-accept a validated normalized factor score.
-
-============================================================
-EXPOSURE
-============================================================
-
-Preserve the supplied top-level structure:
-
-    Infrastructure/Transit   0.282
-    Lifestyle                0.184
-    Fluid/Activity            0.282
-    Air Quality               0.126
-    Healthcare Access         0.125
-
-Infrastructure:
-
-    Condition                0.508
-    Facilities               0.492
-
-Lifestyle:
-
-    Alcohol                  0.341
-    Sleep                    0.232
-    Tobacco                  0.218
-    Caffeine                 0.208
-
-Do not silently renormalize 0.999 to 1.0.
-
-============================================================
-HSRI
-============================================================
-
-Preserve exactly:
-
-    HSRI = H × V × E
-
-Residual floor:
-
-    V >= 0.33
-    E >= 0.33
-
-Risk levels:
-
-    0 < HSRI <= 0.33
-        LOW
-
-    0.33 < HSRI <= 0.66
-        MEDIUM
-
-    0.66 < HSRI <= 1.00
-        HIGH
-
-Do not implement the alternative additive ward model inside HSRI.
-
-Keep that as a separate future aggregation model.
-
-============================================================
-REQUIRED TESTS
-============================================================
-
-Create or update:
-
-    tests/scientific_validation/
-
-Include tests for:
-
-    configuration validation
-    hazard boundaries
-    vulnerability weights
-    vulnerability nested health weighting
-    exposure weights
-    exposure nested weighting
-    HSRI multiplication
-    residual floor
-    risk classification
-    deterministic behavior
-
-For UTCI:
-    only create numerical tests when authoritative reference values
-    are actually available.
-
-============================================================
-QUALITY GATE
-============================================================
-
-Run:
-
-    pytest -q
-
-    ruff check .
-
-    mypy ...
-
-If frontend is affected, run its existing typecheck/build.
-
-Do not suppress failures.
-
-============================================================
-FINAL REPORT
-============================================================
-
-Return:
-
-1. Dependency status
-2. Contract status
-3. Configuration-validation status
-4. UTCI methodology found/not found
-5. UTCI implementation status
-6. UTCI reference-test status
-7. UTCI → H chain status
-8. Vulnerability status
-9. Exposure status
-10. HSRI status
-11. Exact tests executed
-12. Exact results
-13. Remaining scientific gaps
-
-CRITICAL:
-
-If the exact UTCI algorithm/reference data is missing,
-say:
-
-    UTCI IMPLEMENTATION BLOCKED — AUTHORITATIVE METHODOLOGY/REFERENCE
-    DATA NOT PRESENT.
-
-Do not fabricate it.
-
-Only say:
-
-    PHASE 2 STEPS 1–6 COMPLETE
-
-if the requested steps were actually implemented and validated.
-
-START BY INSPECTING THE EXISTING REPOSITORY AND THE AVAILABLE UTCI SOURCES.
+Do not proceed to mortality ML.

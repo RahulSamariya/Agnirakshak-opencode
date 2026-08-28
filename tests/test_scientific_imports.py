@@ -14,7 +14,7 @@ def test_import_thermal_comfort():
         ThermalComfortModel,
         ThermalStressCategory,
     )
-    from scientific.thermal_comfort.utci import UTCIInput, UTCIOutput, PlaceholderUTCIModel
+    from scientific.thermal_comfort.utci import PlaceholderUTCIModel, UTCIInput, UTCIOutput
     assert ThermalComfortModel is not None
     assert ThermalStressCategory is not None
     assert UTCIInput is not None
@@ -59,11 +59,11 @@ def test_import_all_scientific():
         ThermalStressCategory,
         VulnerabilityModel,
     )
-    from scientific.hazard.utci.normalization import HazardNormalizationOutput
-    from scientific.vulnerability.scoring import VulnerabilityOutput
     from scientific.exposure.scoring import ExposureOutput
+    from scientific.hazard.utci.normalization import HazardNormalizationOutput
     from scientific.risk.hsri import HSRIOutput
     from scientific.thermal_comfort.utci import UTCIInput, UTCIOutput
+    from scientific.vulnerability.scoring import VulnerabilityOutput
     assert all([
         ScientificModel,
         ModelVersion,

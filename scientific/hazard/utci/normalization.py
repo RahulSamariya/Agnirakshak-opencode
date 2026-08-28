@@ -161,6 +161,6 @@ class UTCIHazardModel(HazardModel):
     def get_hazard_category(self, hazard_index: float) -> str:
         cfg = load_hazard_categories()
         for _key, cat in cfg.categories.items():
-            if cat.min <= hazard_index <= cat.max:
+            if cat.hazard_min <= hazard_index <= cat.hazard_max:
                 return cat.label
         return "Extreme heat stress"

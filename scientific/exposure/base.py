@@ -56,6 +56,8 @@ class ExposureModel(ABC):
     def get_residual_floor(self) -> float:
         """Return the residual risk floor for exposure.
 
-        Default is 0.33 as per scientific specification.
+        Loaded from configuration YAML (default 0.33).
         """
-        return 0.33
+        from scientific.configuration.loader import load_exposure_weights
+        cfg = load_exposure_weights()
+        return cfg.residual_floor

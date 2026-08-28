@@ -13,14 +13,14 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from scientific.configuration.loader import load_exposure_weights
 from scientific.exposure.base import ExposureModel
 
-_ALLOWED_SCORES: tuple[float, ...] = (0.33, 0.66, 1.00)
-
 
 def _validate_discrete_score(value: float, field_name: str) -> float:
+    cfg = load_exposure_weights()
+    allowed = tuple(cfg.scoring.values())
     value = float(value)
-    if min(abs(value - c) for c in _ALLOWED_SCORES) > 1e-9:
+    if min(abs(value - c) for c in allowed) > 1e-9:
         raise ValueError(
-            f"{field_name} must be one of 0.33, 0.66, or 1.00; got {value}."
+            f"{field_name} must be one of {allowed}; got {value}."
         )
     return value
 
@@ -161,10 +161,11 @@ class BBWMExposureModel(ExposureModel):
     def score_factor(self, factor_name: str, raw_value: Any) -> float:
         """Score a raw factor value.
 
-        Phase 2 accepts already-normalized scores (0.33/0.66/1.00).
+        Phase 2 accepts already-normalized scores from config (0.33/0.66/1.00).
         Raw-to-score classification rules are not yet implemented.
         """
-        allowed = (0.33, 0.66, 1.00)
+        cfg = load_exposure_weights()
+        allowed = tuple(cfg.scoring.values())
         value = float(raw_value)
         if min(abs(value - c) for c in allowed) > 1e-9:
             raise ValueError(

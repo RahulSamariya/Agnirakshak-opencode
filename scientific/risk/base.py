@@ -68,8 +68,6 @@ class RiskModel(ABC):
         Returns:
             Dictionary with threshold boundaries.
         """
-        return {
-            "low_max": 0.33,
-            "medium_max": 0.66,
-            "high_max": 1.0,
-        }
+        from scientific.configuration.loader import load_risk_thresholds
+        cfg = load_risk_thresholds()
+        return {k: v.max for k, v in cfg.categories.items()}
