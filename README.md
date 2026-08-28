@@ -96,14 +96,14 @@ alembic upgrade head
 
 3. **Install dependencies (for local development):**
 ```bash
+# Frontend (from repo root)
+pnpm install
+
 # API
 cd apps/api && pip install -r requirements.txt
 
 # Worker
 cd apps/worker && pip install -r requirements.txt
-
-# Frontend
-cd apps/web && npm install
 ```
 
 4. **Run tests:**
@@ -183,6 +183,15 @@ pytest -v
 
 # Run specific test file
 pytest tests/test_database.py -v
+
+# Frontend lint
+pnpm --filter heatwave-web lint
+
+# Frontend type-check
+pnpm --filter heatwave-web type-check
+
+# Frontend build
+pnpm --filter heatwave-web build
 ```
 
 ### Test Coverage

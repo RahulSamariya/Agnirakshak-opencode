@@ -4,8 +4,8 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install all dependencies
+	pnpm install
 	cd apps/api && pip install -r requirements.txt
-	cd apps/web && npm install
 	cd apps/worker && pip install -r requirements.txt
 
 dev: ## Start all services for development
@@ -19,12 +19,11 @@ test: ## Run all tests
 	cd apps/api && python -m pytest ../../tests/ -v
 
 lint: ## Run linting
-	cd apps/api && ruff check .
-	cd apps/web && npm run lint
+	ruff check apps/ scientific/ pipelines/ tests/
+	pnpm --filter heatwave-web lint
 
 typecheck: ## Run type checking
-	cd apps/api && mypy app/
-	cd apps/web && npm run type-check
+	pnpm --filter heatwave-web type-check
 
 docker-up: ## Start Docker services
 	docker-compose up -d
