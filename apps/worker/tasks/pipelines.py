@@ -1,5 +1,6 @@
 """Pipeline orchestration tasks."""
 import structlog
+
 try:
     from worker.main import app
 except ImportError:
@@ -12,7 +13,7 @@ logger = structlog.get_logger()
 def forecast_pipeline(
     source: str,
     model_name: str,
-    parameters: dict = None,
+    parameters: dict | None = None,
 ):
     """Orchestrate the complete forecast pipeline.
 
@@ -51,7 +52,7 @@ def forecast_pipeline(
 @app.task(name="worker.tasks.pipelines.risk_pipeline")
 def risk_pipeline(
     forecast_run_id: str,
-    ward_ids: list = None,
+    ward_ids: list | None = None,
 ):
     """Orchestrate the complete risk calculation pipeline.
 

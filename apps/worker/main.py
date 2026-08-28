@@ -1,8 +1,9 @@
 """Worker application - Celery configuration."""
 import os
+
+import structlog
 from celery import Celery
 from celery.signals import worker_ready, worker_shutting_down
-import structlog
 
 logger = structlog.get_logger()
 

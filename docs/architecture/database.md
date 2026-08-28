@@ -51,4 +51,10 @@
 - GiST indexes on all geometry columns
 - B-tree indexes on foreign keys
 - Composite indexes for common queries
-- TimescaleDB hypertables for time-series data
+- TimescaleDB hypertables for time-series data (created by Alembic migration)
+
+## Migration Lifecycle
+
+1. Docker PostgreSQL starts with extensions enabled via `db/sql/init.sql`
+2. Run `alembic upgrade head` to create all tables, indexes, and hypertables
+3. Supplementary performance indexes available in `db/sql/indexes.sql` (optional)

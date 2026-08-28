@@ -1,15 +1,15 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Any
 
 
 @dataclass
 class ExposureResult:
     """Result from exposure calculation."""
     exposure_index: float
-    factor_scores: Dict[str, float]
-    weighted_scores: Dict[str, float]
-    metadata: Dict[str, Any]
+    factor_scores: dict[str, float]
+    weighted_scores: dict[str, float]
+    metadata: dict[str, Any]
 
 
 class ExposureModel(ABC):
@@ -23,19 +23,16 @@ class ExposureModel(ABC):
     @abstractmethod
     def model_name(self) -> str:
         """Name of the exposure model."""
-        pass
 
     @property
     @abstractmethod
     def model_version(self) -> str:
         """Version of the exposure model."""
-        pass
 
     @property
     @abstractmethod
-    def weights(self) -> Dict[str, float]:
+    def weights(self) -> dict[str, float]:
         """Return the current weight configuration."""
-        pass
 
     @abstractmethod
     def score_factor(self, factor_name: str, raw_value: Any) -> float:
@@ -48,10 +45,9 @@ class ExposureModel(ABC):
         Returns:
             Score between 0.0 and 1.0.
         """
-        pass
 
     @abstractmethod
-    def calculate(self, profile: Dict[str, Any]) -> ExposureResult:
+    def calculate(self, profile: dict[str, Any]) -> ExposureResult:
         """Calculate exposure index from profile data.
 
         Args:
@@ -60,7 +56,6 @@ class ExposureModel(ABC):
         Returns:
             ExposureResult with index and component scores.
         """
-        pass
 
     def get_residual_floor(self) -> float:
         """Return the residual risk floor for exposure.

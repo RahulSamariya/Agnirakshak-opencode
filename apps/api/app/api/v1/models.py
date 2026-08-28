@@ -1,14 +1,14 @@
 """Scientific models API endpoint."""
+
 from fastapi import APIRouter, Query
-from typing import Optional
 
 router = APIRouter()
 
 
 @router.get("/")
 async def list_models(
-    model_type: Optional[str] = Query(None, description="Filter by model type"),
-    status: Optional[str] = Query(None, description="Filter by status"),
+    model_type: str | None = Query(None, description="Filter by model type"),
+    status: str | None = Query(None, description="Filter by status"),
 ):
     """List registered scientific models."""
     return {
@@ -29,7 +29,7 @@ async def get_model(model_id: str):
 @router.get("/{model_id}/runs")
 async def get_model_runs(
     model_id: str,
-    status: Optional[str] = Query(None, description="Filter by status"),
+    status: str | None = Query(None, description="Filter by status"),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=1000),
 ):

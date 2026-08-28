@@ -24,7 +24,7 @@ class WeatherIngestor:
             "model_name": model_name,
         }
 
-    def ingest_observations(self, station_ids: list = None) -> dict:
+    def ingest_observations(self, station_ids: list | None = None) -> dict:
         """Ingest observation data from weather stations.
 
         Args:

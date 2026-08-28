@@ -1,5 +1,6 @@
 """Weather-related tasks."""
 import structlog
+
 try:
     from worker.main import app
 except ImportError:
@@ -9,7 +10,7 @@ logger = structlog.get_logger()
 
 
 @app.task(name="worker.tasks.weather.ingest_weather")
-def ingest_weather(source: str, parameters: dict = None):
+def ingest_weather(source: str, parameters: dict | None = None):
     """Ingest weather data from external sources.
 
     This task handles:
@@ -34,7 +35,7 @@ def ingest_weather(source: str, parameters: dict = None):
 
 
 @app.task(name="worker.tasks.weather.calculate_hazard")
-def calculate_hazard(forecast_run_id: str, grid_cell_ids: list = None):
+def calculate_hazard(forecast_run_id: str, grid_cell_ids: list | None = None):
     """Calculate hazard assessments for forecast data.
 
     This task handles:

@@ -1,8 +1,9 @@
 """Hazard schemas."""
-from datetime import datetime
-from typing import Optional, Dict, Any
-from pydantic import BaseModel, ConfigDict, Field
 import uuid
+from datetime import datetime
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class HazardAssessmentResponse(BaseModel):
@@ -15,11 +16,11 @@ class HazardAssessmentResponse(BaseModel):
     utci_value: float
     hazard_index: float = Field(ge=0.0, le=1.0)
     hazard_category: str
-    air_temperature: Optional[float] = None
-    relative_humidity: Optional[float] = None
-    wind_speed: Optional[float] = None
-    mean_radiant_temperature: Optional[float] = None
-    calculation_metadata: Optional[Dict[str, Any]] = None
+    air_temperature: float | None = None
+    relative_humidity: float | None = None
+    wind_speed: float | None = None
+    mean_radiant_temperature: float | None = None
+    calculation_metadata: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 

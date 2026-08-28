@@ -1,11 +1,12 @@
 """Weather domain models: stations, observations, forecasts."""
 import uuid
 from datetime import datetime
-from typing import Optional, List
-from sqlalchemy import String, Float, Integer, ForeignKey, DateTime, Index
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
+
 from geoalchemy2 import Geometry
+from sqlalchemy import DateTime, Float, ForeignKey, Index, Integer, String
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.models.base import BaseModel
 
 
@@ -18,12 +19,12 @@ class WeatherStation(BaseModel):
     station_code: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
     latitude: Mapped[float] = mapped_column(nullable=False)
     longitude: Mapped[float] = mapped_column(nullable=False)
-    elevation: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    geometry: Mapped[Optional[str]] = mapped_column(
+    elevation: Mapped[float | None] = mapped_column(Float, nullable=True)
+    geometry: Mapped[str | None] = mapped_column(
         Geometry(geometry_type="POINT", srid=4326), nullable=True
     )
 
-    observations: Mapped[List["WeatherObservation"]] = relationship(
+    observations: Mapped[list["WeatherObservation"]] = relationship(
         back_populates="station"
     )
 
@@ -43,15 +44,15 @@ class WeatherObservation(BaseModel):
     observation_time: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False
     )
-    air_temperature: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    relative_humidity: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    wind_speed: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    wind_direction: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    mean_radiant_temperature: Mapped[Optional[float]] = mapped_column(
+    air_temperature: Mapped[float | None] = mapped_column(Float, nullable=True)
+    relative_humidity: Mapped[float | None] = mapped_column(Float, nullable=True)
+    wind_speed: Mapped[float | None] = mapped_column(Float, nullable=True)
+    wind_direction: Mapped[float | None] = mapped_column(Float, nullable=True)
+    mean_radiant_temperature: Mapped[float | None] = mapped_column(
         Float, nullable=True
     )
-    pressure: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    precipitation: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    pressure: Mapped[float | None] = mapped_column(Float, nullable=True)
+    precipitation: Mapped[float | None] = mapped_column(Float, nullable=True)
 
     station: Mapped["WeatherStation"] = relationship(back_populates="observations")
 
@@ -73,10 +74,10 @@ class WeatherForecastRun(BaseModel):
     status: Mapped[str] = mapped_column(
         String(20), nullable=False, default="pending"
     )
-    source: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    resolution: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    source: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    resolution: Mapped[float | None] = mapped_column(Float, nullable=True)
 
-    forecasts: Mapped[List["WeatherForecast"]] = relationship(
+    forecasts: Mapped[list["WeatherForecast"]] = relationship(
         back_populates="run"
     )
 
@@ -100,15 +101,15 @@ class WeatherForecast(BaseModel):
         DateTime(timezone=True), nullable=False
     )
     lead_time_hours: Mapped[int] = mapped_column(Integer, nullable=False)
-    air_temperature: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    relative_humidity: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    wind_speed: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    wind_direction: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    mean_radiant_temperature: Mapped[Optional[float]] = mapped_column(
+    air_temperature: Mapped[float | None] = mapped_column(Float, nullable=True)
+    relative_humidity: Mapped[float | None] = mapped_column(Float, nullable=True)
+    wind_speed: Mapped[float | None] = mapped_column(Float, nullable=True)
+    wind_direction: Mapped[float | None] = mapped_column(Float, nullable=True)
+    mean_radiant_temperature: Mapped[float | None] = mapped_column(
         Float, nullable=True
     )
-    pressure: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    precipitation_probability: Mapped[Optional[float]] = mapped_column(
+    pressure: Mapped[float | None] = mapped_column(Float, nullable=True)
+    precipitation_probability: Mapped[float | None] = mapped_column(
         Float, nullable=True
     )
 

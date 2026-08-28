@@ -1,7 +1,8 @@
 """Smoke tests for database connectivity and migration."""
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add apps/api to path
 API_DIR = Path(__file__).resolve().parent.parent / "apps" / "api"
@@ -11,7 +12,7 @@ if API_DIR.exists() and str(API_DIR) not in sys.path:
 
 def test_import_database_module():
     """Test database module imports successfully."""
-    from app.db.database import Base, engine, AsyncSessionLocal, get_db
+    from app.db.database import AsyncSessionLocal, Base, engine, get_db
     assert Base is not None
     assert engine is not None
     assert AsyncSessionLocal is not None
@@ -21,29 +22,28 @@ def test_import_database_module():
 def test_import_all_models():
     """Test all domain models import successfully."""
     from app.models import (
-        BaseModel,
-        State,
+        ActionRecommendation,
+        Alert,
         City,
-        Ward,
+        ExposureFactor,
+        ExposureProfile,
         GridCell,
         GridWardIntersection,
-        WeatherStation,
-        WeatherObservation,
-        WeatherForecastRun,
-        WeatherForecast,
-        ScientificModel,
-        ModelRun,
         HazardAssessment,
-        VulnerabilityProfile,
-        VulnerabilityFactor,
-        ExposureProfile,
-        ExposureFactor,
-        RiskRun,
+        ModelRun,
         RiskAssessment,
         RiskAssessmentComponent,
+        RiskRun,
+        ScientificModel,
+        State,
+        VulnerabilityFactor,
+        VulnerabilityProfile,
+        Ward,
         WardRiskSummary,
-        Alert,
-        ActionRecommendation,
+        WeatherForecast,
+        WeatherForecastRun,
+        WeatherObservation,
+        WeatherStation,
     )
     models = [
         State, City, Ward, GridCell, GridWardIntersection,
@@ -61,13 +61,28 @@ def test_import_all_models():
 def test_model_tablenames():
     """Test that all models have correct table names."""
     from app.models import (
-        State, City, Ward, GridCell, GridWardIntersection,
-        WeatherStation, WeatherObservation, WeatherForecastRun, WeatherForecast,
-        ScientificModel, ModelRun, HazardAssessment,
-        VulnerabilityProfile, VulnerabilityFactor,
-        ExposureProfile, ExposureFactor,
-        RiskRun, RiskAssessment, RiskAssessmentComponent, WardRiskSummary,
-        Alert, ActionRecommendation,
+        ActionRecommendation,
+        Alert,
+        City,
+        ExposureFactor,
+        ExposureProfile,
+        GridCell,
+        GridWardIntersection,
+        HazardAssessment,
+        ModelRun,
+        RiskAssessment,
+        RiskAssessmentComponent,
+        RiskRun,
+        ScientificModel,
+        State,
+        VulnerabilityFactor,
+        VulnerabilityProfile,
+        Ward,
+        WardRiskSummary,
+        WeatherForecast,
+        WeatherForecastRun,
+        WeatherObservation,
+        WeatherStation,
     )
     expected_tables = [
         "states", "cities", "wards", "grid_cells", "grid_ward_intersections",
@@ -87,8 +102,10 @@ def test_model_tablenames():
         RiskRun, RiskAssessment, RiskAssessmentComponent, WardRiskSummary,
         Alert, ActionRecommendation,
     ]
-    for model, expected_name in zip(models, expected_tables):
-        assert model.__tablename__ == expected_name, f"{model.__name__} has table {model.__tablename__}, expected {expected_name}"
+    for model, expected_name in zip(models, expected_tables, strict=True):
+        assert model.__tablename__ == expected_name, (
+            f"{model.__name__} has table {model.__tablename__}, expected {expected_name}"
+        )
 
 
 def test_import_alembic_config():

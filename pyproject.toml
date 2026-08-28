@@ -1,0 +1,19 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "PIE", "RUF"]
+ignore = [
+    "B008",  # FastAPI Query() in function args is standard pattern
+    "E402",  # Module level import not at top - needed for sys.path manipulation in tests
+]
+
+[tool.ruff.lint.per-file-ignores]
+"apps/api/**/*.py" = ["B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "scientific", "pipelines", "worker"]
+
+[tool.ruff.format]
+quote-style = "double"

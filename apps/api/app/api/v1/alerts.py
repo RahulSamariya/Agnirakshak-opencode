@@ -1,15 +1,15 @@
 """Alerts API endpoint."""
+
 from fastapi import APIRouter, Query
-from typing import Optional
 
 router = APIRouter()
 
 
 @router.get("/")
 async def list_alerts(
-    alert_level: Optional[str] = Query(None, description="Filter by alert level"),
-    ward_id: Optional[str] = Query(None, description="Filter by ward ID"),
-    is_active: Optional[bool] = Query(None, description="Filter by active status"),
+    alert_level: str | None = Query(None, description="Filter by alert level"),
+    ward_id: str | None = Query(None, description="Filter by ward ID"),
+    is_active: bool | None = Query(None, description="Filter by active status"),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=1000),
 ):

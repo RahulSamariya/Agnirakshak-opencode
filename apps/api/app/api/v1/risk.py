@@ -1,18 +1,18 @@
 """Risk API endpoint."""
-from fastapi import APIRouter, Query
-from typing import Optional
 from datetime import datetime
+
+from fastapi import APIRouter, Query
 
 router = APIRouter()
 
 
 @router.get("/")
 async def list_risk_assessments(
-    grid_cell_id: Optional[str] = Query(None, description="Filter by grid cell ID"),
-    risk_category: Optional[str] = Query(None, description="Filter by risk category"),
-    valid_time: Optional[datetime] = Query(None, description="Filter by valid time"),
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    grid_cell_id: str | None = Query(None, description="Filter by grid cell ID"),  # noqa: B008
+    risk_category: str | None = Query(None, description="Filter by risk category"),  # noqa: B008
+    valid_time: datetime | None = Query(None, description="Filter by valid time"),  # noqa: B008
+    skip: int = Query(0, ge=0),  # noqa: B008
+    limit: int = Query(100, ge=1, le=1000),  # noqa: B008
 ):
     """List risk assessments."""
     return {
@@ -42,9 +42,9 @@ async def explain_risk_assessment(risk_id: str):
 
 @router.get("/runs/")
 async def list_risk_runs(
-    status: Optional[str] = Query(None, description="Filter by status"),
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    status: str | None = Query(None, description="Filter by status"),  # noqa: B008
+    skip: int = Query(0, ge=0),  # noqa: B008
+    limit: int = Query(100, ge=1, le=1000),  # noqa: B008
 ):
     """List risk calculation runs."""
     return {
@@ -56,7 +56,7 @@ async def list_risk_runs(
 @router.get("/summary/ward/{ward_id}")
 async def get_ward_risk_summary(
     ward_id: str,
-    valid_time: Optional[datetime] = Query(None),
+    valid_time: datetime | None = Query(None),  # noqa: B008
 ):
     """Get aggregated risk summary for a ward."""
     return {

@@ -1,14 +1,14 @@
 """Wards API endpoint."""
+
 from fastapi import APIRouter, Query
-from typing import Optional
 
 router = APIRouter()
 
 
 @router.get("/")
 async def list_wards(
-    city_id: Optional[str] = Query(None, description="Filter by city ID"),
-    state_id: Optional[str] = Query(None, description="Filter by state ID"),
+    city_id: str | None = Query(None, description="Filter by city ID"),
+    state_id: str | None = Query(None, description="Filter by state ID"),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=1000),
 ):
@@ -56,7 +56,7 @@ async def list_states():
 
 
 @router.get("/cities/")
-async def list_cities(state_id: Optional[str] = Query(None)):
+async def list_cities(state_id: str | None = Query(None)):
     """List cities, optionally filtered by state."""
     return {
         "message": "Not implemented yet",

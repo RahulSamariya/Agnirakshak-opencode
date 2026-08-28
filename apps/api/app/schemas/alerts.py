@@ -1,8 +1,9 @@
 """Alerts schemas."""
-from datetime import datetime
-from typing import Optional, Dict, Any, List
-from pydantic import BaseModel, ConfigDict
 import uuid
+from datetime import datetime
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict
 
 
 class ActionRecommendationResponse(BaseModel):
@@ -14,7 +15,7 @@ class ActionRecommendationResponse(BaseModel):
     priority: str
     title: str
     description: str
-    target_audience: Optional[str] = None
+    target_audience: str | None = None
     is_acknowledged: bool
     created_at: datetime
     updated_at: datetime
@@ -24,8 +25,8 @@ class AlertResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: uuid.UUID
-    risk_run_id: Optional[uuid.UUID] = None
-    ward_id: Optional[uuid.UUID] = None
+    risk_run_id: uuid.UUID | None = None
+    ward_id: uuid.UUID | None = None
     alert_level: str
     alert_type: str
     title: str
@@ -34,10 +35,10 @@ class AlertResponse(BaseModel):
     valid_until: datetime
     issued_at: datetime
     is_active: bool
-    metadata_json: Optional[Dict[str, Any]] = None
+    metadata_json: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 
 
 class AlertWithRecommendations(AlertResponse):
-    recommendations: List[ActionRecommendationResponse] = []
+    recommendations: list[ActionRecommendationResponse] = []

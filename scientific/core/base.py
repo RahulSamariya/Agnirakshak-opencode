@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import Any, Dict, Optional
-from enum import Enum
+from datetime import UTC, datetime
+from typing import Any
 
 
 class ModelVersion:
@@ -12,16 +10,16 @@ class ModelVersion:
         self,
         version: str,
         name: str,
-        parameters: Dict[str, Any],
-        description: Optional[str] = None,
+        parameters: dict[str, Any],
+        description: str | None = None,
     ):
         self.version = version
         self.name = name
         self.parameters = parameters
         self.description = description
-        self.created_at = datetime.now(timezone.utc)
+        self.created_at = datetime.now(UTC)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "version": self.version,
             "name": self.name,
@@ -45,16 +43,14 @@ class ScientificModel(ABC):
     @abstractmethod
     def model_name(self) -> str:
         """Unique name identifier for the model."""
-        pass
 
     @property
     @abstractmethod
     def model_version(self) -> ModelVersion:
         """Version information for this model instance."""
-        pass
 
     @abstractmethod
-    def validate_inputs(self, inputs: Dict[str, Any]) -> bool:
+    def validate_inputs(self, inputs: dict[str, Any]) -> bool:
         """Validate that inputs meet model requirements.
 
         Args:
@@ -66,10 +62,9 @@ class ScientificModel(ABC):
         Raises:
             ValueError: If inputs are invalid with descriptive message.
         """
-        pass
 
     @abstractmethod
-    def compute(self, inputs: Dict[str, Any]) -> Any:
+    def compute(self, inputs: dict[str, Any]) -> Any:
         """Execute the scientific computation.
 
         Args:
@@ -78,9 +73,8 @@ class ScientificModel(ABC):
         Returns:
             Computation result with type defined by subclass.
         """
-        pass
 
-    def get_metadata(self) -> Dict[str, Any]:
+    def get_metadata(self) -> dict[str, Any]:
         """Return model metadata for audit trail."""
         return {
             "model_name": self.model_name,

@@ -1,7 +1,7 @@
 """Hazard model base class."""
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, Any, Optional
+from typing import Any
 
 
 @dataclass
@@ -10,7 +10,7 @@ class HazardResult:
     utci_value: float
     hazard_index: float
     hazard_category: str
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
 
 class HazardModel(ABC):
@@ -24,13 +24,11 @@ class HazardModel(ABC):
     @abstractmethod
     def model_name(self) -> str:
         """Name of the hazard model."""
-        pass
 
     @property
     @abstractmethod
     def model_version(self) -> str:
         """Version of the hazard model."""
-        pass
 
     @abstractmethod
     def calculate_hazard(self, utci: float) -> HazardResult:
@@ -42,7 +40,6 @@ class HazardModel(ABC):
         Returns:
             HazardResult with normalized hazard index and category.
         """
-        pass
 
     @abstractmethod
     def get_hazard_category(self, hazard_index: float) -> str:
@@ -54,7 +51,6 @@ class HazardModel(ABC):
         Returns:
             Hazard category string.
         """
-        pass
 
     def get_residual_floor(self) -> float:
         """Return the residual risk floor for hazard.

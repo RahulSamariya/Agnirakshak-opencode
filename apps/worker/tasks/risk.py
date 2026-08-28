@@ -1,5 +1,6 @@
 """Risk-related tasks."""
 import structlog
+
 try:
     from worker.main import app
 except ImportError:
@@ -11,11 +12,11 @@ logger = structlog.get_logger()
 @app.task(name="worker.tasks.risk.calculate_risk")
 def calculate_risk(
     hazard_run_id: str,
-    ward_ids: list = None,
+    ward_ids: list | None = None,
     include_vulnerability: bool = True,
     include_exposure: bool = True,
 ):
-    """Calculate risk assessments (HSRI = H × V × E).
+    """Calculate risk assessments (HSRI = H x V x E).
 
     This task handles:
     - Loading hazard assessments
@@ -47,7 +48,7 @@ def calculate_risk(
 
 
 @app.task(name="worker.tasks.risk.aggregate_wards")
-def aggregate_wards(risk_run_id: str, ward_ids: list = None):
+def aggregate_wards(risk_run_id: str, ward_ids: list | None = None):
     """Aggregate grid-cell risk scores to ward level.
 
     This task handles:
@@ -78,7 +79,7 @@ def aggregate_wards(risk_run_id: str, ward_ids: list = None):
 
 
 @app.task(name="worker.tasks.risk.generate_alerts")
-def generate_alerts(risk_run_id: str, thresholds: dict = None):
+def generate_alerts(risk_run_id: str, thresholds: dict | None = None):
     """Generate alerts based on risk assessments.
 
     This task handles:

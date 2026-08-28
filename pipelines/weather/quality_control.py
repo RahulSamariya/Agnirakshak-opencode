@@ -4,7 +4,7 @@
 class WeatherQualityControl:
     """Handles quality control of weather data."""
 
-    def __init__(self, thresholds: dict = None):
+    def __init__(self, thresholds: dict | None = None):
         self.thresholds = thresholds or {
             "temperature_min": -50,
             "temperature_max": 60,
@@ -58,19 +58,16 @@ class WeatherQualityControl:
             "failures": [],
         }
 
-        if "air_temperature" in data:
-            if not self.validate_temperature(data["air_temperature"]):
-                results["passed"] = False
-                results["failures"].append("air_temperature_out_of_range")
+        if "air_temperature" in data and not self.validate_temperature(data["air_temperature"]):
+            results["passed"] = False
+            results["failures"].append("air_temperature_out_of_range")
 
-        if "relative_humidity" in data:
-            if not self.validate_humidity(data["relative_humidity"]):
-                results["passed"] = False
-                results["failures"].append("relative_humidity_out_of_range")
+        if "relative_humidity" in data and not self.validate_humidity(data["relative_humidity"]):
+            results["passed"] = False
+            results["failures"].append("relative_humidity_out_of_range")
 
-        if "wind_speed" in data:
-            if not self.validate_wind_speed(data["wind_speed"]):
-                results["passed"] = False
-                results["failures"].append("wind_speed_out_of_range")
+        if "wind_speed" in data and not self.validate_wind_speed(data["wind_speed"]):
+            results["passed"] = False
+            results["failures"].append("wind_speed_out_of_range")
 
         return results

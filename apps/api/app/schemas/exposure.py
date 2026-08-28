@@ -1,8 +1,9 @@
 """Exposure schemas."""
-from datetime import datetime
-from typing import Optional, Dict, Any, List
-from pydantic import BaseModel, ConfigDict, Field
 import uuid
+from datetime import datetime
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ExposureFactorResponse(BaseModel):
@@ -10,11 +11,11 @@ class ExposureFactorResponse(BaseModel):
 
     id: uuid.UUID
     factor_name: str
-    raw_value: Optional[str] = None
+    raw_value: str | None = None
     factor_score: float = Field(ge=0.0, le=1.0)
     weight: float = Field(ge=0.0, le=1.0)
     weighted_score: float = Field(ge=0.0, le=1.0)
-    sub_factors: Optional[Dict[str, Any]] = None
+    sub_factors: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -24,13 +25,13 @@ class ExposureProfileResponse(BaseModel):
 
     id: uuid.UUID
     ward_id: uuid.UUID
-    model_run_id: Optional[uuid.UUID] = None
+    model_run_id: uuid.UUID | None = None
     exposure_index: float = Field(ge=0.0, le=1.0)
-    score_details: Optional[Dict[str, Any]] = None
-    metadata_json: Optional[Dict[str, Any]] = None
+    score_details: dict[str, Any] | None = None
+    metadata_json: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 
 
 class ExposureProfileWithFactors(ExposureProfileResponse):
-    factors: List[ExposureFactorResponse] = []
+    factors: list[ExposureFactorResponse] = []

@@ -1,10 +1,12 @@
 """Operations domain models: alerts, action recommendations."""
 import uuid
 from datetime import datetime
-from typing import Optional, Dict, Any
-from sqlalchemy import String, Float, DateTime, JSON, ForeignKey, Index, Text, Boolean
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Any
+
+from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, Index, String, Text
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.models.base import BaseModel
 
 
@@ -13,10 +15,10 @@ class Alert(BaseModel):
 
     __tablename__ = "alerts"
 
-    risk_run_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+    risk_run_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("risk_runs.id"), nullable=True
     )
-    ward_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+    ward_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("wards.id"), nullable=True
     )
     alert_level: Mapped[str] = mapped_column(String(20), nullable=False)
@@ -33,7 +35,7 @@ class Alert(BaseModel):
         DateTime(timezone=True), nullable=False
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
-    metadata_json: Mapped[Optional[Dict[str, Any]]] = mapped_column(
+    metadata_json: Mapped[dict[str, Any] | None] = mapped_column(
         JSON, nullable=True
     )
 
@@ -61,7 +63,7 @@ class ActionRecommendation(BaseModel):
     priority: Mapped[str] = mapped_column(String(20), nullable=False)
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    target_audience: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    target_audience: Mapped[str | None] = mapped_column(String(100), nullable=True)
     is_acknowledged: Mapped[bool] = mapped_column(
         Boolean, default=False, nullable=False
     )

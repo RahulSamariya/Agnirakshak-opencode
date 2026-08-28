@@ -1,392 +1,371 @@
-You are continuing work on an existing repository for:
+You are the Principal Systems Architect responsible for completing Phase 1 of the:
 
 EXTREME HEATWAVE EARLY WARNING AND HUMAN THERMAL STRESS INDEX
 
-ROLE:
-Act as Principal Systems Architect, Senior Python Backend Engineer, Database Architect, Geospatial Engineer, DevOps Engineer, and Scientific Software Architect.
+PROJECT.
+
+The repository has already been substantially scaffolded.
+
+Your task now is to perform the FINAL PHASE-1 COMPLETION, HARDENING, AND VERIFICATION PASS.
 
 ============================================================
-MISSION
+CRITICAL SCOPE RULE
 ============================================================
 
-Perform a PHASE-1 HARDENING AND CORRECTION PASS on the existing repository.
+DO NOT rebuild the project.
 
-The repository already contains most of the intended Phase-1 scaffold.
+DO NOT replace the existing architecture.
 
-DO NOT rebuild the repository.
+DO NOT implement Phase 2.
 
-DO NOT delete working components.
+DO NOT implement:
 
-DO NOT implement the actual scientific algorithms yet.
+- UTCI calculation
+- WBGT calculation
+- Heat Index calculation
+- Hazard Index H calculation
+- Vulnerability calculation
+- Exposure calculation
+- HSRI calculation
+- Mortality prediction
+- Hospitalization prediction
+- Machine learning models
+- ML training
+- Real weather-provider integration
+- SMS integration
+- WhatsApp integration
+- Production alert algorithms
+- Full GIS analytics
 
-DO NOT implement UTCI.
+Those belong to later phases.
 
-DO NOT implement the Hazard equation.
-
-DO NOT implement Vulnerability scoring.
-
-DO NOT implement Exposure scoring.
-
-DO NOT implement HSRI calculation.
-
-DO NOT implement machine-learning models.
-
-DO NOT change the scientific weights or scientific thresholds.
-
-Your purpose is to make the existing Phase-1 architecture internally consistent, reproducible, testable, and ready for the next scientific implementation phase.
-
-============================================================
-PHASE-1 DEFINITION OF DONE
-============================================================
-
-Phase 1 will be considered complete only when all of the following are true:
-
-    Repository structure is coherent
-    Backend starts
-    Worker starts
-    Frontend starts/builds
-    PostgreSQL starts
-    PostGIS works
-    TimescaleDB works
-    Alembic migrations work from a fresh database
-    Database schema is internally consistent
-    Timescale hypertables are correctly configured
-    Spatial relationships are correct
-    Test dependencies install correctly
-    Test suite runs from a clean environment
-    Existing tests pass
-    No critical deprecation errors remain
-    No hardcoded production secrets exist
-    Documentation matches actual implementation
-    Docker startup works
-    No scientific algorithms are prematurely implemented
+Your ONLY objective is to make Phase 1 technically complete, reproducible, and verified.
 
 ============================================================
-STEP 1 — INSPECT BEFORE MODIFYING
+PHASE-1 DEFINITION
 ============================================================
 
-First inspect the complete repository.
+Phase 1 establishes:
 
-Review:
+1. Repository architecture
+2. Backend foundation
+3. Frontend foundation
+4. PostgreSQL
+5. PostGIS
+6. TimescaleDB
+7. Redis/Celery worker foundation
+8. Database schema
+9. Alembic migration system
+10. Spatial data architecture
+11. Weather time-series architecture
+12. Scientific module interfaces
+13. Scientific configuration management
+14. API contracts
+15. Pipeline contracts
+16. Testing infrastructure
+17. Docker development environment
+18. Basic Kubernetes/monitoring scaffolding
+19. Documentation
+20. Reproducible development workflow
 
-    directory tree
-    pyproject.toml
-    requirements.txt
-    package.json
-    Dockerfiles
-    docker-compose.yml
-    .env.example
-    Alembic configuration
-    SQLAlchemy models
-    migrations
-    worker
-    pipelines
-    scientific modules
-    frontend
-    tests
-    Kubernetes manifests
-    monitoring configuration
-    documentation
-
-Identify:
-
-    existing problems
-    duplicate files
-    broken imports
-    missing dependencies
-    database inconsistencies
-    migration inconsistencies
-    security issues
-    architecture drift
-
-Do not blindly overwrite files.
-
-Preserve existing good work.
+The scientific algorithms themselves remain Phase 2.
 
 ============================================================
-STEP 2 — FIX PYTHON ENVIRONMENT REPRODUCIBILITY
+STEP 1 — INSPECT CURRENT REPOSITORY
 ============================================================
 
-The current project has tests that import structlog.
+Before making changes:
 
-Make sure every runtime dependency required by actual code is declared correctly.
+- inspect the complete repository
+- inspect current git/status if available
+- inspect directory tree
+- inspect Python configuration
+- inspect frontend configuration
+- inspect Docker Compose
+- inspect Dockerfiles
+- inspect SQLAlchemy models
+- inspect Alembic configuration
+- inspect all migrations
+- inspect PostGIS SQL
+- inspect TimescaleDB SQL
+- inspect worker configuration
+- inspect pipeline modules
+- inspect scientific interfaces
+- inspect configuration YAML
+- inspect tests
+- inspect documentation
 
-Review imports across:
+DO NOT recreate files that already work.
+
+Identify only the remaining Phase-1 gaps.
+
+============================================================
+STEP 2 — PYTHON DEPENDENCY REPRODUCIBILITY
+============================================================
+
+Make the Python environment reproducible.
+
+Inspect all Python imports used by:
 
     apps/api
     apps/worker
     scientific
     pipelines
+    tests
 
-Ensure dependencies are declared in the correct requirements/project files.
+Ensure every required runtime/test dependency is declared correctly.
 
-The documented installation procedure must create an environment in which:
+The important requirement is:
 
-    pytest
+A fresh environment must be able to install the declared dependencies and execute the test suite.
 
-can run successfully without manually installing missing packages.
+Do NOT solve missing dependencies by adding import fallbacks.
 
-Do not solve this by suppressing import errors.
+Do NOT hide import errors.
 
-Ensure the dependency graph is explicit.
+Make the documented installation workflow actually work.
 
-Also ensure test-only dependencies are clearly separated where practical.
-
-============================================================
-STEP 3 — FIX PYDANTIC CONFIGURATION
-============================================================
-
-The project currently contains deprecated Pydantic configuration patterns.
-
-Update them to the current supported Pydantic v2 configuration approach.
-
-Do not change the meaning of configuration.
-
-Verify:
-
-    application settings load
-    environment variables work
-    defaults work
-    validation works
-
-Run tests afterward.
+Prefer the project's existing dependency-management approach rather than introducing unnecessary package managers.
 
 ============================================================
-STEP 4 — DATABASE ARCHITECTURE CORRECTION
+STEP 3 — PYDANTIC / PYTHON CLEANUP
 ============================================================
 
-Review ALL SQLAlchemy models and Alembic migrations.
+Review configuration code.
 
-The database must support:
+Ensure Pydantic v2 configuration is used correctly.
 
-GEOGRAPHY:
+Remove deprecated configuration patterns.
+
+Review datetime usage.
+
+Do not use naive UTC timestamps where timezone-aware UTC timestamps are required.
+
+Replace deprecated patterns such as:
+
+    datetime.utcnow()
+
+with appropriate timezone-aware UTC handling.
+
+Do not change business semantics.
+
+Run tests after changes.
+
+============================================================
+STEP 4 — DATABASE MIGRATION LIFECYCLE
+============================================================
+
+This is a critical requirement.
+
+Establish:
+
+    Alembic = authoritative schema migration mechanism
+
+The repository may retain SQL files for:
+
+    extension bootstrap
+    Timescale-specific operations
+    indexes
+    operational database tasks
+
+but there must not be two contradictory schema initialization mechanisms.
+
+The target lifecycle is:
+
+    fresh PostgreSQL/TimescaleDB database
+                ↓
+         required extensions
+                ↓
+        alembic upgrade head
+                ↓
+          complete schema
+                ↓
+       Timescale hypertables
+                ↓
+             indexes
+                ↓
+             READY
+
+Determine the cleanest implementation using the current repository.
+
+Do not blindly delete init.sql or other SQL files.
+
+Instead, make their responsibilities explicit.
+
+============================================================
+STEP 5 — FRESH DATABASE TEST
+============================================================
+
+Do not validate against an existing developer database.
+
+Create or recreate a clean development database/volume.
+
+Run:
+
+    docker compose up -d
+
+or the repository's documented equivalent.
+
+Then execute the migration from an empty database:
+
+    alembic upgrade head
+
+Verify that migration succeeds without manual database modifications.
+
+If migration fails:
+
+    diagnose the real error
+    fix the migration/schema
+    destroy/reset the test database
+    rerun migration
+
+Do not mark the task complete until this works.
+
+============================================================
+STEP 6 — POSTGIS VERIFICATION
+============================================================
+
+Verify that PostGIS is actually enabled.
+
+Verify spatial columns for:
 
     states
     cities
     wards
     grid_cells
+    grid_ward_intersections
 
-WEATHER:
+where applicable.
 
-    weather_stations
-    weather_observations
-    weather_forecast_runs
-    weather_forecasts
+Verify appropriate spatial indexes exist.
 
-SCIENTIFIC REGISTRY:
+Do not merely inspect migration source.
 
-    scientific_models
-    model_runs
+Actually query the running database.
 
-HAZARD:
-
-    hazard_assessments
-
-VULNERABILITY:
-
-    vulnerability_profiles
-    vulnerability_factors
-
-EXPOSURE:
-
-    exposure_profiles
-    exposure_factors
-
-RISK:
-
-    risk_runs
-    risk_assessments
-    risk_assessment_components
-    ward_risk_summaries
-
-OPERATIONS:
-
-    alerts
-    action_recommendations
-
-Verify:
-
-    primary keys
-    foreign keys
-    nullability
-    indexes
-    timestamps
-    relationships
-    geometry types
-    schema naming
-    cascade behavior where appropriate
-
-Do not add scientific formulas to database models.
+Record the verification result in the final report.
 
 ============================================================
-STEP 5 — TIMESCALEDB CORRECTION
+STEP 7 — TIMESCALEDB VERIFICATION
 ============================================================
 
-This is a critical task.
+This is mandatory.
 
-Review the current definitions for:
+Verify TimescaleDB is actually enabled.
+
+Verify that the intended time-series tables are valid TimescaleDB hypertables.
+
+Expected candidates include:
 
     weather_observations
     weather_forecasts
 
-They are intended to be TimescaleDB hypertables.
+Use the running database to verify the hypertables.
 
-Do not assume an ordinary PostgreSQL UUID primary key automatically works for a Timescale hypertable.
+Check:
 
-Design the keys/indexes according to actual TimescaleDB requirements.
+    timescaledb_information.hypertables
 
-The time-series design must support queries by:
+or the appropriate TimescaleDB metadata view for the installed version.
 
-    valid_time
-    grid_cell_id
-    forecast_run_id
+Verify that the schema's primary keys and unique indexes comply with actual TimescaleDB requirements.
 
-For forecasts, preserve:
+Do not assume ordinary PostgreSQL constraints automatically work on hypertables.
 
-    run_time / initialization time
-    valid_time
+If necessary, redesign the key/index strategy while preserving the logical data model.
+
+Then rerun the migration from a completely clean database.
+
+============================================================
+STEP 8 — WEATHER TEMPORAL MODEL
+============================================================
+
+Verify the forecast schema clearly distinguishes:
+
+    forecast run / initialization time
+    valid time
     lead time
 
-For observations, preserve:
+The logical relationship should be clear.
 
-    observed_at
+Where appropriate, validate:
 
-Validate the final schema against the actual TimescaleDB container.
+    valid_time >= run_time
 
-Do not merely make SQL look correct.
+Do not over-constrain legitimate forecast workflows.
 
-Actually run the migration against TimescaleDB.
+Verify observations separately use their observation timestamp.
 
-============================================================
-STEP 6 — AUTHORITATIVE DATABASE LIFECYCLE
-============================================================
-
-Establish ONE clear database lifecycle.
-
-Prefer:
-
-    Alembic = authoritative schema evolution
-
-The project may retain SQL scripts for:
-
-    extension bootstrap
-    database initialization
-    operational SQL
-
-but they must not create a second contradictory schema lifecycle.
-
-A fresh database should work as:
-
-    database starts
-        ↓
-    required extensions
-        ↓
-    Alembic upgrade head
-        ↓
-    complete usable schema
-
-Verify this from a CLEAN database.
-
-Do not rely on an existing developer database.
+Do not implement actual weather ingestion.
 
 ============================================================
-STEP 7 — POSTGIS SPATIAL MODEL CORRECTION
+STEP 9 — SPATIAL GRID/WARD MODEL
 ============================================================
 
-Review the relationship:
-
-    grid_cells ↔ wards
-
-Do not assume a 333m grid cell belongs to exactly one ward unless this is explicitly guaranteed by the repository's grid-generation strategy.
-
-Prefer a robust spatial relationship model such as:
+Verify the existing spatial architecture:
 
     grid_cells
-        ↓
+          ↓
     grid_ward_intersections
-        ↓
-    wards
+          ↓
+        wards
 
-where appropriate fields may include:
+The intersection table should support:
 
     grid_cell_id
     ward_id
     intersection_area
     coverage_fraction
 
-Use PostGIS-compatible geometry and spatial indexes.
+where appropriate.
 
-The final design must support correct ward aggregation even when a grid cell crosses an administrative boundary.
+Ensure this architecture supports a grid cell intersecting multiple wards.
 
-Do not fake spatial relationships.
+Verify foreign keys.
 
-============================================================
-STEP 8 — FORECAST TEMPORAL MODEL
-============================================================
+Verify spatial indexes.
 
-Verify the weather forecast temporal model.
+Verify that future ward aggregation can use coverage_fraction/intersection geometry.
 
-It must distinguish:
-
-    forecast/run initialization time
-    valid time
-    lead time
-
-A forecast must never be represented only by one timestamp.
-
-Ensure the schema and application types make this distinction obvious.
-
-Add sensible validation where appropriate.
-
-Examples:
-
-    valid_time >= run_time
-
-Do not over-constrain legitimate forecast workflows.
+Do not implement actual aggregation algorithms yet.
 
 ============================================================
-STEP 9 — MODEL VERSIONING
+STEP 10 — SCIENTIFIC MODEL REGISTRY
 ============================================================
 
-Review:
+Verify:
 
     scientific_models
     model_runs
 
-Ensure a model run can be associated with:
+exist and have sensible relationships.
 
-    model name
+The architecture must eventually allow us to determine:
+
+    model
     model version
-    run time
-    configuration/version information
+    configuration/version
+    run
+    run timestamp
     status
-    timestamps
 
-Where appropriate, support:
+Do not invent scientific model results.
 
-    configuration_hash
-    algorithm version
-    input snapshot/reference
+Do not implement UTCI or HSRI.
 
-Do not invent scientific metadata.
-
-The purpose is reproducibility.
-
-The architecture should eventually allow answering:
-
-    "Which scientific model and configuration produced this result?"
+This is only model-run traceability infrastructure.
 
 ============================================================
-STEP 10 — WORKER VALIDATION
+STEP 11 — WORKER VERIFICATION
 ============================================================
 
-Review:
+Verify:
 
     apps/worker/
 
-Verify that the worker can start independently from the API.
+can import/start independently.
 
-Verify imports for all task modules:
+Verify the task modules:
 
     ingest_weather
     calculate_hazard
@@ -394,181 +373,44 @@ Verify imports for all task modules:
     aggregate_wards
     generate_alerts
 
-and pipeline orchestration tasks.
+can be imported.
 
-These may remain placeholders.
+They may remain placeholders.
 
-Do not implement scientific calculations.
+Do NOT implement the scientific computations inside them.
 
-The worker must simply establish a reliable architecture for future asynchronous computation.
+Verify Redis/Celery configuration is valid for local development.
 
 ============================================================
-STEP 11 — PIPELINE VALIDATION
+STEP 12 — PIPELINE VERIFICATION
 ============================================================
 
-Verify these structures:
+Verify these modules exist and import successfully:
 
     pipelines/weather/
     pipelines/vulnerability/
     pipelines/exposure/
     pipelines/risk/
 
-Every pipeline module should import successfully.
+Keep the distinction:
 
-Each module should expose a clear placeholder boundary.
-
-Keep responsibilities separate:
-
-    pipelines = ingestion/transformation/orchestration
+    pipeline = ingestion/transformation/orchestration
 
     scientific = scientific calculation
 
-Do not mix them.
+Do not move scientific logic into pipelines.
 
 ============================================================
-STEP 12 — SCIENTIFIC MODULE SAFETY
+STEP 13 — API VERIFICATION
 ============================================================
-
-Review:
-
-    scientific/core
-    scientific/hazard
-    scientific/vulnerability
-    scientific/exposure
-    scientific/risk
-    scientific/thermal_comfort
-
-Do not implement the actual scientific equations.
-
-Ensure:
-
-    imports work
-    interfaces are clean
-    no circular dependencies exist
-    configuration can eventually be injected
-    models are independently testable
-
-The pluggable thermal-comfort architecture must remain intact.
-
-============================================================
-STEP 13 — CONFIGURATION HYGIENE
-============================================================
-
-Scientific constants must not be scattered across application code.
-
-Preserve the configuration structure:
-
-    scientific/configuration/
-
-including:
-
-    hazard_categories.yaml
-    vulnerability_weights.yaml
-    exposure_weights.yaml
-    risk_thresholds.yaml
-    model_registry.yaml
-
-Do not change their scientific values.
-
-Where application code currently hardcodes these values, refactor only the configuration plumbing.
-
-Do not implement scientific computation.
-
-============================================================
-STEP 14 — SECURITY HARDENING
-============================================================
-
-Inspect:
-
-    docker-compose.yml
-    Kubernetes manifests
-    .env.example
-    application settings
-    frontend configuration
-
-Remove or neutralize actual production secrets.
-
-Development placeholders are acceptable if clearly documented.
-
-Never commit:
-
-    real API keys
-    real database passwords
-    tokens
-    credentials
-    private certificates
-
-Review CORS configuration.
-
-Development may be permissive.
-
-Production configuration must be capable of restricting allowed origins.
-
-============================================================
-STEP 15 — DOCKER HARDENING
-============================================================
-
-Inspect all Dockerfiles and docker-compose configuration.
-
-Do not use unpinned:
-
-    latest
-
-tags for production-oriented infrastructure where practical.
-
-Use reproducible versions.
-
-Ensure the containers can actually start together.
-
-Expected local services include:
-
-    PostgreSQL + PostGIS + TimescaleDB
-    Redis
-    API
-    Worker
-    Web
-
-Do not add unnecessary services.
-
-============================================================
-STEP 16 — FRONTEND VALIDATION
-============================================================
-
-The frontend should remain a scaffold.
-
-Verify:
-
-    Next.js starts
-    TypeScript passes
-    build succeeds
-    existing pages compile
-
-Do not build the full dashboard.
-
-Do not implement scientific visualization yet.
-
-Make sure the frontend structure remains ready for:
-
-    Dashboard
-    Risk Map
-    Ward Explorer
-    Forecast Explorer
-    Alert Center
-    Model Transparency
-
-============================================================
-STEP 17 — API VALIDATION
-============================================================
-
-Keep the API domain routes as scaffolding.
 
 Verify:
 
     /api/v1/health
 
-works correctly.
+works.
 
-Verify the placeholder route modules import without errors:
+Verify the domain route modules import correctly:
 
     forecasts
     hazards
@@ -579,194 +421,373 @@ Verify the placeholder route modules import without errors:
     alerts
     models
 
-Do not implement database-backed business logic yet unless required simply to validate startup.
+Placeholder responses are acceptable.
+
+Do not implement business/scientific calculations.
+
+Verify OpenAPI generation works if configured.
 
 ============================================================
-STEP 18 — TEST INFRASTRUCTURE
+STEP 14 — FRONTEND VERIFICATION
 ============================================================
 
-The project currently has basic scientific/interface tests.
+Verify the Next.js application:
 
-Expand the test infrastructure to include smoke tests for:
+    installs
+    typechecks
+    builds
+    starts
+
+Verify the existing pages/routes.
+
+Do not build the production dashboard.
+
+Do not implement real risk visualization yet.
+
+Do not invent data.
+
+============================================================
+STEP 15 — SECURITY CHECK
+============================================================
+
+Search the repository for:
+
+    passwords
+    API keys
+    tokens
+    credentials
+    private keys
+    connection strings containing real secrets
+
+Remove any real secret.
+
+Development placeholders such as:
+
+    CHANGE_ME
+
+are acceptable.
+
+Ensure .env.example contains examples only.
+
+Ensure production Kubernetes configuration expects secrets to be injected rather than committed.
+
+Review CORS.
+
+Development can remain permissive if clearly documented.
+
+Do not over-engineer production security in this phase.
+
+============================================================
+STEP 16 — DOCKER VALIDATION
+============================================================
+
+Review:
+
+    docker-compose.yml
+    API Dockerfile
+    worker Dockerfile
+    web Dockerfile
+
+Verify image versions are reproducible.
+
+Do not use:
+
+    latest
+
+for infrastructure where practical.
+
+Verify the services start together.
+
+Expected local infrastructure:
+
+    PostgreSQL + PostGIS + TimescaleDB
+    Redis
+    API
+    Worker
+    Web
+
+Do not add unnecessary services.
+
+============================================================
+STEP 17 — TEST SUITE
+============================================================
+
+Make sure the repository's tests actually run.
+
+At minimum test:
 
     API imports
+    API health
     worker imports
-    database connectivity
-    migration
     scientific imports
-    frontend build/typecheck where practical
+    database configuration
+    migration
+    basic integration paths
 
-Create placeholders for:
+Create/maintain:
 
-    tests/end_to_end/
     tests/scientific_validation/
+    tests/integration/
+    tests/end_to_end/
     tests/performance/
 
-Do not fabricate scientific validation results.
+Do not add fake scientific validation.
 
-Scientific formula tests will be implemented later.
+Phase-2 scientific tests will come later.
 
-============================================================
-STEP 19 — FIX WARNINGS
-============================================================
+The final command should be reproducible, for example:
 
-Review current warnings.
+    pytest -q
 
-In particular, replace deprecated timezone handling such as:
+or the repository's documented equivalent.
 
-    datetime.utcnow()
-
-with proper timezone-aware UTC handling.
-
-Use a consistent policy for timestamps across the application.
-
-Do not mix naive and aware datetimes without an explicit reason.
+It must actually execute successfully in the clean environment.
 
 ============================================================
-STEP 20 — DOCUMENTATION CONSISTENCY
+STEP 18 — LINT / TYPE CHECK
 ============================================================
 
-Compare the documentation against the implementation.
+Run the project's configured:
 
-Update:
+    Ruff
+    mypy
+    TypeScript typecheck
+    frontend lint
+
+Do not introduce a new linting framework unnecessarily.
+
+Fix genuine errors.
+
+Do not suppress errors globally just to obtain a green result.
+
+If an existing check is intentionally unavailable, document why.
+
+============================================================
+STEP 19 — DOCUMENT THE ACTUAL SYSTEM
+============================================================
+
+Update documentation only where necessary.
+
+Ensure:
 
     docs/architecture/system-overview.md
     docs/architecture/data-flow.md
     docs/architecture/database.md
 
-Ensure they describe what actually exists.
+describe what actually exists.
 
-Do not document future features as already implemented.
+Clearly distinguish:
 
-Clearly label:
+    IMPLEMENTED IN PHASE 1
 
-    scaffold
-    implemented
-    future phase
+from:
 
-============================================================
-STEP 21 — RUN A CLEAN VALIDATION
-============================================================
+    PLANNED FOR PHASE 2+
 
-Do not rely only on the current working environment.
+Do not claim that UTCI, HSRI, mortality prediction, or ML are implemented.
 
-Perform a clean validation as far as the repository allows.
-
-At minimum:
-
-    install dependencies
-    start database
-    enable PostGIS
-    enable TimescaleDB
-    run migrations from clean database
-    start Redis
-    start API
-    start worker
-    build/start frontend
-    run pytest
-    run lint
-    run typecheck where available
-
-If a command fails:
-
-    diagnose the actual cause
-    fix the repository
-    rerun the command
-
-Do not hide failures.
-
-Do not mark the task complete while known critical startup/test failures remain.
+If the README currently says scientific models are implemented when they are only interfaces/configuration, correct that wording.
 
 ============================================================
-STEP 22 — NO SCIENCE IMPLEMENTATION
+STEP 20 — FINAL CLEAN VALIDATION
 ============================================================
 
-Again:
+Perform a complete clean validation.
 
-DO NOT implement:
+Preferred order:
 
-    UTCI
-    Hazard equation
-    Vulnerability equation
-    Exposure equation
-    HSRI
-    risk thresholds in executable logic
-    machine-learning prediction
+    1. Clean Python environment
+    2. Install declared dependencies
+    3. Clean database
+    4. Start infrastructure
+    5. Run Alembic migration
+    6. Verify PostGIS
+    7. Verify TimescaleDB
+    8. Verify hypertables
+    9. Start API
+    10. Start worker
+    11. Build/typecheck frontend
+    12. Run tests
+    13. Run lint
+    14. Run type checks
 
-Only establish the interfaces, configuration plumbing, database support, and testing architecture required for those later phases.
+Do not rely only on static inspection.
+
+Actually execute the important checks.
 
 ============================================================
-STEP 23 — FINAL QUALITY GATE
+PHASE-1 FINAL CHECKLIST
 ============================================================
 
-Before finishing, verify the following checklist:
+Before declaring Phase 1 complete:
 
-[ ] API starts
-[ ] Worker starts
-[ ] Web builds/starts
-[ ] PostgreSQL starts
+[ ] Repository structure correct
+[ ] FastAPI starts
+[ ] API health works
+[ ] Worker starts/imports
+[ ] Redis works
+[ ] Next.js starts/builds
+[ ] PostgreSQL works
 [ ] PostGIS works
 [ ] TimescaleDB works
-[ ] Alembic migration succeeds from clean DB
-[ ] Hypertables are actually created
-[ ] Timescale constraints are satisfied
-[ ] Weather time-series schema is valid
-[ ] Grid/ward spatial design is valid
-[ ] All domain ORM models import
-[ ] All API modules import
-[ ] All worker modules import
-[ ] Scientific modules import
-[ ] Dependencies are declared
-[ ] pytest runs from documented environment
-[ ] Existing tests pass
-[ ] Deprecated datetime usage is removed where practical
-[ ] Pydantic v2 configuration is current
-[ ] No real secrets are committed
-[ ] Docker configuration is reproducible
-[ ] Documentation matches actual implementation
-[ ] Scientific equations remain unimplemented
+[ ] Alembic works from a clean database
+[ ] All domain tables exist
+[ ] Hypertables actually exist
+[ ] Timescale constraints are valid
+[ ] Spatial indexes exist
+[ ] Grid/ward intersection model works
+[ ] Forecast temporal model is correct
+[ ] Scientific model registry exists
+[ ] Scientific interfaces import
+[ ] Pipeline modules import
+[ ] API modules import
+[ ] Dependencies install cleanly
+[ ] pytest runs
+[ ] pytest passes
+[ ] lint passes
+[ ] typecheck passes where configured
+[ ] no real secrets committed
+[ ] Docker is reproducible
+[ ] documentation matches implementation
+[ ] no Phase-2 scientific algorithms were added
 
 ============================================================
-FINAL REPORT FORMAT
+IMPORTANT: DO NOT CHEAT THE QUALITY GATE
 ============================================================
 
-Return a final report containing:
+Do NOT:
 
-1. PHASE-1 STATUS
-   PASS / PASS WITH MINOR GAPS / FAIL
+- mark a test as skipped merely to obtain PASS
+- disable failing tests
+- suppress import errors
+- remove tests that fail
+- mock the database when validating migrations
+- claim TimescaleDB works without connecting to TimescaleDB
+- claim PostGIS works without querying the database
+- claim Docker works without starting it
+- claim the worker works without importing/starting it
+- claim the frontend builds without running the build
+- silently modify scientific constants
+- implement Phase 2 because a placeholder is inconvenient
 
-2. ARCHITECTURE CHANGES
-   Exact files changed and why.
-
-3. DATABASE
-   Exact tables, indexes, spatial relationships, hypertables, and migrations verified.
-
-4. INFRASTRUCTURE
-   Docker/Redis/API/Worker/Web status.
-
-5. TEST RESULTS
-   Exact commands run.
-   Exact result for each.
-
-6. WARNINGS
-   Remaining non-critical warnings.
-
-7. REMAINING GAPS
-   Anything still preventing Phase 1 from being considered complete.
-
-8. NEXT PHASE
-   Clearly state whether the repository is ready for the scientific-engine implementation phase.
+If something genuinely cannot be verified in the current environment, report it explicitly.
 
 ============================================================
-MOST IMPORTANT RULE
+FINAL REPORT
 ============================================================
 
-Do not merely create files to make the repository look complete.
+At completion, return:
 
-The repository must actually START, MIGRATE, IMPORT, BUILD, and TEST.
+# PHASE 1 FINAL STATUS
 
-Verify functionality.
+Choose exactly one:
 
-Do not implement the scientific algorithms during this correction pass.
+    READY FOR PHASE 2
+    NOT READY FOR PHASE 2
 
-Start by inspecting the repository now.
+Then provide:
+
+## 1. Repository changes
+
+List exact files created/modified.
+
+## 2. Database verification
+
+Report:
+
+    migration result
+    tables
+    foreign keys
+    spatial indexes
+    hypertables
+    TimescaleDB verification
+    PostGIS verification
+
+## 3. Runtime verification
+
+Report:
+
+    PostgreSQL
+    Redis
+    API
+    Worker
+    Web
+
+## 4. Quality verification
+
+Report exact commands and results:
+
+    pytest
+    lint
+    typecheck
+    frontend build
+
+## 5. Security verification
+
+Report whether real secrets were found.
+
+## 6. Remaining Phase-1 gaps
+
+Be explicit.
+
+## 7. Phase-2 readiness
+
+If and ONLY if all critical checks pass, state:
+
+    PHASE 1 IS COMPLETE.
+    THE REPOSITORY IS READY FOR PHASE 2 SCIENTIFIC ENGINE IMPLEMENTATION.
+
+Otherwise state:
+
+    PHASE 1 IS NOT COMPLETE.
+
+and list the exact blockers.
+
+============================================================
+FINAL ARCHITECTURAL RULE
+============================================================
+
+The final Phase-1 architecture must provide this foundation:
+
+    DATA SOURCES
+         ↓
+    DATA/PERSISTENCE
+    PostgreSQL
+    PostGIS
+    TimescaleDB
+         ↓
+    PIPELINES
+         ↓
+    WORKER
+         ↓
+    SCIENTIFIC INTERFACES
+         ↓
+    API
+         ↓
+    FRONTEND
+
+Phase 2 will then implement:
+
+    Thermal Comfort / UTCI
+          ↓
+    Hazard H
+          ↓
+    Vulnerability V
+          ↓
+    Exposure E
+          ↓
+    HSRI = H × V × E
+
+Later phases will implement:
+
+    Historical Health Dataset
+          ↓
+    Mortality / Hospitalization ML
+          ↓
+    3–5 Day Health Impact Prediction
+          ↓
+    Early Warning / GIS / Alerts
+
+Do not cross these phase boundaries.
+
+START NOW BY INSPECTING THE EXISTING REPOSITORY.

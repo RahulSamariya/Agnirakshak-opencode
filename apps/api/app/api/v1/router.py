@@ -1,14 +1,15 @@
 """API v1 router."""
 from fastapi import APIRouter
-from app.api.v1.health import router as health_router
+
+from app.api.v1.alerts import router as alerts_router
+from app.api.v1.exposure import router as exposure_router
 from app.api.v1.forecasts import router as forecasts_router
 from app.api.v1.hazards import router as hazards_router
-from app.api.v1.vulnerability import router as vulnerability_router
-from app.api.v1.exposure import router as exposure_router
-from app.api.v1.risk import router as risk_router
-from app.api.v1.wards import router as wards_router
-from app.api.v1.alerts import router as alerts_router
+from app.api.v1.health import router as health_router
 from app.api.v1.models import router as models_router
+from app.api.v1.risk import router as risk_router
+from app.api.v1.vulnerability import router as vulnerability_router
+from app.api.v1.wards import router as wards_router
 
 api_router = APIRouter()
 

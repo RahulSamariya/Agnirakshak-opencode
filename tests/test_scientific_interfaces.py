@@ -1,7 +1,8 @@
 """Tests for scientific module interfaces."""
 import pytest
-from scientific.core.base import ScientificModel, ModelVersion
-from scientific.risk.base import RiskModel, RiskCategory, RiskResult
+
+from scientific.core.base import ModelVersion, ScientificModel
+from scientific.risk.base import RiskCategory
 
 
 class TestModelVersion:

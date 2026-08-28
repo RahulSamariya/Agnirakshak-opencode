@@ -1,10 +1,12 @@
 """Risk assessment models."""
 import uuid
 from datetime import datetime
-from typing import Optional, Dict, Any
-from sqlalchemy import String, Float, DateTime, JSON, ForeignKey, Index, Text, Integer
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Any
+
+from sqlalchemy import JSON, DateTime, Float, ForeignKey, Index, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.models.base import BaseModel
 
 
@@ -19,14 +21,14 @@ class RiskRun(BaseModel):
     run_start: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False
     )
-    run_end: Mapped[Optional[datetime]] = mapped_column(
+    run_end: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
     status: Mapped[str] = mapped_column(
         String(20), nullable=False, default="running"
     )
-    total_assessments: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
-    completed_assessments: Mapped[Optional[int]] = mapped_column(
+    total_assessments: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    completed_assessments: Mapped[int | None] = mapped_column(
         Integer, nullable=True
     )
 
@@ -71,7 +73,7 @@ class RiskAssessment(BaseModel):
     exposure: Mapped[float] = mapped_column(Float, nullable=False)
     hsri: Mapped[float] = mapped_column(Float, nullable=False)
     risk_category: Mapped[str] = mapped_column(String(20), nullable=False)
-    calculation_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(
+    calculation_metadata: Mapped[dict[str, Any] | None] = mapped_column(
         JSON, nullable=True
     )
 
@@ -99,7 +101,7 @@ class RiskAssessmentComponent(BaseModel):
     factor_value: Mapped[float] = mapped_column(Float, nullable=False)
     weight: Mapped[float] = mapped_column(Float, nullable=False)
     weighted_value: Mapped[float] = mapped_column(Float, nullable=False)
-    rank: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    rank: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
     __table_args__ = (
         Index("ix_risk_components_assessment", "risk_assessment_id"),
@@ -129,7 +131,7 @@ class WardRiskSummary(BaseModel):
     min_hsri: Mapped[float] = mapped_column(Float, nullable=False)
     risk_category: Mapped[str] = mapped_column(String(20), nullable=False)
     cell_count: Mapped[int] = mapped_column(Integer, nullable=False)
-    high_risk_cell_count: Mapped[Optional[int]] = mapped_column(
+    high_risk_cell_count: Mapped[int | None] = mapped_column(
         Integer, nullable=True
     )
 

@@ -1,18 +1,18 @@
 """Hazards API endpoint."""
-from fastapi import APIRouter, Query
-from typing import Optional
 from datetime import datetime
+
+from fastapi import APIRouter, Query
 
 router = APIRouter()
 
 
 @router.get("/")
 async def list_hazard_assessments(
-    grid_cell_id: Optional[str] = Query(None, description="Filter by grid cell ID"),
-    valid_time: Optional[datetime] = Query(None, description="Filter by valid time"),
-    category: Optional[str] = Query(None, description="Filter by hazard category"),
-    skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    grid_cell_id: str | None = Query(None, description="Filter by grid cell ID"),  # noqa: B008
+    valid_time: datetime | None = Query(None, description="Filter by valid time"),  # noqa: B008
+    category: str | None = Query(None, description="Filter by hazard category"),  # noqa: B008
+    skip: int = Query(0, ge=0),  # noqa: B008
+    limit: int = Query(100, ge=1, le=1000),  # noqa: B008
 ):
     """List hazard assessments."""
     return {
@@ -33,8 +33,8 @@ async def get_hazard_assessment(hazard_id: str):
 @router.get("/grid/{grid_cell_id}")
 async def get_hazard_by_grid_cell(
     grid_cell_id: str,
-    valid_from: Optional[datetime] = Query(None),
-    valid_to: Optional[datetime] = Query(None),
+    valid_from: datetime | None = Query(None),  # noqa: B008
+    valid_to: datetime | None = Query(None),  # noqa: B008
 ):
     """Get hazard assessments for a specific grid cell."""
     return {

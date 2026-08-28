@@ -1,25 +1,10 @@
 -- Spatial and performance indexes for the heatwave platform
--- Run after table creation
+-- NOTE: Most indexes are now created by Alembic migration
+-- (001_initial_schema.py). This file contains additional performance
+-- indexes that can be applied after migration for optimization.
 
--- Geography spatial indexes
-CREATE INDEX IF NOT EXISTS ix_states_geometry
-    ON states USING GIST (geometry);
-
-CREATE INDEX IF NOT EXISTS ix_cities_geometry
-    ON cities USING GIST (geometry);
-
-CREATE INDEX IF NOT EXISTS ix_wards_geometry
-    ON wards USING GIST (geometry);
-
-CREATE INDEX IF NOT EXISTS ix_grid_cells_geometry
-    ON grid_cells USING GIST (geometry);
-
-CREATE INDEX IF NOT EXISTS ix_grid_cells_centroid
-    ON grid_cells USING GIST (centroid);
-
--- Weather station spatial index
-CREATE INDEX IF NOT EXISTS ix_weather_stations_geometry
-    ON weather_stations USING GIST (geometry);
+-- Additional spatial indexes (not in Alembic migration)
+-- These are supplementary to the primary indexes created by Alembic
 
 -- Weather forecast performance indexes
 CREATE INDEX IF NOT EXISTS ix_weather_forecasts_valid_time_grid

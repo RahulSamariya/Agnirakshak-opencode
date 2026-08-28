@@ -1,8 +1,9 @@
 """Risk schemas."""
-from datetime import datetime
-from typing import Optional, Dict, Any, List
-from pydantic import BaseModel, ConfigDict, Field
 import uuid
+from datetime import datetime
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class RiskAssessmentComponentResponse(BaseModel):
@@ -15,7 +16,7 @@ class RiskAssessmentComponentResponse(BaseModel):
     factor_value: float
     weight: float
     weighted_value: float
-    rank: Optional[int] = None
+    rank: int | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -35,23 +36,23 @@ class RiskAssessmentResponse(BaseModel):
     exposure: float = Field(ge=0.0, le=1.0)
     hsri: float = Field(ge=0.0, le=1.0)
     risk_category: str
-    calculation_metadata: Optional[Dict[str, Any]] = None
+    calculation_metadata: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 
 
 class RiskAssessmentWithComponents(RiskAssessmentResponse):
-    components: List[RiskAssessmentComponentResponse] = []
+    components: list[RiskAssessmentComponentResponse] = []
 
 
 class RiskExplanationResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     risk_assessment: RiskAssessmentResponse
-    hazard_breakdown: Dict[str, Any]
-    vulnerability_top_factors: List[Dict[str, Any]]
-    exposure_top_factors: List[Dict[str, Any]]
-    thresholds_applied: Dict[str, Any]
+    hazard_breakdown: dict[str, Any]
+    vulnerability_top_factors: list[dict[str, Any]]
+    exposure_top_factors: list[dict[str, Any]]
+    thresholds_applied: dict[str, Any]
     model_version: str
 
 
@@ -70,7 +71,7 @@ class WardRiskSummaryResponse(BaseModel):
     min_hsri: float = Field(ge=0.0, le=1.0)
     risk_category: str
     cell_count: int
-    high_risk_cell_count: Optional[int] = None
+    high_risk_cell_count: int | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -81,9 +82,9 @@ class RiskRunResponse(BaseModel):
     id: uuid.UUID
     hazard_model_run_id: uuid.UUID
     run_start: datetime
-    run_end: Optional[datetime] = None
+    run_end: datetime | None = None
     status: str
-    total_assessments: Optional[int] = None
-    completed_assessments: Optional[int] = None
+    total_assessments: int | None = None
+    completed_assessments: int | None = None
     created_at: datetime
     updated_at: datetime

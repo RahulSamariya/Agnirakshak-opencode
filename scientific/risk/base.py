@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, Any, Optional
 from enum import Enum
+from typing import Any
 
 
 class RiskCategory(Enum):
@@ -19,26 +19,24 @@ class RiskResult:
     hazard: float
     vulnerability: float
     exposure: float
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
 
 class RiskModel(ABC):
     """Abstract base class for risk calculation models.
 
-    Core formula: HSRI = H × V × E
+    Core formula: HSRI = H x V x E
     """
 
     @property
     @abstractmethod
     def model_name(self) -> str:
         """Name of the risk model."""
-        pass
 
     @property
     @abstractmethod
     def model_version(self) -> str:
         """Version of the risk model."""
-        pass
 
     @abstractmethod
     def calculate(
@@ -57,7 +55,6 @@ class RiskModel(ABC):
         Returns:
             RiskResult with HSRI and risk category.
         """
-        pass
 
     @abstractmethod
     def classify_risk(self, hsri: float) -> RiskCategory:
@@ -69,9 +66,8 @@ class RiskModel(ABC):
         Returns:
             RiskCategory enum value.
         """
-        pass
 
-    def get_risk_thresholds(self) -> Dict[str, float]:
+    def get_risk_thresholds(self) -> dict[str, float]:
         """Return current risk category thresholds.
 
         Returns:

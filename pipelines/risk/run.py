@@ -4,7 +4,7 @@
 class RiskRunner:
     """Handles execution of risk calculations."""
 
-    def __init__(self, model_config: dict = None):
+    def __init__(self, model_config: dict | None = None):
         self.model_config = model_config or {}
 
     def run_hsri_calculation(
@@ -13,7 +13,7 @@ class RiskRunner:
         vulnerability: float,
         exposure: float,
     ) -> dict:
-        """Run HSRI = H × V × E calculation.
+        """Run HSRI = H x V x E calculation.
 
         Args:
             hazard: Hazard index (0-1).

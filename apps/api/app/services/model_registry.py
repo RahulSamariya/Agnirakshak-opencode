@@ -1,12 +1,13 @@
 """Model registry service - bridges YAML config to database."""
-import yaml
+from datetime import UTC
 from pathlib import Path
-from typing import Optional, List, Dict, Any
+from typing import Any
+
+import yaml
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.scientific import ScientificModel, ModelRun
-
+from app.models.scientific import ModelRun, ScientificModel
 
 CONFIG_DIR = Path(__file__).parent.parent.parent.parent / "scientific" / "configuration"
 
@@ -19,9 +20,9 @@ class ModelRegistryService:
 
     async def get_all_models(
         self,
-        model_type: Optional[str] = None,
-        status: Optional[str] = None,
-    ) -> List[ScientificModel]:
+        model_type: str | None = None,
+        status: str | None = None,
+    ) -> list[ScientificModel]:
         """Get all registered scientific models."""
         query = select(ScientificModel)
         if model_type:
@@ -31,13 +32,13 @@ class ModelRegistryService:
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
-    async def get_model_by_id(self, model_id: str) -> Optional[ScientificModel]:
+    async def get_model_by_id(self, model_id: str) -> ScientificModel | None:
         """Get a specific model by ID."""
         query = select(ScientificModel).where(ScientificModel.id == model_id)
         result = await self.session.execute(query)
         return result.scalar_one_or_none()
 
-    async def get_model_by_name(self, name: str) -> Optional[ScientificModel]:
+    async def get_model_by_name(self, name: str) -> ScientificModel | None:
         """Get a specific model by name."""
         query = select(ScientificModel).where(ScientificModel.name == name)
         result = await self.session.execute(query)
@@ -48,9 +49,9 @@ class ModelRegistryService:
         name: str,
         model_type: str,
         version: str,
-        description: Optional[str] = None,
-        parameters: Optional[Dict[str, Any]] = None,
-        configuration_yaml: Optional[str] = None,
+        description: str | None = None,
+        parameters: dict[str, Any] | None = None,
+        configuration_yaml: str | None = None,
     ) -> ScientificModel:
         """Register a new scientific model."""
         model = ScientificModel(
@@ -69,8 +70,8 @@ class ModelRegistryService:
     async def get_model_runs(
         self,
         model_id: str,
-        status: Optional[str] = None,
-    ) -> List[ModelRun]:
+        status: str | None = None,
+    ) -> list[ModelRun]:
         """Get runs for a specific model."""
         query = select(ModelRun).where(ModelRun.model_id == model_id)
         if status:
@@ -78,7 +79,7 @@ class ModelRegistryService:
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
-    async def get_model_run_by_id(self, run_id: str) -> Optional[ModelRun]:
+    async def get_model_run_by_id(self, run_id: str) -> ModelRun | None:
         """Get a specific model run."""
         query = select(ModelRun).where(ModelRun.id == run_id)
         result = await self.session.execute(query)
@@ -87,14 +88,14 @@ class ModelRegistryService:
     async def start_model_run(
         self,
         model_id: str,
-        input_parameters: Optional[Dict[str, Any]] = None,
+        input_parameters: dict[str, Any] | None = None,
     ) -> ModelRun:
         """Start a new model run."""
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         run = ModelRun(
             model_id=model_id,
-            run_start=datetime.now(timezone.utc),
+            run_start=datetime.now(UTC),
             status="running",
             input_parameters=input_parameters,
         )
@@ -106,16 +107,16 @@ class ModelRegistryService:
     async def complete_model_run(
         self,
         run_id: str,
-        output_summary: Optional[Dict[str, Any]] = None,
-        execution_time_ms: Optional[int] = None,
-    ) -> Optional[ModelRun]:
+        output_summary: dict[str, Any] | None = None,
+        execution_time_ms: int | None = None,
+    ) -> ModelRun | None:
         """Mark a model run as completed."""
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         run = await self.get_model_run_by_id(run_id)
         if run:
             run.status = "completed"
-            run.run_end = datetime.now(timezone.utc)
+            run.run_end = datetime.now(UTC)
             run.output_summary = output_summary
             run.execution_time_ms = execution_time_ms
             await self.session.commit()
@@ -126,20 +127,20 @@ class ModelRegistryService:
         self,
         run_id: str,
         error_message: str,
-    ) -> Optional[ModelRun]:
+    ) -> ModelRun | None:
         """Mark a model run as failed."""
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         run = await self.get_model_run_by_id(run_id)
         if run:
             run.status = "failed"
-            run.run_end = datetime.now(timezone.utc)
+            run.run_end = datetime.now(UTC)
             run.error_message = error_message
             await self.session.commit()
             await self.session.refresh(run)
         return run
 
-    def load_yaml_config(self, config_name: str) -> Dict[str, Any]:
+    def load_yaml_config(self, config_name: str) -> dict[str, Any]:
         """Load a YAML configuration file."""
         config_path = CONFIG_DIR / f"{config_name}.yaml"
         if config_path.exists():
@@ -147,7 +148,7 @@ class ModelRegistryService:
                 return yaml.safe_load(f)
         return {}
 
-    def get_all_configurations(self) -> Dict[str, Any]:
+    def get_all_configurations(self) -> dict[str, Any]:
         """Load all scientific configurations."""
         configs = {}
         for config_file in CONFIG_DIR.glob("*.yaml"):

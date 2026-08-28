@@ -4,7 +4,7 @@
 class ExposureIngestor:
     """Handles ingestion of exposure data."""
 
-    def __init__(self, data_sources: dict = None):
+    def __init__(self, data_sources: dict | None = None):
         self.data_sources = data_sources or {}
 
     def ingest_infrastructure_data(self, source: str) -> dict:

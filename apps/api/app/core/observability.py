@@ -1,10 +1,11 @@
 """Observability configuration for the Heatwave Platform."""
 import logging
+import uuid
+from typing import Any
+
 import structlog
-from typing import Any, Dict
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
-import uuid
 
 
 def configure_logging(log_level: str = "INFO") -> None:
@@ -50,13 +51,13 @@ class HealthChecker:
     """Centralized health checking for application components."""
 
     def __init__(self):
-        self.checks: Dict[str, Any] = {}
+        self.checks: dict[str, Any] = {}
 
     def register_check(self, name: str, check_fn):
         """Register a health check function."""
         self.checks[name] = check_fn
 
-    async def run_checks(self) -> Dict[str, Any]:
+    async def run_checks(self) -> dict[str, Any]:
         """Run all registered health checks."""
         results = {}
         for name, check_fn in self.checks.items():

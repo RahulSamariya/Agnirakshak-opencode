@@ -1,13 +1,14 @@
 """Smoke tests for API startup and basic functionality."""
 import sys
 from pathlib import Path
-import pytest
-from httpx import AsyncClient, ASGITransport
 
-# Add apps/api to path
+# Add apps/api to path before importing app
 API_DIR = Path(__file__).resolve().parent.parent / "apps" / "api"
 if API_DIR.exists() and str(API_DIR) not in sys.path:
     sys.path.insert(0, str(API_DIR))
+
+import pytest
+from httpx import ASGITransport, AsyncClient
 
 from app.main import app
 

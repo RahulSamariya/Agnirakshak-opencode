@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, Any, Optional
 from enum import Enum
+from typing import Any
 
 
 class ThermalStressCategory(Enum):
@@ -19,7 +19,7 @@ class ThermalComfortResult:
     utci: float
     category: ThermalStressCategory
     hazard_index: float
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
 
 class ThermalComfortModel(ABC):
@@ -34,13 +34,11 @@ class ThermalComfortModel(ABC):
     @abstractmethod
     def model_name(self) -> str:
         """Name of the thermal comfort model."""
-        pass
 
     @property
     @abstractmethod
     def model_version(self) -> str:
         """Version of the thermal comfort model."""
-        pass
 
     @abstractmethod
     def calculate_utci(
@@ -61,7 +59,6 @@ class ThermalComfortModel(ABC):
         Returns:
             ThermalComfortResult with UTCI value and category.
         """
-        pass
 
     @abstractmethod
     def get_hazard_index(self, utci: float) -> float:
@@ -73,4 +70,3 @@ class ThermalComfortModel(ABC):
         Returns:
             Normalized hazard index between 0.0 and 1.0.
         """
-        pass
