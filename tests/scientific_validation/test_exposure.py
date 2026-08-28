@@ -3,6 +3,7 @@ import pytest
 from pydantic import ValidationError
 
 from scientific.exposure.scoring import (
+    BBWMExposureModel,
     ExposureInput,
     InfrastructureTransitScores,
     LifestyleScores,
@@ -16,9 +17,9 @@ def _all_low_exposure():
     return ExposureInput(
         infrastructure_transit=InfrastructureTransitScores(condition=0.33, facilities=0.33),
         lifestyle=LifestyleScores(alcohol=0.33, sleep=0.33, tobacco=0.33, caffeine=0.33),
-        fluid_activity=0.33,
+        fluid_intake_activity=0.33,
         air_quality=0.33,
-        healthcare_access=0.33,
+        healthcare_accessibility=0.33,
     )
 
 
@@ -26,9 +27,9 @@ def _all_high_exposure():
     return ExposureInput(
         infrastructure_transit=InfrastructureTransitScores(condition=1.00, facilities=1.00),
         lifestyle=LifestyleScores(alcohol=1.00, sleep=1.00, tobacco=1.00, caffeine=1.00),
-        fluid_activity=1.00,
+        fluid_intake_activity=1.00,
         air_quality=1.00,
-        healthcare_access=1.00,
+        healthcare_accessibility=1.00,
     )
 
 
@@ -67,9 +68,9 @@ def test_invalid_score_rejected():
         ExposureInput(
             infrastructure_transit=InfrastructureTransitScores(condition=0.50, facilities=0.33),
             lifestyle=LifestyleScores(alcohol=0.33, sleep=0.33, tobacco=0.33, caffeine=0.33),
-            fluid_activity=0.33,
+            fluid_intake_activity=0.33,
             air_quality=0.33,
-            healthcare_access=0.33,
+            healthcare_accessibility=0.33,
         )
 
 
@@ -78,6 +79,27 @@ def test_extra_field_rejected():
         ExposureInput(
             infrastructure_transit=InfrastructureTransitScores(condition=0.33, facilities=0.33),
             lifestyle=LifestyleScores(alcohol=0.33, sleep=0.33, tobacco=0.33, caffeine=0.33),
-            fluid_activity=0.33, air_quality=0.33, healthcare_access=0.33,
+            fluid_intake_activity=0.33, air_quality=0.33, healthcare_accessibility=0.33,
             extra=1.0,
         )
+
+
+def test_interface_implementation():
+    model = BBWMExposureModel()
+    assert model.model_name == "exposure-bbwm-v1"
+    assert "infrastructure_transit" in model.weights
+    assert model.weights["infrastructure_transit"] == 0.282
+
+
+def test_interface_calculate():
+    model = BBWMExposureModel()
+    profile = {
+        "infrastructure_transit": {"condition": 0.66, "facilities": 0.33},
+        "lifestyle": {"alcohol": 0.33, "sleep": 0.33, "tobacco": 0.33, "caffeine": 0.33},
+        "fluid_intake_activity": 0.66,
+        "air_quality": 0.33,
+        "healthcare_accessibility": 0.33,
+    }
+    result = model.calculate(profile)
+    assert 0.33 <= result.exposure_index <= 1.0
+    assert "infrastructure_transit" in result.factor_scores

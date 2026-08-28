@@ -1,115 +1,99 @@
-FINAL PHASE-1 REPOSITORY CONSISTENCY CHECK
+PHASE 2 SCIENTIFIC ENGINE — CORRECTION AND INTEGRATION PASS
 
-Inspect the current repository exactly as committed.
+The current scientific validation tests pass, but the implementation needs to be made architecturally correct before adding the actual UTCI calculator.
 
-Do NOT implement Phase 2.
-Do NOT implement UTCI, WBGT, Hazard, Vulnerability, Exposure, HSRI, mortality ML, hospitalization ML, or any scientific algorithm.
+DO NOT implement mortality ML.
+DO NOT implement hospitalization ML.
+DO NOT implement the 3–5 day prediction model.
 
-Do NOT redesign the architecture.
+Do the following only:
 
-I found that docker-compose.yml references:
+1. Make scientific/configuration/*.yaml the single source of truth for:
+   - hazard categories
+   - vulnerability weights
+   - exposure weights
+   - nested weights
+   - residual floors
+   - risk thresholds
 
-    infra/docker/Dockerfile.db
+2. Create typed Pydantic configuration models for those YAML files.
 
-but this file appears to be missing from the repository.
+3. Remove duplicated scientific constants from calculation code where the same value already exists in configuration.
 
-Resolve this inconsistency.
+4. Make the concrete Phase-2 models actually implement the Phase-1 abstract interfaces:
+   - HazardModel
+   - VulnerabilityModel
+   - ExposureModel
+   - RiskModel
 
-Requirements:
+   Suggested concrete implementations:
+   - UTCIHazardModel / HazardNormalizationModel
+   - BBWMVulnerabilityModel
+   - BBWMExposureModel
+   - MultiplicativeHSRIModel
 
-1. Ensure docker-compose.yml references a database Dockerfile that actually exists in the repository.
+5. Keep pure deterministic calculation functions underneath the model classes where useful.
 
-2. The database container must provide:
-   - PostgreSQL
-   - PostGIS
-   - TimescaleDB
+6. Standardize configuration naming:
+   - fluid_intake_activity
+   - healthcare_accessibility
 
-3. Keep the current PostgreSQL + PostGIS + TimescaleDB architecture.
+   or another single canonical vocabulary, but use it consistently in:
+   YAML
+   Python
+   Pydantic
+   tests
+   database mapping
 
-4. Do not introduce Supabase, Firebase, AWS, MongoDB, Kafka, or any unrelated platform.
+7. Make Pydantic scientific result models the canonical scientific result contract instead of having competing dataclass/Pydantic result types.
 
-5. Start from a completely clean database volume.
+8. Preserve:
+   HSRI = H × V × E
 
-6. Build the Docker images from the repository itself.
+9. Preserve:
+   V >= 0.33
+   E >= 0.33
 
-7. Start the database.
+10. Preserve the exact supplied weights and thresholds.
+    Do NOT renormalize the rounded exposure weights unless explicitly required.
 
-8. Verify:
-   - PostgreSQL works
-   - PostGIS extension exists
-   - TimescaleDB extension exists
+11. Add tests verifying:
+    - configuration loads correctly
+    - configuration values match the expected scientific specification
+    - interface implementations work
+    - V minimum/maximum
+    - E minimum/maximum
+    - HSRI minimum/maximum
+    - risk boundaries
+    - deterministic output
+    - invalid scores rejected
+    - no unknown Pydantic fields accepted
 
-9. Run:
+12. Do NOT implement the actual UTCI formula yet unless an authoritative/reference implementation and validation data are available in the repository.
 
-   cd apps/api
-   alembic upgrade head
+13. The next planned component after this pass is:
+       actual UTCI calculator
+    accepting:
+       air temperature
+       relative humidity
+       wind speed
+       mean radiant temperature
 
-10. Verify from the actual running database:
-    - all expected tables exist
-    - weather_observations is a hypertable
-    - weather_forecasts is a hypertable
-    - TimescaleDB constraints are valid
-    - spatial indexes exist
-    - grid_ward_intersections exists
-    - coverage_fraction exists
-    - intersection_area exists
+14. Update documentation to distinguish:
+    - implemented normalized scoring engine
+    - not-yet-implemented UTCI calculation
+    - later mortality ML
 
-11. Start:
-    - Redis
-    - API
-    - Worker
-    - Web
-
-12. Verify:
-    - API health returns 200
-    - worker imports/starts
-    - frontend typecheck passes
-    - frontend build passes
-    - frontend lint passes
-
-13. Run:
-
+15. Run:
     pytest -q
+    ruff check .
+    mypy ...
 
-14. Run:
+Do not claim scientific validation merely because unit tests pass.
 
-    ruff check apps/ scientific/ pipelines/ tests/
-
-15. Do not modify scientific constants.
-
-16. Do not modify scientific model implementations because they are intentionally Phase-2 work.
-
-17. Make sure README claims match what was actually verified.
-
-IMPORTANT:
-The final repository must be self-contained.
-Every file referenced by Docker Compose, scripts, Makefile, migrations, or documentation must actually exist.
-
-FINAL REPORT:
-
-Provide:
-
-File consistency: PASS/FAIL
-Docker build: PASS/FAIL
-PostgreSQL: PASS/FAIL
-PostGIS: PASS/FAIL
-TimescaleDB: PASS/FAIL
-Clean Alembic migration: PASS/FAIL
-Hypertables: PASS/FAIL
-Spatial model: PASS/FAIL
-Redis: PASS/FAIL
-API: PASS/FAIL
-Worker: PASS/FAIL
-Frontend build: PASS/FAIL
-Frontend typecheck: PASS/FAIL
-Frontend lint: PASS/FAIL
-pytest: PASS/FAIL
-Ruff: PASS/FAIL
-
-List exact files changed.
-
-Only state:
-
-PHASE 1 COMPLETE — READY FOR PHASE 2
-
-if all critical checks genuinely pass from the repository itself.
+Final report must state:
+    what was changed
+    what scientific constants are now configuration-driven
+    which Phase-1 interfaces are concretely implemented
+    tests passed
+    remaining scientific gaps

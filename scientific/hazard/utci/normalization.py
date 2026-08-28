@@ -12,9 +12,11 @@ The raw UTCI value must be supplied by the thermal-comfort engine.
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import Final
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from scientific.configuration.loader import load_hazard_categories
+from scientific.hazard.base import HazardModel, HazardResult
 
 
 class HazardCategory(StrEnum):
@@ -57,16 +59,27 @@ class HazardNormalizationOutput(BaseModel):
     hazard_index: float = Field(..., ge=0.0, le=1.0)
 
 
-# Lower/upper UTCI boundaries supplied by the specification.
-_CATEGORY_BOUNDS: Final = (
-    (9.0, 26.0, 0.0, 0.25, HazardCategory.NO_THERMAL_STRESS),
-    (26.0, 32.0, 0.25, 0.50, HazardCategory.MODERATE_HEAT_STRESS),
-    (32.0, 38.0, 0.50, 0.75, HazardCategory.STRONG_HEAT_STRESS),
-    (38.0, 46.0, 0.75, 1.00, HazardCategory.VERY_STRONG_HEAT_STRESS),
-)
+# ---------------------------------------------------------------------------
+# Pure calculation functions (config-driven)
+# ---------------------------------------------------------------------------
 
-_MIN_UTCI_FOR_SCALE: Final = 9.0
-_MAX_UTCI_FOR_SCALE: Final = 46.0
+_CATEGORY_LABEL_TO_ENUM: dict[str, HazardCategory] = {
+    "no_thermal_stress": HazardCategory.NO_THERMAL_STRESS,
+    "moderate_heat_stress": HazardCategory.MODERATE_HEAT_STRESS,
+    "strong_heat_stress": HazardCategory.STRONG_HEAT_STRESS,
+    "very_strong_heat_stress": HazardCategory.VERY_STRONG_HEAT_STRESS,
+    "extreme_heat_stress": HazardCategory.EXTREME_HEAT_STRESS,
+}
+
+
+def _load_category_bounds() -> list[tuple[float, float, float, float, HazardCategory]]:
+    cfg = load_hazard_categories()
+    bounds = []
+    for _key, cat in cfg.categories.items():
+        enum_val = _CATEGORY_LABEL_TO_ENUM[cat.label.lower().replace(" ", "_")]
+        upper = cat.max if cat.max is not None else float("inf")
+        bounds.append((cat.min, upper, cat.hazard_min, cat.hazard_max, enum_val))
+    return bounds
 
 
 def _linear_interpolate(
@@ -85,45 +98,37 @@ def _linear_interpolate(
 
 def classify_utci(utci_c: float) -> HazardCategory:
     """Return the thermal-stress category for a UTCI value."""
-    if 9.0 <= utci_c < 26.0:
-        return HazardCategory.NO_THERMAL_STRESS
-    if utci_c < 32.0:
-        return HazardCategory.MODERATE_HEAT_STRESS
-    if utci_c < 38.0:
-        return HazardCategory.STRONG_HEAT_STRESS
-    if utci_c <= 46.0:
-        return HazardCategory.VERY_STRONG_HEAT_STRESS
+    bounds = _load_category_bounds()
+    for utci_min, utci_max, _h_min, _h_max, category in bounds:
+        if utci_min <= utci_c < utci_max:
+            return category
+    # Extreme heat (max is inf)
     return HazardCategory.EXTREME_HEAT_STRESS
 
 
 def normalize_utci(utci_c: float) -> float:
     """Convert UTCI to normalized Hazard Index H.
 
-    Values at/below 9 C are clamped to H = 0.0 because the supplied
-    material does not define a separate cold-stress normalization regime.
-    Values above 46 C are capped at H = 1.0.
+    Values at/below the minimum category bound are clamped to H = 0.0.
+    Values above the maximum category bound are capped at H = 1.0.
     """
+    bounds = _load_category_bounds()
+    first_min = bounds[0][0]
+    last_max = bounds[-1][1]
+
     value = float(utci_c)
-    if value <= _MIN_UTCI_FOR_SCALE:
+    if value <= first_min:
         return 0.0
-    if value > _MAX_UTCI_FOR_SCALE:
+    if value >= last_max:
         return 1.0
-    for utci_min, utci_max, h_min, h_max, _category in _CATEGORY_BOUNDS:
+    for utci_min, utci_max, h_min, h_max, _category in bounds:
         if utci_min <= value <= utci_max:
-            result = _linear_interpolate(
-                value,
-                utci_min,
-                utci_max,
-                h_min,
-                h_max,
-            )
+            result = _linear_interpolate(value, utci_min, utci_max, h_min, h_max)
             return float(min(1.0, max(0.0, result)))
     raise RuntimeError(f"UTCI value {value} did not match any normalization band.")
 
 
-def normalize_hazard(
-    data: HazardNormalizationInput,
-) -> HazardNormalizationOutput:
+def normalize_hazard(data: HazardNormalizationInput) -> HazardNormalizationOutput:
     """Calculate normalized Hazard Index H from a validated UTCI input."""
     hazard_index = normalize_utci(data.utci_c)
     category = classify_utci(data.utci_c)
@@ -132,3 +137,36 @@ def normalize_hazard(
         category=category,
         hazard_index=hazard_index,
     )
+
+
+# ---------------------------------------------------------------------------
+# Concrete Phase-1 interface implementation
+# ---------------------------------------------------------------------------
+
+class UTCIHazardModel(HazardModel):
+    """Configuration-driven UTCI hazard normalization model."""
+
+    @property
+    def model_name(self) -> str:
+        return "utci-hazard-v1"
+
+    @property
+    def model_version(self) -> str:
+        cfg = load_hazard_categories()
+        return cfg.version
+
+    def calculate_hazard(self, utci: float) -> HazardResult:
+        output = normalize_hazard(HazardNormalizationInput(utci_c=utci))
+        return HazardResult(
+            utci_value=utci,
+            hazard_index=output.hazard_index,
+            hazard_category=output.category.value,
+            metadata={"version": self.model_version},
+        )
+
+    def get_hazard_category(self, hazard_index: float) -> str:
+        cfg = load_hazard_categories()
+        for _key, cat in cfg.categories.items():
+            if cat.min <= hazard_index <= cat.max:
+                return cat.label
+        return "Extreme heat stress"

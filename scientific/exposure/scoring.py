@@ -1,19 +1,24 @@
 """Exposure Index calculation.
 
 Atomic scores use the supplied 0.33 / 0.66 / 1.00 scale.
+Weights and floors are loaded from configuration YAML.
+Standardized naming: fluid_intake_activity, healthcare_accessibility.
 """
 from __future__ import annotations
 
-from typing import Final
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-_ALLOWED_SCORES: Final = (0.33, 0.66, 1.00)
+from scientific.configuration.loader import load_exposure_weights
+from scientific.exposure.base import ExposureModel, ExposureResult
+
+_ALLOWED_SCORES: tuple[float, ...] = (0.33, 0.66, 1.00)
 
 
 def _validate_discrete_score(value: float, field_name: str) -> float:
     value = float(value)
-    if min(abs(value - candidate) for candidate in _ALLOWED_SCORES) > 1e-9:
+    if min(abs(value - c) for c in _ALLOWED_SCORES) > 1e-9:
         raise ValueError(
             f"{field_name} must be one of 0.33, 0.66, or 1.00; got {value}."
         )
@@ -53,15 +58,15 @@ class ExposureInput(BaseModel):
 
     infrastructure_transit: InfrastructureTransitScores
     lifestyle: LifestyleScores
-    fluid_activity: float = Field(..., ge=0.33, le=1.00)
+    fluid_intake_activity: float = Field(..., ge=0.33, le=1.00)
     air_quality: float = Field(..., ge=0.33, le=1.00)
-    healthcare_access: float = Field(..., ge=0.33, le=1.00)
+    healthcare_accessibility: float = Field(..., ge=0.33, le=1.00)
 
     @model_validator(mode="after")
     def validate_top_level_scores(self) -> ExposureInput:
-        _validate_discrete_score(self.fluid_activity, "fluid_activity")
+        _validate_discrete_score(self.fluid_intake_activity, "fluid_intake_activity")
         _validate_discrete_score(self.air_quality, "air_quality")
-        _validate_discrete_score(self.healthcare_access, "healthcare_access")
+        _validate_discrete_score(self.healthcare_accessibility, "healthcare_accessibility")
         return self
 
 
@@ -80,62 +85,43 @@ class ExposureOutput(BaseModel):
     contributions: dict[str, ExposureContribution]
 
 
-EXPOSURE_WEIGHTS: Final = {
-    "infrastructure_transit": 0.282,
-    "lifestyle": 0.184,
-    "fluid_activity": 0.282,
-    "air_quality": 0.126,
-    "healthcare_access": 0.125,
-}
+# ---------------------------------------------------------------------------
+# Pure calculation functions (config-driven)
+# ---------------------------------------------------------------------------
 
-INFRASTRUCTURE_WEIGHTS: Final = {
-    "condition": 0.508,
-    "facilities": 0.492,
-}
-
-LIFESTYLE_WEIGHTS: Final = {
-    "alcohol": 0.341,
-    "sleep": 0.232,
-    "tobacco": 0.218,
-    "caffeine": 0.208,
-}
-
-
-def calculate_infrastructure_transit(
-    data: InfrastructureTransitScores,
-) -> float:
-    return (
-        0.508 * data.condition
-        + 0.492 * data.facilities
-    )
+def calculate_infrastructure_transit(data: InfrastructureTransitScores) -> float:
+    cfg = load_exposure_weights()
+    sub = cfg.infrastructure_transit_sub
+    return sub["condition"] * data.condition + sub["facilities"] * data.facilities
 
 
 def calculate_lifestyle(data: LifestyleScores) -> float:
+    cfg = load_exposure_weights()
+    sub = cfg.lifestyle_sub
     return (
-        0.341 * data.alcohol
-        + 0.232 * data.sleep
-        + 0.218 * data.tobacco
-        + 0.208 * data.caffeine
+        sub["alcohol"] * data.alcohol
+        + sub["sleep"] * data.sleep
+        + sub["tobacco"] * data.tobacco
+        + sub["caffeine"] * data.caffeine
     )
 
 
 def calculate_exposure(data: ExposureInput) -> ExposureOutput:
-    infrastructure_score = calculate_infrastructure_transit(
-        data.infrastructure_transit
-    )
+    cfg = load_exposure_weights()
+    infrastructure_score = calculate_infrastructure_transit(data.infrastructure_transit)
     lifestyle_score = calculate_lifestyle(data.lifestyle)
 
     component_scores = {
         "infrastructure_transit": infrastructure_score,
         "lifestyle": lifestyle_score,
-        "fluid_activity": data.fluid_activity,
+        "fluid_intake_activity": data.fluid_intake_activity,
         "air_quality": data.air_quality,
-        "healthcare_access": data.healthcare_access,
+        "healthcare_accessibility": data.healthcare_accessibility,
     }
 
     total = 0.0
     contributions: dict[str, ExposureContribution] = {}
-    for component_name, weight in EXPOSURE_WEIGHTS.items():
+    for component_name, weight in cfg.weights.items():
         score = float(component_scores[component_name])
         contribution = weight * score
         total += contribution
@@ -144,8 +130,62 @@ def calculate_exposure(data: ExposureInput) -> ExposureOutput:
             weight=weight,
             contribution=contribution,
         )
-    total = float(min(1.0, max(0.33, round(total, 12))))
+    total = float(min(1.0, max(cfg.residual_floor, round(total, 12))))
     return ExposureOutput(
         exposure_index=total,
         contributions=contributions,
     )
+
+
+# ---------------------------------------------------------------------------
+# Concrete Phase-1 interface implementation
+# ---------------------------------------------------------------------------
+
+class BBWMExposureModel(ExposureModel):
+    """Configuration-driven BBWM exposure model."""
+
+    @property
+    def model_name(self) -> str:
+        return "exposure-bbwm-v1"
+
+    @property
+    def model_version(self) -> str:
+        cfg = load_exposure_weights()
+        return cfg.version
+
+    @property
+    def weights(self) -> dict[str, float]:
+        cfg = load_exposure_weights()
+        return dict(cfg.weights)
+
+    def score_factor(self, factor_name: str, raw_value: Any) -> float:
+        """Score a raw factor value.
+
+        Phase 2 accepts already-normalized scores (0.33/0.66/1.00).
+        Raw-to-score classification rules are not yet implemented.
+        """
+        allowed = (0.33, 0.66, 1.00)
+        value = float(raw_value)
+        if min(abs(value - c) for c in allowed) > 1e-9:
+            raise ValueError(
+                f"{factor_name} must be one of {allowed}; got {value}."
+            )
+        return value
+
+    def calculate(self, profile: dict[str, Any]) -> ExposureResult:
+        infra = InfrastructureTransitScores(**profile["infrastructure_transit"])
+        lifestyle = LifestyleScores(**profile["lifestyle"])
+        data = ExposureInput(
+            infrastructure_transit=infra,
+            lifestyle=lifestyle,
+            fluid_intake_activity=profile["fluid_intake_activity"],
+            air_quality=profile["air_quality"],
+            healthcare_accessibility=profile["healthcare_accessibility"],
+        )
+        output = calculate_exposure(data)
+        return ExposureResult(
+            exposure_index=output.exposure_index,
+            factor_scores={k: v.score for k, v in output.contributions.items()},
+            weighted_scores={k: v.contribution for k, v in output.contributions.items()},
+            metadata={"version": self.model_version},
+        )

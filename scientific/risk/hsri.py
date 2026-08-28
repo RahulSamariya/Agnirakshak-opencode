@@ -3,15 +3,16 @@
 Core equation:
     HSRI = H * V * E
 
-Residual-risk floor:
-    V >= 0.33
-    E >= 0.33
+Risk thresholds and floors are loaded from configuration YAML.
 """
 from __future__ import annotations
 
 from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from scientific.configuration.loader import load_risk_thresholds
+from scientific.risk.base import RiskCategory, RiskModel, RiskResult
 
 
 class RiskLevel(StrEnum):
@@ -46,22 +47,22 @@ class HSRIOutput(BaseModel):
     risk_level: RiskLevel
 
 
+# ---------------------------------------------------------------------------
+# Pure calculation functions (config-driven)
+# ---------------------------------------------------------------------------
+
 def classify_hsri(hsri_score: float) -> RiskLevel:
+    cfg = load_risk_thresholds()
     value = float(hsri_score)
-    if value <= 0.33:
-        return RiskLevel.LOW
-    if value <= 0.66:
-        return RiskLevel.MEDIUM
+    for _key, cat in cfg.categories.items():
+        if cat.min <= value <= cat.max:
+            return RiskLevel(cat.label.lower())
     return RiskLevel.HIGH
 
 
 def calculate_hsri(data: HSRIInput) -> HSRIOutput:
     """Calculate the deterministic multiplicative HSRI."""
-    hsri = (
-        data.hazard_index
-        * data.vulnerability_index
-        * data.exposure_index
-    )
+    hsri = data.hazard_index * data.vulnerability_index * data.exposure_index
     hsri = float(min(1.0, max(0.0, round(hsri, 12))))
     return HSRIOutput(
         hazard_index=data.hazard_index,
@@ -70,3 +71,49 @@ def calculate_hsri(data: HSRIInput) -> HSRIOutput:
         hsri_score=hsri,
         risk_level=classify_hsri(hsri),
     )
+
+
+# ---------------------------------------------------------------------------
+# Concrete Phase-1 interface implementation
+# ---------------------------------------------------------------------------
+
+class MultiplicativeHSRIModel(RiskModel):
+    """Configuration-driven multiplicative HSRI risk model."""
+
+    @property
+    def model_name(self) -> str:
+        return "hsri-multiplicative-v1"
+
+    @property
+    def model_version(self) -> str:
+        cfg = load_risk_thresholds()
+        return cfg.version
+
+    def calculate(
+        self,
+        hazard: float,
+        vulnerability: float,
+        exposure: float,
+    ) -> RiskResult:
+        data = HSRIInput(
+            hazard_index=hazard,
+            vulnerability_index=vulnerability,
+            exposure_index=exposure,
+        )
+        output = calculate_hsri(data)
+        return RiskResult(
+            hsri=output.hsri_score,
+            risk_category=RiskCategory(output.risk_level.value),
+            hazard=output.hazard_index,
+            vulnerability=output.vulnerability_index,
+            exposure=output.exposure_index,
+            metadata={"version": self.model_version},
+        )
+
+    def classify_risk(self, hsri: float) -> RiskCategory:
+        level = classify_hsri(hsri)
+        return RiskCategory(level.value)
+
+    def get_risk_thresholds(self) -> dict[str, float]:
+        cfg = load_risk_thresholds()
+        return {k: v.max for k, v in cfg.categories.items()}

@@ -4,6 +4,7 @@ from pydantic import ValidationError
 
 from scientific.risk.hsri import (
     HSRIInput,
+    MultiplicativeHSRIModel,
     RiskLevel,
     calculate_hsri,
     classify_hsri,
@@ -65,3 +66,29 @@ def test_extra_field_rejected():
             hazard_index=0.5, vulnerability_index=0.5,
             exposure_index=0.5, extra=1.0,
         )
+
+
+def test_interface_implementation():
+    model = MultiplicativeHSRIModel()
+    assert model.model_name == "hsri-multiplicative-v1"
+    result = model.calculate(0.8, 0.75, 0.9)
+    assert 0.0 <= result.hsri <= 1.0
+    assert result.hazard == 0.8
+    assert result.vulnerability == 0.75
+    assert result.exposure == 0.9
+
+
+def test_interface_classify_risk():
+    from scientific.risk.base import RiskCategory
+    model = MultiplicativeHSRIModel()
+    assert model.classify_risk(0.2) == RiskCategory.LOW
+    assert model.classify_risk(0.5) == RiskCategory.MEDIUM
+    assert model.classify_risk(0.8) == RiskCategory.HIGH
+
+
+def test_interface_thresholds():
+    model = MultiplicativeHSRIModel()
+    thresholds = model.get_risk_thresholds()
+    assert "low" in thresholds
+    assert "medium" in thresholds
+    assert "high" in thresholds

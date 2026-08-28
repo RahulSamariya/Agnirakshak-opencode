@@ -2,6 +2,7 @@
 from scientific.hazard.utci.normalization import (
     HazardCategory,
     HazardNormalizationInput,
+    UTCIHazardModel,
     normalize_hazard,
 )
 
@@ -33,7 +34,7 @@ def test_utci_38_boundary():
 def test_utci_46_boundary():
     result = normalize_hazard(HazardNormalizationInput(utci_c=46.0))
     assert result.hazard_index == 1.00
-    assert result.category == HazardCategory.VERY_STRONG_HEAT_STRESS
+    assert result.category == HazardCategory.EXTREME_HEAT_STRESS
 
 
 def test_utci_above_46_is_capped():
@@ -68,3 +69,18 @@ def test_utci_extra_forbid():
 
     with pytest.raises(ValidationError):
         HazardNormalizationInput(utci_c=30.0, extra_field=1.0)
+
+
+def test_interface_implementation():
+    model = UTCIHazardModel()
+    assert model.model_name == "utci-hazard-v1"
+    result = model.calculate_hazard(41.2)
+    assert 0.0 <= result.hazard_index <= 1.0
+    assert result.utci_value == 41.2
+    assert isinstance(result.hazard_category, str)
+
+
+def test_interface_get_hazard_category():
+    model = UTCIHazardModel()
+    cat = model.get_hazard_category(0.5)
+    assert isinstance(cat, str)
