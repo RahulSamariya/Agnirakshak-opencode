@@ -1,84 +1,115 @@
-Run the final Phase-1 integration acceptance test.
+FINAL PHASE-1 REPOSITORY CONSISTENCY CHECK
 
-Do not implement Phase 2.
-Do not implement UTCI, WBGT, H, V, E, HSRI, mortality ML, hospitalization ML, or any scientific algorithm.
+Inspect the current repository exactly as committed.
 
-Do not redesign the architecture.
+Do NOT implement Phase 2.
+Do NOT implement UTCI, WBGT, Hazard, Vulnerability, Exposure, HSRI, mortality ML, hospitalization ML, or any scientific algorithm.
 
-Perform these checks against the ACTUAL repository:
+Do NOT redesign the architecture.
 
-1. Create a completely clean Python environment.
-2. Install the documented Python dependencies.
-3. Run pytest.
-4. Start a completely fresh PostgreSQL + PostGIS + TimescaleDB database.
-5. Do NOT manually create application tables.
-6. Run:
+I found that docker-compose.yml references:
+
+    infra/docker/Dockerfile.db
+
+but this file appears to be missing from the repository.
+
+Resolve this inconsistency.
+
+Requirements:
+
+1. Ensure docker-compose.yml references a database Dockerfile that actually exists in the repository.
+
+2. The database container must provide:
+   - PostgreSQL
+   - PostGIS
+   - TimescaleDB
+
+3. Keep the current PostgreSQL + PostGIS + TimescaleDB architecture.
+
+4. Do not introduce Supabase, Firebase, AWS, MongoDB, Kafka, or any unrelated platform.
+
+5. Start from a completely clean database volume.
+
+6. Build the Docker images from the repository itself.
+
+7. Start the database.
+
+8. Verify:
+   - PostgreSQL works
+   - PostGIS extension exists
+   - TimescaleDB extension exists
+
+9. Run:
 
    cd apps/api
    alembic upgrade head
 
-7. Verify from the running database:
+10. Verify from the actual running database:
+    - all expected tables exist
+    - weather_observations is a hypertable
+    - weather_forecasts is a hypertable
+    - TimescaleDB constraints are valid
+    - spatial indexes exist
+    - grid_ward_intersections exists
+    - coverage_fraction exists
+    - intersection_area exists
 
-   - PostGIS extension exists
-   - TimescaleDB extension exists
-   - all expected domain tables exist
-   - weather_observations is a hypertable
-   - weather_forecasts is a hypertable
-   - TimescaleDB primary-key/unique-index constraints are valid
-   - spatial indexes exist
-   - grid_ward_intersections exists
-   - coverage_fraction exists
-   - intersection_area exists
+11. Start:
+    - Redis
+    - API
+    - Worker
+    - Web
 
-8. Start Redis.
-9. Start the API.
-10. Verify /api/v1/health.
-11. Start/import the worker.
-12. Verify scientific packages import.
-13. Run frontend:
+12. Verify:
+    - API health returns 200
+    - worker imports/starts
+    - frontend typecheck passes
+    - frontend build passes
+    - frontend lint passes
 
-   pnpm install
-   pnpm --filter heatwave-web type-check
-   pnpm --filter heatwave-web build
-   pnpm --filter heatwave-web lint
+13. Run:
+
+    pytest -q
 
 14. Run:
 
-   ruff check apps/ scientific/ pipelines/ tests/
+    ruff check apps/ scientific/ pipelines/ tests/
 
 15. Do not modify scientific constants.
-16. Do not implement Phase 2.
+
+16. Do not modify scientific model implementations because they are intentionally Phase-2 work.
+
+17. Make sure README claims match what was actually verified.
 
 IMPORTANT:
+The final repository must be self-contained.
+Every file referenced by Docker Compose, scripts, Makefile, migrations, or documentation must actually exist.
 
-Do not report PASS based on static code inspection.
+FINAL REPORT:
 
-Actually connect to the database and verify TimescaleDB/PostGIS.
+Provide:
 
-At the end return:
+File consistency: PASS/FAIL
+Docker build: PASS/FAIL
+PostgreSQL: PASS/FAIL
+PostGIS: PASS/FAIL
+TimescaleDB: PASS/FAIL
+Clean Alembic migration: PASS/FAIL
+Hypertables: PASS/FAIL
+Spatial model: PASS/FAIL
+Redis: PASS/FAIL
+API: PASS/FAIL
+Worker: PASS/FAIL
+Frontend build: PASS/FAIL
+Frontend typecheck: PASS/FAIL
+Frontend lint: PASS/FAIL
+pytest: PASS/FAIL
+Ruff: PASS/FAIL
 
-CHECK                         RESULT
-Python install                PASS/FAIL
-pytest                        PASS/FAIL
-PostgreSQL                    PASS/FAIL
-PostGIS                       PASS/FAIL
-TimescaleDB                   PASS/FAIL
-Alembic clean migration       PASS/FAIL
-Weather hypertables           PASS/FAIL
-Spatial model                 PASS/FAIL
-API                           PASS/FAIL
-Worker                        PASS/FAIL
-Frontend typecheck            PASS/FAIL
-Frontend build                PASS/FAIL
-Frontend lint                 PASS/FAIL
-Ruff                          PASS/FAIL
+List exact files changed.
 
-Then list every failure and its root cause.
+Only state:
 
-Only if all critical checks pass, state:
+PHASE 1 COMPLETE — READY FOR PHASE 2
 
-PHASE 1 COMPLETE — READY FOR PHASE 2.
-
-Otherwise state:
-
-PHASE 1 NOT COMPLETE.
+if all critical checks genuinely pass from the repository itself.
