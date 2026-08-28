@@ -21,7 +21,24 @@ Extreme Heatwave Early Warning and Human Thermal Stress Index Platform for the I
 | Testing infrastructure | Complete |
 | Docker environment | Complete |
 | Lint (Ruff) | All checks passed |
-| Tests | 27 passed, 1 skipped |
+| Tests | 28 passed |
+
+### Verification Results
+
+```
+PostgreSQL 16.15                PASS
+PostGIS 3.6 (5 geometry cols)  PASS
+TimescaleDB 2.29.2              PASS
+Alembic clean migration         PASS
+Weather hypertables (2)         PASS
+Spatial model verification      PASS
+API startup                     PASS
+Worker startup                  PASS
+Frontend build                  PASS
+Frontend typecheck              PASS
+Frontend lint                   PASS
+Secrets check                   PASS
+```
 
 ## Overview
 
@@ -73,6 +90,7 @@ heatwave-platform/
 - Docker & Docker Compose
 - Python 3.12+
 - Node.js 20+
+- pnpm (package manager)
 
 ### Development Setup
 
@@ -147,6 +165,13 @@ ruff check apps/ scientific/ pipelines/ tests/
 - `weather_observations` (chunked by observation_time, 1 day)
 - `weather_forecasts` (chunked by valid_time, 1 day)
 
+### Spatial Model
+```
+grid_cells -> grid_ward_intersections -> wards
+```
+- `grid_ward_intersections` supports a grid cell intersecting multiple wards
+- `coverage_fraction` and `intersection_area` available for weighted aggregation
+
 ## API Endpoints
 
 | Endpoint | Description | Status |
@@ -165,12 +190,12 @@ ruff check apps/ scientific/ pipelines/ tests/
 
 Registered models (interfaces defined, implementations pending Phase 2):
 
-| Model | Type | Description |
-|-------|------|-------------|
-| utci-v1 | Thermal Comfort | UTCI calculation |
-| vulnerability-bbwm-v1 | Vulnerability | BBWM vulnerability scoring |
-| exposure-bbwm-v1 | Exposure | BBWM exposure scoring |
-| hsri-multiplicative-v1 | Risk | HSRI = H x V x E |
+| Model | Type | Status | Description |
+|-------|------|--------|-------------|
+| utci-v1 | Thermal Comfort | interface_only | UTCI calculation |
+| vulnerability-bbwm-v1 | Vulnerability | interface_only | BBWM vulnerability scoring |
+| exposure-bbwm-v1 | Exposure | interface_only | BBWM exposure scoring |
+| hsri-multiplicative-v1 | Risk | interface_only | HSRI = H x V x E |
 
 ## Testing
 
