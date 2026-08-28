@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime
 
 from geoalchemy2 import Geometry
-from sqlalchemy import DateTime, Float, ForeignKey, Index, Integer, String
+from sqlalchemy import DateTime, Float, ForeignKey, Index, Integer, PrimaryKeyConstraint, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -38,6 +38,9 @@ class WeatherObservation(BaseModel):
 
     __tablename__ = "weather_observations"
 
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), default=uuid.uuid4, nullable=False
+    )
     station_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("weather_stations.id"), nullable=False
     )
@@ -57,6 +60,7 @@ class WeatherObservation(BaseModel):
     station: Mapped["WeatherStation"] = relationship(back_populates="observations")
 
     __table_args__ = (
+        PrimaryKeyConstraint("id", "observation_time", name="pk_weather_observations"),
         Index("ix_weather_observations_station_time", "station_id", "observation_time"),
         Index("ix_weather_observations_time", "observation_time"),
     )
@@ -91,6 +95,9 @@ class WeatherForecast(BaseModel):
 
     __tablename__ = "weather_forecasts"
 
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), default=uuid.uuid4, nullable=False
+    )
     run_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("weather_forecast_runs.id"), nullable=False
     )
@@ -116,6 +123,7 @@ class WeatherForecast(BaseModel):
     run: Mapped["WeatherForecastRun"] = relationship(back_populates="forecasts")
 
     __table_args__ = (
+        PrimaryKeyConstraint("id", "valid_time", name="pk_weather_forecasts"),
         Index("ix_weather_forecasts_run_grid", "run_id", "grid_cell_id"),
         Index("ix_weather_forecasts_valid_time", "valid_time"),
         Index("ix_weather_forecasts_grid_valid", "grid_cell_id", "valid_time"),

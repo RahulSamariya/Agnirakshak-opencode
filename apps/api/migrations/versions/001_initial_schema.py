@@ -155,7 +155,7 @@ def upgrade() -> None:
 
     op.create_table(
         "weather_observations",
-        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("id", postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column(
             "station_id",
             postgresql.UUID(as_uuid=True),
@@ -174,6 +174,10 @@ def upgrade() -> None:
         sa.Column("precipitation", sa.Float),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.execute(
+        "ALTER TABLE weather_observations "
+        "ADD CONSTRAINT pk_weather_observations PRIMARY KEY (id, observation_time)"
     )
     op.create_index(
         "ix_weather_observations_station_time",
@@ -205,7 +209,7 @@ def upgrade() -> None:
 
     op.create_table(
         "weather_forecasts",
-        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("id", postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column(
             "run_id",
             postgresql.UUID(as_uuid=True),
@@ -229,6 +233,10 @@ def upgrade() -> None:
         sa.Column("precipitation_probability", sa.Float),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.execute(
+        "ALTER TABLE weather_forecasts "
+        "ADD CONSTRAINT pk_weather_forecasts PRIMARY KEY (id, valid_time)"
     )
     op.create_index(
         "ix_weather_forecasts_run_grid",
@@ -668,6 +676,8 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
+    op.execute("SELECT drop_hypertable('weather_observations', if_exists => TRUE)")
+    op.execute("SELECT drop_hypertable('weather_forecasts', if_exists => TRUE)")
     op.drop_index("ix_ward_risk_summaries_valid_time", "ward_risk_summaries")
     op.drop_index("ix_risk_components_type", "risk_assessment_components")
     op.drop_index("ix_exposure_factors_name", "exposure_factors")

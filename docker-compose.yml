@@ -1,6 +1,8 @@
 services:
   db:
-    image: timescale/timescaledb-ha:pg16.4
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.db
     container_name: heatwave_db
     restart: unless-stopped
     ports:
