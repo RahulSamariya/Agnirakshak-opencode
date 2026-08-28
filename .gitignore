@@ -39,3 +39,4 @@ htmlcov/
 
 # Database
 *.db
+!Dockerfile.db
