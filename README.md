@@ -2,6 +2,27 @@
 
 Extreme Heatwave Early Warning and Human Thermal Stress Index Platform for the Indian Ministry of Earth Sciences.
 
+## Status: Phase 1 Complete
+
+**Phase 1 is complete.** The repository is ready for Phase 2 scientific engine implementation.
+
+| Component | Status |
+|-----------|--------|
+| Repository architecture | Complete |
+| Backend foundation (FastAPI) | Complete |
+| Frontend foundation (Next.js) | Complete |
+| Database schema (22 tables) | Complete |
+| Alembic migrations | Complete |
+| PostGIS spatial support | Complete |
+| TimescaleDB hypertables | Complete |
+| Scientific interfaces | Complete |
+| API contracts (scaffold) | Complete |
+| Pipeline contracts (scaffold) | Complete |
+| Testing infrastructure | Complete |
+| Docker environment | Complete |
+| Lint (Ruff) | All checks passed |
+| Tests | 27 passed, 1 skipped |
+
 ## Overview
 
 This platform converts meteorological forecasts and population vulnerability data into spatially and temporally resolved Human Thermal Stress Risk Index (HSRI) values.
@@ -9,13 +30,13 @@ This platform converts meteorological forecasts and population vulnerability dat
 ### Core Formula
 
 ```
-HSRI = H × V × E
+HSRI = H x V x E
 ```
 
 Where:
-- **H** = UTCI-derived Hazard Index
-- **V** = BBWM-derived Vulnerability Index
-- **E** = BBWM-derived Exposure Index
+- **H** = UTCI-derived Hazard Index (0.0 - 1.0) [Phase 2]
+- **V** = BBWM-derived Vulnerability Index (0.0 - 1.0) [Phase 2]
+- **E** = BBWM-derived Exposure Index (0.0 - 1.0) [Phase 2]
 
 ## Project Structure
 
@@ -23,21 +44,27 @@ Where:
 heatwave-platform/
 ├── apps/
 │   ├── api/           # FastAPI backend
+│   │   ├── app/
+│   │   │   ├── models/    # SQLAlchemy ORM models (22 tables)
+│   │   │   ├── schemas/   # Pydantic v2 schemas
+│   │   │   ├── api/v1/    # API route stubs
+│   │   │   └── services/  # Business logic services
+│   │   └── migrations/    # Alembic migrations
 │   ├── worker/        # Celery background workers
-│   └── web/           # Next.js frontend
-├── scientific/        # Scientific modules
-│   ├── core/          # Base classes
-│   ├── hazard/        # Hazard calculation
-│   ├── vulnerability/ # Vulnerability calculation
-│   ├── exposure/      # Exposure calculation
-│   ├── risk/          # Risk calculation
-│   ├── thermal_comfort/ # Thermal comfort models
+│   └── web/           # Next.js frontend (scaffold)
+├── scientific/        # Scientific module interfaces
+│   ├── core/          # Abstract base classes
+│   ├── hazard/        # Hazard model interface
+│   ├── vulnerability/ # Vulnerability model interface
+│   ├── exposure/      # Exposure model interface
+│   ├── risk/          # Risk model interface
+│   ├── thermal_comfort/ # Thermal comfort interface
 │   └── configuration/ # Scientific configuration YAMLs
-├── pipelines/         # Data pipelines
-├── db/               # Database migrations and SQL
+├── pipelines/         # Data pipeline stubs
+├── db/               # Database SQL files
 ├── infra/            # Infrastructure (Docker, K8s, monitoring)
-├── tests/            # Test suites
-└── docs/             # Documentation
+├── tests/            # Test suites (28 tests)
+└── docs/             # Architecture documentation
 ```
 
 ## Quick Start
@@ -54,43 +81,39 @@ heatwave-platform/
 docker-compose up -d
 ```
 
-2. **Install API dependencies:**
-```bash
-cd apps/api
-pip install -r requirements.txt
-```
+This starts:
+- PostgreSQL + PostGIS + TimescaleDB (port 5432)
+- Redis (port 6379)
+- API (port 8000)
+- Worker
+- Web (port 3000)
 
-3. **Install worker dependencies:**
-```bash
-cd apps/worker
-pip install -r requirements.txt
-```
-
-4. **Install frontend dependencies:**
-```bash
-cd apps/web
-npm install
-```
-
-5. **Run database migrations:**
+2. **Run database migrations:**
 ```bash
 cd apps/api
 alembic upgrade head
 ```
 
-6. **Start the API:**
+3. **Install dependencies (for local development):**
 ```bash
-uvicorn app.main:app --reload
+# API
+cd apps/api && pip install -r requirements.txt
+
+# Worker
+cd apps/worker && pip install -r requirements.txt
+
+# Frontend
+cd apps/web && npm install
 ```
 
-7. **Start the worker:**
+4. **Run tests:**
 ```bash
-celery -A worker.main worker --loglevel=info
+pytest
 ```
 
-8. **Start the frontend:**
+5. **Run linting:**
 ```bash
-npm run dev
+ruff check apps/ scientific/ pipelines/ tests/
 ```
 
 ### Access Services
@@ -100,65 +123,85 @@ npm run dev
 - PostgreSQL: localhost:5432
 - Redis: localhost:6379
 
-## Testing
+## Database Schema
 
-```bash
-# Run all tests
-make test
+### Tables (22 total)
 
-# Run with coverage
-pytest --cov=scientific tests/
+**Geography:** states, cities, wards, grid_cells, grid_ward_intersections
 
-# Run specific test
-pytest tests/test_scientific_interfaces.py -v
-```
+**Weather:** weather_stations, weather_observations, weather_forecast_runs, weather_forecasts
 
-## Linting
+**Scientific:** scientific_models, model_runs
 
-```bash
-# Run Python linting
-cd apps/api
-ruff check .
+**Hazard:** hazard_assessments
 
-# Run frontend linting
-cd apps/web
-npm run lint
-```
+**Vulnerability:** vulnerability_profiles, vulnerability_factors
 
-## Type Checking
+**Exposure:** exposure_profiles, exposure_factors
 
-```bash
-# Run Python type checking
-cd apps/api
-mypy app/
+**Risk:** risk_runs, risk_assessments, risk_assessment_components, ward_risk_summaries
 
-# Run frontend type checking
-cd apps/web
-npm run type-check
-```
+**Operations:** alerts, action_recommendations
+
+### TimescaleDB Hypertables
+- `weather_observations` (chunked by observation_time, 1 day)
+- `weather_forecasts` (chunked by valid_time, 1 day)
 
 ## API Endpoints
 
-| Endpoint | Description |
-|----------|-------------|
-| GET /api/v1/health | Health check |
-| GET /api/v1/forecasts | Weather forecasts |
-| GET /api/v1/hazards | Hazard assessments |
-| GET /api/v1/vulnerability | Vulnerability profiles |
-| GET /api/v1/exposure | Exposure profiles |
-| GET /api/v1/risk | Risk assessments |
-| GET /api/v1/wards | Ward data |
-| GET /api/v1/alerts | Active alerts |
-| GET /api/v1/models | Scientific models |
+| Endpoint | Description | Status |
+|----------|-------------|--------|
+| GET /api/v1/health | Health check | Implemented |
+| GET /api/v1/forecasts | Weather forecasts | Scaffold |
+| GET /api/v1/hazards | Hazard assessments | Scaffold |
+| GET /api/v1/vulnerability | Vulnerability profiles | Scaffold |
+| GET /api/v1/exposure | Exposure profiles | Scaffold |
+| GET /api/v1/risk | Risk assessments | Scaffold |
+| GET /api/v1/wards | Ward data | Scaffold |
+| GET /api/v1/alerts | Active alerts | Scaffold |
+| GET /api/v1/models | Scientific models | Scaffold |
 
 ## Scientific Models
+
+Registered models (interfaces defined, implementations pending Phase 2):
 
 | Model | Type | Description |
 |-------|------|-------------|
 | utci-v1 | Thermal Comfort | UTCI calculation |
 | vulnerability-bbwm-v1 | Vulnerability | BBWM vulnerability scoring |
 | exposure-bbwm-v1 | Exposure | BBWM exposure scoring |
-| hsri-multiplicative-v1 | Risk | HSRI = H × V × E |
+| hsri-multiplicative-v1 | Risk | HSRI = H x V x E |
+
+## Testing
+
+```bash
+# Run all tests
+pytest
+
+# Run with verbose output
+pytest -v
+
+# Run specific test file
+pytest tests/test_database.py -v
+```
+
+### Test Coverage
+- API startup and health endpoints
+- Database module imports
+- All 22 domain model imports
+- Scientific module imports
+- Worker task imports
+- Scientific interface contracts
+
+## Linting
+
+```bash
+# Run Ruff linting
+ruff check apps/ scientific/ pipelines/ tests/
+
+# Run Ruff with auto-fix
+ruff check apps/ scientific/ pipelines/ tests/ --fix
+```
 
 ## Documentation
 
@@ -171,6 +214,45 @@ npm run type-check
 - [Risk Model](docs/scientific/risk.md)
 - [Deployment Guide](docs/operations/deployment.md)
 - [Monitoring Guide](docs/operations/monitoring.md)
+
+## Implementation Status
+
+### Phase 1 - IMPLEMENTED
+- Repository architecture
+- Backend foundation (FastAPI)
+- Frontend foundation (Next.js)
+- PostgreSQL + PostGIS + TimescaleDB
+- Redis/Celery worker foundation
+- Database schema (22 tables)
+- Alembic migration system
+- Spatial data architecture (grid_ward_intersections)
+- Weather time-series architecture (hypertables)
+- Scientific module interfaces (abstract base classes)
+- Scientific configuration management (YAML files)
+- API contracts (scaffold)
+- Pipeline contracts (scaffold)
+- Testing infrastructure
+- Docker development environment
+- Kubernetes/monitoring scaffolding
+- Documentation
+
+### Phase 2 - PLANNED
+- UTCI/thermal comfort calculation
+- Hazard index calculation
+- Vulnerability scoring (BBWM)
+- Exposure scoring (BBWM)
+- HSRI calculation (H x V x E)
+- Risk classification
+- Alert generation algorithms
+- Real weather-provider integration
+- Full GIS analytics
+
+### Later Phases - PLANNED
+- Historical Health Dataset
+- Mortality/Hospitalization ML
+- 3-5 Day Health Impact Prediction
+- SMS/WhatsApp integration
+- Production alert algorithms
 
 ## License
 
