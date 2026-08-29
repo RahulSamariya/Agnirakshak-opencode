@@ -306,7 +306,7 @@ class TestHSRIBoundaries:
 # ===================================================================
 
 class TestVectorization:
-    """Verify scalar and array equivalence."""
+    """Verify scalar and array equivalence with normal, boundary, NaN, and mixed inputs."""
 
     def test_age_vectorized(self):
         from scientific.scoring.vectorized import vectorized_score_age
@@ -342,6 +342,79 @@ class TestVectorization:
         scalar_result = score_age(28)
         array_result = vectorized_score_age(np.array([28]))[0]
         assert scalar_result == array_result
+
+    def test_age_boundary_values(self):
+        """Test boundary values for age scoring."""
+        from scientific.scoring.vectorized import vectorized_score_age
+        ages = np.array([4, 5, 23, 24, 40, 41, 65, 66])
+        expected = np.array([1.0, 0.66, 0.66, 0.33, 0.33, 0.66, 0.66, 1.0])
+        result = vectorized_score_age(ages)
+        np.testing.assert_array_almost_equal(result, expected)
+
+    def test_bmi_boundary_values(self):
+        """Test boundary values for BMI scoring."""
+        from scientific.scoring.vectorized import vectorized_score_bmi
+        bmis = np.array([16.9, 17.0, 18.4, 18.5, 24.9, 25.0, 29.9, 30.0])
+        expected = np.array([1.0, 0.66, 0.66, 0.33, 0.33, 0.66, 0.66, 1.0])
+        result = vectorized_score_bmi(bmis)
+        np.testing.assert_array_almost_equal(result, expected)
+
+    def test_age_nan_input(self):
+        """NaN input should produce NaN output."""
+        from scientific.scoring.vectorized import vectorized_score_age
+        ages = np.array([np.nan, 28.0])
+        result = vectorized_score_age(ages)
+        assert np.isnan(result[0])
+        assert result[1] == 0.33
+
+    def test_bmi_nan_input(self):
+        """NaN input should produce NaN output."""
+        from scientific.scoring.vectorized import vectorized_score_bmi
+        bmis = np.array([np.nan, 22.0])
+        result = vectorized_score_bmi(bmis)
+        assert np.isnan(result[0])
+        assert result[1] == 0.33
+
+    def test_fluid_nan_input(self):
+        """NaN input should produce NaN output."""
+        from scientific.scoring.vectorized import vectorized_score_fluid_intake
+        deficits = np.array([np.nan, 3.0])
+        result = vectorized_score_fluid_intake(deficits)
+        assert np.isnan(result[0])
+        assert result[1] == 0.33
+
+    def test_healthcare_nan_input(self):
+        """NaN input should produce NaN output."""
+        from scientific.scoring.vectorized import vectorized_score_healthcare_access
+        times = np.array([np.nan, 20.0])
+        result = vectorized_score_healthcare_access(times)
+        assert np.isnan(result[0])
+        assert result[1] == 0.33
+
+    def test_age_mixed_valid_nan(self):
+        """Mixed valid/NaN array handles correctly."""
+        from scientific.scoring.vectorized import vectorized_score_age
+        ages = np.array([3, np.nan, 28, np.nan, 70])
+        expected = np.array([1.0, np.nan, 0.33, np.nan, 1.0])
+        result = vectorized_score_age(ages)
+        np.testing.assert_array_almost_equal(result, expected)
+
+    def test_bmi_mixed_valid_nan(self):
+        """Mixed valid/NaN array handles correctly."""
+        from scientific.scoring.vectorized import vectorized_score_bmi
+        bmis = np.array([16, np.nan, 22, np.nan, 32])
+        expected = np.array([1.0, np.nan, 0.33, np.nan, 1.0])
+        result = vectorized_score_bmi(bmis)
+        np.testing.assert_array_almost_equal(result, expected)
+
+    def test_vectorized_matches_scalar_all_bands(self):
+        """Vectorized results match scalar for all age bands."""
+        from scientific.scoring.vectorized import vectorized_score_age
+        ages = np.array([2, 10, 30, 55, 80])
+        for i, age in enumerate(ages):
+            scalar = score_age(age)
+            vectorized = vectorized_score_age(np.array([age]))[0]
+            assert scalar == vectorized, f"Mismatch at age {age}: scalar={scalar}, vectorized={vectorized}"
 
 
 # ===================================================================
