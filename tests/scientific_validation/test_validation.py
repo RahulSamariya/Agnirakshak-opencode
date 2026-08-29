@@ -15,7 +15,7 @@ import numpy as np
 import pytest
 from pydantic import ValidationError
 
-from scientific.thermal_comfort.utci import UTCICalculatorModel, UTCIInput, calculate_utci
+from scientific.thermal_comfort.utci import calculate_utci
 from scientific.hazard.utci.normalization import (
     classify_utci,
     normalize_utci,
@@ -24,13 +24,6 @@ from scientific.hazard.utci.normalization import (
 from scientific.vulnerability.scoring import (
     BBWMVulnerabilityModel,
     score_age,
-    score_bmi,
-    score_economic_status,
-    score_social_isolation,
-    score_education,
-    score_gender,
-    score_health_issues,
-    score_disability,
 )
 from scientific.exposure.scoring import (
     BBWMExposureModel,
