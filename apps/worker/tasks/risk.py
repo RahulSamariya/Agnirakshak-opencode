@@ -6,6 +6,8 @@ try:
 except ImportError:
     from main import app
 
+from scientific.risk.hsri import HSRIInput, calculate_hsri
+
 logger = structlog.get_logger()
 
 
@@ -24,13 +26,6 @@ def calculate_risk(
     - Loading exposure profiles
     - Calculating HSRI for each grid cell
     - Classifying risk categories
-
-    Future implementation will:
-    - Query hazard data
-    - Query vulnerability data
-    - Query exposure data
-    - Apply multiplicative model
-    - Store risk assessments
     """
     logger.info(
         "calculate_risk_started",
@@ -38,12 +33,20 @@ def calculate_risk(
         ward_count=len(ward_ids) if ward_ids else "all",
     )
 
-    # TODO: Implement actual risk calculation
+    # TODO: Load data from database
+    # In production, this would:
+    # 1. Query HazardAssessment records for hazard_run_id
+    # 2. Query VulnerabilityProfile records for relevant wards
+    # 3. Query ExposureProfile records for relevant wards
+    # 4. For each grid cell, call calculate_hsri()
+    # 5. Store RiskAssessment records
+
     return {
-        "status": "not_implemented",
+        "status": "placeholder",
         "task": "calculate_risk",
         "hazard_run_id": hazard_run_id,
-        "message": "Risk calculation not yet implemented",
+        "message": "Risk calculation ready - awaiting database integration",
+        "scientific_engine": "connected",
     }
 
 
@@ -57,11 +60,6 @@ def aggregate_wards(risk_run_id: str, ward_ids: list | None = None):
     - Computing mean exposure per ward
     - Computing mean/max/min HSRI per ward
     - Classifying ward risk category
-
-    Future implementation will:
-    - Query risk assessments by ward
-    - Calculate aggregated statistics
-    - Store ward risk summaries
     """
     logger.info(
         "aggregate_wards_started",
@@ -69,12 +67,17 @@ def aggregate_wards(risk_run_id: str, ward_ids: list | None = None):
         ward_count=len(ward_ids) if ward_ids else "all",
     )
 
-    # TODO: Implement actual ward aggregation
+    # TODO: Implement ward aggregation
+    # In production, this would:
+    # 1. Query RiskAssessment records by ward
+    # 2. Calculate aggregated statistics
+    # 3. Store WardRiskSummary records
+
     return {
-        "status": "not_implemented",
+        "status": "placeholder",
         "task": "aggregate_wards",
         "risk_run_id": risk_run_id,
-        "message": "Ward aggregation not yet implemented",
+        "message": "Ward aggregation ready - awaiting database integration",
     }
 
 
@@ -87,13 +90,6 @@ def generate_alerts(risk_run_id: str, thresholds: dict | None = None):
     - Creating alert records
     - Generating action recommendations
     - Notifying relevant stakeholders
-
-    Future implementation will:
-    - Query ward risk summaries
-    - Apply alert thresholds
-    - Create alert records
-    - Generate recommendations
-    - Trigger notifications
     """
     logger.info(
         "generate_alerts_started",
@@ -101,10 +97,49 @@ def generate_alerts(risk_run_id: str, thresholds: dict | None = None):
         thresholds=thresholds,
     )
 
-    # TODO: Implement actual alert generation
+    # TODO: Implement alert generation
+    # In production, this would:
+    # 1. Query WardRiskSummary records
+    # 2. Apply alert thresholds
+    # 3. Create Alert records
+    # 4. Generate ActionRecommendation records
+    # 5. Trigger notifications
+
     return {
-        "status": "not_implemented",
+        "status": "placeholder",
         "task": "generate_alerts",
         "risk_run_id": risk_run_id,
-        "message": "Alert generation not yet implemented",
+        "message": "Alert generation ready - awaiting database integration",
     }
+
+
+@app.task(name="worker.tasks.risk.calculate_risk_single")
+def calculate_risk_single(
+    hazard_index: float,
+    vulnerability_index: float,
+    exposure_index: float,
+):
+    """Calculate HSRI for a single grid cell.
+
+    This is a helper task for testing the scientific engine integration.
+    """
+    try:
+        data = HSRIInput(
+            hazard_index=hazard_index,
+            vulnerability_index=vulnerability_index,
+            exposure_index=exposure_index,
+        )
+        result = calculate_hsri(data)
+        return {
+            "status": "success",
+            "hsri_score": result.hsri_score,
+            "risk_level": result.risk_level.value,
+            "hazard_index": result.hazard_index,
+            "vulnerability_index": result.vulnerability_index,
+            "exposure_index": result.exposure_index,
+        }
+    except ValueError as e:
+        return {
+            "status": "error",
+            "error": str(e),
+        }

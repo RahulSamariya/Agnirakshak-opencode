@@ -1,8 +1,22 @@
-"""Risk pipeline - run module."""
+"""Risk pipeline - run module.
+
+This module orchestrates risk calculations by calling the scientific engine.
+The scientific engine (scientific.risk.hsri) is the authoritative source for
+HSRI calculation and risk classification.
+"""
+from __future__ import annotations
+
+from scientific.risk.hsri import (
+    HSRIInput,
+    HSRIOutput,
+    RiskLevel,
+    calculate_hsri,
+    classify_hsri,
+)
 
 
 class RiskRunner:
-    """Handles execution of risk calculations."""
+    """Handles execution of risk calculations using the scientific engine."""
 
     def __init__(self, model_config: dict | None = None):
         self.model_config = model_config or {}
@@ -12,38 +26,35 @@ class RiskRunner:
         hazard: float,
         vulnerability: float,
         exposure: float,
-    ) -> dict:
+    ) -> HSRIOutput:
         """Run HSRI = H x V x E calculation.
+
+        Delegates to the scientific engine (scientific.risk.hsri.calculate_hsri).
 
         Args:
             hazard: Hazard index (0-1).
-            vulnerability: Vulnerability index (0-1).
-            exposure: Exposure index (0-1).
+            vulnerability: Vulnerability index (0.33-1.0).
+            exposure: Exposure index (0.33-1.0).
 
         Returns:
-            Dictionary with HSRI result and metadata.
+            HSRIOutput with HSRI score and risk level.
         """
-        # TODO: Implement actual HSRI calculation
-        return {
-            "status": "not_implemented",
-            "hazard": hazard,
-            "vulnerability": vulnerability,
-            "exposure": exposure,
-        }
+        data = HSRIInput(
+            hazard_index=hazard,
+            vulnerability_index=vulnerability,
+            exposure_index=exposure,
+        )
+        return calculate_hsri(data)
 
-    def classify_risk(self, hsri: float) -> str:
+    def classify_risk(self, hsri: float) -> RiskLevel:
         """Classify HSRI into risk category.
+
+        Delegates to the scientific engine (scientific.risk.hsri.classify_hsri).
 
         Args:
             hsri: Human Stress Risk Index (0-1).
 
         Returns:
-            Risk category string (low, medium, high).
+            RiskLevel enum (low, medium, high).
         """
-        # TODO: Implement actual classification
-        if hsri <= 0.33:
-            return "low"
-        elif hsri <= 0.66:
-            return "medium"
-        else:
-            return "high"
+        return classify_hsri(hsri)

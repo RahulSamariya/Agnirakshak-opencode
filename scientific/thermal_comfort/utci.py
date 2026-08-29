@@ -90,6 +90,14 @@ class UTCIOutput(BaseModel):
     relative_humidity: float
     wind_speed: float
     mean_radiant_temperature: float
+    wind_clamped: bool = Field(
+        default=False,
+        description="True if wind speed was clamped from < 0.5 m/s to 0.5 m/s.",
+    )
+    original_wind_speed: float | None = Field(
+        default=None,
+        description="Original wind speed before clamping (if clamping occurred).",
+    )
 
 
 def _vapour_pressure_hpa(ta: float, rh: float) -> float:
@@ -358,6 +366,11 @@ def calculate_utci(
     Uses the UTCI polynomial approximation from Fiala et al. (2012)
     via the pythermalcomfort coefficient set.
 
+    Calm-wind policy:
+        If wind_speed < 0.5 m/s, it is clamped to 0.5 m/s and a quality
+        flag (wind_clamped=True) is recorded. The original wind speed is
+        preserved for reference.
+
     Args:
         air_temperature: Air temperature in C
         relative_humidity: Relative humidity in % (0-100)
@@ -365,7 +378,7 @@ def calculate_utci(
         mean_radiant_temperature: Mean radiant temperature in C
 
     Returns:
-        UTCIOutput with UTCI value and input echoes
+        UTCIOutput with UTCI value, input echoes, and quality flags
 
     Raises:
         ValueError: If inputs are outside valid ranges.
@@ -378,10 +391,6 @@ def calculate_utci(
         raise ValueError(
             f"Relative humidity must be in [0, 100]%, got {relative_humidity}"
         )
-    if not (0.5 <= wind_speed <= 17.0):
-        raise ValueError(
-            f"Wind speed must be in [0.5, 17.0] m/s, got {wind_speed}"
-        )
     if not (air_temperature - 30 <= mean_radiant_temperature <= air_temperature + 70):
         raise ValueError(
             f"Mean radiant temperature must be in [Ta-30, Ta+70], "
@@ -391,6 +400,19 @@ def calculate_utci(
     if ea > 50.0:
         raise ValueError(
             f"Water vapour pressure must be <= 50 hPa, got {ea:.1f}"
+        )
+
+    # Calm-wind policy: clamp wind speed < 0.5 m/s to 0.5 m/s
+    wind_clamped = False
+    original_wind_speed = None
+    if wind_speed < 0.5:
+        original_wind_speed = wind_speed
+        wind_speed = 0.5
+        wind_clamped = True
+
+    if not (0.5 <= wind_speed <= 17.0):
+        raise ValueError(
+            f"Wind speed must be in [0.5, 17.0] m/s, got {wind_speed}"
         )
 
     tk = air_temperature + 273.15
@@ -409,6 +431,8 @@ def calculate_utci(
         relative_humidity=relative_humidity,
         wind_speed=wind_speed,
         mean_radiant_temperature=mean_radiant_temperature,
+        wind_clamped=wind_clamped,
+        original_wind_speed=original_wind_speed,
     )
 
 

@@ -1,71 +1,435 @@
-We are continuing Phase 2.
+This is a SEPARATE CLEANUP / INTEGRATION TASK.
 
-Do NOT start Phase 3.
-Do NOT implement mortality ML.
-Do NOT implement hospitalization ML.
+Do NOT change the main scientific roadmap.
 Do NOT redesign the architecture.
+Do NOT add new ML models.
+Do NOT change the scientific equations, weights, or thresholds unless required to fix an actual implementation bug.
 
-Perform the following in order:
+The scientific engine is already implemented.
 
-1. Fix the existing hazard-category bug where H-score values
-   are incorrectly compared against UTCI bounds.
+Your task is to fix ONLY the remaining issues identified in the latest project review.
 
-2. Add semantic tests proving that H values map to the correct
-   hazard categories.
+==================================================
+1. REMOVE DUPLICATED HSRI LOGIC
+==================================================
 
-3. Remove remaining duplicated scientific constants where the
-   same values already exist in scientific/configuration.
+There must be exactly one authoritative implementation of:
 
-4. Tighten configuration validation.
+    HSRI = H × V × E
 
-5. Keep Pydantic scientific contracts canonical.
+and risk classification.
 
-6. Update documentation/test counts.
+The scientific risk module is the source of truth.
 
-7. Then inspect the actual UTCI methodology and reference data
-   available in the repository.
+Remove/rework duplicate threshold/classification logic from pipelines.
 
-8. If an authoritative/reference UTCI algorithm and reference
-   values are available:
-       implement scientific/thermal_comfort/utci.py
-       exactly according to that methodology.
+Pipelines must call the scientific engine rather than reproduce equations.
 
-9. If the exact algorithm/reference data is NOT available:
-       DO NOT invent or approximate UTCI.
-       Stop the UTCI implementation and clearly report what is missing.
+==================================================
+2. UPDATE STALE UTCI DOCUMENTATION
+==================================================
 
-10. When the algorithm is available:
-       create tests/scientific_validation/test_utci.py
-       using independent authoritative reference values.
+The current documentation still describes UTCI as a placeholder.
 
-11. Validate:
-       temperature
-       relative humidity
-       wind speed
-       mean radiant temperature
-       -> UTCI
+Update it to accurately state the current implementation.
 
-12. Only after UTCI passes its reference tests:
-       connect UTCI -> existing Hazard normalization.
+Document:
 
-13. Add an integration test:
-       meteorological inputs
-       -> UTCI
-       -> H
+    UTCI implementation
+    method
+    inputs
+    units
+    validation status
 
-14. Run:
-       pytest -q
-       ruff check .
-       mypy ...
+Do not claim scientific validation beyond what has actually been verified.
 
-Do not claim scientific validity merely because tests pass.
+==================================================
+3. ADD EXPLICIT CALM-WIND POLICY
+==================================================
 
-Final status must explicitly say:
+Current UTCI validity is:
 
-    NORMALIZED RISK ENGINE READY
-    or
-    COMPLETE SCIENTIFIC ENGINE READY
-    or
-    UTCI IMPLEMENTATION BLOCKED — REFERENCE METHODOLOGY MISSING
+    0.5–17.0 m/s
 
-Do not proceed to mortality ML.
+Real weather data may contain wind below 0.5 m/s.
+
+Implement an explicit policy.
+
+Preferred behavior:
+
+    if wind < 0.5 m/s:
+        clamp to 0.5 m/s
+        record quality flag:
+            wind_clamped = true
+
+OR, if the existing architecture makes rejection safer:
+
+    mark UTCI unavailable
+    record quality flag
+
+Do NOT silently alter the input.
+
+Document the selected policy.
+
+Add tests.
+
+==================================================
+4. IMPROVE UTCI REFERENCE VALIDATION
+==================================================
+
+Keep existing valid reference tests.
+
+Add a broader validation matrix:
+
+    Hot/humid:
+        35°C, 80% RH, 1 m/s, MRT 35°C
+
+    Hot/dry:
+        42°C, 20% RH, 1 m/s, MRT 42°C
+
+    High radiation:
+        38°C, 50% RH, 1 m/s, MRT 55°C
+
+    Windy:
+        40°C, 50% RH, 5 m/s, MRT 40°C
+
+Also test validity boundaries:
+
+    Ta = -50°C
+    Ta = +50°C
+
+    wind = 0.5 m/s
+    wind = 17 m/s
+
+    vapor pressure = 50 hPa
+
+    MRT = Ta - 30°C
+    MRT = Ta + 70°C
+
+Where authoritative reference values are available, compare against them.
+
+Do NOT modify the UTCI formula merely to satisfy a disputed reference.
+
+==================================================
+5. ADD EVIDENCE METADATA TO VULNERABILITY FACTORS
+==================================================
+
+Do not represent every vulnerability threshold as empirically validated.
+
+Add metadata fields such as:
+
+    source
+    evidence_level
+    validation_status
+
+Supported statuses may include:
+
+    validated
+    literature-derived
+    expert-derived
+    assumption
+
+Apply this to:
+
+    age
+    BMI
+    gender
+    education
+    economic status
+    social isolation
+    health
+    disability
+
+Preserve the existing mathematical scoring.
+
+This is metadata/provenance work only.
+
+==================================================
+6. DOCUMENT EXPOSURE MODEL ASSUMPTIONS
+==================================================
+
+Keep the existing Exposure equation.
+
+Do not replace it.
+
+Document the conceptual distinction:
+
+    H = thermal hazard
+
+    V = susceptibility:
+        demographic
+        health
+        socioeconomic
+
+    E = exposure:
+        population
+        occupation
+        outdoor activity
+        built environment
+        environmental conditions
+
+Clearly identify which exposure factors are:
+
+    source-derived
+    project conventions
+    unresolved
+
+Do not invent new scientific thresholds.
+
+==================================================
+7. KEEP HSRI DETERMINISTIC
+==================================================
+
+Do NOT replace:
+
+    HSRI = H × V × E
+
+Do NOT introduce alternative risk equations into production code.
+
+If sensitivity-analysis code already exists, keep it isolated as analysis/research tooling.
+
+Do not change the operational HSRI model.
+
+==================================================
+8. CONNECT WEATHER PIPELINE TO SCIENTIFIC ENGINE
+==================================================
+
+Implement the actual orchestration flow:
+
+    weather ingest
+        ↓
+    weather validation / QC
+        ↓
+    UTCI calculation
+        ↓
+    Hazard H
+        ↓
+    Vulnerability V
+        ↓
+    Exposure E
+        ↓
+    HSRI
+        ↓
+    grid result
+
+Do not implement external production weather providers yet unless already configured.
+
+Use deterministic synthetic fixtures where necessary.
+
+==================================================
+9. CONNECT WORKER TASKS
+==================================================
+
+Replace placeholder worker paths where required for this deterministic pipeline.
+
+Implement orchestration for:
+
+    weather_ingest
+    hazard_calculation
+    risk_calculation
+    ward_aggregation
+    alert_generation
+
+The worker should call existing scientific modules.
+
+Do NOT duplicate scientific formulas inside workers.
+
+Workers orchestrate.
+
+Scientific modules calculate.
+
+==================================================
+10. CONNECT SCIENTIFIC ENGINE TO DATABASE
+==================================================
+
+Create the complete integration path:
+
+    database input
+        ↓
+    validated domain object
+        ↓
+    scientific calculation
+        ↓
+    result object
+        ↓
+    persistence
+
+At minimum demonstrate:
+
+    weather forecast
+        ↓
+    UTCI/H
+        ↓
+    V
+        ↓
+    E
+        ↓
+    HSRI
+        ↓
+    risk_assessment record
+
+Preserve model/version metadata.
+
+Each calculated result should carry, where supported:
+
+    model
+    model_version
+    configuration_version
+    calculated_at
+    input_dataset_version
+    quality information
+
+==================================================
+11. MAKE API FUNCTIONAL
+==================================================
+
+The API should stop returning placeholder "not implemented"
+responses for the deterministic scientific workflow.
+
+Implement the minimum working endpoints needed to query:
+
+    forecasts
+    hazards
+    risk
+    wards
+    models
+
+Do not build the entire final dashboard API.
+
+The API should retrieve persisted results rather than recalculate
+scientific values unnecessarily.
+
+==================================================
+12. END-TO-END TEST
+==================================================
+
+Create one deterministic integration fixture.
+
+Use approximately:
+
+    1 synthetic city
+    10 wards
+    100 grid cells
+
+Run:
+
+    synthetic weather
+        ↓
+    UTCI
+        ↓
+    H
+        ↓
+    V
+        ↓
+    E
+        ↓
+    HSRI
+        ↓
+    spatial aggregation
+        ↓
+    ward risk
+        ↓
+    alert
+
+Verify that the full chain completes.
+
+This is a deterministic integration test, not a real-world forecast.
+
+==================================================
+13. CLEAN ENVIRONMENT
+==================================================
+
+Fix the dependency/bootstrap issue identified in the review.
+
+A clean clone must be able to:
+
+    install dependencies
+    start required local services
+    run migrations
+    run tests
+
+Do not manually install undeclared packages.
+
+Do not hide dependency failures.
+
+==================================================
+14. TEST NAMING
+==================================================
+
+Rename stale test files such as:
+
+    test_utci_placeholder.py
+
+to an accurate name such as:
+
+    test_utci_reference.py
+
+or:
+
+    test_utci_validation.py
+
+Do not change test meaning unnecessarily.
+
+==================================================
+15. DO NOT TOUCH
+==================================================
+
+Do NOT modify:
+
+    scientific weights
+    HSRI equation
+    UTCI coefficients
+    risk thresholds
+    exposure weights
+    vulnerability weights
+
+Do NOT implement:
+
+    mortality ML training
+    hospitalization ML training
+    real Indian health-data modeling
+    SMS production integration
+    WhatsApp production integration
+    advanced dashboard work
+    new scientific models
+
+==================================================
+16. FINAL VALIDATION
+==================================================
+
+Run:
+
+    pytest -q
+    ruff check .
+    mypy ...
+
+and relevant frontend checks.
+
+Verify the complete deterministic integration test.
+
+Verify API + worker + database integration.
+
+==================================================
+FINAL REPORT
+==================================================
+
+Report only this cleanup task.
+
+Include:
+
+1. Files changed
+2. Duplicate logic removed
+3. UTCI policy added
+4. Reference tests added
+5. Evidence metadata added
+6. Pipeline integration completed
+7. Worker integration completed
+8. Database persistence path completed
+9. API endpoints made functional
+10. End-to-end test result
+11. Clean-environment result
+12. Remaining issues
+
+Do not report these changes as a new development phase.
+
+This is a focused remediation/integration task for the existing implementation.

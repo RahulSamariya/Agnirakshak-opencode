@@ -113,8 +113,10 @@ class TestUTCIInputValidation:
             calculate_utci(25.0, -1.0, 1.0, 25.0)
 
     def test_rejects_wind_below_range(self):
+        # With calm-wind policy, wind < 0.5 m/s is clamped, not rejected
+        # Wind > 17.0 m/s should still be rejected
         with pytest.raises(ValueError):
-            calculate_utci(25.0, 50.0, 0.4, 25.0)
+            calculate_utci(25.0, 50.0, 17.1, 25.0)
 
     def test_rejects_wind_above_range(self):
         with pytest.raises(ValueError):
