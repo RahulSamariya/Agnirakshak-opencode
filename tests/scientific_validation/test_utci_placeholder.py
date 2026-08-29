@@ -1,10 +1,11 @@
-"""Tests for UTCI placeholder model."""
+"""Tests for UTCI calculator model."""
 import pytest
 from pydantic import ValidationError
 
 from scientific.thermal_comfort.utci import (
-    PlaceholderUTCIModel,
+    UTCICalculatorModel,
     UTCIInput,
+    UTCIOutput,
 )
 
 
@@ -51,19 +52,27 @@ def test_utci_input_frozen():
         inp.air_temperature = 40.0
 
 
-def test_placeholder_model_properties():
-    model = PlaceholderUTCIModel()
-    assert model.model_name == "utci-placeholder-v1"
-    assert model.model_version == "0.0.0"
+def test_calculator_model_properties():
+    model = UTCICalculatorModel()
+    assert model.model_name == "utci-polynomial-v1"
+    assert model.model_version == "1.0.0"
 
 
-def test_placeholder_model_raises_not_implemented():
-    model = PlaceholderUTCIModel()
-    with pytest.raises(NotImplementedError, match="AUTHORITATIVE"):
-        model.calculate_utci(35.0, 60.0, 2.0, 40.0)
+def test_calculator_model_produces_output():
+    model = UTCICalculatorModel()
+    result = model.calculate_utci(35.0, 60.0, 2.0, 40.0)
+    assert isinstance(result, UTCIOutput)
+    assert -50 <= result.utci_c <= 50
 
 
-def test_placeholder_model_get_hazard_index_raises():
-    model = PlaceholderUTCIModel()
-    with pytest.raises(NotImplementedError):
-        model.get_hazard_index(40.0)
+def test_calculator_model_get_hazard_index():
+    model = UTCICalculatorModel()
+    idx = model.get_hazard_index(40.0)
+    assert 0.0 <= idx <= 1.0
+
+
+def test_utci_reference_value():
+    """Reference: tdb=25, rh=50, v=1, tmrt=25 -> UTCI ≈ 24.6."""
+    model = UTCICalculatorModel()
+    result = model.calculate_utci(25.0, 50.0, 1.0, 25.0)
+    assert abs(result.utci_c - 24.6) < 0.2

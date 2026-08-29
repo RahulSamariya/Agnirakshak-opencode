@@ -14,12 +14,12 @@ def test_import_thermal_comfort():
         ThermalComfortModel,
         ThermalStressCategory,
     )
-    from scientific.thermal_comfort.utci import PlaceholderUTCIModel, UTCIInput, UTCIOutput
+    from scientific.thermal_comfort.utci import UTCICalculatorModel, UTCIInput, UTCIOutput
     assert ThermalComfortModel is not None
     assert ThermalStressCategory is not None
     assert UTCIInput is not None
     assert UTCIOutput is not None
-    assert PlaceholderUTCIModel is not None
+    assert UTCICalculatorModel is not None
 
 
 def test_import_vulnerability():

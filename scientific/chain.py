@@ -14,7 +14,7 @@ from scientific.hazard.utci.normalization import (
     HazardNormalizationOutput,
     UTCIHazardModel,
 )
-from scientific.thermal_comfort.utci import PlaceholderUTCIModel, UTCIInput, UTCIOutput
+from scientific.thermal_comfort.utci import UTCICalculatorModel, UTCIInput, UTCIOutput
 
 
 class ThermalHazardChainResult(BaseModel):
@@ -46,7 +46,7 @@ def run_thermal_hazard_chain(
         mean_radiant_temperature=mean_radiant_temperature,
     )
 
-    utci_model = PlaceholderUTCIModel()
+    utci_model = UTCICalculatorModel()
     hazard_model = UTCIHazardModel()
 
     try:
