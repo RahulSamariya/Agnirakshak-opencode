@@ -4,6 +4,18 @@ Connects all components into one working deterministic operational pipeline:
     Synthetic Weather → UTCI → H → V → E → HSRI → Database → Ward Aggregation → Alert
 
 This module orchestrates the existing scientific engines and database models.
+
+SYNTHETIC DATA POLICY:
+    This module is for software integration testing ONLY.
+    Every record must include:
+        data_source = "synthetic"
+        environment = "test"
+    Synthetic data MUST NOT be used for:
+        scientific validation
+        mortality/hospitalization model training
+        model performance claims
+        real-world risk reporting
+        operational alerts
 """
 from __future__ import annotations
 
@@ -20,11 +32,23 @@ from scientific.exposure.scoring import BBWMExposureModel
 
 
 # ---------------------------------------------------------------------------
+# Synthetic data policy constants
+# ---------------------------------------------------------------------------
+DATA_SOURCE_SYNTHETIC = "synthetic"
+ENVIRONMENT_TEST = "test"
+
+
+# ---------------------------------------------------------------------------
 # Data models for integration
 # ---------------------------------------------------------------------------
 
 class SyntheticWeatherRecord(BaseModel):
-    """Deterministic weather record for a grid cell."""
+    """Deterministic weather record for a grid cell.
+
+    SYNTHETIC DATA POLICY:
+        data_source = "synthetic"
+        environment = "test"
+    """
     model_config = ConfigDict(frozen=True)
 
     grid_cell_id: str
@@ -33,10 +57,17 @@ class SyntheticWeatherRecord(BaseModel):
     relative_humidity: float
     wind_speed: float
     mean_radiant_temperature: float
+    data_source: str = DATA_SOURCE_SYNTHETIC
+    environment: str = ENVIRONMENT_TEST
 
 
 class HazardResult(BaseModel):
-    """Result from UTCI → Hazard calculation."""
+    """Result from UTCI → Hazard calculation.
+
+    SYNTHETIC DATA POLICY:
+        data_source = "synthetic"
+        environment = "test"
+    """
     model_config = ConfigDict(frozen=True)
 
     grid_cell_id: str
@@ -50,10 +81,17 @@ class HazardResult(BaseModel):
     relative_humidity: float
     wind_speed: float
     mean_radiant_temperature: float
+    data_source: str = DATA_SOURCE_SYNTHETIC
+    environment: str = ENVIRONMENT_TEST
 
 
 class RiskAssessmentResult(BaseModel):
-    """Result from HSRI calculation for a grid cell."""
+    """Result from HSRI calculation for a grid cell.
+
+    SYNTHETIC DATA POLICY:
+        data_source = "synthetic"
+        environment = "test"
+    """
     model_config = ConfigDict(frozen=True)
 
     grid_cell_id: str
@@ -63,10 +101,17 @@ class RiskAssessmentResult(BaseModel):
     exposure_index: float
     hsri_score: float
     risk_level: str
+    data_source: str = DATA_SOURCE_SYNTHETIC
+    environment: str = ENVIRONMENT_TEST
 
 
 class WardRiskSummaryResult(BaseModel):
-    """Aggregated risk summary for a ward."""
+    """Aggregated risk summary for a ward.
+
+    SYNTHETIC DATA POLICY:
+        data_source = "synthetic"
+        environment = "test"
+    """
     model_config = ConfigDict(frozen=True)
 
     ward_id: str
@@ -80,10 +125,17 @@ class WardRiskSummaryResult(BaseModel):
     risk_level: str
     cell_count: int
     high_risk_cell_count: int
+    data_source: str = DATA_SOURCE_SYNTHETIC
+    environment: str = ENVIRONMENT_TEST
 
 
 class AlertResult(BaseModel):
-    """Generated alert for a ward."""
+    """Generated alert for a ward.
+
+    SYNTHETIC DATA POLICY:
+        data_source = "synthetic"
+        environment = "test"
+    """
     model_config = ConfigDict(frozen=True)
 
     ward_id: str
@@ -92,6 +144,8 @@ class AlertResult(BaseModel):
     message: str
     valid_from: datetime
     valid_until: datetime
+    data_source: str = DATA_SOURCE_SYNTHETIC
+    environment: str = ENVIRONMENT_TEST
 
 
 # ---------------------------------------------------------------------------
