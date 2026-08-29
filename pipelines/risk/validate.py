@@ -1,8 +1,17 @@
-"""Risk pipeline - validate module."""
+"""Risk pipeline - validate module.
+
+Delegates validation to the scientific engine to avoid duplication.
+"""
+from pydantic import ValidationError
+
+from scientific.risk.hsri import HSRIInput, classify_hsri
 
 
 class RiskValidator:
-    """Handles validation of risk calculation results."""
+    """Handles validation of risk calculation results.
+
+    Delegates to scientific.risk.hsri for input validation and classification.
+    """
 
     def validate_inputs(
         self,
@@ -10,7 +19,7 @@ class RiskValidator:
         vulnerability: float,
         exposure: float,
     ) -> dict:
-        """Validate risk calculation inputs.
+        """Validate risk calculation inputs via HSRIInput Pydantic model.
 
         Args:
             hazard: Hazard index.
@@ -25,22 +34,21 @@ class RiskValidator:
             "errors": [],
         }
 
-        if not (0.0 <= hazard <= 1.0):
+        try:
+            HSRIInput(
+                hazard_index=hazard,
+                vulnerability_index=vulnerability,
+                exposure_index=exposure,
+            )
+        except ValidationError as e:
             results["valid"] = False
-            results["errors"].append(f"hazard_out_of_range: {hazard}")
-
-        if not (0.0 <= vulnerability <= 1.0):
-            results["valid"] = False
-            results["errors"].append(f"vulnerability_out_of_range: {vulnerability}")
-
-        if not (0.0 <= exposure <= 1.0):
-            results["valid"] = False
-            results["errors"].append(f"exposure_out_of_range: {exposure}")
+            for err in e.errors():
+                results["errors"].append(f"{err['loc'][0]}: {err['msg']}")
 
         return results
 
     def validate_result(self, hsri: float, risk_category: str) -> dict:
-        """Validate risk calculation result.
+        """Validate risk calculation result using classify_hsri.
 
         Args:
             hsri: Calculated HSRI.
@@ -58,9 +66,11 @@ class RiskValidator:
             results["valid"] = False
             results["errors"].append(f"hsri_out_of_range: {hsri}")
 
-        valid_categories = {"low", "medium", "high"}
-        if risk_category not in valid_categories:
+        expected_category = classify_hsri(hsri).value
+        if risk_category != expected_category:
             results["valid"] = False
-            results["errors"].append(f"invalid_category: {risk_category}")
+            results["errors"].append(
+                f"category_mismatch: expected {expected_category}, got {risk_category}"
+            )
 
         return results

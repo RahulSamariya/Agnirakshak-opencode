@@ -431,7 +431,10 @@ def aggregate_to_wards(
             min_hsri=round(min_hsri, 12),
             risk_level=risk_level,
             cell_count=len(assessments),
-            high_risk_cell_count=sum(1 for h in hsri_values if h > 0.66),
+            high_risk_cell_count=sum(
+                1 for h in hsri_values
+                if classify_hsri(h).value == "high"
+            ),
         ))
 
     return results
