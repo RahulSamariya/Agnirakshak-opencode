@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from scientific.configuration.loader import load_risk_thresholds
 from scientific.risk.base import RiskCategory, RiskModel
@@ -28,14 +28,6 @@ class HSRIInput(BaseModel):
     vulnerability_index: float = Field(..., ge=0.33, le=1.0)
     exposure_index: float = Field(..., ge=0.33, le=1.0)
 
-    @model_validator(mode="after")
-    def validate_inputs(self) -> HSRIInput:
-        if self.vulnerability_index < 0.33:
-            raise ValueError("Vulnerability Index cannot be below 0.33.")
-        if self.exposure_index < 0.33:
-            raise ValueError("Exposure Index cannot be below 0.33.")
-        return self
-
 
 class HSRIOutput(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -52,10 +44,20 @@ class HSRIOutput(BaseModel):
 # ---------------------------------------------------------------------------
 
 def classify_hsri(hsri_score: float) -> RiskLevel:
+    """Classify HSRI score into risk level.
+
+    Boundary convention (non-overlapping):
+        0.0 < HSRI <= 0.33 -> LOW
+        0.33 < HSRI <= 0.66 -> MEDIUM
+        0.66 < HSRI <= 1.00 -> HIGH
+        HSRI == 0 -> LOW (no hazard)
+    """
     cfg = load_risk_thresholds()
     value = float(hsri_score)
+    if value <= 0.0:
+        return RiskLevel.LOW
     for _key, cat in cfg.categories.items():
-        if cat.min <= value <= cat.max:
+        if cat.min < value <= cat.max:
             return RiskLevel(cat.label.lower())
     return RiskLevel.HIGH
 

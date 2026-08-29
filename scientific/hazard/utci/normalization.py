@@ -97,20 +97,30 @@ def _linear_interpolate(
 
 
 def classify_utci(utci_c: float) -> HazardCategory:
-    """Return the thermal-stress category for a UTCI value."""
+    """Return the thermal-stress category for a UTCI value.
+
+    Boundary convention:
+        Values below the first category's min (9C) -> NO_THERMAL_STRESS
+        Values within [min, max) -> category
+        Values at/above last category's max -> EXTREME_HEAT_STRESS
+    """
     bounds = _load_category_bounds()
+    first_min = bounds[0][0]
+    if utci_c < first_min:
+        return HazardCategory.NO_THERMAL_STRESS
     for utci_min, utci_max, _h_min, _h_max, category in bounds:
         if utci_min <= utci_c < utci_max:
             return category
-    # Extreme heat (max is inf)
     return HazardCategory.EXTREME_HEAT_STRESS
 
 
 def normalize_utci(utci_c: float) -> float:
     """Convert UTCI to normalized Hazard Index H.
 
-    Values at/below the minimum category bound are clamped to H = 0.0.
-    Values above the maximum category bound are capped at H = 1.0.
+    Boundary convention (consistent with classify_utci):
+        Values at/below the minimum category bound (9C) -> H = 0.0
+        Values at/above the maximum category bound (46C) -> H = 1.0
+        Within each category, linear interpolation.
     """
     bounds = _load_category_bounds()
     first_min = bounds[0][0]
@@ -122,10 +132,10 @@ def normalize_utci(utci_c: float) -> float:
     if value >= last_max:
         return 1.0
     for utci_min, utci_max, h_min, h_max, _category in bounds:
-        if utci_min <= value <= utci_max:
+        if utci_min <= value < utci_max:
             result = _linear_interpolate(value, utci_min, utci_max, h_min, h_max)
             return float(min(1.0, max(0.0, result)))
-    raise RuntimeError(f"UTCI value {value} did not match any normalization band.")
+    return 1.0
 
 
 def normalize_hazard(data: HazardNormalizationInput) -> HazardNormalizationOutput:

@@ -1,4 +1,4 @@
-"""Tests for UTCI → Hazard chain."""
+"""Tests for UTCI -> Hazard chain."""
 import pytest
 from pydantic import ValidationError
 
@@ -14,7 +14,6 @@ def test_chain_produces_full_result():
     )
     assert isinstance(result, ThermalHazardChainResult)
     assert result.utci_input.air_temperature == 35.0
-    assert result.utci_implemented is True
     assert result.utci_output is not None
     assert result.hazard_output is not None
 
@@ -34,7 +33,7 @@ def test_chain_hazard_index_in_range():
 def test_chain_result_is_frozen():
     result = run_thermal_hazard_chain(35.0, 60.0, 2.0, 40.0)
     with pytest.raises(ValidationError):
-        result.utci_implemented = True
+        result.utci_output = None
 
 
 def test_chain_result_rejects_extra():

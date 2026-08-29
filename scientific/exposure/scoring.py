@@ -236,8 +236,8 @@ def score_air_quality(aqi_category: str) -> float:
         'good' / 'satisfactory' / 'moderate' -> LOW (0.33)
         'poor' / 'very_poor' / 'severe'       -> HIGH (1.00)
 
-    Note: 'poor' intermediate is NOT YET SPECIFIED in source; mapped to
-    HIGH as worst-case conservative default.
+    Note: 'poor' intermediate is NOT YET SPECIFIED in source; conservatively
+    mapped to MEDIUM (0.66) as an intermediate default.
     """
     normalized = aqi_category.strip().lower()
     mapping = {

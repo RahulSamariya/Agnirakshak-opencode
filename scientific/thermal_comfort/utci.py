@@ -359,14 +359,40 @@ def calculate_utci(
     via the pythermalcomfort coefficient set.
 
     Args:
-        air_temperature: Air temperature in °C
+        air_temperature: Air temperature in C
         relative_humidity: Relative humidity in % (0-100)
         wind_speed: Wind speed in m/s at 10m height
-        mean_radiant_temperature: Mean radiant temperature in °C
+        mean_radiant_temperature: Mean radiant temperature in C
 
     Returns:
         UTCIOutput with UTCI value and input echoes
+
+    Raises:
+        ValueError: If inputs are outside valid ranges.
     """
+    if not (-50.0 <= air_temperature <= 50.0):
+        raise ValueError(
+            f"Air temperature must be in [-50, 50]C, got {air_temperature}"
+        )
+    if not (0.0 <= relative_humidity <= 100.0):
+        raise ValueError(
+            f"Relative humidity must be in [0, 100]%, got {relative_humidity}"
+        )
+    if not (0.5 <= wind_speed <= 17.0):
+        raise ValueError(
+            f"Wind speed must be in [0.5, 17.0] m/s, got {wind_speed}"
+        )
+    if not (air_temperature - 30 <= mean_radiant_temperature <= air_temperature + 70):
+        raise ValueError(
+            f"Mean radiant temperature must be in [Ta-30, Ta+70], "
+            f"got {mean_radiant_temperature} for Ta={air_temperature}"
+        )
+    ea = _vapour_pressure_hpa(air_temperature, relative_humidity)
+    if ea > 50.0:
+        raise ValueError(
+            f"Water vapour pressure must be <= 50 hPa, got {ea:.1f}"
+        )
+
     tk = air_temperature + 273.15
     eh_pa = _saturated_vapour_pressure(tk) * (relative_humidity / 100.0)
     pa = eh_pa / 10.0  # hPa to kPa
