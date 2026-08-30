@@ -1,54 +1,91 @@
-# Ahmedabad Pilot Data Acquisition Manifest
+# Acquisition Manifest
+# Generated: 2026-08-30
 
-## Data Sources
+datasets:
+  era5land:
+    dataset_id: era5land_ahmedabad_2010_03
+    domain: weather
+    source_name: ECMWF ERA5-Land
+    source_type: PRIMARY_OFFICIAL
+    source_url: "https://cds.climate.copernicus.eu/"
+    source_file: data/raw/weather/data_0.nc
+    source_sha256: "f6a1333e5a5e7da18a32112e23ae527e02c45c7398f2d0817c16b96861b32042"
+    acquired_at: "2026-08-28"
+    original_format: NetCDF
+    evidence_classification: PRIMARY_OFFICIAL
+    source_status: VERIFIED
+    access_status: PUBLIC
+    ml_suitability: SUITABLE
+    transformation_version: v2.0.0
+    file_size_bytes: 133764
+    notes: "March 2010, 124 timesteps, 0.1 degree resolution"
 
-### 1. ERA5-Land
-- **source_id**: era5land_ahmedabad_2010_03
-- **source_file**: data/raw/weather/data_0.nc
-- **source_hash**: (compute MD5)
-- **retrieved_at**: 2026-08-30
-- **transformation_version**: v1.0.0
-- **quality_flag**: PASS
+  gis_raw:
+    dataset_id: gis_ahmedabad_wards
+    domain: spatial
+    source_name: Ahmedabad Municipal Corporation
+    source_type: PRIMARY_OFFICIAL
+    source_url: ""
+    source_file: data/raw/gis/wards_ahmedabad.geojson
+    source_sha256: "15c30e5c21bbd1b736a3e1a23e0485560e33e6464a5c08d217260252e1ca53c7"
+    acquired_at: "2026-08-28"
+    original_format: GeoJSON
+    evidence_classification: PRIMARY_OFFICIAL
+    source_status: VERIFIED
+    access_status: PUBLIC
+    ml_suitability: SUITABLE
+    transformation_version: v2.0.0
+    file_size_bytes: 76253
+    notes: "48 current AMC wards, lat/lon coordinate order"
 
-### 2. GIS (Ahmedabad Wards)
-- **source_id**: gis_ahmedabad_wards_2024
-- **source_file**: data/raw/gis/wards_ahmedabad.geojson
-- **source_hash**: 8899d0c734a351910dc4f8a91a7db27b
-- **retrieved_at**: 2026-08-30
-- **transformation_version**: v1.0.0
-- **quality_flag**: PASS
+  gis_normalized:
+    dataset_id: gis_ahmedabad_wards_normalized
+    domain: spatial
+    source_name: Ahmedabad Municipal Corporation
+    source_type: PRIMARY_OFFICIAL
+    source_url: ""
+    source_file: data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson
+    source_sha256: ""
+    acquired_at: "2026-08-28"
+    original_format: GeoJSON
+    evidence_classification: PRIMARY_OFFICIAL
+    source_status: DERIVED
+    access_status: PUBLIC
+    ml_suitability: SUITABLE
+    transformation_version: v2.0.0
+    notes: "Coordinate swap from lat/lon to lon/lat per GeoJSON spec"
 
-### 3. AQI (CPCB Ahmedabad)
-- **source_id**: cpcb_ahmedabad_2025_01_05
-- **source_file**: data/raw/aqi/aqi_hourly_city_level__*.xlsx
-- **source_hash**: (compute MD5 for each file)
-- **retrieved_at**: 2026-08-30
-- **transformation_version**: v1.0.0
-- **quality_flag**: PARTIAL
+  aqi:
+    dataset_id: cpcb_ahmedabad_2025_01_05
+    domain: air_quality
+    source_name: Central Pollution Control Board
+    source_type: PRIMARY_OFFICIAL
+    source_url: "https://cpcb.gov.in/"
+    source_file: data/raw/aqi/*.xlsx
+    source_sha256: "see provenance-manifest.json for per-file hashes"
+    acquired_at: "2026-08-28"
+    original_format: XLSX
+    evidence_classification: PRIMARY_OFFICIAL
+    source_status: VERIFIED
+    access_status: PUBLIC
+    ml_suitability: PARTIALLY_SUITABLE
+    transformation_version: v2.0.0
+    notes: "5 monthly files, city-level, no ward breakdown"
 
-### 4. Census 2011
-- **source_id**: census_ahmedabad_2011
-- **source_file**: NOT FOUND
-- **source_hash**: N/A
-- **retrieved_at**: N/A
-- **transformation_version**: N/A
-- **quality_flag**: MISSING
-
-## Transformation History
-
-### ERA5-Land
-- **v1.0.0**: Initial profiling (no transformation)
-
-### GIS
-- **v1.0.0**: Initial profiling
-- **v1.0.1**: Normalized copy created (data/staging/gis/wards_ahmedabad_normalized.geojson)
-
-### AQI
-- **v1.0.0**: Initial profiling (no transformation)
-
-## Quality Flags
-
-- **PASS**: Data meets all quality checks
-- **PARTIAL**: Data has some missing values or issues
-- **BLOCKED**: Data not available or cannot be processed
-- **MISSING**: Source file not found
+  census:
+    dataset_id: census_ahmedabad_2011
+    domain: demographics
+    source_name: Census of India 2011
+    source_type: PRIMARY_OFFICIAL
+    source_url: "https://censusindia.gov.in/"
+    source_file: "data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx"
+    source_sha256: ""
+    acquired_at: "2026-08-30"
+    original_format: XLSX
+    evidence_classification: PRIMARY_OFFICIAL
+    source_status: VERIFIED
+    access_status: PUBLIC
+    ml_suitability: PARTIALLY_SUITABLE
+    transformation_version: v2.0.0
+    amc_ward_count: 57
+    notes: "57 AMC wards, 94 demographic columns"
