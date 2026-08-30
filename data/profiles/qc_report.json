@@ -1,0 +1,234 @@
+{
+  "era5land": {
+    "dataset": "era5land",
+    "total_checks": 20,
+    "passed": 20,
+    "failed": 0,
+    "overall": "PASS",
+    "checks": [
+      {
+        "check": "file_loads",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_t2m_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_d2m_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_u10_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_v10_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_sp_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_ssrd_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "var_strd_present",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "d2m_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "t2m_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "ssrd_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "strd_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "u10_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "v10_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "sp_no_missing",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "t2m_range",
+        "status": "PASS",
+        "details": "16.5 to 39.9 C"
+      },
+      {
+        "check": "u10_range",
+        "status": "PASS",
+        "details": "-4.21 to 4.15"
+      },
+      {
+        "check": "v10_range",
+        "status": "PASS",
+        "details": "-3.64 to 3.80"
+      },
+      {
+        "check": "has_time_dim",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "has_lat_lon",
+        "status": "PASS",
+        "details": ""
+      }
+    ]
+  },
+  "gis": {
+    "dataset": "gis_ahmedabad",
+    "total_checks": 8,
+    "passed": 8,
+    "failed": 0,
+    "overall": "PASS",
+    "checks": [
+      {
+        "check": "file_loads",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "feature_count",
+        "status": "PASS",
+        "details": "48 features"
+      },
+      {
+        "check": "crs_epsg4326",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "valid_geometries",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "no_empty_geometries",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "no_duplicate_ids",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "has_ward_lgd_code",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "has_ward_lgd_name",
+        "status": "PASS",
+        "details": ""
+      }
+    ]
+  },
+  "aqi": {
+    "dataset": "aqi_ahmedabad",
+    "total_checks": 13,
+    "passed": 13,
+    "failed": 0,
+    "overall": "PASS",
+    "checks": [
+      {
+        "check": "files_exist",
+        "status": "PASS",
+        "details": "5 files"
+      },
+      {
+        "check": "load_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "date_col_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "load_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "date_col_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "load_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "date_col_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "load_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "date_col_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "load_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "date_col_aqi_hourly_city_leve",
+        "status": "PASS",
+        "details": ""
+      },
+      {
+        "check": "total_rows",
+        "status": "PASS",
+        "details": "151 rows across 5 files"
+      },
+      {
+        "check": "missing_values",
+        "status": "PASS",
+        "details": "0.7% missing (26 cells)"
+      }
+    ]
+  }
+}
