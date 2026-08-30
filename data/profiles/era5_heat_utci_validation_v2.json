@@ -1,0 +1,56 @@
+{
+  "validation_id": "era5_heat_utci_validation_v2",
+  "status": "BLOCKED",
+  "blocked_reason": "Matching ERA5 meteorology (0.25° hourly single-level reanalysis) unavailable in repository",
+  "date": "2026-08-30",
+  "previous_experiment": {
+    "version": "v1",
+    "file": "docs/data/era5_heat_reference_validation_v1.md",
+    "issue": "Used ERA5-Land meteorology instead of ERA5, could not isolate UTCI implementation error",
+    "previous_statistics": {
+      "mae_c": 0.581,
+      "rmse_c": 0.8546,
+      "mean_bias_c": 0.4619,
+      "sample_count": 1488
+    },
+    "note": "Preserved as historical evidence. Cannot be attributed solely to UTCI implementation."
+  },
+  "datasets": {
+    "era5_heat": {
+      "file": "cde4e619c080209e1ec505565f79b8e.nc",
+      "type": "ERA5-HEAT",
+      "variables": ["mrt", "utci"],
+      "units": "degK",
+      "grid": "0.25°",
+      "resolution": "~25km",
+      "usable": true
+    },
+    "era5_meteorology": {
+      "type": "ERA5 single-level reanalysis",
+      "required_variables": ["t2m", "d2m", "u10", "v10", "sp"],
+      "required_grid": "0.25°",
+      "required_frequency": "hourly",
+      "required_period": "2010-03-01 to 2010-03-31",
+      "available": false,
+      "usable": false
+    },
+    "era5_land": {
+      "file": "data/raw/weather/data_0.nc",
+      "type": "ERA5-Land",
+      "grid": "0.1°",
+      "usable_for_test1": false,
+      "reason": "Different product from ERA5, meteorological fields differ"
+    }
+  },
+  "required_cds_request": {
+    "dataset": "reanalysis-era5-single-levels",
+    "variables": ["2m_temperature", "2m_dewpoint_temperature", "10m_u_component_of_wind", "10m_v_component_of_wind", "surface_pressure"],
+    "time_range": "2010-03-01 to 2010-03-31",
+    "frequency": "hourly",
+    "area": [23.25, 72.25, 22.75, 73.0],
+    "grid": [0.25, 0.25],
+    "format": "netcdf"
+  },
+  "methodology": "BLOCKED — awaiting ERA5 meteorology",
+  "conclusion": "TEST 1 cannot proceed without matching ERA5 meteorology. ERA5-Land is not a substitute."
+}
