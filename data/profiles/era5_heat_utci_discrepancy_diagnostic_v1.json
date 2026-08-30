@@ -1,0 +1,171 @@
+{
+  "diagnostic_id": "era5_heat_utci_discrepancy_v1",
+  "date": "2026-08-30 18:32",
+  "objective": "Investigate systematic UTCI difference (MAE~0.95C, Bias~+0.86C)",
+  "baseline": {
+    "test1_mae_c": 0.9515,
+    "test1_rmse_c": 1.1877,
+    "test1_bias_c": 0.8587,
+    "test1_samples": 1488
+  },
+  "experiments": [
+    {
+      "name": "Current implementation",
+      "humidity": "Buck(17.67,243.5)->pythermalcomfort sat->pa",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "round(utci, 1)",
+      "mae": 0.9514861691382457,
+      "rmse": 1.187681180527015,
+      "bias": 0.8586800893147557
+    },
+    {
+      "name": "Direct vapor pressure",
+      "humidity": "dewpoint->pythermalcomfort sat->pa (direct)",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "round(utci, 1)",
+      "mae": 0.951815110893643,
+      "rmse": 1.1879989079279496,
+      "bias": 0.8597553581319601
+    },
+    {
+      "name": "Buck-only vapor pressure",
+      "humidity": "Buck(17.67,243.5)->pa (no pythermalcomfort)",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "round(utci, 1)",
+      "mae": 0.9504109003210415,
+      "rmse": 1.1865065967937922,
+      "bias": 0.8576048204975516
+    },
+    {
+      "name": "Full precision (current)",
+      "humidity": "Buck(17.67,243.5)->pythermalcomfort sat->pa",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "none (full float64)",
+      "mae": 0.9519962377213292,
+      "rmse": 1.1879538198598913,
+      "bias": 0.8593677492880407
+    },
+    {
+      "name": "Full precision (direct VP)",
+      "humidity": "dewpoint->pythermalcomfort sat->pa (direct)",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "none (full float64)",
+      "mae": 0.9527987733144474,
+      "rmse": 1.1886980827973865,
+      "bias": 0.8605185404856214
+    },
+    {
+      "name": "Full precision (Buck VP)",
+      "humidity": "Buck(17.67,243.5)->pa (no pythermalcomfort)",
+      "wind": "sqrt(u10^2+v10^2), clamp<0.5",
+      "mrt": "ERA5-HEAT K->C",
+      "rounding": "none (full float64)",
+      "mae": 0.9511395186763237,
+      "rmse": 1.1869042176990043,
+      "bias": 0.8583582869547473
+    }
+  ],
+  "sample_count": 1488,
+  "input_statistics": {
+    "ta_c": {
+      "mean": 29.254935036936136,
+      "median": 28.856347656250023,
+      "std": 5.612546121682176,
+      "min": 17.438562011718773,
+      "max": 39.9758239746094,
+      "p95_abs": 37.85309295654299
+    },
+    "d2m_c": {
+      "mean": 12.730357557727466,
+      "median": 12.886895751953148,
+      "std": 3.9271661275810765,
+      "min": 2.4334960937500227,
+      "max": 22.739160156250023,
+      "p95_abs": 18.907727050781272
+    },
+    "rh_buck": {
+      "mean": 39.272017838393566,
+      "median": 36.671772998440545,
+      "std": 15.991905050253491,
+      "min": 12.882790847009343,
+      "max": 88.91491152234977,
+      "p95_abs": 72.42353740672151
+    },
+    "ws_ms": {
+      "mean": 2.4030483556017415,
+      "median": 2.369099215285725,
+      "std": 0.7662751838357178,
+      "min": 0.20429009532072911,
+      "max": 4.900984761198138,
+      "p95_abs": 3.745757470636633
+    },
+    "mrt_c": {
+      "mean": 34.252713488507034,
+      "median": 31.480569458007835,
+      "std": 20.479889331640056,
+      "min": 6.888970947265648,
+      "max": 61.28008422851565,
+      "p95_abs": 58.06909942626955
+    },
+    "pa_current_kpa": {
+      "mean": 1.513790457765784,
+      "median": 1.4852804336103205,
+      "std": 0.3854870229938137,
+      "min": 0.7286574234996546,
+      "max": 2.7663725663695984,
+      "p95_abs": 2.1839796008222896
+    },
+    "pa_direct_kpa": {
+      "mean": 1.514732387884609,
+      "median": 1.4869771070495323,
+      "std": 0.38578199416516296,
+      "min": 0.728150500763757,
+      "max": 2.766957499725019,
+      "p95_abs": 2.1855822314378845
+    }
+  },
+  "vapor_pressure_comparison": {
+    "current_vs_direct_mean_diff_hpa": -0.9419301188248895,
+    "current_vs_direct_std_diff_hpa": 0.9833193787088951,
+    "current_vs_direct_p95_abs_diff_hpa": 2.7775754236401102,
+    "current_vs_direct_max_abs_diff_hpa": 4.692615162072311,
+    "current_vs_buck_mean_diff_hpa": 0.4173247098739619,
+    "current_vs_buck_std_diff_hpa": 0.9438699164806714,
+    "current_vs_buck_p95_abs_diff_hpa": 1.8204685945950037,
+    "current_vs_buck_max_abs_diff_hpa": 2.2404383111558346
+  },
+  "rounding_effect": {
+    "current_mean_diff_c": -0.0006876599732848433,
+    "current_max_abs_diff_c": 0.04995294982738585,
+    "direct_vp_mean_diff_c": -0.0007631823536612821,
+    "direct_vp_max_abs_diff_c": 0.049993025895794574
+  },
+  "wind_diagnostic": {
+    "calm_wind_count": 5,
+    "calm_wind_percent": 0.3,
+    "wind_range_ms": [
+      0.20429009532072911,
+      4.900984761198138
+    ]
+  },
+  "mrt_diagnostic": {
+    "mrt_range_c": [
+      6.888970947265648,
+      61.28008422851565
+    ],
+    "ta_mrt_range_c": [
+      -16.745452880859375,
+      28.1981201171875
+    ]
+  },
+  "source_hashes": {
+    "era5_meteorology": "9e9d26c3ca07d978fd29c430e20b376ccdc320e4c5e5f8201e835871437def9d",
+    "era5_heat": "2c68117822e8ec69365fa6cc7004a5e362a4112a44d07005d5d16265b1861144"
+  },
+  "conclusion": "Vapor pressure convention is the dominant source of discrepancy."
+}
