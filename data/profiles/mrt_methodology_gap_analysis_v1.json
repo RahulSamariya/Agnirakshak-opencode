@@ -1,0 +1,506 @@
+{
+  "document_version": "1.0",
+  "created": "2026-08-30",
+  "task": "MRT Methodology Verification — ERA5-Land Variable Gap Analysis",
+  "production_mrt_code_implemented": false,
+  "utci_h_v_e_hsri_unchanged": true,
+  "sources": [
+    {
+      "id": 1,
+      "title": "Mean radiant temperature from global-scale numerical weather prediction models",
+      "authors": "Di Napoli, Hogan, Pappenberger",
+      "year": 2020,
+      "doi": "10.1007/s00484-020-01900-5",
+      "type": "peer_reviewed_paper",
+      "relevance": "Primary MRT methodology used by ERA5-HEAT"
+    },
+    {
+      "id": 2,
+      "title": "ERA5-HEAT: Universal Thermal Climate Index on a single grid",
+      "organization": "ECMWF",
+      "url": "https://atmosphere.copernicus.eu/era5-heat-universal-thermal-climate-index-single-grid",
+      "type": "documentation",
+      "relevance": "ERA5-HEAT dataset documentation"
+    },
+    {
+      "id": 3,
+      "title": "ERA5-Land hourly data from 1950 to present",
+      "organization": "ECMWF/Copernicus CDS",
+      "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
+      "type": "dataset_documentation",
+      "relevance": "ERA5-Land variable availability"
+    },
+    {
+      "id": 4,
+      "title": "ERA5 data documentation",
+      "organization": "ECMWF",
+      "url": "https://confluence.ecmwf.int/spaces/CKB/pages/76414402/ERA5+data+documentation",
+      "type": "technical_documentation",
+      "relevance": "ERA5 radiation variable definitions"
+    },
+    {
+      "id": 5,
+      "title": "ERA5 Land data documentation",
+      "organization": "ECMWF",
+      "url": "https://confluence.ecmwf.int/spaces/CKB/pages/140385202/ERA5-Land+data+documentation",
+      "type": "technical_documentation",
+      "relevance": "ERA5-Land specific variable list"
+    },
+    {
+      "id": 6,
+      "title": "UTCI User Guide",
+      "authors": "Fiala et al.",
+      "year": 2012,
+      "doi": "10.1007/s00484-011-0424-z",
+      "type": "peer_reviewed_paper",
+      "relevance": "UTCI polynomial and thermodynamic basis"
+    },
+    {
+      "id": 7,
+      "title": "Reference UTCI Fortran implementation",
+      "organization": "marvell/utci",
+      "url": "https://github.com/marvell/utci",
+      "type": "code_reference",
+      "relevance": "Polynomial coefficients validation"
+    }
+  ],
+  "mrt_requirements": {
+    "primary_radiation_fluxes": [
+      {
+        "symbol": "S_srf_dn",
+        "name": "Surface solar radiation downwards",
+        "ecmwf_variable": "ssrd",
+        "ecmwf_paramId": 169,
+        "description": "Total downward shortwave at surface (direct + diffuse)"
+      },
+      {
+        "symbol": "S_srf_net",
+        "name": "Surface net solar radiation",
+        "ecmwf_variable": "ssr",
+        "ecmwf_paramId": 176,
+        "description": "Net shortwave = downward - upward"
+      },
+      {
+        "symbol": "S_srf_dn_direct",
+        "name": "Direct solar radiation at surface",
+        "ecmwf_variable": "fdir",
+        "ecmwf_paramId": 228021,
+        "description": "Direct (beam) shortwave at surface"
+      },
+      {
+        "symbol": "L_srf_dn",
+        "name": "Surface thermal radiation downwards",
+        "ecmwf_variable": "strd",
+        "ecmwf_paramId": 175,
+        "description": "Downward longwave at surface"
+      },
+      {
+        "symbol": "L_srf_net",
+        "name": "Surface net thermal radiation",
+        "ecmwf_variable": "str",
+        "ecmwf_paramId": 178,
+        "description": "Net longwave = downward - upward"
+      }
+    ],
+    "derived_quantities": [
+      {
+        "symbol": "L_srf_up",
+        "equation": "L_srf_dn - L_srf_net",
+        "equation_number": "3",
+        "description": "Upward longwave from ground"
+      },
+      {
+        "symbol": "S_srf_dn_diffuse",
+        "equation": "S_srf_dn - S_srf_dn_direct",
+        "equation_number": "4",
+        "description": "Diffuse shortwave"
+      },
+      {
+        "symbol": "S_srf_up",
+        "equation": "S_srf_dn - S_srf_net",
+        "equation_number": "5",
+        "description": "Upward shortwave reflected from ground"
+      }
+    ],
+    "solar_geometry": [
+      {
+        "symbol": "delta",
+        "name": "Solar declination",
+        "equation_number": "8",
+        "derivable": true,
+        "source": "Spencer (1971) via Di Napoli et al. (2020)"
+      },
+      {
+        "symbol": "h",
+        "name": "Hour angle",
+        "equation_number": "9",
+        "derivable": true,
+        "source": "NOAA (1997) via Di Napoli et al. (2020)"
+      },
+      {
+        "symbol": "theta_0",
+        "name": "Solar zenith angle",
+        "equation_number": "6",
+        "derivable": true,
+        "source": "Woan (2000) via Di Napoli et al. (2020)"
+      },
+      {
+        "symbol": "gamma",
+        "name": "Solar elevation angle",
+        "equation_number": "16",
+        "derivable": true,
+        "source": "Di Napoli et al. (2020)"
+      },
+      {
+        "symbol": "cos_theta_bar_0",
+        "name": "Average daytime cosine of solar zenith angle",
+        "equation_number": "12",
+        "derivable": true,
+        "source": "Hogan and Hirahara (2016) via Di Napoli et al. (2020)"
+      }
+    ],
+    "mrt_equation": {
+      "equation_number": "14",
+      "formula": "MRT* = [1/sigma * (f_a*L_srf_dn + f_a*L_srf_up + (alpha_ir/epsilon_p)*f_a*S_srf_dn_diffuse + (alpha_ir/epsilon_p)*f_a*S_srf_up + f_p*I*)]^0.25",
+      "constants": {
+        "sigma": {
+          "value": 5.67e-8,
+          "units": "W/m2K4",
+          "description": "Stefan-Boltzmann constant"
+        },
+        "f_a": {
+          "value": 0.5,
+          "description": "Angle factors for upper/lower hemispheres"
+        },
+        "alpha_ir": {
+          "value": 0.7,
+          "description": "Solar absorption coefficient of clothed human body"
+        },
+        "epsilon_p": {
+          "value": 0.97,
+          "description": "Emissivity of clothed human body"
+        }
+      }
+    }
+  },
+  "era5land_variables": {
+    "actual_file": "data/raw/weather/data_0.nc",
+    "grid_resolution": "0.25 degrees",
+    "timesteps": 124,
+    "spatial_extent": {
+      "latitude": [22.75, 23.25],
+      "longitude": [72.25, 73.0]
+    },
+    "variables": [
+      {
+        "name": "d2m",
+        "long_name": "2 metre dewpoint temperature",
+        "units": "K",
+        "grib_paramId": 168,
+        "step_type": "instant",
+        "mrt_relevant": true,
+        "usage": "Humidity input for UTCI"
+      },
+      {
+        "name": "t2m",
+        "long_name": "2 metre temperature",
+        "units": "K",
+        "grib_paramId": 167,
+        "step_type": "instant",
+        "mrt_relevant": true,
+        "usage": "Air temperature for UTCI and MRT approximation"
+      },
+      {
+        "name": "ssrd",
+        "long_name": "Surface short-wave (solar) radiation downwards",
+        "units": "J m-2",
+        "grib_paramId": 169,
+        "step_type": "accum",
+        "mrt_relevant": true,
+        "usage": "S_srf_dn for MRT calculation"
+      },
+      {
+        "name": "strd",
+        "long_name": "Surface long-wave (thermal) radiation downwards",
+        "units": "J m-2",
+        "grib_paramId": 175,
+        "step_type": "accum",
+        "mrt_relevant": true,
+        "usage": "L_srf_dn for MRT calculation"
+      },
+      {
+        "name": "u10",
+        "long_name": "10 metre U wind component",
+        "units": "m s-1",
+        "grib_paramId": 165,
+        "step_type": "instant",
+        "mrt_relevant": false,
+        "usage": "Wind speed for UTCI"
+      },
+      {
+        "name": "v10",
+        "long_name": "10 metre V wind component",
+        "units": "m s-1",
+        "grib_paramId": 166,
+        "step_type": "instant",
+        "mrt_relevant": false,
+        "usage": "Wind speed for UTCI"
+      },
+      {
+        "name": "sp",
+        "long_name": "Surface pressure",
+        "units": "Pa",
+        "grib_paramId": 134,
+        "step_type": "instant",
+        "mrt_relevant": false,
+        "usage": "Pressure for UTCI"
+      }
+    ],
+    "not_downloaded_but_available": [
+      {
+        "name": "ssr",
+        "long_name": "Surface net solar radiation",
+        "units": "J m-2",
+        "grib_paramId": 176,
+        "step_type": "accum",
+        "mrt_relevant": true,
+        "usage": "S_srf_net needed for S_srf_up computation"
+      },
+      {
+        "name": "str",
+        "long_name": "Surface net thermal radiation",
+        "units": "J m-2",
+        "grib_paramId": 178,
+        "step_type": "accum",
+        "mrt_relevant": true,
+        "usage": "L_srf_net needed for L_srf_up computation"
+      }
+    ],
+    "not_available_in_era5land": [
+      {
+        "name": "fdir",
+        "long_name": "Total sky direct solar radiation at surface",
+        "units": "J m-2",
+        "grib_paramId": 228021,
+        "step_type": "accum",
+        "mrt_relevant": true,
+        "critical": true,
+        "usage": "S_srf_dn_direct needed for direct/diffuse separation and I* projection",
+        "note": "Only available in ERA5 single levels, NOT in ERA5-Land"
+      }
+    ]
+  },
+  "gap_classification": {
+    "available": [
+      {
+        "variable": "t2m",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "d2m",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "u10/v10",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "sp",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "ssrd (S_srf_dn)",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "strd (L_srf_dn)",
+        "status": "AVAILABLE",
+        "can_reproduce_directly": true
+      }
+    ],
+    "derivable": [
+      {
+        "variable": "Solar declination (delta)",
+        "status": "DERIVABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "Hour angle (h)",
+        "status": "DERIVABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "Solar zenith angle (theta_0)",
+        "status": "DERIVABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "Solar elevation angle (gamma)",
+        "status": "DERIVABLE",
+        "can_reproduce_directly": true
+      },
+      {
+        "variable": "Average daytime cos(theta_bar_0)",
+        "status": "DERIVABLE",
+        "can_reproduce_directly": true
+      }
+    ],
+    "not_downloaded": [
+      {
+        "variable": "ssr (S_srf_net)",
+        "status": "NOT_DOWNLOADED",
+        "can_reproduce_directly": false,
+        "note": "Available in ERA5-Land but not in our current data_0.nc"
+      },
+      {
+        "variable": "str (L_srf_net)",
+        "status": "NOT_DOWNLOADED",
+        "can_reproduce_directly": false,
+        "note": "Available in ERA5-Land but not in our current data_0.nc"
+      }
+    ],
+    "missing": [
+      {
+        "variable": "fdir (S_srf_dn_direct)",
+        "status": "MISSING",
+        "can_reproduce_directly": false,
+        "critical": true,
+        "note": "NOT available in ERA5-Land. Only in ERA5 single levels. Essential for direct/diffuse separation and I* projection."
+      }
+    ]
+  },
+  "radiation_units": {
+    "accumulation_type": "accumulated_over_hour",
+    "accumulation_period_seconds": 3600,
+    "storage_units": "J m-2",
+    "conversion_to_flux": "Flux [W/m2] = Accumulation [J/m2] / 3600 [s]",
+    "source": "ECMWF ERA5 data documentation"
+  },
+  "exact_reproduction_feasible": false,
+  "exact_reproduction_reason": "ERA5-Land does not provide fdir (direct solar radiation at surface), which is essential for the Di Napoli et al. (2020) MRT method. This variable is only available in ERA5 single levels.",
+  "candidate_methods": [
+    {
+      "id": "A",
+      "name": "Use ERA5-HEAT MRT Directly",
+      "description": "Download pre-computed MRT from ERA5-HEAT dataset",
+      "required_inputs": ["ERA5-HEAT MRT file"],
+      "assumptions": "None - uses ERA5-HEAT's own MRT",
+      "source": "ERA5-HEAT dataset",
+      "limitations": ["0.25 degree resolution", "Limited temporal coverage", "Cannot compute MRT independently"],
+      "estimated_accuracy": "Validated: R2 > 0.88, bias 0.42C, RMSE 5.99C (Di Napoli et al. 2020)",
+      "recommended_for": "Historical/reference processing when ERA5-HEAT is available"
+    },
+    {
+      "id": "B",
+      "name": "Approximate MRT from ERA5-Land (Isotropic Shortwave)",
+      "description": "Assume isotropic diffuse shortwave and estimate direct component from ssrd and solar geometry",
+      "required_inputs": ["ssrd", "strd", "t2m", "d2m", "u10", "v10", "sp"],
+      "assumptions": [
+        "All shortwave is diffuse (no direct beam separation) - very strong assumption",
+        "Or estimate direct/diffuse split using empirical clearness index",
+        "Ground reflectance albedo approx 0.2"
+      ],
+      "source": "Simplified version of Di Napoli et al. (2020)",
+      "limitations": ["Significant error in clear-sky conditions", "Better performance in overcast", "Estimated RMSE: 10-20C"],
+      "estimated_accuracy": "Estimated RMSE: 10-20C (vs 6C for full method)",
+      "recommended_for": "Only if higher resolution is critical and approximation error is acceptable"
+    },
+    {
+      "id": "C",
+      "name": "Empirical MRT Approximation",
+      "description": "Use empirical relationship MRT approx T_air + f(RH, wind, radiation)",
+      "required_inputs": ["t2m", "d2m", "u10", "v10", "ssrd"],
+      "assumptions": [
+        "Linear or polynomial relationship between MRT and air temperature",
+        "Radiation correction factor based on clearness index"
+      ],
+      "source": "Thorsson et al. (2007), Lindberg et al. (2008)",
+      "limitations": ["Site-specific calibration required", "Poor transferability", "Estimated RMSE: 5-15C"],
+      "estimated_accuracy": "Estimated RMSE: 5-15C",
+      "recommended_for": "Quick estimation when ERA5-HEAT is unavailable"
+    },
+    {
+      "id": "D",
+      "name": "Download Missing ERA5 Variables",
+      "description": "Download fdir, ssr, str from ERA5 single levels and combine with ERA5-Land data",
+      "required_inputs": ["ERA5 single levels file", "ERA5-Land file"],
+      "assumptions": ["ERA5 and ERA5-Land are consistent at 0.25 degree resolution"],
+      "source": "ERA5 dataset",
+      "limitations": ["Requires additional data download", "Mixing two datasets", "0.25 degree resolution"],
+      "estimated_accuracy": "Full Di Napoli et al. (2020) methodology accuracy",
+      "recommended_for": "If exact MRT reproduction is required"
+    }
+  ],
+  "validation_plan": {
+    "reference_data": "ERA5-HEAT MRT (validated against BSRN stations)",
+    "metrics": ["MAE", "RMSE", "bias", "median_absolute_error", "P95_absolute_error", "R2"],
+    "stratification": [
+      "daytime_vs_nighttime",
+      "solar_conditions_clear_vs_overcast",
+      "MRT_minus_T_air_difference",
+      "radiation_intensity"
+    ],
+    "acceptance_thresholds": "No predetermined thresholds - report observed performance"
+  },
+  "architectural_options": {
+    "option_a": {
+      "name": "ERA5-HEAT MRT -> UTCI",
+      "pipeline": "ERA5-HEAT MRT (0.25 degree) -> UTCI -> HSRI",
+      "advantages": ["Scientifically validated", "No approximation needed", "Reproducible"],
+      "disadvantages": ["0.25 degree resolution", "Limited temporal coverage", "Dependency on ERA5-HEAT"],
+      "recommended_for": "Historical/reference processing"
+    },
+    "option_b": {
+      "name": "ERA5-Land -> Derived MRT -> UTCI",
+      "pipeline": "ERA5-Land (0.1 degree) -> Derived MRT -> UTCI -> HSRI",
+      "advantages": ["0.1 degree resolution", "Longer temporal coverage", "Independent MRT computation"],
+      "disadvantages": ["Requires MRT approximation", "Missing fdir variable", "Validation needed"],
+      "recommended_for": "Future exploration if higher resolution required"
+    }
+  },
+  "recommendation": {
+    "immediate_action": "Use ERA5-HEAT MRT directly for UTCI computation when ERA5-HEAT data is available",
+    "gap_conclusion": "Exact reproduction of ERA5-HEAT MRT from ERA5-Land variables alone is NOT possible due to missing fdir variable",
+    "if_higher_resolution_required": "Consider Approach D (download missing ERA5 variables) as most scientifically sound option"
+  },
+  "open_questions": [
+    {
+      "question": "Can the direct/diffuse shortwave split be estimated from ssrd alone?",
+      "possible_approaches": "Clearness index methods (Orgill & Hollands 1977, Erbs et al. 1982)",
+      "status": "Unknown - requires validation"
+    },
+    {
+      "question": "How sensitive is UTCI to MRT errors?",
+      "note": "UTCI has +/-1.1C accuracy for MRT input. MRT errors propagate through UTCI polynomial.",
+      "status": "Requires sensitivity analysis"
+    },
+    {
+      "question": "Is the 0.25 to 0.1 degree resolution improvement worth the approximation error?",
+      "note": "Depends on spatial variability of heat stress in Ahmedabad.",
+      "status": "Requires local assessment"
+    },
+    {
+      "question": "Can ERA5-Land skin temperature (skt) improve longwave MRT estimation?",
+      "note": "ERA5-Land may provide skt in full dataset, could improve L_srf_up computation.",
+      "status": "Requires investigation"
+    },
+    {
+      "question": "What is the actual accumulation period for our ERA5-Land data?",
+      "note": "Documentation says hourly, but need to verify from data metadata.",
+      "status": "Requires verification"
+    }
+  ],
+  "files_created": [
+    "docs/data/mrt_methodology_and_era5land_gap_analysis_v1.md",
+    "data/profiles/mrt_methodology_gap_analysis_v1.json"
+  ],
+  "tests": {
+    "pytest_result": "336 passed",
+    "ruff_result": "No new errors (pre-existing errors in other files unchanged)"
+  }
+}
