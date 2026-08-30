@@ -1,0 +1,54 @@
+# Ahmedabad Pilot Data Acquisition Manifest
+
+## Data Sources
+
+### 1. ERA5-Land
+- **source_id**: era5land_ahmedabad_2010_03
+- **source_file**: data/raw/weather/data_0.nc
+- **source_hash**: (compute MD5)
+- **retrieved_at**: 2026-08-30
+- **transformation_version**: v1.0.0
+- **quality_flag**: PASS
+
+### 2. GIS (Ahmedabad Wards)
+- **source_id**: gis_ahmedabad_wards_2024
+- **source_file**: data/raw/gis/wards_ahmedabad.geojson
+- **source_hash**: 8899d0c734a351910dc4f8a91a7db27b
+- **retrieved_at**: 2026-08-30
+- **transformation_version**: v1.0.0
+- **quality_flag**: PASS
+
+### 3. AQI (CPCB Ahmedabad)
+- **source_id**: cpcb_ahmedabad_2025_01_05
+- **source_file**: data/raw/aqi/aqi_hourly_city_level__*.xlsx
+- **source_hash**: (compute MD5 for each file)
+- **retrieved_at**: 2026-08-30
+- **transformation_version**: v1.0.0
+- **quality_flag**: PARTIAL
+
+### 4. Census 2011
+- **source_id**: census_ahmedabad_2011
+- **source_file**: NOT FOUND
+- **source_hash**: N/A
+- **retrieved_at**: N/A
+- **transformation_version**: N/A
+- **quality_flag**: MISSING
+
+## Transformation History
+
+### ERA5-Land
+- **v1.0.0**: Initial profiling (no transformation)
+
+### GIS
+- **v1.0.0**: Initial profiling
+- **v1.0.1**: Normalized copy created (data/staging/gis/wards_ahmedabad_normalized.geojson)
+
+### AQI
+- **v1.0.0**: Initial profiling (no transformation)
+
+## Quality Flags
+
+- **PASS**: Data meets all quality checks
+- **PARTIAL**: Data has some missing values or issues
+- **BLOCKED**: Data not available or cannot be processed
+- **MISSING**: Source file not found

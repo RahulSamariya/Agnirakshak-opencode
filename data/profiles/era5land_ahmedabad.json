@@ -1,0 +1,151 @@
+{
+  "file": "data_0.nc",
+  "dimensions": {
+    "valid_time": 124,
+    "latitude": 5,
+    "longitude": 5
+  },
+  "variables": [
+    "d2m",
+    "t2m",
+    "ssrd",
+    "strd",
+    "u10",
+    "v10",
+    "sp"
+  ],
+  "coordinates": [
+    "number",
+    "valid_time",
+    "latitude",
+    "longitude",
+    "expver"
+  ],
+  "latitude_range": [
+    22.8,
+    23.2
+  ],
+  "longitude_range": [
+    72.4,
+    72.8
+  ],
+  "time_range": [
+    "2010-03-01T00:00:00.000000000",
+    "2010-03-31T18:00:00.000000000"
+  ],
+  "time_size": 124,
+  "variable_details": {
+    "d2m": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "K",
+      "long_name": "2 metre dewpoint temperature",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "t2m": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "K",
+      "long_name": "2 metre temperature",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "ssrd": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "J m**-2",
+      "long_name": "Surface short-wave (solar) radiation downwards",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "strd": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "J m**-2",
+      "long_name": "Surface long-wave (thermal) radiation downwards",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "u10": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "m s**-1",
+      "long_name": "10 metre U wind component",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "v10": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "m s**-1",
+      "long_name": "10 metre V wind component",
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "sp": {
+      "dims": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        5,
+        5
+      ],
+      "units": "Pa",
+      "long_name": "Surface pressure",
+      "missing_values": 0,
+      "total_values": 3100
+    }
+  }
+}

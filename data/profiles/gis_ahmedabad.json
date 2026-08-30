@@ -1,0 +1,94 @@
+{
+  "file": "wards_ahmedabad.geojson",
+  "feature_count": 48,
+  "columns": [
+    "tessellate",
+    "extrude",
+    "visibility",
+    "objectid",
+    "townname",
+    "towncensuscode2011",
+    "town_lgd_code",
+    "ward_lgd_code",
+    "ward_lgd_name",
+    "sourcewardname",
+    "sourcewardcode",
+    "state",
+    "geometry"
+  ],
+  "crs": "EPSG:4326",
+  "geometry_types": [
+    "Polygon"
+  ],
+  "bounding_box": {
+    "min_lon": 22.9121407,
+    "min_lat": 72.4472434,
+    "max_lon": 23.1386475,
+    "max_lat": 72.7036946
+  },
+  "invalid_geometries": 0,
+  "empty_geometries": 0,
+  "source_hash": "8899d0c734a351910dc4f8a91a7db27b",
+  "column_info": {
+    "tessellate": {
+      "dtype": "int32",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "extrude": {
+      "dtype": "int32",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "visibility": {
+      "dtype": "int32",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "objectid": {
+      "dtype": "float64",
+      "unique_count": 48,
+      "null_count": 0
+    },
+    "townname": {
+      "dtype": "str",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "towncensuscode2011": {
+      "dtype": "str",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "town_lgd_code": {
+      "dtype": "float64",
+      "unique_count": 1,
+      "null_count": 0
+    },
+    "ward_lgd_code": {
+      "dtype": "float64",
+      "unique_count": 48,
+      "null_count": 0
+    },
+    "ward_lgd_name": {
+      "dtype": "str",
+      "unique_count": 48,
+      "null_count": 0
+    },
+    "sourcewardname": {
+      "dtype": "str",
+      "unique_count": 48,
+      "null_count": 0
+    },
+    "sourcewardcode": {
+      "dtype": "str",
+      "unique_count": 48,
+      "null_count": 0
+    },
+    "state": {
+      "dtype": "str",
+      "unique_count": 1,
+      "null_count": 0
+    }
+  }
+}
