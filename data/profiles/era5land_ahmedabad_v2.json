@@ -6,7 +6,7 @@
   "source_url": "https://cds.climate.copernicus.eu/",
   "source_file": "data/raw/weather/data_0.nc",
   "source_sha256": "0d807637a3e74b4c62cdbe250e7ef670785ff8a9297302c12bb269d6aa9047db",
-  "acquired_at": "2026-08-30T10:46:46.902149+00:00",
+  "acquired_at": "2026-08-30T11:05:05.549116+00:00",
   "original_format": "NetCDF (CF-1.6)",
   "transformation_version": "v2.0.0",
   "status": "READY",

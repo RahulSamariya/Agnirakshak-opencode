@@ -6,7 +6,7 @@
   "source_url": null,
   "source_file": "data/raw/gis/wards_ahmedabad.geojson",
   "source_sha256": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
-  "acquired_at": "2026-08-30T10:46:53.947914+00:00",
+  "acquired_at": "2026-08-30T11:05:11.425306+00:00",
   "original_format": "GeoJSON",
   "transformation_version": "v2.0.0",
   "status": "READY",

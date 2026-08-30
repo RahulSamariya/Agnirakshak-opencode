@@ -1,435 +1,672 @@
-This is a SEPARATE CLEANUP / INTEGRATION TASK.
+DATA LAYER FINALIZATION — REAL FILES MUST BE INSIDE THE REPOSITORY
 
-Do NOT change the main scientific roadmap.
-Do NOT redesign the architecture.
-Do NOT add new ML models.
-Do NOT change the scientific equations, weights, or thresholds unless required to fix an actual implementation bug.
+Project: Agnirakshak — MoES Problem Statement 26083
 
-The scientific engine is already implemented.
+GOAL:
+Finish ONLY the real Ahmedabad data-layer milestone.
 
-Your task is to fix ONLY the remaining issues identified in the latest project review.
-
-==================================================
-1. REMOVE DUPLICATED HSRI LOGIC
-==================================================
-
-There must be exactly one authoritative implementation of:
-
-    HSRI = H × V × E
-
-and risk classification.
-
-The scientific risk module is the source of truth.
-
-Remove/rework duplicate threshold/classification logic from pipelines.
-
-Pipelines must call the scientific engine rather than reproduce equations.
+Do NOT move to MRT, UTCI, H, V/E aggregation, HSRI, mortality ML,
+hospitalization ML, or DeepTherm.
 
 ==================================================
-2. UPDATE STALE UTCI DOCUMENTATION
+1. INSPECT THE CURRENT REPOSITORY
 ==================================================
 
-The current documentation still describes UTCI as a placeholder.
+First inspect the actual repository and report:
 
-Update it to accurately state the current implementation.
+- current working directory
+- repo root
+- existing data/
+- existing docs/data/
+- existing profiling scripts
+- existing tests
+- existing TODOs affecting this milestone
+
+Do not assume previous work is present.
+
+==================================================
+2. FIND THE REAL PILOT FILES
+==================================================
+
+Search the repository/workspace for these actual files:
+
+CENSUS:
+    DDW_PCA2407_2011_MDDS with UI (1).xlsx
+
+WEATHER:
+    data_0.nc
+
+GIS:
+    wards_ahmedabad.geojson
+    wards_ahmedabad.kml
+    wards_ahmedabad.parquet
+    wards_ahmedabad.pmtiles
+    wards_ahmedabad.shp.zip
+
+AQI:
+    Ahmedabad city-level AQI Excel files
+    January 2025
+    February 2025
+    March 2025
+    April 2025
+    May 2025
+
+Also search for any duplicate copies.
+
+PRINT THE EXACT PATH OF EVERY FILE FOUND.
+
+==================================================
+3. REAL DATA MUST BE COPIED INTO data/raw
+==================================================
+
+Create:
+
+data/
+├── raw/
+│   ├── census/
+│   ├── weather/
+│   ├── gis/
+│   └── aqi/
+├── staging/
+├── curated/
+├── metadata/
+└── profiles/
+
+Copy the REAL source files byte-for-byte into:
+
+data/raw/census/
+data/raw/weather/
+data/raw/gis/
+data/raw/aqi/
+
+Do NOT modify originals.
+
+Do NOT create placeholder files.
+
+Do NOT create synthetic replacements.
+
+If a required file cannot be found:
+    STOP that dataset
+    report the exact missing file
+    do not fabricate it
+
+==================================================
+4. VERIFY ACTUAL FILE ACCESS
+==================================================
+
+After copying, run real filesystem checks.
+
+Verify that every required file physically exists under data/raw.
+
+Run something equivalent to:
+
+    Get-ChildItem data/raw -Recurse
+
+and individual existence checks.
+
+Do NOT say the task is complete unless these files are actually there.
+
+==================================================
+5. CHECKSUM + PROVENANCE
+==================================================
+
+For every raw file calculate SHA-256.
+
+Create/update:
+
+    data/metadata/acquisition-manifest.yaml
+
+Each record must contain:
+
+    dataset_id
+    domain
+    source_file
+    source_sha256
+    original_filename
+    source_url
+    acquired_at
+    original_format
+    evidence_type
+    source_status
+    access_status
+    ml_suitability
+    notes
+
+Evidence types:
+
+    PRIMARY_OFFICIAL
+    OFFICIAL_DOCUMENTATION
+    SECONDARY_RESEARCH
+    LLM_ONLY
+
+RULE:
+
+    LLM_ONLY -> NEVER IMPLEMENT
+
+==================================================
+6. CENSUS PROFILING
+==================================================
+
+Use the REAL XLSX in data/raw/census/.
+
+Inspect:
+
+    workbook
+    sheets
+    rows
+    columns
+    geography fields
+    ward ID
+    ward name
+    municipal corporation
+    population
+    age fields
+    sex
+    literacy
+    workers
+    non-workers
+    household fields
+
+Identify exactly the Ahmedabad Municipal Corporation records.
+
+Confirm the actual AMC ward count.
+
+Check:
+
+    duplicate IDs
+    missing IDs
+    duplicate names
+    missing values
+    invalid numeric values
+
+Create:
+
+    data/profiles/census_ahmedabad_2011.json
+    data/profiles/census_ahmedabad_2011.md
+
+Also create a normalized staging output.
+
+DO NOT calculate V_ward.
+
+DO NOT calculate E_ward.
+
+==================================================
+7. ERA5-LAND PROFILING
+==================================================
+
+Use:
+
+    data/raw/weather/data_0.nc
+
+Read the ACTUAL NetCDF metadata.
+
+Report:
+
+    dimensions
+    variables
+    units
+    latitude
+    longitude
+    time
+    time range
+    timestamp count
+    frequency
+    missing values
+    geographic extent
+
+Explicitly inspect for:
+
+    t2m
+    d2m
+    u10
+    v10
+    sp
+    ssrd
+    strd
+
+Only report variables that actually exist.
+
+Create:
+
+    data/profiles/era5land_ahmedabad.json
+    data/profiles/era5land_ahmedabad.md
+
+DO NOT:
+
+    derive RH
+    derive MRT
+    calculate UTCI
+    calculate H
+
+That is a later milestone.
+
+==================================================
+8. GIS PROFILING
+==================================================
+
+Use the actual GIS files.
+
+Inspect:
+
+    feature count
+    ward IDs
+    ward names
+    LGD identifiers
+    CRS
+    coordinate order
+    geometry type
+    geometry validity
+    duplicate IDs
+    empty geometries
+    bounding box
+
+IMPORTANT:
+
+Verify coordinate axis order from the actual coordinates.
+
+If the source uses an incorrect axis order, DO NOT overwrite raw files.
+
+Create a derived normalized file:
+
+    data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson
+
+Record:
+
+    original file
+    original hash
+    original CRS
+    original coordinate order
+    corrected CRS
+    corrected coordinate order
+    transformation
+    transformation version
+
+==================================================
+9. CENSUS VS GIS — DO NOT FORCE JOIN
+==================================================
+
+Preserve this fact:
+
+    Census 2011 = 57 AMC wards
+    Current GIS = 48 wards
+
+Do NOT:
+
+    force IDs
+    rename IDs
+    directly join
+    invent crosswalk
+    silently aggregate
+
+Create:
+
+    docs/data/ahmedabad-spatial-reconciliation-v2.md
 
 Document:
 
-    UTCI implementation
-    method
-    inputs
-    units
-    validation status
+    ward counts
+    IDs
+    names
+    LGD codes
+    overlaps
+    unmatched records
+    known geography/version differences
 
-Do not claim scientific validation beyond what has actually been verified.
+If no authoritative crosswalk exists:
 
-==================================================
-3. ADD EXPLICIT CALM-WIND POLICY
-==================================================
-
-Current UTCI validity is:
-
-    0.5–17.0 m/s
-
-Real weather data may contain wind below 0.5 m/s.
-
-Implement an explicit policy.
-
-Preferred behavior:
-
-    if wind < 0.5 m/s:
-        clamp to 0.5 m/s
-        record quality flag:
-            wind_clamped = true
-
-OR, if the existing architecture makes rejection safer:
-
-    mark UTCI unavailable
-    record quality flag
-
-Do NOT silently alter the input.
-
-Document the selected policy.
-
-Add tests.
+    status = CROSSWALK_REQUIRED
 
 ==================================================
-4. IMPROVE UTCI REFERENCE VALIDATION
+10. ERA5 GRID VS CURRENT GIS
 ==================================================
 
-Keep existing valid reference tests.
+Using the NORMALIZED GIS:
 
-Add a broader validation matrix:
+Test the actual ERA5 grid against current ward polygons.
 
-    Hot/humid:
-        35°C, 80% RH, 1 m/s, MRT 35°C
+Report:
 
-    Hot/dry:
-        42°C, 20% RH, 1 m/s, MRT 42°C
+    total ERA5 cells
+    cells intersecting Ahmedabad
+    cells intersecting wards
+    number of wards hit
+    wards receiving no direct cell
+    cells intersecting multiple wards
 
-    High radiation:
-        38°C, 50% RH, 1 m/s, MRT 55°C
+Do NOT interpolate.
 
-    Windy:
-        40°C, 50% RH, 5 m/s, MRT 40°C
+Do NOT calculate HSRI.
 
-Also test validity boundaries:
+Create:
 
-    Ta = -50°C
-    Ta = +50°C
-
-    wind = 0.5 m/s
-    wind = 17 m/s
-
-    vapor pressure = 50 hPa
-
-    MRT = Ta - 30°C
-    MRT = Ta + 70°C
-
-Where authoritative reference values are available, compare against them.
-
-Do NOT modify the UTCI formula merely to satisfy a disputed reference.
+    docs/data/ahmedabad-era5-gis-compatibility-v1.md
 
 ==================================================
-5. ADD EVIDENCE METADATA TO VULNERABILITY FACTORS
+11. AQI PROFILING
 ==================================================
 
-Do not represent every vulnerability threshold as empirically validated.
+Use the actual Ahmedabad city-level AQI files in data/raw/aqi/.
 
-Add metadata fields such as:
+Profile January–May 2025.
 
-    source
-    evidence_level
-    validation_status
+Determine:
 
-Supported statuses may include:
+    rows
+    columns
+    date coverage
+    hourly structure
+    observed values
+    missing values
+    duplicates
+    AQI min
+    AQI max
+    timestamp format
+    city/station metadata
+    pollutant fields if present
+    units if present
 
-    validated
-    literature-derived
-    expert-derived
-    assumption
+Do NOT assume station-level if the file is city-level.
 
-Apply this to:
+Do NOT create ward AQI.
 
-    age
-    BMI
-    gender
-    education
-    economic status
-    social isolation
-    health
-    disability
+Do NOT impute AQI.
 
-Preserve the existing mathematical scoring.
+Create:
 
-This is metadata/provenance work only.
-
-==================================================
-6. DOCUMENT EXPOSURE MODEL ASSUMPTIONS
-==================================================
-
-Keep the existing Exposure equation.
-
-Do not replace it.
-
-Document the conceptual distinction:
-
-    H = thermal hazard
-
-    V = susceptibility:
-        demographic
-        health
-        socioeconomic
-
-    E = exposure:
-        population
-        occupation
-        outdoor activity
-        built environment
-        environmental conditions
-
-Clearly identify which exposure factors are:
-
-    source-derived
-    project conventions
-    unresolved
-
-Do not invent new scientific thresholds.
+    data/profiles/aqi_ahmedabad_2025_01_05.json
+    data/profiles/aqi_ahmedabad_2025_01_05.md
 
 ==================================================
-7. KEEP HSRI DETERMINISTIC
+12. TEMPORAL AVAILABILITY
 ==================================================
 
-Do NOT replace:
+Create:
 
+    docs/data/ahmedabad-temporal-availability-v2.md
+
+Compare:
+
+    Census
+    ERA5-Land
+    AQI
+    GIS
+    IMDAA
+    mortality
+    hospitalization
+
+For each record:
+
+    start
+    end
+    frequency
+    timezone
+    geography
+    access status
+
+Clearly identify:
+
+    overlap
+    non-overlap
+    unknown
+
+DO NOT manufacture a common training period.
+
+==================================================
+13. DATA QUALITY REPORT
+==================================================
+
+Create:
+
+    docs/data/ahmedabad-data-quality-v1.md
+
+For each dataset report:
+
+    missingness
+    duplicates
+    invalid values
+    timestamp anomalies
+    identifier anomalies
+    unit anomalies
+    geometry anomalies
+
+Use:
+
+    PASS
+    WARNING
+    FAIL
+    UNKNOWN
+
+Do not silently repair raw data.
+
+==================================================
+14. PILOT PROFILE
+==================================================
+
+Create:
+
+    docs/data/ahmedabad-pilot-profile-v2.md
+
+Include:
+
+| Dataset | Coverage | Spatial | Temporal | Quality | Status | Limitation |
+|---|---|---|---|---|---|---|
+
+Datasets:
+
+    Census
+    GIS
+    ERA5-Land
+    AQI
+    IMDAA
+    Mortality
+    Hospitalization
+
+==================================================
+15. PILOT READINESS
+==================================================
+
+Create:
+
+    docs/data/ahmedabad-pilot-readiness-v2.md
+
+For each:
+
+    Weather
+    Population
+    GIS
+    AQI
+    Mortality
+    Hospitalization
+
+Use only:
+
+    READY
+    PARTIAL
+    BLOCKED
+    UNKNOWN
+
+Do NOT call mortality or hospitalization READY without actual target data.
+
+==================================================
+16. REQUIRED DATA CONTRACT FILES
+==================================================
+
+Ensure these physically exist:
+
+docs/data/
+├── india-data-contract-v1.md
+├── source-register.md
+├── data-dictionary.md
+├── spatial-strategy.md
+└── unresolved-data-gaps.md
+
+If missing, create them based only on verified project decisions.
+
+Do not invent source claims.
+
+==================================================
+17. SCIENTIFIC ENGINE PROTECTION
+==================================================
+
+DO NOT MODIFY:
+
+    UTCI
+    Hazard H
+    Vulnerability V
+    Exposure E
     HSRI = H × V × E
 
-Do NOT introduce alternative risk equations into production code.
+Do not modify scientific tests.
 
-If sensitivity-analysis code already exists, keep it isolated as analysis/research tooling.
-
-Do not change the operational HSRI model.
+Do not introduce new scientific formulas.
 
 ==================================================
-8. CONNECT WEATHER PIPELINE TO SCIENTIFIC ENGINE
+18. HEALTH DATA PROTECTION
 ==================================================
 
-Implement the actual orchestration flow:
+DO NOT:
 
-    weather ingest
-        ↓
-    weather validation / QC
-        ↓
-    UTCI calculation
-        ↓
-    Hazard H
-        ↓
-    Vulnerability V
-        ↓
-    Exposure E
-        ↓
-    HSRI
-        ↓
-    grid result
+    fabricate mortality
+    fabricate hospitalization
+    create synthetic targets
+    turn monthly/annual values into daily targets
+    infer missing deaths
 
-Do not implement external production weather providers yet unless already configured.
-
-Use deterministic synthetic fixtures where necessary.
+Health targets remain BLOCKED unless real data are obtained.
 
 ==================================================
-9. CONNECT WORKER TASKS
+19. NO ML
 ==================================================
 
-Replace placeholder worker paths where required for this deterministic pipeline.
+Do NOT:
 
-Implement orchestration for:
-
-    weather_ingest
-    hazard_calculation
-    risk_calculation
-    ward_aggregation
-    alert_generation
-
-The worker should call existing scientific modules.
-
-Do NOT duplicate scientific formulas inside workers.
-
-Workers orchestrate.
-
-Scientific modules calculate.
+    implement DeepTherm
+    train Transformer
+    train Random Forest
+    train XGBoost
+    create mortality_training.parquet
+    create hospitalization_training.parquet
+    construct 14-day ML sequences
 
 ==================================================
-10. CONNECT SCIENTIFIC ENGINE TO DATABASE
-==================================================
-
-Create the complete integration path:
-
-    database input
-        ↓
-    validated domain object
-        ↓
-    scientific calculation
-        ↓
-    result object
-        ↓
-    persistence
-
-At minimum demonstrate:
-
-    weather forecast
-        ↓
-    UTCI/H
-        ↓
-    V
-        ↓
-    E
-        ↓
-    HSRI
-        ↓
-    risk_assessment record
-
-Preserve model/version metadata.
-
-Each calculated result should carry, where supported:
-
-    model
-    model_version
-    configuration_version
-    calculated_at
-    input_dataset_version
-    quality information
-
-==================================================
-11. MAKE API FUNCTIONAL
-==================================================
-
-The API should stop returning placeholder "not implemented"
-responses for the deterministic scientific workflow.
-
-Implement the minimum working endpoints needed to query:
-
-    forecasts
-    hazards
-    risk
-    wards
-    models
-
-Do not build the entire final dashboard API.
-
-The API should retrieve persisted results rather than recalculate
-scientific values unnecessarily.
-
-==================================================
-12. END-TO-END TEST
-==================================================
-
-Create one deterministic integration fixture.
-
-Use approximately:
-
-    1 synthetic city
-    10 wards
-    100 grid cells
-
-Run:
-
-    synthetic weather
-        ↓
-    UTCI
-        ↓
-    H
-        ↓
-    V
-        ↓
-    E
-        ↓
-    HSRI
-        ↓
-    spatial aggregation
-        ↓
-    ward risk
-        ↓
-    alert
-
-Verify that the full chain completes.
-
-This is a deterministic integration test, not a real-world forecast.
-
-==================================================
-13. CLEAN ENVIRONMENT
-==================================================
-
-Fix the dependency/bootstrap issue identified in the review.
-
-A clean clone must be able to:
-
-    install dependencies
-    start required local services
-    run migrations
-    run tests
-
-Do not manually install undeclared packages.
-
-Do not hide dependency failures.
-
-==================================================
-14. TEST NAMING
-==================================================
-
-Rename stale test files such as:
-
-    test_utci_placeholder.py
-
-to an accurate name such as:
-
-    test_utci_reference.py
-
-or:
-
-    test_utci_validation.py
-
-Do not change test meaning unnecessarily.
-
-==================================================
-15. DO NOT TOUCH
-==================================================
-
-Do NOT modify:
-
-    scientific weights
-    HSRI equation
-    UTCI coefficients
-    risk thresholds
-    exposure weights
-    vulnerability weights
-
-Do NOT implement:
-
-    mortality ML training
-    hospitalization ML training
-    real Indian health-data modeling
-    SMS production integration
-    WhatsApp production integration
-    advanced dashboard work
-    new scientific models
-
-==================================================
-16. FINAL VALIDATION
+20. TESTS
 ==================================================
 
 Run:
 
     pytest -q
+
     ruff check .
+
+If configured:
+
     mypy ...
 
-and relevant frontend checks.
+Do not weaken existing tests.
 
-Verify the complete deterministic integration test.
-
-Verify API + worker + database integration.
+Add only data-layer tests required for this milestone.
 
 ==================================================
-FINAL REPORT
+21. HARD COMPLETION GATE
 ==================================================
 
-Report only this cleanup task.
+Before reporting COMPLETE, verify all required repository artifacts.
 
-Include:
+Run:
 
-1. Files changed
-2. Duplicate logic removed
-3. UTCI policy added
-4. Reference tests added
-5. Evidence metadata added
-6. Pipeline integration completed
-7. Worker integration completed
-8. Database persistence path completed
-9. API endpoints made functional
-10. End-to-end test result
-11. Clean-environment result
-12. Remaining issues
+    Get-ChildItem data/raw -Recurse
+    Get-ChildItem data/profiles -Recurse
+    Get-ChildItem data/metadata -Recurse
+    Get-ChildItem docs/data -Recurse
 
-Do not report these changes as a new development phase.
+Also verify every required file with Test-Path.
 
-This is a focused remediation/integration task for the existing implementation.
+The milestone is COMPLETE only when:
+
+1. REAL Census XLSX is under data/raw/census/
+2. REAL ERA5 NetCDF is under data/raw/weather/
+3. REAL GIS files are under data/raw/gis/
+4. REAL AQI files are under data/raw/aqi/
+5. Raw files are untouched
+6. Checksums/provenance exist
+7. All required profiles exist
+8. Spatial reconciliation report exists
+9. Temporal report exists
+10. Data-quality report exists
+11. Pilot-readiness report exists
+12. Required Data Contract files exist
+13. Tests pass
+14. No scientific engine changes occurred
+15. No ML code was started
+16. No synthetic health target was created
+
+If ANY condition fails:
+
+    REAL DATA LAYER RECONCILIATION INCOMPLETE
+
+==================================================
+22. FINAL RESPONSE FORMAT
+==================================================
+
+Return:
+
+# REAL DATA LAYER RECONCILIATION
+
+## Repository inspected
+Summarize actual repository state.
+
+## Files discovered
+List exact source paths.
+
+## Files copied
+List exact data/raw paths.
+
+## Census
+Actual findings.
+
+## ERA5-Land
+Actual findings.
+
+## GIS
+Actual findings.
+
+## AQI
+Actual findings.
+
+## Spatial compatibility
+Actual findings.
+
+## Temporal compatibility
+Actual findings.
+
+## Data quality
+Actual findings.
+
+## Provenance
+Actual checksums/metadata.
+
+## Tests
+Exact commands and results.
+
+## Files created
+Exact paths.
+
+## Blockers
+Actual remaining blockers.
+
+## Final status
+Use exactly one:
+
+    REAL DATA LAYER RECONCILIATION COMPLETE
+
+or:
+
+    REAL DATA LAYER RECONCILIATION INCOMPLETE
+
+DO NOT claim completion from documentation alone.
+
+DO NOT claim data exists if it was not physically found.
+
+DO NOT invent missing files.
+
+START NOW BY INSPECTING THE REPOSITORY AND LOCATING THE REAL FILES.
