@@ -1,0 +1,24 @@
+{
+  "total_era5_cells": 25,
+  "cells_intersecting_ahmedabad": 11,
+  "cells_intersecting_ward_point": 4,
+  "cells_intersecting_ward_polygon": 11,
+  "wards_hit_point": 4,
+  "wards_hit_polygon": 48,
+  "wards_with_zero_intersections": [],
+  "ward_count_total": 48,
+  "cells_intersecting_multiple_wards": 0,
+  "multi_ward_cells": [],
+  "era5_grid": {
+    "lat_range": [
+      22.8,
+      23.2
+    ],
+    "lon_range": [
+      72.4,
+      72.8
+    ],
+    "lat_resolution": 0.10000000000000142,
+    "lon_resolution": 0.09999999999999432
+  }
+}

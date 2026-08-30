@@ -1,15 +1,24 @@
 {
-  "generated_at": "2026-08-30T10:19:51.767122+00:00",
-  "schema_version": "v1.0.0",
+  "generated_at": "2026-08-30T10:33:27.807342+00:00",
+  "schema_version": "v2.0.0",
+  "hash_algorithm": "SHA256",
   "datasets": {
     "era5land": {
-      "source_id": "era5land_ahmedabad_2010_03",
+      "dataset_id": "era5land_ahmedabad_2010_03",
+      "domain": "weather",
+      "source_name": "ERA5-Land (Copernicus)",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_url": "https://cds.climate.copernicus.eu/",
       "source_file": "data/raw/weather/data_0.nc",
-      "source_hash_md5": "f4e1e07e8ae99c1f75c17e65f16f10cc",
-      "retrieved_at": "2026-08-30T10:19:51.767122+00:00",
-      "transformation_version": "v1.0.0",
-      "quality_flag": "PASS",
-      "schema_version": "v1.0.0",
+      "source_sha256": "0d807637a3e74b4c62cdbe250e7ef670785ff8a9297302c12bb269d6aa9047db",
+      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "original_format": "NetCDF (CF-1.6)",
+      "transformation_version": "v2.0.0",
+      "status": "READY",
+      "evidence_classification": "PRIMARY_OFFICIAL",
+      "source_status": "VERIFIED",
+      "access_status": "PUBLIC",
+      "ml_suitability": "PARTIALLY_SUITABLE",
       "file_size_bytes": 133764,
       "dimensions": {
         "valid_time": 124,
@@ -36,76 +45,109 @@
       "longitude_range": [
         72.4,
         72.8
-      ]
+      ],
+      "notes": "March 2010 sample only."
     },
-    "gis": {
-      "source_id": "gis_ahmedabad_wards_2024",
+    "gis_raw": {
+      "dataset_id": "gis_ahmedabad_wards_2024",
+      "domain": "geospatial",
+      "source_name": "Ahmedabad Municipal Corporation",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_url": null,
       "source_file": "data/raw/gis/wards_ahmedabad.geojson",
-      "source_hash_md5": "8899d0c734a351910dc4f8a91a7db27b",
-      "retrieved_at": "2026-08-30T10:19:51.767122+00:00",
-      "transformation_version": "v1.0.0",
-      "quality_flag": "PASS",
-      "schema_version": "v1.0.0",
+      "source_sha256": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
+      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "original_format": "GeoJSON",
+      "transformation_version": "v2.0.0",
+      "status": "READY",
+      "evidence_classification": "PRIMARY_OFFICIAL",
+      "source_status": "VERIFIED",
+      "access_status": "PUBLIC",
+      "ml_suitability": "PARTIALLY_SUITABLE",
       "file_size_bytes": 226794,
       "feature_count": 48,
-      "crs": "EPSG:4326"
+      "crs": "EPSG:4326",
+      "coordinate_order": "latitude_longitude",
+      "notes": "48 wards (2024 delimitation). Coordinate order is lat/lon."
     },
-    "gis_staging": {
-      "source_id": "gis_ahmedabad_normalized",
-      "source_file": "data/staging/gis/wards_ahmedabad_normalized.geojson",
-      "source_hash_md5": "941d15f8846ab931130f9ff2a7c49f79",
-      "retrieved_at": "2026-08-30T10:19:51.767122+00:00",
-      "transformation_version": "v1.0.0",
-      "quality_flag": "PASS",
-      "schema_version": "v1.0.0",
-      "file_size_bytes": 226421,
-      "feature_count": 48,
-      "crs": "EPSG:4326"
+    "gis_normalized": {
+      "dataset_id": "gis_ahmedabad_normalized",
+      "domain": "geospatial",
+      "source_name": "Ahmedabad Municipal Corporation (normalized)",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_file": "data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson",
+      "source_sha256": "e421811c18df3adc2ac8c4cbe9d620df4a963b7df057d4065f1ac9f736e224dc",
+      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "original_format": "GeoJSON",
+      "transformation_version": "v2.0.0",
+      "status": "READY",
+      "transformation": "Coordinate swap from lat/lon to lon/lat per GeoJSON spec",
+      "original_coordinate_order": "latitude_longitude",
+      "normalized_coordinate_order": "longitude_latitude",
+      "original_hash": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
+      "notes": "Normalized copy with [lon, lat] coordinate order."
     },
     "aqi": {
-      "source_id": "cpcb_ahmedabad_2025_01_05",
+      "dataset_id": "cpcb_ahmedabad_2025_01_05",
+      "domain": "air_quality",
+      "source_name": "Central Pollution Control Board (CPCB)",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_url": "https://cpcb.gov.in/",
       "source_files": [
         {
           "file": "aqi_hourly_city_level__2025_April_ahmedabad_2025.xlsx",
-          "hash_md5": "32f72161350725ec22e958e14a3a21a2",
+          "sha256": "f328157196dd2f56e9aa538f01c7340d3dee84220be1f35270429ba96601f349",
           "size_bytes": 7810
         },
         {
           "file": "aqi_hourly_city_level__2025_February_ahmedabad_2025.xlsx",
-          "hash_md5": "3bd08f05b9ad53ee809158a209237306",
+          "sha256": "93ff0d624c1b1b22436a6a9d8b7d02d94e096662471d555b173803e9e1a9a8d7",
           "size_bytes": 7677
         },
         {
           "file": "aqi_hourly_city_level__2025_January_ahmedabad_2025.xlsx",
-          "hash_md5": "22fb1e56ddf93c3377587262b9580f32",
+          "sha256": "d9d5c6167364cca6bececc2a4f3d2fdc3f89544e220afaab33336fea1dbd1119",
           "size_bytes": 7900
         },
         {
           "file": "aqi_hourly_city_level__2025_March_ahmedabad_2025.xlsx",
-          "hash_md5": "01dec10aa65a13d432085ce2cdda6b27",
+          "sha256": "f5744b088cec2c01357e8be2c98dfb7bf6a31d9a968296cb41d92ea7786fe594",
           "size_bytes": 7964
         },
         {
           "file": "aqi_hourly_city_level__2025_May_ahmedabad_2025.xlsx",
-          "hash_md5": "d530cc23341f8a378891da2d0c7cc017",
+          "sha256": "a9c5112a607084bd2485f27ff4ecda4f51b47d00b159dbfad9cbf39d02101ca5",
           "size_bytes": 7783
         }
       ],
-      "retrieved_at": "2026-08-30T10:19:51.767122+00:00",
-      "transformation_version": "v1.0.0",
-      "quality_flag": "PARTIAL",
-      "schema_version": "v1.0.0",
-      "file_count": 5
+      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "original_format": "XLSX",
+      "transformation_version": "v2.0.0",
+      "status": "PARTIAL",
+      "evidence_classification": "PRIMARY_OFFICIAL",
+      "source_status": "VERIFIED",
+      "access_status": "PUBLIC",
+      "ml_suitability": "PARTIALLY_SUITABLE",
+      "file_count": 5,
+      "notes": "City-level AQI. ~5% missing values."
     },
     "census": {
-      "source_id": "census_ahmedabad_2011",
-      "source_file": "NOT FOUND",
-      "source_hash_md5": null,
-      "retrieved_at": null,
+      "dataset_id": "census_ahmedabad_2011",
+      "domain": "demographics",
+      "source_name": "Census of India 2011",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_url": "https://censusindia.gov.in/",
+      "source_file": "DDW_PCA2407_2011_MDDS with UI (1).xlsx",
+      "source_sha256": null,
+      "acquired_at": null,
+      "original_format": "XLSX",
       "transformation_version": null,
-      "quality_flag": "BLOCKED",
-      "schema_version": null,
-      "notes": "DDW_PCA2407_2011_MDDS.xlsx not found in repository"
+      "status": "BLOCKED",
+      "evidence_classification": "PRIMARY_OFFICIAL",
+      "source_status": "UNAVAILABLE",
+      "access_status": "UNAVAILABLE",
+      "ml_suitability": "UNKNOWN",
+      "notes": "File not found in repository."
     }
   }
 }

@@ -1,0 +1,171 @@
+{
+  "dataset_id": "era5land_ahmedabad_2010_03",
+  "domain": "weather",
+  "source_name": "ERA5-Land",
+  "source_type": "PRIMARY_OFFICIAL",
+  "source_url": "https://cds.climate.copernicus.eu/",
+  "source_file": "data/raw/weather/data_0.nc",
+  "source_sha256": "0d807637a3e74b4c62cdbe250e7ef670785ff8a9297302c12bb269d6aa9047db",
+  "acquired_at": "2026-08-30T10:29:11.151495+00:00",
+  "original_format": "NetCDF (CF-1.6)",
+  "transformation_version": "v2.0.0",
+  "status": "READY",
+  "evidence_classification": "PRIMARY_OFFICIAL",
+  "source_status": "VERIFIED",
+  "access_status": "PUBLIC",
+  "ml_suitability": "PARTIALLY_SUITABLE",
+  "notes": "March 2010 sample only. Not full year.",
+  "file_size_bytes": 133764,
+  "dimensions": {
+    "valid_time": 124,
+    "latitude": 5,
+    "longitude": 5
+  },
+  "coordinate_dimensions": [
+    "valid_time",
+    "latitude",
+    "longitude"
+  ],
+  "variables_present": [
+    "d2m",
+    "t2m",
+    "ssrd",
+    "strd",
+    "u10",
+    "v10",
+    "sp"
+  ],
+  "required_variables": {
+    "t2m": "present",
+    "d2m": "present",
+    "u10": "present",
+    "v10": "present",
+    "sp": "present",
+    "ssrd": "present",
+    "strd": "present"
+  },
+  "variable_details": {
+    "t2m": {
+      "description": "2 metre temperature",
+      "units_raw": "K",
+      "units_converted": "degrees Celsius (after -273.15)",
+      "standard_name": "unknown",
+      "long_name": "2 metre temperature",
+      "range_raw": [
+        289.6565856933594,
+        313.0207214355469
+      ],
+      "range_celsius": [
+        16.506585693359398,
+        39.8707214355469
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "d2m": {
+      "description": "2 metre dewpoint temperature",
+      "units_raw": "K",
+      "units_converted": "degrees Celsius (after -273.15)",
+      "standard_name": "unknown",
+      "long_name": "2 metre dewpoint temperature",
+      "range_raw": [
+        271.99609375,
+        294.9202880859375
+      ],
+      "range_celsius": [
+        -1.1539062499999773,
+        21.770288085937523
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "u10": {
+      "description": "10 metre U wind component",
+      "units_raw": "m s**-1",
+      "standard_name": "unknown",
+      "long_name": "10 metre U wind component",
+      "range_raw": [
+        -4.210113525390625,
+        4.1495513916015625
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "v10": {
+      "description": "10 metre V wind component",
+      "units_raw": "m s**-1",
+      "standard_name": "unknown",
+      "long_name": "10 metre V wind component",
+      "range_raw": [
+        -3.636505126953125,
+        3.804422378540039
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "sp": {
+      "description": "Surface pressure",
+      "units_raw": "Pa",
+      "standard_name": "surface_air_pressure",
+      "long_name": "Surface pressure",
+      "range_raw": [
+        99370.859375,
+        101362.25
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "ssrd": {
+      "description": "Surface short-wave (solar) radiation downwards",
+      "units_raw": "J m**-2",
+      "standard_name": "surface_downwelling_shortwave_flux_in_air",
+      "long_name": "Surface short-wave (solar) radiation downwards",
+      "range_raw": [
+        6323036.0,
+        25831884.0
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    },
+    "strd": {
+      "description": "Surface long-wave (thermal) radiation downwards",
+      "units_raw": "J m**-2",
+      "standard_name": "unknown",
+      "long_name": "Surface long-wave (thermal) radiation downwards",
+      "range_raw": [
+        6952162.5,
+        34055028.0
+      ],
+      "missing_values": 0,
+      "total_values": 3100
+    }
+  },
+  "time_analysis": {
+    "time_min": "2010-03-01T00:00:00.000000000",
+    "time_max": "2010-03-31T18:00:00.000000000",
+    "timestamp_count": 124,
+    "unique_timestamps": 124,
+    "duplicate_timestamps": 0,
+    "time_encoding": "unknown",
+    "timezone_semantics": "UTC (ERA5 standard)"
+  },
+  "spatial_analysis": {
+    "latitude_range": [
+      22.8,
+      23.2
+    ],
+    "longitude_range": [
+      72.4,
+      72.8
+    ],
+    "latitude_resolution_deg": 0.10000000000000142,
+    "longitude_resolution_deg": 0.09999999999999432,
+    "spatial_cell_count": 25,
+    "geographic_extent": "Ahmedabad region (approx 22.8-23.2N, 72.4-72.8E)"
+  },
+  "quality_checks": {
+    "total_missing_values": 0,
+    "duplicate_timestamps": 0,
+    "all_required_variables_present": true
+  }
+}

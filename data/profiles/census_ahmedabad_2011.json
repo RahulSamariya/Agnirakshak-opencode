@@ -1,0 +1,31 @@
+{
+  "dataset_id": "census_ahmedabad_2011",
+  "domain": "demographics",
+  "source_name": "Census of India 2011",
+  "source_type": "PRIMARY_OFFICIAL",
+  "source_url": "https://censusindia.gov.in/",
+  "source_file": "DDW_PCA2407_2011_MDDS with UI (1).xlsx",
+  "source_sha256": null,
+  "acquired_at": null,
+  "original_format": "XLSX (Excel)",
+  "transformation_version": null,
+  "status": "BLOCKED",
+  "notes": "File not found in repository. data/raw/census/ is empty.",
+  "evidence_classification": "PRIMARY_OFFICIAL",
+  "source_status": "UNAVAILABLE",
+  "access_status": "UNAVAILABLE",
+  "ml_suitability": "UNKNOWN",
+  "expected_ward_count": 57,
+  "expected_district": "Ahmedabad",
+  "expected_state": "Gujarat",
+  "profiling": {
+    "sheet_names": null,
+    "row_count": null,
+    "column_count": null,
+    "amc_record_count": null,
+    "fields_profiled": null,
+    "duplicate_ward_ids": null,
+    "missing_ward_ids": null,
+    "missing_numeric_values": null
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "dataset_id": "gis_ahmedabad_wards_2024",
+  "domain": "geospatial",
+  "source_name": "Ahmedabad Municipal Corporation",
+  "source_type": "PRIMARY_OFFICIAL",
+  "source_url": null,
+  "source_file": "data/raw/gis/wards_ahmedabad.geojson",
+  "source_sha256": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
+  "acquired_at": "2026-08-30T10:29:50.716711+00:00",
+  "original_format": "GeoJSON",
+  "transformation_version": "v2.0.0",
+  "status": "READY",
+  "evidence_classification": "PRIMARY_OFFICIAL",
+  "source_status": "VERIFIED",
+  "access_status": "PUBLIC",
+  "ml_suitability": "PARTIALLY_SUITABLE",
+  "notes": "48 wards (2024 delimitation). Census 2011 had 57 wards.",
+  "file_size_bytes": 226794,
+  "feature_count": 48,
+  "geometry_type": "<ArrowStringArray>\n['Polygon']\nLength: 1, dtype: str",
+  "crs": "EPSG:4326",
+  "columns": [
+    "tessellate",
+    "extrude",
+    "visibility",
+    "objectid",
+    "townname",
+    "towncensuscode2011",
+    "town_lgd_code",
+    "ward_lgd_code",
+    "ward_lgd_name",
+    "sourcewardname",
+    "sourcewardcode",
+    "state",
+    "geometry"
+  ],
+  "coordinate_order_verification": {
+    "detected_order": "latitude_longitude",
+    "x_range": [
+      22.9121407,
+      23.1386475
+    ],
+    "y_range": [
+      72.4472434,
+      72.7036946
+    ],
+    "lat_range": [
+      22.9121407,
+      23.1386475
+    ],
+    "lon_range": [
+      72.4472434,
+      72.7036946
+    ]
+  },
+  "bounds": [
+    22.9121407,
+    72.4472434,
+    23.1386475,
+    72.7036946
+  ],
+  "ward_id_column": "ward_lgd_code",
+  "ward_id_unique_count": 48,
+  "duplicate_ward_ids": 0,
+  "invalid_geometries": 0,
+  "empty_geometries": 0,
+  "valid_geometries": 48,
+  "has_lgd_code": true,
+  "has_ward_name": true,
+  "has_source_ward": true,
+  "normalization": {
+    "original_file": "data/raw/gis/wards_ahmedabad.geojson",
+    "original_hash": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
+    "original_coordinate_order": "latitude_longitude",
+    "normalized_coordinate_order": "longitude_latitude",
+    "original_crs": "EPSG:4326",
+    "normalized_crs": "EPSG:4326",
+    "transformation": "swapped lat/lon to lon/lat per GeoJSON spec",
+    "transformation_version": "v2.0.0",
+    "normalized_hash": "e421811c18df3adc2ac8c4cbe9d620df4a963b7df057d4065f1ac9f736e224dc"
+  }
+}
