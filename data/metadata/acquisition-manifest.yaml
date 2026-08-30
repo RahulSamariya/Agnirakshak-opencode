@@ -79,13 +79,16 @@ datasets:
     source_type: PRIMARY_OFFICIAL
     source_url: "https://censusindia.gov.in/"
     source_file: "data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx"
-    source_sha256: ""
+    source_sha256: "3a601d501e437f85f2388b6460a0ebf4df5c784d1fb1484eb846b4df7913433b"
     acquired_at: "2026-08-30"
     original_format: XLSX
+    temporal_type: STATIC
+    reference_year: 2011
+    frequency: STATIC
     evidence_classification: PRIMARY_OFFICIAL
     source_status: VERIFIED
     access_status: PUBLIC
     ml_suitability: PARTIALLY_SUITABLE
     transformation_version: v2.0.0
     amc_ward_count: 57
-    notes: "57 AMC wards, 94 demographic columns"
+    notes: "57 AMC wards, 94 demographic columns. STATIC reference data, not a time series."

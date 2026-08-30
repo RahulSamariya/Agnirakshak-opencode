@@ -6,7 +6,7 @@
 |---------|-------|-----|-----------|----------|-----------|--------|
 | ERA5-Land | 2010-03-01 | 2010-03-31 | 6-hourly | UTC | 5x5 grid (22.8-23.2N, 72.4-72.8E) | READY |
 | AQI (CPCB) | 2025-01-01 | 2025-05-31 | Hourly | IST | City-level | PARTIAL |
-| Census 2011 | 2011-03-01 | 2011-03-31 | Static | N/A | 57 AMC wards | BLOCKED |
+| Census 2011 | STATIC | STATIC | STATIC | N/A | 57 AMC wards | READY |
 | GIS (current) | 2024-01-01 | 2024-12-31 | Static | N/A | 48 wards | READY |
 | IMDAA | N/A | N/A | N/A | N/A | N/A | UNKNOWN |
 | Mortality | N/A | N/A | N/A | N/A | N/A | BLOCKED |

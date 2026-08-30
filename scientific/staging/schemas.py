@@ -280,7 +280,7 @@ class ProvenanceRecord(BaseModel):
 
     source_id: str = Field(..., description="Source dataset identifier")
     source_file: str = Field(..., description="Original file path")
-    source_hash: str = Field(..., description="MD5 hash of source file")
+    source_hash: str = Field(..., description="SHA-256 hash of source file (canonical project checksum)")
     retrieved_at: datetime = Field(..., description="When data was retrieved")
     transformation_version: str = Field(
         "v1.0.0", description="Processing script version"

@@ -1,6 +1,9 @@
 # Census 2011 - Ahmedabad AMC Profiling
 
 **Status**: READY
+**Temporal Type**: STATIC
+**Reference Year**: 2011
+**Frequency**: STATIC
 **Source**: Census of India 2011
 **File**: `data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx`
 **SHA256**: `3a601d501e437f85f2388b6460a0ebf4df5c784d1fb1484eb846b4df7913433b`

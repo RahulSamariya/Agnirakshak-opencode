@@ -117,7 +117,7 @@ Full QC report: `data/profiles/qc_report.json`
 
 - Acquisition manifest: `data/metadata/acquisition-manifest.yaml`
 - Provenance manifest: `data/metadata/provenance-manifest.json`
-- All source file hashes (MD5) recorded
+- All source file hashes (SHA-256) recorded
 - Schema version: v1.0.0
 
 ## 10. Tests Added

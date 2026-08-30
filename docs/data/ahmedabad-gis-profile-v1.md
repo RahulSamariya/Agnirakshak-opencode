@@ -37,7 +37,7 @@
 ## Data Quality
 - All 48 features have valid geometries
 - No duplicate ward IDs
-- Source file hash (MD5): 8899d0c734a351910dc4f8a91a7db27b
+- Source file hash (SHA-256): c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a
 
 ## Notes
 - Current GIS has 48 wards (2024 configuration)

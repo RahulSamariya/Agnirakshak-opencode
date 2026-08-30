@@ -43,8 +43,8 @@
 | Files load | PASS | All 5 Excel files open |
 | Date column present | PASS | Date column in all files |
 | Hourly columns | PASS | 24 hourly columns (00:00:00 to 23:00:00) |
-| Total observations | PASS | 3624 records (151 days x 24 hours) |
-| Missing values | WARNING | ~5% missing across all files |
+| Total observations | PASS | 3624 expected, 3598 observed |
+| Missing values | WARNING | 26 missing records (0.72%) across 5 months |
 | Duplicate timestamps | PASS | 0 duplicates |
 | AQI range | PASS | 48-225 — plausible for Ahmedabad |
 | City-level only | WARNING | No station breakdown |
@@ -57,10 +57,13 @@
 
 | Check | Status | Details |
 |-------|--------|---------|
-| File present | FAIL | Directory is empty |
-| Can profile | FAIL | No data to inspect |
+| File present | PASS | DDW_PCA2407_2011_MDDS with UI (1).xlsx |
+| Can profile | PASS | 57 AMC wards, 94 columns |
+| Temporal type | PASS | STATIC reference data (2011), not time series |
+| Duplicate ward IDs | PASS | 0 duplicates |
+| Missing ward IDs | PASS | 0 missing |
 
-**Overall**: BLOCKED
+**Overall**: READY
 
 ## Health Data
 

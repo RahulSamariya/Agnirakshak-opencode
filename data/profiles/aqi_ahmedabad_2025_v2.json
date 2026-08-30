@@ -14,8 +14,18 @@
   "source_status": "VERIFIED",
   "access_status": "PUBLIC",
   "ml_suitability": "PARTIALLY_SUITABLE",
-  "notes": "City-level AQI only. No station-level breakdown. ~5% missing values.",
+  "notes": "City-level AQI only. No station-level breakdown. Reconciled against raw files 2026-08-30.",
   "file_count": 5,
+  "reconciled_statistics": {
+    "total_expected": 3624,
+    "total_observed": 3598,
+    "total_missing": 26,
+    "completeness_pct": 99.28,
+    "duplicate_timestamps": 0,
+    "aqi_min": 48,
+    "aqi_max": 225,
+    "aqi_mean": 120.39
+  },
   "monthly_profiles": [
     {
       "file": "aqi_hourly_city_level__2025_April_ahmedabad_2025.xlsx",
