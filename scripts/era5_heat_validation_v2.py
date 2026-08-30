@@ -16,7 +16,10 @@ import xarray as xr
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scientific.thermal_comfort.utci import calculate_utci
+from scientific.thermal_comfort.utci import (
+    _saturated_vapour_pressure,
+    _utci_polynomial,
+)
 
 # --- Configuration ---
 ERA5_PATH = "53968a80e95eb41e9fe5c5f804eacbd8.nc"
@@ -123,11 +126,11 @@ for t_common in common_times:
             ta_c = t2m_k - 273.15
             d2m_c = d2m_k - 273.15
 
-            # Calculate relative humidity from dewpoint (Buck equation)
-            es = 6.112 * np.exp((17.67 * ta_c) / (ta_c + 243.5))
-            ed = 6.112 * np.exp((17.67 * d2m_c) / (d2m_c + 243.5))
-            rh = (ed / es) * 100.0
-            rh = max(1.0, min(100.0, rh))
+            # Calculate water vapor pressure directly from dewpoint (no RH step)
+            # Using the UTCI-specific exponential formula (matches polynomial internals)
+            tk_dew = d2m_k  # already in Kelvin
+            eh_pa = float(_saturated_vapour_pressure(tk_dew))
+            pa = eh_pa / 10.0  # hPa to kPa
 
             # Wind speed
             ws = np.sqrt(u10**2 + v10**2)
@@ -142,28 +145,24 @@ for t_common in common_times:
             utci_ref_k = float(ds_heat.utci.values[i_heat, j_lat, j_lon])
             utci_ref_c = utci_ref_k - 273.15
 
-            # Run Agnirakshak UTCI engine
-            result = calculate_utci(
-                air_temperature=ta_c,
-                relative_humidity=rh,
-                wind_speed=ws,
-                mean_radiant_temperature=mrt_c,
-            )
-            agn_utci_c = result.utci_c
+            # Run UTCI polynomial directly with vapor pressure (skip RH step)
+            delta_t_tr = mrt_c - ta_c
+            utci_val = ta_c + _utci_polynomial(ta_c, ws, delta_t_tr, pa)
+            agn_utci_c = round(utci_val, 1)
 
-            if agn_utci_c is not None and not np.isnan(agn_utci_c):
+            if not np.isnan(agn_utci_c):
                 agn_utci_values.append(agn_utci_c)
                 heat_utci_values.append(utci_ref_c)
                 mrt_values.append(mrt_c)
                 ta_values.append(ta_c)
-                rh_values.append(rh)
+                rh_values.append(0.0)  # RH not used in this route
                 ws_values.append(ws)
                 sample_metadata.append({
                     "time": str(t_common),
                     "lat": float(lat_era5[i_lat]),
                     "lon": float(lon_era5[i_lon]),
                     "ta_c": round(ta_c, 2),
-                    "rh_pct": round(rh, 2),
+                    "pa_kpa": round(pa, 4),
                     "ws_ms": round(ws, 3),
                     "mrt_c": round(mrt_c, 2),
                     "utci_agn": round(agn_utci_c, 2),

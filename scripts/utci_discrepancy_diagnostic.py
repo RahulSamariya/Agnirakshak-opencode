@@ -44,9 +44,13 @@ PLOT_DIR = "data/profiles/plots/utci_discrepancy"
 # ─── Helper functions ────────────────────────────────────────────────────────
 
 def buck_rh(ta_c: float, d2m_c: float) -> float:
-    """Buck (1981) RH from air temp and dewpoint (validation script convention)."""
-    es = 6.112 * math.exp((17.67 * ta_c) / (ta_c + 243.5))
-    ed = 6.112 * math.exp((17.67 * d2m_c) / (d2m_c + 243.5))
+    """Alduchov-Eskridge (1996) RH from air temp and dewpoint.
+
+    Reference: Alduchov & Eskridge (1996), J. Appl. Meteor., 35(4), 601-609.
+    This matches ERA5-HEAT's internal conversion.
+    """
+    es = 6.1094 * math.exp(17.625 * ta_c / (ta_c + 243.04))
+    ed = 6.1094 * math.exp(17.625 * d2m_c / (d2m_c + 243.04))
     rh = (ed / es) * 100.0
     return max(1.0, min(100.0, rh))
 
@@ -409,7 +413,7 @@ print(f"  UTCI D diff: mean={np.mean(diff_d):.4f}, std={np.std(diff_d):.4f}")
 experiments = [
     {
         "name": "Current implementation",
-        "humidity": "Buck(17.67,243.5)->pythermalcomfort sat->pa",
+        "humidity": "Alduchov-Eskridge(1996)->pythermalcomfort sat->pa",
         "wind": "sqrt(u10^2+v10^2), clamp<0.5",
         "mrt": "ERA5-HEAT K->C",
         "rounding": "round(utci, 1)",
@@ -429,7 +433,7 @@ experiments = [
     },
     {
         "name": "Buck-only vapor pressure",
-        "humidity": "Buck(17.67,243.5)->pa (no pythermalcomfort)",
+        "humidity": "Buck(1981)->pa (no pythermalcomfort)",
         "wind": "sqrt(u10^2+v10^2), clamp<0.5",
         "mrt": "ERA5-HEAT K->C",
         "rounding": "round(utci, 1)",
@@ -439,7 +443,7 @@ experiments = [
     },
     {
         "name": "Full precision (current)",
-        "humidity": "Buck(17.67,243.5)->pythermalcomfort sat->pa",
+        "humidity": "Alduchov-Eskridge(1996)->pythermalcomfort sat->pa",
         "wind": "sqrt(u10^2+v10^2), clamp<0.5",
         "mrt": "ERA5-HEAT K->C",
         "rounding": "none (full float64)",
@@ -459,7 +463,7 @@ experiments = [
     },
     {
         "name": "Full precision (Buck VP)",
-        "humidity": "Buck(17.67,243.5)->pa (no pythermalcomfort)",
+        "humidity": "Buck(1981)->pa (no pythermalcomfort)",
         "wind": "sqrt(u10^2+v10^2), clamp<0.5",
         "mrt": "ERA5-HEAT K->C",
         "rounding": "none (full float64)",
