@@ -40,3 +40,21 @@ htmlcov/
 # Database
 *.db
 !Dockerfile.db
+
+# Local notes
+cause.md
+prompt.txt
+
+# Data files (large)
+*.nc
+data/raw/weather/
+ERA5/
+
+# Generated / build artifacts
+*.tsbuildinfo
+apps/web/next-env.d.ts
+
+# Temporary / output files
+latest_output.txt
+phase2_guide.txt
+scientific data.txt
