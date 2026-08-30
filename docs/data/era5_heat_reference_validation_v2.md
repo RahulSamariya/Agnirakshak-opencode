@@ -1,98 +1,123 @@
 # ERA5-HEAT Reference Validation — TEST 1 (Corrected)
 
-**Status**: BLOCKED
-**Reason**: Matching ERA5 meteorology unavailable
-**Date**: 2026-08-30
+**Status**: COMPLETE
+**Method**: ERA5 meteorology + ERA5-HEAT MRT → Agnirakshak UTCI → compare with ERA5-HEAT UTCI
+**Date**: 2026-08-30 18:14
 
-## Previous Experiment (v1)
+## Files Used
 
-The previous validation (`era5_heat_reference_validation_v1.md`) used:
+| File | Type | Purpose |
+|------|------|---------|
+| `53968a80e95eb41e9fe5c5f804eacbd8.nc` | ERA5 reanalysis (0.25°) | Meteorological inputs (t2m, d2m, u10, v10) |
+| `cde4e619c080209e1ec505565f79b8e.nc` | ERA5-HEAT (0.25°) | Reference MRT and UTCI |
 
-- ERA5-HEAT MRT and UTCI as reference
-- **ERA5-Land** meteorological inputs (t2m, d2m, u10, v10) for the Agnirakshak UTCI engine
+## ERA5 Meteorology Metadata
 
-**Why this could not isolate UTCI error**: ERA5-Land is a separate downscaled product (0.1° resolution) based on ERA5, but its temperature, humidity, and wind fields differ from ERA5 itself. The 0.58°C MAE reflects a combination of:
+| Variable | Description | Units | Shape |
+|----------|-------------|-------|-------|
+| t2m | 2m temperature | K | (124, 3, 4) |
+| d2m | 2m dewpoint | K | (124, 3, 4) |
+| u10 | 10m U-wind | m/s | (124, 3, 4) |
+| v10 | 10m V-wind | m/s | (124, 3, 4) |
 
-1. UTCI polynomial implementation differences
-2. Meteorological input differences (ERA5-Land vs ERA5)
-3. Spatial mismatch (0.1° vs 0.25° grids)
-4. Temporal mismatch (6-hourly vs hourly)
+## ERA5-HEAT Metadata
 
-Previous statistics (MAE=0.58°C, RMSE=0.85°C, bias=+0.46°C) are preserved as historical evidence but cannot be attributed solely to the UTCI implementation.
+| Variable | Description | Units | Shape |
+|----------|-------------|-------|-------|
+| mrt | Mean radiant temperature | degK | (140472, 3, 4) |
+| utci | Universal Thermal Climate Index | degK | (140472, 3, 4) |
 
-## What Is Missing
+## Grid
 
-For a clean TEST 1 validation, the following ERA5 reanalysis variables are required at **0.25° resolution** (matching ERA5-HEAT grid):
+| Property | ERA5 | ERA5-HEAT |
+|----------|------|-----------|
+| Latitude | 23.25–22.75°N | 22.75–23.25°N |
+| Longitude | 72.25–73.0°E | 72.25–73.0°E |
+| Resolution | 0.25° | 0.25° |
+| Grid points | 3×4 = 12 | 3×4 = 12 |
+| Grid match | **IDENTICAL** | **IDENTICAL** |
 
-| Variable | ERA5 Short Name | Description | Unit |
-|----------|----------------|-------------|------|
-| 2m temperature | `t2m` | Air temperature at 2m | K |
-| 2m dewpoint | `d2m` | Dewpoint temperature at 2m | K |
-| 10m U-wind | `u10` | U-component of wind at 10m | m/s |
-| 10m V-wind | `v10` | V-component of wind at 10m | m/s |
-| Surface pressure | `sp` | Surface pressure | Pa |
+## Unit Conversions
 
-These must be from the **ERA5 single-level reanalysis** (not ERA5-Land), covering:
+| Source | Variable | Original | Canonical | Method |
+|--------|----------|----------|-----------|--------|
+| ERA5 | t2m | K | °C | subtract 273.15 |
+| ERA5 | d2m | K | RH% | Buck equation |
+| ERA5 | u10, v10 | m/s | wind speed | sqrt(u²+v²) |
+| ERA5-HEAT | mrt | degK | °C | subtract 273.15 |
+| ERA5-HEAT | utci | degK | °C | subtract 273.15 |
 
-- **Time**: 2010-03-01 to 2010-03-31
-- **Frequency**: Hourly (to match ERA5-HEAT temporal resolution)
-- **Region**: 22.75–23.25°N, 72.25–73.0°E (matching ERA5-HEAT grid)
-- **Grid**: 0.25° (matching ERA5-HEAT spatial resolution)
+## Temporal Matching
 
-## Available Files
+| Metric | Value |
+|--------|-------|
+| ERA5 March 2010 timesteps | 124 |
+| ERA5-HEAT March 2010 timesteps | 744 |
+| Common timesteps | 124 |
+| Frequency | 6-hourly (00, 06, 12, 18 UTC) |
+| Method | Exact timestamp intersection |
 
-| File | Type | Resolution | Usable for TEST 1? |
-|------|------|-----------|-------------------|
-| `cde4e619c080209e1ec505565f79b8e.nc` | ERA5-HEAT | 0.25° | YES (reference) |
-| `data/raw/weather/data_0.nc` | ERA5-Land | 0.1° | NO (wrong product) |
-| `ERA5/data_0.nc` | ERA5-Land | 0.1° | NO (wrong product) |
-| `data_stream-mnth.nc` | Monthly ERA5 | 0.1° | NO (wrong frequency) |
+## Spatial Matching
 
-**No matching ERA5 0.25° hourly meteorology exists in the repository.**
+| Metric | Value |
+|--------|-------|
+| Grid | 3×4 (22.75–23.25°N, 72.25–73.0°E) |
+| Resolution | 0.25° |
+| Method | Identical grids — no interpolation needed |
 
-## CDS API Request to Acquire ERA5 Data
+## UTCI Comparison Statistics
 
-To obtain the required ERA5 meteorology, use the Copernicus Climate Data Store (CDS) API:
+| Metric | Value |
+|--------|-------|
+| Sample count | 1488 |
+| MAE | 0.9515 °C |
+| RMSE | 1.1877 °C |
+| Mean bias | +0.8587 °C |
+| Median absolute error | 0.8201 °C |
+| Min difference | -1.4509 °C |
+| Max difference | +4.8701 °C |
+| Std of difference | 0.8205 °C |
+| 95th percentile absolute error | 2.3291 °C |
 
-```python
-import cdsapi
+## Input Statistics
 
-client = cdsapi.Client()
+| Variable | Min | Max | Mean | Std |
+|----------|-----|-----|------|-----|
+| Air temp (°C) | 17.44 | 39.98 | 29.25 | 5.61 |
+| RH (%) | 12.88 | 88.91 | 39.27 | 15.99 |
+| Wind speed (m/s) | 0.204 | 4.901 | 2.403 | 0.77 |
+| MRT (°C) | 6.89 | 61.28 | 34.25 | 20.48 |
+| UTCI ref (°C) | 9.09 | 43.18 | 27.79 | 10.05 |
 
-client.retrieve(
-    "reanalysis-era5-single-levels",
-    {
-        "product_type": "reanalysis",
-        "variable": [
-            "2m_temperature",
-            "2m_dewpoint_temperature",
-            "10m_u_component_of_wind",
-            "10m_v_component_of_wind",
-            "surface_pressure",
-        ],
-        "year": "2010",
-        "month": "03",
-        "day": [str(d) for d in range(1, 32)],
-        "time": [f"{h:02d}:00" for h in range(24)],
-        "area": [23.25, 72.25, 22.75, 73.0],  # N, W, S, E
-        "grid": [0.25, 0.25],
-        "format": "netcdf",
-    },
-    "era5_meteorology_ahmedabad_2010_03.nc",
-)
-```
+## Wind Speed
 
-**After downloading**, place the file in `data/raw/weather/` and re-run the validation.
+| Metric | Value |
+|--------|-------|
+| Calm wind (<0.5 m/s) | 5 samples (0.3%) |
+| Calm wind treatment | Clamped, not rejected |
 
-## TEST 1 Status
+## Previous v1 Experiment
 
-**BLOCKED** — corresponding ERA5 meteorology unavailable.
+The previous validation (v1) used ERA5-Land meteorology (0.1°) instead of ERA5 (0.25°).
+This introduced cross-product error that could not isolate UTCI implementation differences.
+Previous statistics (MAE=0.581°C, RMSE=0.8546°C, bias=+0.4619°C) are preserved as
+historical evidence but cannot be attributed solely to the UTCI implementation.
 
-Do NOT substitute ERA5-Land and do not claim completion.
+**This v2 experiment uses ERA5 meteorology (same product as ERA5-HEAT), eliminating
+cross-product error and isolating the UTCI polynomial implementation difference.**
 
-## Next Steps
+## Scientific Limitations
 
-1. Download ERA5 single-level reanalysis using the CDS API request above
-2. Place `era5_meteorology_ahmedabad_2010_03.nc` in `data/raw/weather/`
-3. Re-run the corrected validation script
-4. Verify that ERA5-HEAT MRT, ERA5 meteorology, and ERA5-HEAT UTCI share identical spatial/temporal grids
+1. **UTCI polynomial only** — this validates the UTCI polynomial accuracy, not MRT derivation.
+2. **6-hourly matching** — ERA5 meteorology is 6-hourly; ERA5-HEAT is hourly. Only common 6-hourly timestamps are compared.
+3. **Calm wind clamping** — wind speed <0.5 m/s is clamped to 0.5 m/s per UTCI valid range.
+4. **No MRT derivation tested** — this is TEST 1 only.
+
+## Conclusion
+
+This validation tests the Agnirakshak UTCI polynomial against ERA5-HEAT UTCI using
+ERA5 meteorological inputs (same reanalysis product as ERA5-HEAT), with ERA5-HEAT MRT
+as direct MRT input. The identical 0.25° grid and common 6-hourly timestamps eliminate
+cross-product and spatial mismatch errors present in v1.
+
+**Do NOT interpret this as MRT derivation validation.**
