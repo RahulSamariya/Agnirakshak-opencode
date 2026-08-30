@@ -1,0 +1,182 @@
+{
+  "validation_id": "era5_heat_reference_march_2010",
+  "method": "TEST1_era5_heat_mrt_plus_era5_land_meteo",
+  "era5_heat_file": "cde4e619c080209e1ec505565f79b8e.nc",
+  "era5_land_file": "data/raw/weather/data_0.nc",
+  "era5_heat_variables": [
+    "mrt",
+    "utci"
+  ],
+  "era5_heat_units": {
+    "mrt": "degK",
+    "utci": "degK"
+  },
+  "era5_land_variables": [
+    "t2m",
+    "d2m",
+    "u10",
+    "v10",
+    "sp",
+    "ssrd",
+    "strd"
+  ],
+  "era5_land_units": {
+    "t2m": "K",
+    "d2m": "K",
+    "u10": "m/s",
+    "v10": "m/s",
+    "sp": "Pa",
+    "ssrd": "J/m2",
+    "strd": "J/m2"
+  },
+  "time_range": "2010-03-01 to 2010-03-31",
+  "temporal_matching": {
+    "era5_heat_timesteps": 744,
+    "era5_land_timesteps": 124,
+    "common_timesteps": 124,
+    "method": "exact timestamp intersection"
+  },
+  "spatial_matching": {
+    "era5_heat_grid": "3x4 (22.75-23.25N, 72.25-73.00E)",
+    "era5_land_grid": "5x5 (23.20-22.80N, 72.40-72.80E)",
+    "method": "nearest neighbor",
+    "matched_pairs": [
+      {
+        "heat_lat": 22.75,
+        "heat_lon": 72.25,
+        "land_lat": 22.8,
+        "land_lon": 72.4,
+        "land_lat_idx": 4,
+        "land_lon_idx": 0,
+        "distance_km": 17.55
+      },
+      {
+        "heat_lat": 22.75,
+        "heat_lon": 72.5,
+        "land_lat": 22.8,
+        "land_lon": 72.5,
+        "land_lat_idx": 4,
+        "land_lon_idx": 1,
+        "distance_km": 5.55
+      },
+      {
+        "heat_lat": 22.75,
+        "heat_lon": 72.75,
+        "land_lat": 22.8,
+        "land_lon": 72.8,
+        "land_lat_idx": 4,
+        "land_lon_idx": 4,
+        "distance_km": 7.85
+      },
+      {
+        "heat_lat": 22.75,
+        "heat_lon": 73.0,
+        "land_lat": 22.8,
+        "land_lon": 72.8,
+        "land_lat_idx": 4,
+        "land_lon_idx": 4,
+        "distance_km": 22.88
+      },
+      {
+        "heat_lat": 23.0,
+        "heat_lon": 72.25,
+        "land_lat": 22.999999999999996,
+        "land_lon": 72.4,
+        "land_lat_idx": 2,
+        "land_lon_idx": 0,
+        "distance_km": 16.65
+      },
+      {
+        "heat_lat": 23.0,
+        "heat_lon": 72.5,
+        "land_lat": 22.999999999999996,
+        "land_lon": 72.5,
+        "land_lat_idx": 2,
+        "land_lon_idx": 1,
+        "distance_km": 0.0
+      },
+      {
+        "heat_lat": 23.0,
+        "heat_lon": 72.75,
+        "land_lat": 22.999999999999996,
+        "land_lon": 72.8,
+        "land_lat_idx": 2,
+        "land_lon_idx": 4,
+        "distance_km": 5.55
+      },
+      {
+        "heat_lat": 23.0,
+        "heat_lon": 73.0,
+        "land_lat": 22.999999999999996,
+        "land_lon": 72.8,
+        "land_lat_idx": 2,
+        "land_lon_idx": 4,
+        "distance_km": 22.2
+      },
+      {
+        "heat_lat": 23.25,
+        "heat_lon": 72.25,
+        "land_lat": 23.2,
+        "land_lon": 72.4,
+        "land_lat_idx": 0,
+        "land_lon_idx": 0,
+        "distance_km": 17.55
+      },
+      {
+        "heat_lat": 23.25,
+        "heat_lon": 72.5,
+        "land_lat": 23.2,
+        "land_lon": 72.5,
+        "land_lat_idx": 0,
+        "land_lon_idx": 1,
+        "distance_km": 5.55
+      },
+      {
+        "heat_lat": 23.25,
+        "heat_lon": 72.75,
+        "land_lat": 23.2,
+        "land_lon": 72.8,
+        "land_lat_idx": 0,
+        "land_lon_idx": 4,
+        "distance_km": 7.85
+      },
+      {
+        "heat_lat": 23.25,
+        "heat_lon": 73.0,
+        "land_lat": 23.2,
+        "land_lon": 72.8,
+        "land_lat_idx": 0,
+        "land_lon_idx": 4,
+        "distance_km": 22.88
+      }
+    ]
+  },
+  "unit_conversions": {
+    "era5_heat_mrt": "K -> \u00b0C (subtract 273.15)",
+    "era5_heat_utci": "K -> \u00b0C (subtract 273.15)",
+    "era5_land_t2m": "K -> \u00b0C (subtract 273.15)",
+    "era5_land_d2m": "K -> RH% via Buck equation",
+    "era5_land_u10_v10": "m/s -> wind_speed = sqrt(u10^2 + v10^2)"
+  },
+  "utci_comparison": {
+    "sample_count": 1488,
+    "invalid_calculations": 0,
+    "missing_values": 0,
+    "mean_difference": 0.4619,
+    "mean_absolute_difference": 0.581,
+    "rmse": 0.8546,
+    "median_absolute_error": 0.4023,
+    "min_difference": -1.5913,
+    "max_difference": 4.37,
+    "std_difference": 0.719,
+    "mean_bias": 0.4619
+  },
+  "mrt_reference": {
+    "min": 6.62,
+    "max": 63.64,
+    "mean": 32.75,
+    "median": 20.49,
+    "std": 19.55
+  },
+  "limitation": "ERA5-HEAT provides MRT directly. ERA5-Land provides t2m, d2m, u10, v10. Our UTCI engine uses ERA5-HEAT MRT + ERA5-Land temperature/humidity/wind. This tests the UTCI polynomial only, not the MRT derivation. Spatial matching uses nearest-neighbor (0.1 deg ERA5-Land to 0.25 deg ERA5-HEAT). Wind speed validation range [0.5, 17.0] m/s excludes calm wind conditions."
+}

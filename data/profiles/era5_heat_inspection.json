@@ -1,0 +1,63 @@
+{
+  "file": "cde4e619c080209e1ec505565f79b8e.nc",
+  "dimensions": {
+    "valid_time": 140472,
+    "latitude": 3,
+    "longitude": 4
+  },
+  "variables": [
+    "mrt",
+    "utci"
+  ],
+  "coordinates": [
+    "latitude",
+    "longitude",
+    "valid_time"
+  ],
+  "mrt": {
+    "shape": [
+      140472,
+      3,
+      4
+    ],
+    "dims": [
+      "valid_time",
+      "latitude",
+      "longitude"
+    ],
+    "units": "degK",
+    "long_name": "Mean Radiant Temperature",
+    "fill_value": "N/A",
+    "min": 267.9547119140625,
+    "max": 341.51226806640625,
+    "mean": 305.1481628417969
+  },
+  "utci": {
+    "shape": [
+      140472,
+      3,
+      4
+    ],
+    "dims": [
+      "valid_time",
+      "latitude",
+      "longitude"
+    ],
+    "units": "degK",
+    "long_name": "Universal Thermal Climate Index",
+    "fill_value": "N/A",
+    "min": 270.7026062011719,
+    "max": 324.0593566894531,
+    "mean": 300.0213623046875
+  },
+  "latitude": {
+    "min": 22.75,
+    "max": 23.25,
+    "count": 3
+  },
+  "longitude": {
+    "min": 72.25,
+    "max": 73.0,
+    "count": 4
+  }
+}
