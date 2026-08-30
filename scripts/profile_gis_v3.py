@@ -3,12 +3,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 import geopandas as gpd
 import shapely
-
 
 GEOJSON_PATH = "data/raw/gis/wards_ahmedabad.geojson"
 STAGING_PATH = "data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson"
@@ -52,10 +51,10 @@ def verify_coordinate_order(gdf: gpd.GeoDataFrame) -> dict:
     # If x is longitude: x should be ~72.4-72.7, y should be ~22.9-23.1
     # If x is latitude: x should be ~22.9-23.1, y should be ~72.4-72.7
 
-    x_could_be_lon = 72.0 <= x_min and x_max <= 73.0
-    x_could_be_lat = 22.0 <= x_min and x_max <= 24.0
-    y_could_be_lat = 22.0 <= y_min and y_max <= 24.0
-    y_could_be_lon = 72.0 <= y_min and y_max <= 73.0
+    x_could_be_lon = x_min >= 72.0 and x_max <= 73.0
+    x_could_be_lat = x_min >= 22.0 and x_max <= 24.0
+    y_could_be_lat = y_min >= 22.0 and y_max <= 24.0
+    y_could_be_lon = y_min >= 72.0 and y_max <= 73.0
 
     if x_could_be_lon and y_could_be_lat:
         order = "longitude_latitude"
@@ -105,7 +104,7 @@ def profile_gis() -> dict:
         "source_url": None,
         "source_file": GEOJSON_PATH,
         "source_sha256": sha256_file(GEOJSON_PATH),
-        "acquired_at": datetime.now(timezone.utc).isoformat(),
+        "acquired_at": datetime.now(UTC).isoformat(),
         "original_format": "GeoJSON",
         "transformation_version": "v2.0.0",
         "status": "READY",

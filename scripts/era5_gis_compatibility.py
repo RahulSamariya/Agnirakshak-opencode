@@ -4,10 +4,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import xarray as xr
 import geopandas as gpd
 import shapely
-
+import xarray as xr
 
 NC_PATH = "data/raw/weather/data_0.nc"
 GEOJSON_PATH = "data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson"
@@ -104,6 +103,13 @@ def analyze_spatial_compatibility() -> dict:
 
 
 def write_markdown(result: dict) -> None:
+    pip = result["cells_intersecting_ward_point"]
+    wip = result["wards_hit_point"]
+    pia = result["cells_intersecting_ward_polygon"]
+    wia = result["wards_hit_polygon"]
+    zc = len(result["wards_with_zero_intersections"])
+    mw = result["cells_intersecting_multiple_wards"]
+
     md = f"""# ERA5-GIS Spatial Compatibility Analysis
 
 ## ERA5 Grid
@@ -121,20 +127,20 @@ def write_markdown(result: dict) -> None:
 | Property | Value |
 |----------|-------|
 | Total wards | {result['ward_count_total']} |
-| Wards hit (point) | {result['wards_hit_point']} |
-| Wards hit (polygon) | {result['wards_hit_polygon']} |
-| Wards with zero intersections | {len(result['wards_with_zero_intersections'])} |
+| Wards hit (point) | {wip} |
+| Wards hit (polygon) | {wia} |
+| Wards with zero intersections | {zc} |
 
 ## Spatial Intersection Results
 
 | Method | Cells intersecting | Wards hit |
 |--------|--------------------|-----------|
-| Point-in-polygon | {result['cells_intersecting_ward_point']} | {result['wards_hit_point']} |
-| Polygon intersection | {result['cells_intersecting_ward_polygon']} | {result['wards_hit_polygon']} |
+| Point-in-polygon | {pip} | {wip} |
+| Polygon intersection | {pia} | {wia} |
 
 ## Multi-ward Cells
 
-Cells intersecting multiple wards: {result['cells_intersecting_multiple_wards']}
+Cells intersecting multiple wards: {mw}
 
 """
 
@@ -146,9 +152,14 @@ Cells intersecting multiple wards: {result['cells_intersecting_multiple_wards']}
 
     if result["multi_ward_cells"]:
         md += "## Multi-ward Cell Details\n\n"
-        md += "| Cell | Lat | Lon | Wards |\n|------|-----|-----|-------|\n"
+        md += "| Cell | Lat | Lon | Wards |\n"
+        md += "|------|-----|-----|-------|\n"
         for cell in result["multi_ward_cells"]:
-            md += f"| {cell['cell_idx']} | {cell['lat']:.2f} | {cell['lon']:.2f} | {', '.join(cell['wards'])} |\n"
+            wards_str = ", ".join(cell["wards"])
+            md += (
+                f"| {cell['cell_idx']} | {cell['lat']:.2f}"
+                f" | {cell['lon']:.2f} | {wards_str} |\n"
+            )
         md += "\n"
 
     md += """## Interpretation

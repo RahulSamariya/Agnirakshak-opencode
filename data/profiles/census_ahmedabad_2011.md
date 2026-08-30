@@ -1,56 +1,41 @@
-# Census 2011 — Ahmedabad AMC Profiling
+# Census 2011 - Ahmedabad AMC Profiling
 
-**Status**: BLOCKED — Census file not found in repository
+**Status**: READY
+**Source**: Census of India 2011
+**File**: `data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx`
+**SHA256**: `3a601d501e437f85f2388b6460a0ebf4df5c784d1fb1484eb846b4df7913433b`
 
-## Expected File
+## Workbook Structure
 
-`DDW_PCA2407_2011_MDDS with UI (1).xlsx`
+| Property | Value |
+|----------|-------|
+| Sheet names | ['EB-2407'] |
+| Total rows | 711 |
+| Total columns | 94 |
+| AMC ward count | 57 |
 
-## Finding
+## Key Demographic Fields (AMC Wards Total)
 
-The Census 2011 workbook `DDW_PCA2407_2011_MDDS with UI (1).xlsx` is **NOT present** in the repository.
+| Field | Description | Value |
+|-------|-------------|-------|
+| TOT_P | Total population | 5,577,940 |
+| TOT_M | Male population | 2,938,985 |
+| TOT_F | Female population | 2,638,955 |
+| P_06 | Child 0-6 | 621,034 |
+| P_LIT | Literate | 4,376,393 |
+| P_ILL | Illiterate | 1,201,547 |
+| TOT_WORK_P | Total workers | 1,951,129 |
+| NON_WORK_P | Non-workers | 3,626,811 |
+| No_HH | Households | 1,179,823 |
 
-- `data/raw/census/` directory exists but is **empty**
-- No `.xlsx` files matching `*DDW*` or `*MDDS*` found anywhere in the repo
-- The `.gitignore` does not exclude `.xlsx` files
-- The file was never committed or copied to the working tree
+## Quality Checks
 
-## Expected Structure (from Census of India documentation)
+- Duplicate ward IDs: 0
+- Missing ward IDs: 0
+- Missing population: 0
 
-The DDW_PCA2407_2011_MDDS workbook typically contains:
+## Known Limitations
 
-| Field | Description |
-|-------|-------------|
-| District Code | Census district identifier |
-| Town Code | Census town identifier |
-| Ward Code | Ward-level identifier |
-| Total Population | Overall population count |
-| Male Population | Male population count |
-| Female Population | Female population count |
-| Age Group Fields | 0-14, 15-29, 30-44, 45-59, 60+ |
-| Literacy Fields | Literate, Illiterate |
-| Worker Fields | Main Worker, Marginal Worker |
-| Non-Worker Fields | Non-worker count |
-| Household Fields | Number of households |
-
-## Expected Record Counts
-
-- **57 AMC wards** (2011 delimitation)
-- District: Ahmedabad
-- State: Gujarat
-
-## Blocker
-
-Cannot profile Census data without the actual file.
-
-**Action required**: Obtain `DDW_PCA2407_2011_MDDS with UI (1).xlsx` and place in `data/raw/census/`.
-
-## Profiling Script
-
-A profiling script is prepared at `scripts/profile_census.py` and will execute once the file is available.
-
-## Output Files (when available)
-
-- `data/profiles/census_ahmedabad_2011.json`
-- `data/profiles/census_ahmedabad_2011.md`
-- `data/staging/census/wards_census_2011_amc.csv`
+- Census 2011 has 57 AMC wards (2011 delimitation)
+- Current GIS has 48 wards (2024 delimitation)
+- CROSSWALK REQUIRED between 2011 and 2024 ward boundaries

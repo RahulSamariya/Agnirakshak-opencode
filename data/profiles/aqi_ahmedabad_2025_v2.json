@@ -6,7 +6,7 @@
   "source_url": "https://cpcb.gov.in/",
   "source_file": "data/raw/aqi",
   "source_sha256": null,
-  "acquired_at": "2026-08-30T10:30:39.984666+00:00",
+  "acquired_at": "2026-08-30T10:47:04.019233+00:00",
   "original_format": "XLSX (Excel)",
   "transformation_version": "v2.0.0",
   "status": "PARTIAL",

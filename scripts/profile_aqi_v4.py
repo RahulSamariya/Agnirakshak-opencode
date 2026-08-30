@@ -3,11 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 import pandas as pd
-
 
 AQI_DIR = "data/raw/aqi"
 OUTPUT_JSON = "data/profiles/aqi_ahmedabad_2025_v2.json"
@@ -72,7 +71,8 @@ def profile_aqi() -> dict:
         valid_aqi = total_cells - missing_aqi
 
         # Duplicate check
-        dup_count = int(melted.duplicated(subset=["timestamp"]).sum()) if "timestamp" in melted.columns else 0
+        has_ts = "timestamp" in melted.columns
+        dup_count = int(melted.duplicated(subset=["timestamp"]).sum()) if has_ts else 0
 
         # AQI statistics
         aqi_min = float(melted["AQI"].min()) if valid_aqi > 0 else None
@@ -110,7 +110,15 @@ def profile_aqi() -> dict:
             })
 
     total_records = len(all_records)
-    total_missing = sum(1 for r in all_records if r["aqi"] is None or (isinstance(r["aqi"], float) and pd.isna(r["aqi"])))
+
+    def _is_missing(val):
+        if val is None:
+            return True
+        if isinstance(val, float) and pd.isna(val):
+            return True
+        return False
+
+    total_missing = sum(1 for r in all_records if _is_missing(r["aqi"]))
 
     profile = {
         "dataset_id": "cpcb_ahmedabad_2025_01_05",
@@ -120,7 +128,7 @@ def profile_aqi() -> dict:
         "source_url": "https://cpcb.gov.in/",
         "source_file": AQI_DIR,
         "source_sha256": None,
-        "acquired_at": datetime.now(timezone.utc).isoformat(),
+        "acquired_at": datetime.now(UTC).isoformat(),
         "original_format": "XLSX (Excel)",
         "transformation_version": "v2.0.0",
         "status": "PARTIAL",
@@ -133,7 +141,10 @@ def profile_aqi() -> dict:
         "monthly_profiles": monthly_profiles,
         "total_records": total_records,
         "total_missing": total_missing,
-        "overall_missing_pct": round(total_missing / total_records * 100, 2) if total_records > 0 else 0,
+        "overall_missing_pct": (
+            round(total_missing / total_records * 100, 2)
+            if total_records > 0 else 0
+        ),
         "date_range": {
             "start": "2025-01-01",
             "end": "2025-05-31",

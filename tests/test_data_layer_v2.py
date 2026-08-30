@@ -15,11 +15,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
-import xarray as xr
 import geopandas as gpd
 import pandas as pd
-
+import xarray as xr
 
 # ---------------------------------------------------------------------------
 # ERA5-Land tests
@@ -213,6 +211,53 @@ class TestAQI:
     def test_five_monthly_files(self):
         aqi_files = list(Path(self.AQI_DIR).glob("*.xlsx"))
         assert len(aqi_files) == 5
+
+
+# ---------------------------------------------------------------------------
+# Census tests
+# ---------------------------------------------------------------------------
+
+class TestCensus:
+    """Tests for real Census 2011 file."""
+
+    CENSUS_FILE = "data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx"
+
+    def test_file_exists(self):
+        assert Path(self.CENSUS_FILE).exists()
+
+    def test_loads_successfully(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        assert df is not None
+        assert len(df) > 0
+
+    def test_has_ward_column(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        assert "Ward" in df.columns
+
+    def test_has_level_column(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        assert "Level" in df.columns
+
+    def test_has_57_amc_wards(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        ward = df[(df["District"] == 474) & (df["Level"] == "WARD")]
+        amc = ward[ward["Name"].str.contains("M Corp", case=False, na=False)]
+        assert len(amc) == 57
+
+    def test_has_population_columns(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        assert "TOT_P" in df.columns
+        assert "TOT_M" in df.columns
+        assert "TOT_F" in df.columns
+
+    def test_amc_population_positive(self):
+        df = pd.read_excel(self.CENSUS_FILE)
+        ward = df[(df["District"] == 474) & (df["Level"] == "WARD")]
+        amc = ward[ward["Name"].str.contains("M Corp", case=False, na=False)]
+        assert amc["TOT_P"].sum() > 0
+
+    def test_staging_csv_exists(self):
+        assert Path("data/staging/census/wards_census_2011_amc.csv").exists()
 
 
 # ---------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T10:33:27.807342+00:00",
+  "generated_at": "2026-08-30T10:57:23.514854+00:00",
   "schema_version": "v2.0.0",
   "hash_algorithm": "SHA256",
   "datasets": {
@@ -11,7 +11,7 @@
       "source_url": "https://cds.climate.copernicus.eu/",
       "source_file": "data/raw/weather/data_0.nc",
       "source_sha256": "0d807637a3e74b4c62cdbe250e7ef670785ff8a9297302c12bb269d6aa9047db",
-      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "acquired_at": "2026-08-30T10:57:23.514854+00:00",
       "original_format": "NetCDF (CF-1.6)",
       "transformation_version": "v2.0.0",
       "status": "READY",
@@ -56,7 +56,7 @@
       "source_url": null,
       "source_file": "data/raw/gis/wards_ahmedabad.geojson",
       "source_sha256": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
-      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "acquired_at": "2026-08-30T10:57:23.514854+00:00",
       "original_format": "GeoJSON",
       "transformation_version": "v2.0.0",
       "status": "READY",
@@ -77,7 +77,7 @@
       "source_type": "PRIMARY_OFFICIAL",
       "source_file": "data/staging/gis/wards_ahmedabad_epsg4326_normalized.geojson",
       "source_sha256": "e421811c18df3adc2ac8c4cbe9d620df4a963b7df057d4065f1ac9f736e224dc",
-      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "acquired_at": "2026-08-30T10:57:23.514854+00:00",
       "original_format": "GeoJSON",
       "transformation_version": "v2.0.0",
       "status": "READY",
@@ -120,7 +120,7 @@
           "size_bytes": 7783
         }
       ],
-      "acquired_at": "2026-08-30T10:33:27.807342+00:00",
+      "acquired_at": "2026-08-30T10:57:23.514854+00:00",
       "original_format": "XLSX",
       "transformation_version": "v2.0.0",
       "status": "PARTIAL",
@@ -137,17 +137,19 @@
       "source_name": "Census of India 2011",
       "source_type": "PRIMARY_OFFICIAL",
       "source_url": "https://censusindia.gov.in/",
-      "source_file": "DDW_PCA2407_2011_MDDS with UI (1).xlsx",
-      "source_sha256": null,
-      "acquired_at": null,
+      "source_file": "data/raw/census/DDW_PCA2407_2011_MDDS with UI (1).xlsx",
+      "source_sha256": "3a601d501e437f85f2388b6460a0ebf4df5c784d1fb1484eb846b4df7913433b",
+      "acquired_at": "2026-08-30T10:57:23.514854+00:00",
       "original_format": "XLSX",
-      "transformation_version": null,
-      "status": "BLOCKED",
+      "transformation_version": "v2.0.0",
+      "status": "READY",
       "evidence_classification": "PRIMARY_OFFICIAL",
-      "source_status": "UNAVAILABLE",
-      "access_status": "UNAVAILABLE",
-      "ml_suitability": "UNKNOWN",
-      "notes": "File not found in repository."
+      "source_status": "VERIFIED",
+      "access_status": "PUBLIC",
+      "ml_suitability": "PARTIALLY_SUITABLE",
+      "file_size_bytes": 376762,
+      "amc_ward_count": 57,
+      "notes": "57 AMC wards profiled."
     }
   }
 }

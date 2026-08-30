@@ -3,11 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import UTC, datetime
 from pathlib import Path
-from datetime import datetime, timezone
 
 import xarray as xr
-
 
 NC_PATH = "data/raw/weather/data_0.nc"
 OUTPUT_JSON = "data/profiles/era5land_ahmedabad_v2.json"
@@ -132,7 +131,7 @@ def profile_era5() -> dict:
         "source_url": "https://cds.climate.copernicus.eu/",
         "source_file": NC_PATH,
         "source_sha256": sha256_file(NC_PATH),
-        "acquired_at": datetime.now(timezone.utc).isoformat(),
+        "acquired_at": datetime.now(UTC).isoformat(),
         "original_format": "NetCDF (CF-1.6)",
         "transformation_version": "v2.0.0",
         "status": "READY",
@@ -197,8 +196,8 @@ def write_markdown(profile: dict) -> None:
         "",
         "## Dimensions",
         "",
-        f"| Dimension | Size |",
-        f"|-----------|------|",
+        "| Dimension | Size |",
+        "|-----------|------|",
     ]
     for dim, size in profile["dimensions"].items():
         md_lines.append(f"| {dim} | {size} |")
@@ -242,9 +241,12 @@ def write_markdown(profile: dict) -> None:
         "",
         "## Quality Checks",
         "",
-        f"- Total missing values: {profile['quality_checks']['total_missing_values']}",
-        f"- Duplicate timestamps: {profile['quality_checks']['duplicate_timestamps']}",
-        f"- All required variables present: {profile['quality_checks']['all_required_variables_present']}",
+        f"- Total missing values: "
+        f"{profile['quality_checks']['total_missing_values']}",
+        f"- Duplicate timestamps: "
+        f"{profile['quality_checks']['duplicate_timestamps']}",
+        f"- All required variables present: "
+        f"{profile['quality_checks']['all_required_variables_present']}",
         "",
     ]
 
