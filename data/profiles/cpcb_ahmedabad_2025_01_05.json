@@ -1,0 +1,84 @@
+{
+  "files": [
+    "aqi_hourly_city_level__2025_April_ahmedabad_2025.xlsx",
+    "aqi_hourly_city_level__2025_February_ahmedabad_2025.xlsx",
+    "aqi_hourly_city_level__2025_January_ahmedabad_2025.xlsx",
+    "aqi_hourly_city_level__2025_March_ahmedabad_2025.xlsx",
+    "aqi_hourly_city_level__2025_May_ahmedabad_2025.xlsx"
+  ],
+  "file_count": 5,
+  "monthly_profiles": [
+    {
+      "file": "aqi_hourly_city_level__2025_April_ahmedabad_2025.xlsx",
+      "month": "level",
+      "rows": 30,
+      "aqi_min": 75.0,
+      "aqi_max": 222.0,
+      "aqi_mean": 115.4311797752809,
+      "missing_aqi": 8,
+      "time_range": {
+        "start": "1900-01-01 00:00:00",
+        "end": "1900-01-30 23:00:00"
+      }
+    },
+    {
+      "file": "aqi_hourly_city_level__2025_February_ahmedabad_2025.xlsx",
+      "month": "level",
+      "rows": 28,
+      "aqi_min": 86.0,
+      "aqi_max": 210.0,
+      "aqi_mean": 137.9404761904762,
+      "missing_aqi": 0,
+      "time_range": {
+        "start": "1900-01-01 00:00:00",
+        "end": "1900-01-28 23:00:00"
+      }
+    },
+    {
+      "file": "aqi_hourly_city_level__2025_January_ahmedabad_2025.xlsx",
+      "month": "level",
+      "rows": 31,
+      "aqi_min": 83.0,
+      "aqi_max": 211.0,
+      "aqi_mean": 123.68598382749326,
+      "missing_aqi": 2,
+      "time_range": {
+        "start": "1900-01-01 00:00:00",
+        "end": "1900-01-31 23:00:00"
+      }
+    },
+    {
+      "file": "aqi_hourly_city_level__2025_March_ahmedabad_2025.xlsx",
+      "month": "level",
+      "rows": 31,
+      "aqi_min": 67.0,
+      "aqi_max": 225.0,
+      "aqi_mean": 131.99864314789687,
+      "missing_aqi": 7,
+      "time_range": {
+        "start": "1900-01-01 00:00:00",
+        "end": "1900-01-31 23:00:00"
+      }
+    },
+    {
+      "file": "aqi_hourly_city_level__2025_May_ahmedabad_2025.xlsx",
+      "month": "level",
+      "rows": 31,
+      "aqi_min": 48.0,
+      "aqi_max": 160.0,
+      "aqi_mean": 94.19727891156462,
+      "missing_aqi": 9,
+      "time_range": {
+        "start": "1900-01-01 00:00:00",
+        "end": "1900-01-31 23:00:00"
+      }
+    }
+  ],
+  "overall_time_range": {
+    "start": "2025-01-01",
+    "end": "2025-05-31"
+  },
+  "data_format": "Wide format with Date column and 24 hourly columns (00:00:00 to 23:00:00)",
+  "city": "Ahmedabad",
+  "source": "CPCB"
+}
