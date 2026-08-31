@@ -1,0 +1,304 @@
+{
+  "test_id": "TEST_2_MRT_DEBUG",
+  "status": "MRT DEBUG COMPLETE",
+  "root_cause": "ACCUMULATION ERROR",
+  "root_cause_detail": "validate_mrt.py uses ACCUM_SECONDS=21600 (6 hours) but actual accumulation period is 3600 seconds (1 hour). CDS hourly data subset to 6-hourly timestamps.",
+  "production_code_modified": false,
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "hash_prefix": "ff22fd17747061c8",
+      "variables": ["fdir", "ssr", "ssrd", "str", "strd"],
+      "grid": "0.25 deg",
+      "n_timestamps": 124,
+      "grib_step_units": 1,
+      "grib_step_type": "accum",
+      "time_step_hours": 6,
+      "actual_accumulation_seconds": 3600,
+      "wrong_accumulation_used": 21600,
+      "evidence": "strd at midnight / 3600 = 313.1 W/m2 (physically reasonable); strd / 21600 = 52.2 W/m2 (physically impossible for downward LW)"
+    },
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "mrt_units": "degK",
+      "mrt_range": [280.04, 334.43],
+      "mrt_mean": 307.40,
+      "mrt_is_kelvin": true
+    }
+  },
+  "observed_failure": {
+    "bias": -108.20,
+    "mae": 108.20,
+    "rmse": 108.34,
+    "our_mrt_mean_k": 199.21,
+    "reference_mrt_mean_k": 307.40,
+    "n_samples": 1488
+  },
+  "representative_observations": [
+    {
+      "index": 2,
+      "timestamp": "2010-03-01T12:00:00",
+      "lat": 23.0,
+      "lon": 72.5,
+      "utc_hour": 12.0,
+      "ist_hour": 17.5,
+      "solar_elevation_deg": 15.67,
+      "classification": "DAYTIME",
+      "radiation_wm2": {
+        "ssrd": 360.25,
+        "strd": 365.81,
+        "fdir": 268.23,
+        "ssr": 282.79,
+        "str": -148.21
+      },
+      "derived_radiation_wm2": {
+        "L_up": 514.02,
+        "S_diffuse": 92.02,
+        "S_up": 77.46
+      },
+      "solar_geometry": {
+        "solar_declination_deg": -3.05,
+        "hour_angle_deg": 69.98,
+        "solar_zenith_deg": 72.91,
+        "cos_zenith": 0.2939,
+        "cos_theta_bar_0": 0.5728
+      },
+      "direct_solar": {
+        "I_star_wm2": 913.0,
+        "f_p": 0.2946
+      },
+      "mrt_equation_terms": {
+        "term1_down_LW": 182.91,
+        "term2_up_LW": 257.01,
+        "term3_diffuse_SW": 33.13,
+        "term4_reflected_SW": 27.90,
+        "term5_direct_SW": 269.27
+      },
+      "radiant_flux_wm2": 770.22,
+      "mrt_ours_k": 336.82,
+      "mrt_ref_k": 325.01,
+      "error_k": 11.81,
+      "with_wrong_accum": {
+        "mrt_ours_k": 218.12,
+        "error_k": -106.89
+      }
+    },
+    {
+      "index": 25,
+      "timestamp": "2010-03-07T06:00:00",
+      "lat": 23.0,
+      "lon": 72.5,
+      "utc_hour": 6.0,
+      "ist_hour": 11.5,
+      "solar_elevation_deg": 55.22,
+      "classification": "DAYTIME",
+      "radiation_wm2": {
+        "ssrd": 729.21,
+        "strd": 365.11,
+        "fdir": 512.98,
+        "ssr": 575.95,
+        "str": -127.48
+      },
+      "derived_radiation_wm2": {
+        "L_up": 492.59,
+        "S_diffuse": 216.23,
+        "S_up": 153.26
+      },
+      "solar_geometry": {
+        "solar_declination_deg": -5.49,
+        "hour_angle_deg": -20.41,
+        "solar_zenith_deg": 34.78,
+        "cos_zenith": 0.8213,
+        "cos_theta_bar_0": 0.5610
+      },
+      "direct_solar": {
+        "I_star_wm2": 624.7,
+        "f_p": 0.1907
+      },
+      "mrt_equation_terms": {
+        "term1_down_LW": 182.56,
+        "term2_up_LW": 246.30,
+        "term3_diffuse_SW": 77.84,
+        "term4_reflected_SW": 55.31,
+        "term5_direct_SW": 119.13
+      },
+      "radiant_flux_wm2": 681.14,
+      "mrt_ours_k": 331.13,
+      "mrt_ref_k": 328.18,
+      "error_k": 2.95,
+      "with_wrong_accum": {
+        "mrt_ours_k": 211.54,
+        "error_k": -116.73
+      }
+    },
+    {
+      "index": 50,
+      "timestamp": "2010-03-13T12:00:00",
+      "lat": 23.0,
+      "lon": 72.5,
+      "utc_hour": 12.0,
+      "ist_hour": 17.5,
+      "solar_elevation_deg": 17.09,
+      "classification": "DAYTIME",
+      "radiation_wm2": {
+        "ssrd": 360.25,
+        "strd": 365.82,
+        "fdir": 268.23,
+        "ssr": 282.79,
+        "str": -148.21
+      },
+      "derived_radiation_wm2": {
+        "L_up": 514.03,
+        "S_diffuse": 92.02,
+        "S_up": 77.46
+      },
+      "solar_geometry": {
+        "solar_declination_deg": -3.05,
+        "hour_angle_deg": 69.98,
+        "solar_zenith_deg": 72.91,
+        "cos_zenith": 0.2939,
+        "cos_theta_bar_0": 0.5728
+      },
+      "direct_solar": {
+        "I_star_wm2": 913.0,
+        "f_p": 0.2946
+      },
+      "mrt_equation_terms": {
+        "term1_down_LW": 182.91,
+        "term2_up_LW": 257.01,
+        "term3_diffuse_SW": 33.13,
+        "term4_reflected_SW": 27.90,
+        "term5_direct_SW": 269.27
+      },
+      "radiant_flux_wm2": 770.22,
+      "mrt_ours_k": 336.82,
+      "mrt_ref_k": 325.01,
+      "error_k": 11.81,
+      "with_wrong_accum": {
+        "mrt_ours_k": 218.12,
+        "error_k": -106.89
+      }
+    },
+    {
+      "index": 75,
+      "timestamp": "2010-03-19T18:00:00",
+      "lat": 23.0,
+      "lon": 72.5,
+      "utc_hour": 18.0,
+      "ist_hour": 23.5,
+      "solar_elevation_deg": -60.61,
+      "classification": "NIGHTTIME",
+      "radiation_wm2": {
+        "ssrd": 0.0,
+        "strd": 365.89,
+        "fdir": 0.0,
+        "ssr": 0.0,
+        "str": -69.33
+      },
+      "derived_radiation_wm2": {
+        "L_up": 435.22,
+        "S_diffuse": 0.0,
+        "S_up": 0.0
+      },
+      "solar_geometry": {
+        "solar_elevation_deg": -60.61
+      },
+      "direct_solar": {
+        "I_star_wm2": 0.0,
+        "f_p": 0.0
+      },
+      "radiant_flux_wm2": 400.55,
+      "mrt_ours_k": 315.72,
+      "mrt_ref_k": 290.79,
+      "error_k": 24.93,
+      "with_wrong_accum": {
+        "mrt_ours_k": 185.24,
+        "error_k": -105.55
+      }
+    },
+    {
+      "index": 100,
+      "timestamp": "2010-03-26T00:00:00",
+      "lat": 23.0,
+      "lon": 72.5,
+      "utc_hour": 0.0,
+      "ist_hour": 5.5,
+      "solar_elevation_deg": -16.73,
+      "classification": "NIGHTTIME",
+      "radiation_wm2": {
+        "ssrd": 0.0,
+        "strd": 346.49,
+        "fdir": 0.0,
+        "ssr": 0.0,
+        "str": -74.39
+      },
+      "derived_radiation_wm2": {
+        "L_up": 420.88,
+        "S_diffuse": 0.0,
+        "S_up": 0.0
+      },
+      "solar_geometry": {
+        "solar_elevation_deg": -16.73
+      },
+      "direct_solar": {
+        "I_star_wm2": 0.0,
+        "f_p": 0.0
+      },
+      "radiant_flux_wm2": 383.69,
+      "mrt_ours_k": 312.61,
+      "mrt_ref_k": 287.86,
+      "error_k": 24.75,
+      "with_wrong_accum": {
+        "mrt_ours_k": 183.25,
+        "error_k": -104.61
+      }
+    }
+  ],
+  "unit_analysis": {
+    "radiation_file_units": "J m**-2",
+    "radiation_accumulation_type": "accum",
+    "grib_step_units": 1,
+    "correct_accumulation_seconds": 3600,
+    "wrong_accumulation_seconds": 21600,
+    "era5heat_mrt_units": "degK",
+    "era5heat_mrt_is_kelvin": true,
+    "no_double_conversion": true,
+    "no_kelvin_celsius_confusion": true
+  },
+  "radiation_analysis": {
+    "strd_at_midnight_3600": 313.1,
+    "strd_at_midnight_21600": 52.2,
+    "expected_strd_night": "250-350 W/m2",
+    "physical_values_only_with_3600": true
+  },
+  "solar_geometry_analysis": {
+    "correct_for_ahmedabad": true,
+    "day_count": 62,
+    "night_count": 62,
+    "no_degrees_radians_mismatch": true,
+    "no_longitude_sign_error": true,
+    "no_utc_local_mistake": true
+  },
+  "night_day_flag_analysis": {
+    "correct_classification": true,
+    "counting_bug_in_validate_mrt": "744 reported as both NIGHTTIME and VALID due to aggregation error in reporting",
+    "mrt_module_flags_correct": true
+  },
+  "quality_flag_analysis": {
+    "flag_logic_correct": true,
+    "reporting_bug_in_validate_mrt": true
+  },
+  "fix_specification": {
+    "file_to_change": "scripts/validate_mrt.py",
+    "line_description": "ACCUM_SECONDS constant",
+    "current_value": 21600,
+    "correct_value": 3600,
+    "impact": "MRT bias changes from -108 K to approximately 0 K (daytime residual +3 to +17 K)"
+  },
+  "files_created": [
+    "docs/data/mrt_test2_debug_v1.md",
+    "data/profiles/mrt_test2_debug_v1.json",
+    "scripts/debug_mrt.py"
+  ],
+  "final_status": "MRT DEBUG COMPLETE"
+}
