@@ -1,0 +1,83 @@
+{
+  "audit_id": "TEST_2C_NUMERICAL_AUDIT",
+  "status": "TEST 2C COMPLETE",
+  "accumulation_period": {
+    "correct_seconds": 3600,
+    "wrong_seconds": 21600,
+    "evidence": "GRIB_stepUnits=1 (hours), GRIB_stepType=accum, strd/3600=313 W/m2 (physical), strd/21600=52 W/m2 (impossible)"
+  },
+  "fourth_root_audit": {
+    "test_cases": [
+      {"input": 383.69, "output_k": 286.8133, "expected_k": 286.8, "pass": true},
+      {"input": 681.14, "output_k": 331.0650, "pass": true},
+      {"input": 503.50, "output_k": 306.9758, "pass": true},
+      {"input": 100.00, "output_k": 204.9294, "pass": true},
+      {"input": 1000.00, "output_k": 364.4217, "pass": true}
+    ],
+    "sigma": 5.67e-08,
+    "all_pass": true,
+    "round_trip_errors": "< 1e-13"
+  },
+  "eq13_audit": {
+    "source_paper": "Di Napoli et al. (2020) Eq 13",
+    "source_quote": "When direct solar radiation is available from the NWP model, I* is set equal to this variable (as it is already projected onto a horizontal surface).",
+    "previous_implementation": "I* = fdir / cos(zenith_instantaneous)",
+    "correct_implementation": "I* = fdir (ERA5 fdir already horizontal)",
+    "fix_applied": true,
+    "reason": "fdir in ERA5 is direct component of ssrd (horizontal). Dividing by cos(zenith) double-projects. ERA5 verification: ssrd = fdir + (ssrd-fdir) = 513.0 + 216.2 = 729.2 = ssrd.",
+    "impact": {
+      "mae_before": 4.67,
+      "mae_after": 2.18,
+      "improvement_k": 2.49
+    }
+  },
+  "observation_repro_20100326_0000": {
+    "timestamp": "2010-03-26T00:00:00",
+    "classification": "NIGHTTIME",
+    "raw_jm2": {"ssrd": 0.0, "strd": 1262190.0, "fdir": 0.0, "ssr": 0.0, "str": -254968.19},
+    "converted_wm2": {"ssrd": 0.0, "strd": 350.61, "fdir": 0.0, "ssr": 0.0, "str": -70.82},
+    "derived": {"L_up": 421.43, "S_diffuse": 0.0, "S_up": 0.0},
+    "solar_geometry": {"elevation": -16.73, "zenith": 106.73},
+    "I_star": 0.0,
+    "f_p": 0.0,
+    "terms": {"t1_down_LW": 175.30, "t2_up_LW": 210.72, "t3_diffuse": 0.0, "t4_reflected": 0.0, "t5_direct": 0.0},
+    "radiant_flux": 386.02,
+    "mrt_ours_k": 287.25,
+    "mrt_ref_k": 286.97,
+    "error_k": 0.28,
+    "independent_verification": "sigma * 287.25^4 = 386.02 (PASS)"
+  },
+  "validation_metrics": {
+    "n": 1488,
+    "mae": 2.1823,
+    "rmse": 3.4467,
+    "bias": -1.5651,
+    "median_ae": 0.8655,
+    "p95_ae": 7.4981,
+    "r_squared": 0.9717,
+    "correlation": 0.9897,
+    "quality_flags": {"valid": 744, "nighttime": 744, "low_solar": 0, "negative_rad": 0, "missing": 0, "unphysical": 0}
+  },
+  "day_night_stratification": {
+    "daytime": {"n": 744, "mae": 3.7913, "bias": -3.1083},
+    "nighttime": {"n": 744, "mae": 0.5733, "bias": -0.0219},
+    "by_elevation": {
+      "(-90,0]": {"n": 744, "mae": 0.57, "bias": -0.02},
+      "(10,20]": {"n": 372, "mae": 6.60, "bias": -6.60},
+      "(30,90]": {"n": 372, "mae": 0.98, "bias": 0.39}
+    }
+  },
+  "remaining_discrepancies": {
+    "low_sun_geometry": "~6.6 K at 10-20 deg elevation (f_p sensitivity)",
+    "era5heat_formulation": "~2-3 K (possible convective corrections)",
+    "spatial_interpolation": "~0.5 K (grid alignment)"
+  },
+  "production_code_modified": true,
+  "files_modified": [
+    "scientific/thermal_comfort/mrt.py (I* fix: fdir instead of fdir/cos_zenith)",
+    "scripts/validate_mrt.py (ACCUM_SECONDS: 3600 instead of 21600)",
+    "tests/scientific_validation/test_mrt.py (3 regression tests for Eq 13)"
+  ],
+  "utci_h_v_e_hsri_unchanged": true,
+  "tests": {"total": 360, "passed": 360, "failed": 0, "new_regression_tests": 3}
+}

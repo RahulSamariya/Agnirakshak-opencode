@@ -14,7 +14,6 @@ from scientific.thermal_comfort.mrt import (
     QualityFlag,
     _day_of_year,
     _solar_declination,
-    _hour_angle,
     _solar_zenith_angle,
     _sunrise_sunset_hour_angle,
     _surface_projection_factor,
@@ -157,6 +156,55 @@ class TestMRTEquation:
         assert result.diffuse_shortwave == pytest.approx(300.0, abs=0.1)
         # S_srf_up = ssrd - ssr = 500 - 100 = 400
         assert result.upward_shortwave == pytest.approx(400.0, abs=0.1)
+
+
+class TestEq13DirectSolar:
+    """Regression tests for Eq 13 I* calculation (Di Napoli 2020).
+
+    ERA5 fdir is the direct component of ssrd (horizontal surface).
+    The paper states: "When direct solar radiation is available from the
+    NWP model, I* is set equal to this variable (as it is already projected
+    onto a horizontal surface)."
+
+    Therefore I* = fdir, NOT fdir / cos(zenith).
+    """
+
+    def test_idir_uses_fdir_directly(self):
+        """I* should equal fdir when elevation > 0."""
+        result = calculate_mrt_single(
+            ssrd=500.0, strd=300.0, fdir=200.0, ssr=100.0, str_val=-50.0,
+            latitude_deg=23.0, longitude_deg=72.5,
+            time_utc=np.datetime64("2010-03-01T12:00:00"),
+            accumulation_seconds=3600.0,
+        )
+        # I* should be fdir (200.0), not fdir/cos(zenith)
+        assert result.direct_radiation_projected == pytest.approx(200.0, abs=1.0)
+
+    def test_idir_zero_at_night(self):
+        """I* should be 0 at night."""
+        result = calculate_mrt_single(
+            ssrd=0.0, strd=300.0, fdir=0.0, ssr=0.0, str_val=-50.0,
+            latitude_deg=23.0, longitude_deg=72.5,
+            time_utc=np.datetime64("2010-03-01T00:00:00"),
+            accumulation_seconds=3600.0,
+        )
+        assert result.direct_radiation_projected == 0.0
+
+    def test_idir_not_double_projected(self):
+        """I* should NOT divide fdir by cos(zenith)."""
+        # At high elevation (low zenith), cos(zenith) is large
+        # If I* = fdir/cos(zenith), I* would be larger than fdir
+        # With correct I* = fdir, I* = fdir exactly
+        result = calculate_mrt_single(
+            ssrd=600.0, strd=300.0, fdir=400.0, ssr=100.0, str_val=-50.0,
+            latitude_deg=23.0, longitude_deg=72.5,
+            time_utc=np.datetime64("2010-03-01T06:00:00"),
+            accumulation_seconds=3600.0,
+        )
+        # fdir=400, I* should be 400 (not 400/cos(zenith) which would be ~500)
+        assert result.direct_radiation_projected == pytest.approx(400.0, abs=1.0)
+        # Verify fdir = I* (not double-projected)
+        assert result.direct_radiation_projected <= 400.0 + 1.0
 
 
 class TestValidation:

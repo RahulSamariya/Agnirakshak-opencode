@@ -1,110 +1,87 @@
 {
   "test_id": "TEST_2_DI_NAPOLI_MRT_VALIDATION",
-  "status": "BLOCKED",
-  "blocker": "No single ERA5 file contains all 5 required radiation variables (ssrd, strd, fdir, ssr, str)",
-  "required_variables": [
-    "fdir",
-    "ssr",
-    "ssrd",
-    "str",
-    "strd"
-  ],
-  "files_inspected": {
-    "ERA5 radiation (2b5663f2)": {
+  "status": "COMPLETE",
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "hash": "ff22fd17747061c8656dfc25ab7594c09d7b613c56694becc8bc9b97b1dc5902",
       "variables": [
         "fdir",
         "ssr",
-        "str"
-      ],
-      "has_required": [
-        "fdir",
-        "ssr",
-        "str"
-      ],
-      "missing_required": [
-        "ssrd",
-        "strd"
-      ],
-      "n_timestamps": 124
-    },
-    "ERA5 stream (data_stream-mnth)": {
-      "variables": [
-        "d2m",
-        "sp",
-        "ssrd",
-        "str",
-        "strd",
-        "t2m",
-        "u10",
-        "v10"
-      ],
-      "has_required": [
         "ssrd",
         "str",
         "strd"
       ],
-      "missing_required": [
-        "fdir",
-        "ssr"
-      ],
-      "n_timestamps": 528
+      "grid": "0.25 deg",
+      "time_range": "2010-03-01T00:00:00.000000000 to 2010-03-31T18:00:00.000000000",
+      "n_timestamps": 124,
+      "accumulation_seconds": 3600
     },
-    "ERA5-Land (data_0)": {
-      "variables": [
-        "d2m",
-        "sp",
-        "ssrd",
-        "strd",
-        "t2m",
-        "u10",
-        "v10"
-      ],
-      "has_required": [
-        "ssrd",
-        "strd"
-      ],
-      "missing_required": [
-        "fdir",
-        "ssr",
-        "str"
-      ],
-      "n_timestamps": 124
-    },
-    "ERA5-HEAT (reference)": {
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "hash": "2c68117822e8ec69365fa6cc7004a5e362a4112a44d07005d5d16265b1861144",
       "variables": [
         "mrt",
         "utci"
       ],
-      "has_required": [],
-      "missing_required": [
-        "fdir",
-        "ssr",
-        "ssrd",
-        "str",
-        "strd"
-      ],
-      "n_timestamps": 140472
-    },
-    "GRIB (c961f6b1)": {
-      "variables": [
-        "SSR"
-      ],
-      "has_required": [],
-      "missing_required": [
-        "fdir",
-        "ssr",
-        "ssrd",
-        "str",
-        "strd"
-      ],
-      "n_timestamps": null
+      "grid": "0.25 deg"
     }
   },
-  "diagnosis": {
-    "2b5663f2dae9337c125c5159b0f4ccce.nc": "Has fdir, ssr, str (3/5). Missing ssrd, strd.",
-    "data_stream-mnth.nc": "Has ssrd, strd, str (3/5) but only 4 timestamps for March 2010.",
-    "data_0.nc (ERA5-Land)": "Has ssrd, strd (2/5). Missing fdir, ssr, str. Different ECMWF product.",
-    "c961f6b13701010cc9af2002523ada5d (1).grib": "Contains SSR only (1 of 5). Not the complete set.",
-    "REQUIRED": "A single ERA5 single-level file with ALL 5 variables (ssrd, strd, fdir, ssr, str) on the Ahmedabad 0.25-deg grid for March 2010 at 6-hourly resolution."
+  "method": {
+    "reference": "Di Napoli, Hogan, Pappenberger (2020)",
+    "doi": "10.1007/s00484-020-01900-5",
+    "constants": {
+      "sigma": 5.67e-08,
+      "f_a": 0.5,
+      "alpha_ir": 0.7,
+      "epsilon_p": 0.97
+    },
+    "accumulation_seconds": 3600
+  },
+  "grid": {
+    "n_time": 124,
+    "n_lat": 3,
+    "n_lon": 4,
+    "total_points": 1488
+  },
+  "metrics": {
+    "sample_count": 1488,
+    "mae": 2.182307561238607,
+    "rmse": 3.446688428408547,
+    "mean_bias": -1.5651323667136572,
+    "median_ae": 0.865509033203125,
+    "std_error": 3.070834055625716,
+    "min_error": -9.13037109375,
+    "max_error": 2.925689697265625,
+    "p95_ae": 7.498077392578124,
+    "r_squared": 0.9716763773602186,
+    "correlation": 0.9897488143713729,
+    "delta_mrt_mean": -1.5651323667136572,
+    "delta_mrt_std": 3.070834055625716,
+    "nighttime_count": 744,
+    "nighttime_mae": 0.5732763146841398,
+    "nighttime_bias": -0.02194747104439684,
+    "nighttime_rmse": 0.7715275214960473,
+    "valid_count": 744,
+    "valid_mae": 3.791338807793074,
+    "valid_bias": -3.1083172623829176,
+    "valid_rmse": 4.812906349455069,
+    "low_sun_count": 744,
+    "low_sun_mae": 0.5732763146841398,
+    "low_sun_bias": -0.02194747104439684,
+    "mid_sun_count": 372,
+    "mid_sun_mae": 6.601721896920153,
+    "mid_sun_bias": -6.601721896920153,
+    "high_sun_count": 372,
+    "high_sun_mae": 0.9809557186659946,
+    "high_sun_bias": 0.3850873721543179
+  },
+  "quality_flags": {
+    "valid": 744,
+    "nighttime": 744,
+    "low_solar_elevation": 0,
+    "negative_radiation": 0,
+    "missing_input": 0,
+    "unphysical_mrt": 0
   }
 }

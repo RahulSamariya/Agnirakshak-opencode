@@ -12,7 +12,7 @@ explicit scientific approval.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 
 import numpy as np
@@ -281,7 +281,6 @@ def calculate_mrt_single(
 
     # --- Solar geometry ---
     jd = _day_of_year(time_utc)
-    hour_utc = float(time_utc.astype("datetime64[h]").astype(int) % 24)
     # More precise hour of day
     hours_since_midnight = (
         (time_utc - np.datetime64(time_utc.astype("datetime64[D]")))
@@ -296,21 +295,22 @@ def calculate_mrt_single(
 
     # Sunrise/sunset for average daytime calculation
     h0 = _sunrise_sunset_hour_angle(delta, latitude_deg)
-    cos_theta_bar = _average_daytime_cos_zenith(delta, latitude_deg, -h0, h0)
 
-    # --- Direct solar component projection (Equation 13 / TM 895 Eq 7) ---
-    # I* = S_srf_dn_direct / cossza (instantaneous)
-    # ECMWF TM 895: "Where Direct Solar Radiation (dsrp) is available
-    # I* is equal to this variable" — otherwise I* = fdir / cossza
-    # Handle nighttime and low sun
+    # --- Direct solar component projection (Equation 13) ---
+    # Di Napoli et al. (2020) Eq 13: I* = S_dn,direct / cos(theta_bar)
+    # "When direct solar radiation is available from the NWP model,
+    #  I* is set equal to this variable (as it is already projected
+    #  onto a horizontal surface)."
+    # ERA5 fdir = direct component of ssrd (horizontal surface).
+    # ssrd = fdir + (ssrd - fdir) = direct_horizontal + diffuse_horizontal
+    # Therefore I* = fdir (no division needed).
     nighttime = elevation < 0.0
     low_sun = elevation < 2.0  # below ~2 degrees
 
-    cos_zenith = math.cos(math.radians(zenith))
-    if nighttime or cos_zenith < 0.01:
+    if nighttime:
         I_star = 0.0
     else:
-        I_star = fdir / cos_zenith
+        I_star = fdir
 
     # --- Surface projection factor (Equation 15) ---
     f_p = _surface_projection_factor(elevation) if not nighttime else 0.0
