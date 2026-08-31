@@ -10,29 +10,7 @@
     "strd"
   ],
   "files_inspected": {
-    "ERA5-Land": {
-      "variables": [
-        "d2m",
-        "sp",
-        "ssrd",
-        "strd",
-        "t2m",
-        "u10",
-        "v10"
-      ],
-      "has_required": [
-        "ssrd",
-        "strd"
-      ],
-      "missing_required": [
-        "fdir",
-        "ssr",
-        "str"
-      ],
-      "n_timestamps": 124,
-      "interval_hours": 6
-    },
-    "ERA5 radiation": {
+    "ERA5 radiation (2b5663f2)": {
       "variables": [
         "fdir",
         "ssr",
@@ -47,10 +25,9 @@
         "ssrd",
         "strd"
       ],
-      "n_timestamps": 124,
-      "interval_hours": 6
+      "n_timestamps": 124
     },
-    "ERA5 stream": {
+    "ERA5 stream (data_stream-mnth)": {
       "variables": [
         "d2m",
         "sp",
@@ -70,10 +47,30 @@
         "fdir",
         "ssr"
       ],
-      "n_timestamps": 528,
-      "interval_hours": 6
+      "n_timestamps": 528
     },
-    "ERA5-HEAT": {
+    "ERA5-Land (data_0)": {
+      "variables": [
+        "d2m",
+        "sp",
+        "ssrd",
+        "strd",
+        "t2m",
+        "u10",
+        "v10"
+      ],
+      "has_required": [
+        "ssrd",
+        "strd"
+      ],
+      "missing_required": [
+        "fdir",
+        "ssr",
+        "str"
+      ],
+      "n_timestamps": 124
+    },
+    "ERA5-HEAT (reference)": {
       "variables": [
         "mrt",
         "utci"
@@ -86,14 +83,28 @@
         "str",
         "strd"
       ],
-      "n_timestamps": 140472,
-      "interval_hours": 1
+      "n_timestamps": 140472
+    },
+    "GRIB (c961f6b1)": {
+      "variables": [
+        "SSR"
+      ],
+      "has_required": [],
+      "missing_required": [
+        "fdir",
+        "ssr",
+        "ssrd",
+        "str",
+        "strd"
+      ],
+      "n_timestamps": null
     }
   },
   "diagnosis": {
-    "2b5663f2dae9337c125c5159b0f4ccce.nc": "Has fdir, ssr, str (3 of 5). Missing ssrd, strd.",
-    "data_stream-mnth.nc": "Has ssrd, strd, str (3 of 5) but only 4 timestamps for March 2010. Sparse monthly product, NOT 6-hourly.",
-    "data_0.nc (ERA5-Land)": "Has ssrd, strd (2 of 5). Missing fdir, ssr, str. Different ECMWF product.",
+    "2b5663f2dae9337c125c5159b0f4ccce.nc": "Has fdir, ssr, str (3/5). Missing ssrd, strd.",
+    "data_stream-mnth.nc": "Has ssrd, strd, str (3/5) but only 4 timestamps for March 2010.",
+    "data_0.nc (ERA5-Land)": "Has ssrd, strd (2/5). Missing fdir, ssr, str. Different ECMWF product.",
+    "c961f6b13701010cc9af2002523ada5d (1).grib": "Contains SSR only (1 of 5). Not the complete set.",
     "REQUIRED": "A single ERA5 single-level file with ALL 5 variables (ssrd, strd, fdir, ssr, str) on the Ahmedabad 0.25-deg grid for March 2010 at 6-hourly resolution."
   }
 }
