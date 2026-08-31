@@ -1,0 +1,248 @@
+{
+  "file": "2b5663f2dae9337c125c5159b0f4ccce.nc",
+  "variables_present": {
+    "fdir": {
+      "long_name": "Surface direct short-wave (solar) radiation",
+      "units": "J m**-2",
+      "paramId": "N/A",
+      "step_type": "N/A",
+      "dimensions": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "min": 0.0,
+      "max": 2653504.0,
+      "missing_values": 0,
+      "total_values": 1488
+    },
+    "ssr": {
+      "long_name": "Surface net short-wave (solar) radiation",
+      "units": "J m**-2",
+      "paramId": "N/A",
+      "step_type": "N/A",
+      "dimensions": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "min": 3.5999987713086767e-12,
+      "max": 2569920.0,
+      "missing_values": 0,
+      "total_values": 1488
+    },
+    "str": {
+      "long_name": "Surface net long-wave (thermal) radiation",
+      "units": "J m**-2",
+      "paramId": "N/A",
+      "step_type": "N/A",
+      "dimensions": [
+        "valid_time",
+        "latitude",
+        "longitude"
+      ],
+      "shape": [
+        124,
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "min": -673117.0,
+      "max": -153639.0,
+      "missing_values": 0,
+      "total_values": 1488
+    }
+  },
+  "required_variables_status": {
+    "fdir": "PRESENT",
+    "ssr": "PRESENT",
+    "str": "PRESENT"
+  },
+  "time_analysis": {
+    "time_min": "2010-03-01T00:00:00.000000000",
+    "time_max": "2010-03-31T18:00:00.000000000",
+    "timestamp_count": 124,
+    "time_interval_hours": [
+      6
+    ],
+    "is_regular": true
+  },
+  "spatial_analysis": {
+    "latitude_min": 22.75,
+    "latitude_max": 23.25,
+    "latitude_count": 3,
+    "latitude_resolution": 0.25,
+    "longitude_min": 72.25,
+    "longitude_max": 73.0,
+    "longitude_count": 4,
+    "longitude_resolution": 0.25
+  },
+  "comparison_with_era5land": {
+    "era5land_time_min": "2010-03-01T00:00:00.000000000",
+    "era5land_time_max": "2010-03-31T18:00:00.000000000",
+    "era5land_timestamp_count": 124,
+    "era5land_lat_range": [
+      22.8,
+      23.2
+    ],
+    "era5land_lon_range": [
+      72.4,
+      72.8
+    ],
+    "era5land_variables": [
+      "d2m",
+      "t2m",
+      "ssrd",
+      "strd",
+      "u10",
+      "v10",
+      "sp"
+    ]
+  },
+  "comparison_with_era5heat": {
+    "era5heat_time_min": "2010-01-02T00:00:00.000000000",
+    "era5heat_time_max": "2026-01-10T23:00:00.000000000",
+    "era5heat_timestamp_count": 140472,
+    "era5heat_lat_range": [
+      22.75,
+      23.25
+    ],
+    "era5heat_lon_range": [
+      72.25,
+      73.0
+    ],
+    "era5heat_variables": [
+      "mrt",
+      "utci"
+    ]
+  },
+  "accumulation_analysis": {
+    "fdir": {
+      "cell_methods": "N/A",
+      "accumulation_period": "N/A",
+      "all_attrs": {
+        "GRIB_paramId": "228021",
+        "GRIB_dataType": "fc",
+        "GRIB_numberOfPoints": "12",
+        "GRIB_typeOfLevel": "surface",
+        "GRIB_stepUnits": "1",
+        "GRIB_stepType": "accum",
+        "GRIB_gridType": "regular_ll",
+        "GRIB_uvRelativeToGrid": "0",
+        "GRIB_NV": "0",
+        "GRIB_Nx": "4",
+        "GRIB_Ny": "3",
+        "GRIB_cfName": "unknown",
+        "GRIB_cfVarName": "fdir",
+        "GRIB_gridDefinitionDescription": "Latitude/Longitude Grid",
+        "GRIB_iDirectionIncrementInDegrees": 0.25,
+        "GRIB_iScansNegatively": "0",
+        "GRIB_jDirectionIncrementInDegrees": 0.25,
+        "GRIB_jPointsAreConsecutive": "0",
+        "GRIB_jScansPositively": "0",
+        "GRIB_latitudeOfFirstGridPointInDegrees": 23.25,
+        "GRIB_latitudeOfLastGridPointInDegrees": 22.75,
+        "GRIB_longitudeOfFirstGridPointInDegrees": 72.25,
+        "GRIB_longitudeOfLastGridPointInDegrees": 73.0,
+        "GRIB_missingValue": 3.4028234663852886e+38,
+        "GRIB_name": "Surface direct short-wave (solar) radiation",
+        "GRIB_shortName": "fdir",
+        "GRIB_totalNumber": "0",
+        "GRIB_units": "J m**-2",
+        "long_name": "Surface direct short-wave (solar) radiation",
+        "units": "J m**-2",
+        "standard_name": "unknown",
+        "GRIB_surface": 0.0
+      }
+    },
+    "ssr": {
+      "cell_methods": "N/A",
+      "accumulation_period": "N/A",
+      "all_attrs": {
+        "GRIB_paramId": "176",
+        "GRIB_dataType": "fc",
+        "GRIB_numberOfPoints": "12",
+        "GRIB_typeOfLevel": "surface",
+        "GRIB_stepUnits": "1",
+        "GRIB_stepType": "accum",
+        "GRIB_gridType": "regular_ll",
+        "GRIB_uvRelativeToGrid": "0",
+        "GRIB_NV": "0",
+        "GRIB_Nx": "4",
+        "GRIB_Ny": "3",
+        "GRIB_cfName": "surface_net_downward_shortwave_flux",
+        "GRIB_cfVarName": "ssr",
+        "GRIB_gridDefinitionDescription": "Latitude/Longitude Grid",
+        "GRIB_iDirectionIncrementInDegrees": 0.25,
+        "GRIB_iScansNegatively": "0",
+        "GRIB_jDirectionIncrementInDegrees": 0.25,
+        "GRIB_jPointsAreConsecutive": "0",
+        "GRIB_jScansPositively": "0",
+        "GRIB_latitudeOfFirstGridPointInDegrees": 23.25,
+        "GRIB_latitudeOfLastGridPointInDegrees": 22.75,
+        "GRIB_longitudeOfFirstGridPointInDegrees": 72.25,
+        "GRIB_longitudeOfLastGridPointInDegrees": 73.0,
+        "GRIB_missingValue": 3.4028234663852886e+38,
+        "GRIB_name": "Surface net short-wave (solar) radiation",
+        "GRIB_shortName": "ssr",
+        "GRIB_totalNumber": "0",
+        "GRIB_units": "J m**-2",
+        "long_name": "Surface net short-wave (solar) radiation",
+        "units": "J m**-2",
+        "standard_name": "surface_net_downward_shortwave_flux",
+        "GRIB_surface": 0.0
+      }
+    },
+    "str": {
+      "cell_methods": "N/A",
+      "accumulation_period": "N/A",
+      "all_attrs": {
+        "GRIB_paramId": "177",
+        "GRIB_dataType": "fc",
+        "GRIB_numberOfPoints": "12",
+        "GRIB_typeOfLevel": "surface",
+        "GRIB_stepUnits": "1",
+        "GRIB_stepType": "accum",
+        "GRIB_gridType": "regular_ll",
+        "GRIB_uvRelativeToGrid": "0",
+        "GRIB_NV": "0",
+        "GRIB_Nx": "4",
+        "GRIB_Ny": "3",
+        "GRIB_cfName": "surface_net_upward_longwave_flux",
+        "GRIB_cfVarName": "str",
+        "GRIB_gridDefinitionDescription": "Latitude/Longitude Grid",
+        "GRIB_iDirectionIncrementInDegrees": 0.25,
+        "GRIB_iScansNegatively": "0",
+        "GRIB_jDirectionIncrementInDegrees": 0.25,
+        "GRIB_jPointsAreConsecutive": "0",
+        "GRIB_jScansPositively": "0",
+        "GRIB_latitudeOfFirstGridPointInDegrees": 23.25,
+        "GRIB_latitudeOfLastGridPointInDegrees": 22.75,
+        "GRIB_longitudeOfFirstGridPointInDegrees": 72.25,
+        "GRIB_longitudeOfLastGridPointInDegrees": 73.0,
+        "GRIB_missingValue": 3.4028234663852886e+38,
+        "GRIB_name": "Surface net long-wave (thermal) radiation",
+        "GRIB_shortName": "str",
+        "GRIB_totalNumber": "0",
+        "GRIB_units": "J m**-2",
+        "long_name": "Surface net long-wave (thermal) radiation",
+        "units": "J m**-2",
+        "standard_name": "surface_net_upward_longwave_flux",
+        "GRIB_surface": 0.0
+      }
+    }
+  },
+  "overall_status": "ERA5 RADIATION INPUTS VERIFIED"
+}
