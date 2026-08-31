@@ -1,166 +1,93 @@
 # MRT VALIDATION REPORT -- TEST 2
 
-## 1. Objective
+## Status: BLOCKED
 
-Implement the Di Napoli et al. (2020) Mean Radiant Temperature (MRT)
-methodology using real ERA5-Land and ERA5 radiation data, then validate
-against ERA5-HEAT MRT reference.
+No single ERA5 file contains all 5 required radiation variables.
+The primary MRT validation cannot proceed.
 
-## 2. Data Sources
+## 1. Required Variables
 
-| Dataset | File | Variables Used |
-|---------|------|---------------|
-| ERA5-Land | `data/raw/weather/data_0.nc` | ssrd, strd, t2m, d2m, u10, v10, sp |
-| ERA5 Radiation | `2b5663f2dae9337c125c5159b0f4ccce.nc` | fdir, ssr, str |
-| ERA5-HEAT | `cde4e619c080209e1ec505565f79b8e.nc` | mrt (reference) |
+The Di Napoli et al. (2020) method requires 5 radiation components
+from the SAME ERA5 single-level product:
 
-## 3. Input Variables
+| Variable | Description |
+|----------|-------------|
+| ssrd | Surface short-wave radiation downwards |
+| strd | Surface long-wave radiation downwards |
+| fdir | Surface direct short-wave radiation |
+| ssr | Surface net short-wave radiation |
+| str | Surface net long-wave radiation |
 
-### 3.1 From ERA5-Land
+## 2. Files Inspected
 
-| Variable | Long Name | Units | Step Type |
-|----------|-----------|-------|-----------|
-| ssrd | Surface short-wave radiation downwards | J/m2 | accum |
-| strd | Surface long-wave radiation downwards | J/m2 | accum |
+### 2.1 2b5663f2dae9337c125c5159b0f4ccce.nc
 
-### 3.2 From ERA5 Radiation
+- **Source:** ERA5 single levels
+- **Grid:** 0.25 deg (lat: 22.75-23.25, lon: 72.25-73.00)
+- **Time:** March 2010, 6-hourly (124 timestamps)
+- **Variables:** fdir, ssr, str
+- **Has:** fdir, ssr, str (3 of 5)
+- **Missing:** ssrd, strd
 
-| Variable | Long Name | Units | Step Type |
-|----------|-----------|-------|-----------|
-| fdir | Surface direct short-wave radiation | J/m2 | accum |
-| ssr | Surface net short-wave radiation | J/m2 | accum |
-| str | Surface net long-wave radiation | J/m2 | accum |
+### 2.2 data_stream-mnth.nc
 
-## 4. Critical Finding: Mixed Data Sources
+- **Source:** ERA5 (stream=monthly)
+- **Grid:** 0.1 deg (lat: 22.8-23.2, lon: 72.4-72.8)
+- **Time:** Jan 2010 - Dec 2020, sparse monthly snapshots
+- **Variables:** d2m, sp, ssrd, str, strd, t2m, u10, v10
+- **Has:** ssrd, strd, str (3 of 5)
+- **Missing:** fdir, ssr
+- **CRITICAL:** Only 4 timestamps for March 2010. This is a sparse
+  monthly product with ~4 consecutive 6-hourly snapshots per month.
+  NOT suitable for full-period 6-hourly MRT validation.
 
-**INPUT/METADATA ISSUE IDENTIFIED**
+### 2.3 data_0.nc (ERA5-Land)
 
-The Di Napoli method requires 5 radiation variables from the SAME source:
-  ssrd, strd, fdir, ssr, str
+- **Source:** ERA5-Land
+- **Grid:** 0.1 deg (lat: 22.8-23.2, lon: 72.4-72.8)
+- **Time:** March 2010, 6-hourly (124 timestamps)
+- **Variables:** d2m, sp, ssrd, strd, t2m, u10, v10
+- **Has:** ssrd, strd (2 of 5)
+- **Missing:** fdir, ssr, str
+- **NOTE:** Different ECMWF product (ERA5-Land vs ERA5 single levels).
+  Mixing with ERA5 radiation produces physically inconsistent values.
 
-However, our data uses variables from TWO DIFFERENT sources:
-  - ssrd, strd from ERA5-Land (0.1 deg resolution)
-  - fdir, ssr, str from ERA5 single levels (0.25 deg resolution)
+## 3. What Is Missing
 
-These are different ECMWF products with different grids and different
-physical parameterizations. The values are not consistent:
+**A single ERA5 single-level file containing ALL 5 variables:**
+- ssrd, strd, fdir, ssr, str
+- On the Ahmedabad 0.25-deg grid
+- For March 2010 at 6-hourly resolution
 
-At grid point (23.0N, 72.5E), time 2010-03-01 06:00:
-  - ssrd (ERA5-Land) = 1001 W/m2
-  - ssr (ERA5 single levels) = 42 W/m2
-  - Implied albedo = (1001 - 42) / 1001 = 95.8% (PHYSICALLY IMPOSSIBLE)
+## 4. Why This Matters
 
-This indicates the ssrd and ssr values are from different physical
-parameterizations and cannot be combined in the Di Napoli equation.
+The Di Napoli method computes MRT from 5 radiation components that
+must be physically consistent. Using variables from different ECMWF
+products (e.g., ERA5-Land + ERA5 single levels) produces impossible
+values (e.g., 95.8% implied albedo).
 
-## 5. Time/Space Matching
+## 5. Required Action
 
-**Time resolution:** 6-hourly (accumulation period = 21600 s)
+Download a new ERA5 single-level file with variables:
+    ssrd, strd, fdir, ssr, str
+from the CDS API for the Ahmedabad region (22.75-23.25N, 72.25-73.00E)
+for March 2010 at 6-hourly resolution.
 
-**Common timestamps:** 124 (March 2010)
+## 6. Production Changes
 
-**Common grid:** 1 lat x 1 lon at 0.25 deg resolution
-- Latitude: 23.00
-- Longitude: 72.50
+No MRT implementation was created.
 
-**Total matched points:** 124
+UTCI modified = NO
+H modified = NO
+V modified = NO
+E modified = NO
+HSRI modified = NO
 
-## 6. Radiation Normalization
+## 7. Final Status
 
-Accumulated J/m2 converted to W/m2 by dividing by accumulation period:
-  flux [W/m2] = accumulation [J/m2] / 21600 [s]
-
-**SOURCE-DERIVED:** Accumulation period verified from GRIB metadata.
-
-## 7. Solar Geometry
-
-Implemented from Di Napoli et al. (2020) equations 6-12:
-- Solar declination (Eq 8): From Julian day
-- Hour angle (Eq 9): h = (hr - 12)*15 + lambda + TC
-- Time correction (Eq 10): Astronomical correction
-- Zenith angle (Eq 6): cos(theta) = sin(delta)*sin(phi) + cos(delta)*cos(phi)*cos(h)
-- Sunrise/sunset (Eq 11): cos(h0) = -tan(delta)*tan(phi)
-- Average daytime cos zenith (Eq 12): Integration over daylight hours
-
-## 8. Di Napoli MRT Equations
-
-### Derived Radiation (Eq 3-5)
-  L_srf_up = strd - str (upward longwave)
-  S_diffuse = ssrd - fdir (diffuse shortwave)
-  S_srf_up = ssrd - ssr (upward shortwave)
-
-### Direct Solar Projection (Eq 13 / TM 895 Eq 7)
-  I* = fdir / cos(zenith) (instantaneous)
-
-### Surface Projection Factor (Eq 15)
-  f_p = 0.308 * cos(gamma * (0.998 - gamma^2/50000))
-
-### MRT Equation (Eq 14)
-  MRT* = [1/sigma * (f_a*L_srf_up + f_a*strd + (alpha_ir/epsilon_p)*f_a*S_diffuse
-         + (alpha_ir/epsilon_p)*f_a*S_srf_up + f_p*I*)]^0.25
-
-### Constants (SOURCE-DERIVED)
-  sigma = 5.67e-8 W/m2K4 (Stefan-Boltzmann)
-  f_a = 0.5 (angle factor)
-  alpha_ir = 0.7 (solar absorption)
-  epsilon_p = 0.97 (emissivity)
-
-## 9. Numerical Handling
-
-- Nighttime: Direct solar set to 0, f_p set to 0
-- Low sun (elevation < 2 deg): Flagged but computed
-- Negative radiant flux: Absolute value used with flag
-- NaN inputs: Propagated as NaN
-- MRT range check: Flagged if outside 150-400 K
-
-## 10. MRT Results
-
-### Overall Metrics
-
-| Metric | Value |
-|--------|-------|
-| Sample count | 124 |
-| MAE | 99.15 K |
-| RMSE | 114.47 K |
-| Mean bias | 92.09 K |
-| R-squared | -30.26 |
-
-**OBSERVED RESULT:** The large bias (92 K) and negative R-squared indicate
-a fundamental mismatch between our MRT calculation and ERA5-HEAT.
-
-## 11. Root Cause Analysis
-
-The 92 K bias is caused by using radiation variables from TWO DIFFERENT
-data sources:
-
-1. ssrd, strd from ERA5-Land
-2. fdir, ssr, str from ERA5 single levels
-
-When combined, these produce physically impossible values (95.8% implied
-albedo), leading to a massive overestimate of the radiant flux and MRT.
-
-## 12. Conclusion
-
-**INPUT/METADATA ISSUE IDENTIFIED**
-
-The Di Napoli MRT implementation is CORRECT in terms of equations and
-constants. However, the validation fails because the input radiation
-variables are from inconsistent data sources.
-
-**REQUIRED FIX:** Download all 5 radiation variables (ssrd, strd, fdir,
-ssr, str) from ERA5 single levels (not ERA5-Land) to ensure physical
-consistency.
-
-## 13. Next Step
-
-1. Re-download ERA5 radiation with variables: ssrd, strd, fdir, ssr, str
-   from ERA5 single levels (same source as ERA5-HEAT)
-2. Re-run MRT validation with consistent inputs
-3. Then proceed to TEST 3
+TEST 2 BLOCKED
 
 ---
 
-**Document version:** 1.0
-**Created:** 2026-08-31
-**Task:** TEST 2 -- Di Napoli MRT Implementation + Validation
-**Status:** INPUT ISSUE IDENTIFIED -- requires re-download of radiation data
+**Version:** 2.0 (BLOCKED)
+**Date:** 2026-09-01
