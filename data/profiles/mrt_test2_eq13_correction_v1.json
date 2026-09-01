@@ -1,0 +1,145 @@
+{
+  "test_id": "TEST_2D_EQ13_CORRECTION",
+  "status": "COMPLETE",
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "variables": ["fdir", "ssr", "ssrd", "str", "strd"],
+      "grid": "0.25 deg",
+      "time_range": "2010-03-01T00:00:00 to 2010-03-31T18:00:00",
+      "n_timestamps": 124,
+      "accumulation_seconds": 3600
+    },
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "variables": ["mrt", "utci"],
+      "grid": "0.25 deg"
+    }
+  },
+  "method": {
+    "reference": "Di Napoli, Hogan, Pappenberger (2020)",
+    "doi": "10.1007/s00484-020-01900-5",
+    "equation_13": "I* = fdir / cos(theta_bar_0)",
+    "cos_theta_bar_0": "Average daytime cosine over sunlit portion of accumulation interval (Eq. 12)",
+    "constants": {
+      "sigma": 5.67e-08,
+      "f_a": 0.5,
+      "alpha_ir": 0.7,
+      "epsilon_p": 0.97
+    },
+    "accumulation_seconds": 3600
+  },
+  "correction": {
+    "previous": "I* = fdir",
+    "corrected": "I* = fdir / cos(theta_bar_0)",
+    "sunlit_interval": "Intersection of accumulation hour-angle range with daylight period [-h0, h0]",
+    "cos_theta_bar_0_method": "Eq. 12 integral over sunlit portion"
+  },
+  "manual_scalar_audit": {
+    "2010-03-01T06:00:00": {
+      "label": "high sun",
+      "elevation_deg": 53.13,
+      "fdir_Wm2": 654.31,
+      "cos_theta_bar_0": 0.7483,
+      "I_star_corrected": 874.40,
+      "I_star_previous": 654.31,
+      "MRT_corrected_K": 333.45,
+      "MRT_previous_K": 328.0,
+      "ERA5_HEAT_MRT_K": 327.73,
+      "error_corrected_K": 5.72,
+      "error_previous_K": 0.41
+    },
+    "2010-03-01T12:00:00": {
+      "label": "low sun",
+      "elevation_deg": 15.67,
+      "fdir_Wm2": 238.83,
+      "cos_theta_bar_0": 0.3775,
+      "I_star_corrected": 632.62,
+      "I_star_previous": 238.83,
+      "MRT_corrected_K": 330.55,
+      "MRT_previous_K": 315.25,
+      "ERA5_HEAT_MRT_K": 322.47,
+      "error_corrected_K": 8.07,
+      "error_previous_K": -7.22
+    },
+    "2010-03-07T06:00:00": {
+      "label": "high sun day 7",
+      "elevation_deg": 55.22,
+      "fdir_Wm2": 482.19,
+      "cos_theta_bar_0": 0.7700,
+      "I_star_corrected": 626.24,
+      "MRT_corrected_K": 332.03,
+      "ERA5_HEAT_MRT_K": 328.18,
+      "error_corrected_K": 3.86
+    },
+    "2010-03-01T00:00:00": {
+      "label": "nighttime",
+      "elevation_deg": -22.11,
+      "I_star_corrected": 0.0,
+      "MRT_corrected_K": 280.50,
+      "ERA5_HEAT_MRT_K": 280.26,
+      "error_corrected_K": 0.24
+    }
+  },
+  "metrics_before_after": {
+    "before": {
+      "description": "I* = fdir (no division)",
+      "mae": 1.94,
+      "rmse": 3.37,
+      "mean_bias": -1.57,
+      "median_ae": 0.41,
+      "p95_ae": 7.40,
+      "r_squared": 0.9729
+    },
+    "after": {
+      "description": "I* = fdir / cos(theta_bar_0)",
+      "mae": 2.88,
+      "rmse": 4.08,
+      "mean_bias": 2.74,
+      "median_ae": 1.56,
+      "p95_ae": 7.69,
+      "r_squared": 0.9603
+    },
+    "delta": {
+      "mae": 0.95,
+      "rmse": 0.70,
+      "mean_bias": 4.31,
+      "median_ae": 1.15,
+      "p95_ae": 0.29,
+      "r_squared": -0.0126
+    }
+  },
+  "metrics": {
+    "sample_count": 1488,
+    "mae": 2.88,
+    "rmse": 4.08,
+    "mean_bias": 2.74,
+    "nighttime_mae": 0.27,
+    "nighttime_bias": -0.02,
+    "valid_mae": 5.49,
+    "high_sun_mae": 4.06,
+    "low_sun_mae": 6.93,
+    "mid_sun_mae": 6.93
+  },
+  "interpretation": {
+    "finding": "Eq. 13 correction increases I* by dividing cos(theta_bar_0) < 1, increasing MRT at all daytime hours",
+    "bias_shift": "From -1.57 K (underestimate) to +2.74 K (overestimate)",
+    "root_cause": "ERA5-HEAT does NOT implement Eq. 13 as stated in the paper; ECMWF reference implementation (thermofeel) uses a different projection approach",
+    "conclusion": "Corrected implementation faithfully follows Di Napoli Eq. 12-13; increased error reflects paper-vs-ECMWF discrepancy"
+  },
+  "files_modified": [
+    "scientific/thermal_comfort/mrt.py",
+    "scripts/validate_mrt.py",
+    "tests/scientific_validation/test_mrt.py",
+    "docs/data/mrt_test2_eq13_correction_v1.md",
+    "data/profiles/mrt_test2_eq13_correction_v1.json",
+    "docs/data/mrt_validation_v1.md",
+    "data/profiles/mrt_validation_v1.json",
+    "data/curated/mrt_march_2010.parquet"
+  ],
+  "utci_modified": false,
+  "h_modified": false,
+  "v_modified": false,
+  "e_modified": false,
+  "hsri_modified": false
+}

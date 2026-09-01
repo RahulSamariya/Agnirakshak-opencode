@@ -17,6 +17,8 @@ from scientific.thermal_comfort.mrt import (
     _solar_zenith_angle,
     _sunrise_sunset_hour_angle,
     _surface_projection_factor,
+    _average_daytime_cos_zenith,
+    _sunlit_hour_angles,
     calculate_mrt_single,
     validate_mrt,
 )
@@ -161,24 +163,21 @@ class TestMRTEquation:
 class TestEq13DirectSolar:
     """Regression tests for Eq 13 I* calculation (Di Napoli 2020).
 
-    ERA5 fdir is the direct component of ssrd (horizontal surface).
-    The paper states: "When direct solar radiation is available from the
-    NWP model, I* is set equal to this variable (as it is already projected
-    onto a horizontal surface)."
-
-    Therefore I* = fdir, NOT fdir / cos(zenith).
+    I* = fdir / cos(theta_bar_0) where cos(theta_bar_0) is the average
+    daytime cosine of solar zenith angle over the sunlit portion of the
+    accumulation interval (Eq. 12).
     """
 
-    def test_idir_uses_fdir_directly(self):
-        """I* should equal fdir when elevation > 0."""
+    def test_idir_uses_fdir_divided_by_cos_bar(self):
+        """I* should equal fdir / cos(theta_bar_0) when elevation > 0."""
         result = calculate_mrt_single(
             ssrd=500.0, strd=300.0, fdir=200.0, ssr=100.0, str_val=-50.0,
             latitude_deg=23.0, longitude_deg=72.5,
             time_utc=np.datetime64("2010-03-01T12:00:00"),
             accumulation_seconds=3600.0,
         )
-        # I* should be fdir (200.0), not fdir/cos(zenith)
-        assert result.direct_radiation_projected == pytest.approx(200.0, abs=1.0)
+        # I* should be > fdir because cos(theta_bar_0) < 1
+        assert result.direct_radiation_projected > 200.0
 
     def test_idir_zero_at_night(self):
         """I* should be 0 at night."""
@@ -190,21 +189,60 @@ class TestEq13DirectSolar:
         )
         assert result.direct_radiation_projected == 0.0
 
-    def test_idir_not_double_projected(self):
-        """I* should NOT divide fdir by cos(zenith)."""
-        # At high elevation (low zenith), cos(zenith) is large
-        # If I* = fdir/cos(zenith), I* would be larger than fdir
-        # With correct I* = fdir, I* = fdir exactly
+    def test_idir_increases_mrt(self):
+        """I* = fdir/cos_bar should give higher MRT than I* = fdir."""
+        # With I* = fdir (lower), MRT should be lower
         result = calculate_mrt_single(
             ssrd=600.0, strd=300.0, fdir=400.0, ssr=100.0, str_val=-50.0,
             latitude_deg=23.0, longitude_deg=72.5,
             time_utc=np.datetime64("2010-03-01T06:00:00"),
             accumulation_seconds=3600.0,
         )
-        # fdir=400, I* should be 400 (not 400/cos(zenith) which would be ~500)
-        assert result.direct_radiation_projected == pytest.approx(400.0, abs=1.0)
-        # Verify fdir = I* (not double-projected)
-        assert result.direct_radiation_projected <= 400.0 + 1.0
+        # I* should be > fdir (400) because cos_bar < 1
+        assert result.direct_radiation_projected > 400.0
+
+    def test_idir_regression_high_sun(self):
+        """Regression: I* at high sun (2010-03-01T06:00, Ahmedabad)."""
+        result = calculate_mrt_single(
+            ssrd=877.71, strd=343.41, fdir=654.31, ssr=726.07,
+            str_val=-166.58,
+            latitude_deg=23.0, longitude_deg=72.5,
+            time_utc=np.datetime64("2010-03-01T06:00:00"),
+            accumulation_seconds=3600.0,
+        )
+        # I* = fdir / cos_bar, cos_bar ~0.748, I* ~874
+        assert result.direct_radiation_projected > 654.31
+        assert result.direct_radiation_projected < 1000.0
+        # MRT should be > 330 K
+        assert result.mrt_kelvin > 330.0
+
+    def test_sunlit_hour_angles_full_day(self):
+        """Sunlit interval for a fully sunlit hour."""
+        h_start = -35.7
+        h_end = -20.7
+        h0 = 86.6
+        h_min, h_max = _sunlit_hour_angles(h_start, h_end, h0)
+        assert h_min == pytest.approx(h_start, abs=0.1)
+        assert h_max == pytest.approx(h_end, abs=0.1)
+
+    def test_sunlit_hour_angles_night(self):
+        """Sunlit interval for a fully nighttime hour."""
+        h_start = -120.0
+        h_end = -110.0
+        h0 = 86.6
+        h_min, h_max = _sunlit_hour_angles(h_start, h_end, h0)
+        # h_min > h_max means no sunlit overlap
+        assert h_min > h_max
+
+    def test_sunlit_hour_angles_partial(self):
+        """Sunlit interval for a partially sunlit hour."""
+        h_start = -90.0  # starts before sunrise
+        h_end = -80.0    # ends after sunrise
+        h0 = 86.6
+        h_min, h_max = _sunlit_hour_angles(h_start, h_end, h0)
+        # Should clip to [-h0, h_end]
+        assert h_min == pytest.approx(-86.6, abs=0.1)
+        assert h_max == pytest.approx(-80.0, abs=0.1)
 
 
 class TestValidation:

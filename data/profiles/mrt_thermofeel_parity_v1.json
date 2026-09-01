@@ -1,0 +1,67 @@
+{
+  "test_id": "TEST_2F_EXACT_THERMOFEEL_PARITY",
+  "status": "COMPLETE",
+  "thermofeel_version": "2.3.0",
+  "thermofeel_source": "pip install thermofeel (ECMWF)",
+  "thermofeel_path": "C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\thermofeel",
+  "python_version": "3.14.5",
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "variables": ["fdir", "ssr", "ssrd", "str", "strd"],
+      "n_timestamps": 124,
+      "accumulation_seconds": 3600
+    },
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "variables": ["mrt", "utci"]
+    }
+  },
+  "implementation_differences": {
+    "fp_gamma_convention": {
+      "ours": "gamma = zenith = 90 - elevation",
+      "thermofeel": "gamma = arcsin(cossza) = elevation",
+      "impact": "LARGEST contributor to MRT difference"
+    },
+    "alpha_epsilon_placement": {
+      "ours": "fp*I* NOT multiplied by (alpha_ir/epsilon_p)",
+      "thermofeel": "fp*dsrp IS multiplied by (0.7/0.97)",
+      "impact": "Medium contributor"
+    },
+    "dsrp_vs_istar": {
+      "ours": "I* = fdir / cos_bar (interval average)",
+      "thermofeel": "dsrp = fdir / cossza (instantaneous)",
+      "impact": "Smaller contributor"
+    }
+  },
+  "variant_matrix": {
+    "A_ours_current": {"dsrp": "I*", "fp": "zenith", "alpha": "ours", "mae_vs_tf": 13.1833, "bias_vs_tf": 0.9609},
+    "B_tf_dsrp": {"dsrp": "dsrp", "fp": "zenith", "alpha": "ours", "mae_vs_tf": 10.5312, "bias_vs_tf": 2.1444},
+    "C_tf_fp": {"dsrp": "I*", "fp": "elevation", "alpha": "ours", "mae_vs_tf": 3.1468, "bias_vs_tf": 3.1305},
+    "D_tf_alpha": {"dsrp": "I*", "fp": "zenith", "alpha": "tf", "mae_vs_tf": 11.1488, "bias_vs_tf": -4.0930},
+    "E_tf_dsrp_fp": {"dsrp": "dsrp", "fp": "elevation", "alpha": "ours", "mae_vs_tf": 6.3609, "bias_vs_tf": 6.3609},
+    "F_all_tf": {"dsrp": "dsrp", "fp": "elevation", "alpha": "tf", "mae_vs_tf": 0.000000, "bias_vs_tf": 0.000000}
+  },
+  "first_divergent_term": "fp (projection factor)",
+  "root_cause": "OUR MRT IMPLEMENTATION ERROR",
+  "corrections_required": [
+    "Change gamma from zenith to elevation in _surface_projection_factor",
+    "Move fp*I* inside alpha_ir/epsilon_p multiplier",
+    "Use dsrp = fdir/cossza instead of I* = fdir/cos_bar"
+  ],
+  "production_mrt_modified": "YES",
+  "utci_unchanged": true,
+  "h_unchanged": true,
+  "v_unchanged": true,
+  "e_unchanged": true,
+  "hsri_unchanged": true,
+  "files_created": [
+    "docs/data/mrt_thermofeel_parity_v1.md",
+    "data/profiles/mrt_thermofeel_parity_v1.json",
+    "data/profiles/plots/mrt_thermofeel_parity/ours_vs_thermofeel.png",
+    "data/profiles/plots/mrt_thermofeel_parity/parity_error_distribution.png",
+    "data/profiles/plots/mrt_thermofeel_parity/error_vs_solar_elevation.png",
+    "data/profiles/plots/mrt_thermofeel_parity/direct_term_comparison.png",
+    "tests/scientific_validation/test_thermofeel_parity.py"
+  ]
+}

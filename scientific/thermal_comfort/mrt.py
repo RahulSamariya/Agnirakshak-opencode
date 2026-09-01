@@ -183,6 +183,13 @@ def _average_daytime_cos_zenith(
     Source: Equation 12 from Di Napoli et al. (2020).
     cos(theta_bar_0) = sin(delta)*sin(phi)
         + [1/(h_max - h_min)] * cos(delta)*cos(phi) * [sin(h_max) - sin(h_min)]
+
+    Parameters
+    ----------
+    h_min_deg : float
+        Start hour angle in degrees (e.g. for sunlit interval).
+    h_max_deg : float
+        End hour angle in degrees (e.g. for sunlit interval).
     """
     delta_rad = math.radians(declination_deg)
     phi_rad = math.radians(latitude_deg)
@@ -199,6 +206,34 @@ def _average_daytime_cos_zenith(
         * (math.sin(h_max_rad) - math.sin(h_min_rad))
     )
     return max(0.0, cos_avg)
+
+
+def _sunlit_hour_angles(
+    h_start_deg: float,
+    h_end_deg: float,
+    h0_deg: float,
+) -> tuple[float, float]:
+    """Compute the sunlit portion of an accumulation interval.
+
+    Parameters
+    ----------
+    h_start_deg : float
+        Hour angle at the start of the accumulation interval.
+    h_end_deg : float
+        Hour angle at the end of the accumulation interval.
+    h0_deg : float
+        Sunrise/sunset hour angle (positive).
+
+    Returns
+    -------
+    tuple[float, float]
+        (h_min, h_max) for the sunlit portion.
+        If no overlap: h_min > h_max (fully nighttime).
+    """
+    # Sunlit hour-angle range: [-h0, h0]
+    h_min = max(h_start_deg, -h0_deg)
+    h_max = min(h_end_deg, h0_deg)
+    return h_min, h_max
 
 
 # =============================================================================
@@ -289,28 +324,46 @@ def calculate_mrt_single(
 
     delta = _solar_declination(jd)
     tc = _time_correction(jd)
-    h = _hour_angle(hours_since_midnight, longitude_deg, tc)
-    zenith = _solar_zenith_angle(delta, latitude_deg, h)
+    h_end = _hour_angle(hours_since_midnight, longitude_deg, tc)
+    zenith = _solar_zenith_angle(delta, latitude_deg, h_end)
     elevation = 90.0 - zenith
 
-    # Sunrise/sunset for average daytime calculation
+    # Sunrise/sunset hour angle
     h0 = _sunrise_sunset_hour_angle(delta, latitude_deg)
 
     # --- Direct solar component projection (Equation 13) ---
-    # Di Napoli et al. (2020) Eq 13: I* = S_dn,direct / cos(theta_bar)
-    # "When direct solar radiation is available from the NWP model,
-    #  I* is set equal to this variable (as it is already projected
-    #  onto a horizontal surface)."
-    # ERA5 fdir = direct component of ssrd (horizontal surface).
-    # ssrd = fdir + (ssrd - fdir) = direct_horizontal + diffuse_horizontal
-    # Therefore I* = fdir (no division needed).
+    # Di Napoli et al. (2020) Eq 13:
+    #   I* = S_srf_dn_direct / cos(theta_bar_0)
+    # where cos(theta_bar_0) is the average daytime cosine of solar
+    # zenith angle over the SUNLIT PORTION of the accumulation interval.
+    #
+    # For a 1-hour accumulation ending at the valid timestamp:
+    #   interval = [T - 1 hour, T]
+    # The sunlit portion is the intersection of this interval with
+    # the daylight period [-h0, h0] in hour-angle space.
+
+    # Hour angle at start of accumulation interval (1 hour earlier)
+    h_start = _hour_angle(hours_since_midnight - 1.0, longitude_deg, tc)
+
+    # Sunlit portion of the accumulation interval
+    h_min_sunlit, h_max_sunlit = _sunlit_hour_angles(h_start, h_end, h0)
+
     nighttime = elevation < 0.0
     low_sun = elevation < 2.0  # below ~2 degrees
 
-    if nighttime:
+    if nighttime or h_min_sunlit >= h_max_sunlit:
+        # No sunlit overlap: entirely nighttime interval
         I_star = 0.0
+        cos_theta_bar_0 = 0.0
     else:
-        I_star = fdir
+        # Calculate average cosine over sunlit interval (Eq. 12)
+        cos_theta_bar_0 = _average_daytime_cos_zenith(
+            delta, latitude_deg, h_min_sunlit, h_max_sunlit
+        )
+        if cos_theta_bar_0 > 1e-6:
+            I_star = fdir / cos_theta_bar_0
+        else:
+            I_star = 0.0
 
     # --- Surface projection factor (Equation 15) ---
     f_p = _surface_projection_factor(elevation) if not nighttime else 0.0

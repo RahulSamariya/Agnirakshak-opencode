@@ -1,0 +1,151 @@
+{
+  "test_id": "TEST_2E_MRT_THERMOFEEL_RECONCILIATION",
+  "status": "COMPLETE",
+  "thermofeel_version": "2.3.0",
+  "thermofeel_source": "pip install thermofeel (ECMWF)",
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "variables": ["fdir", "ssr", "ssrd", "str", "strd"],
+      "grid": "0.25 deg",
+      "time_range": "2010-03-01 to 2010-03-31",
+      "n_timestamps": 124,
+      "accumulation_seconds": 3600
+    },
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "variables": ["mrt", "utci"],
+      "grid": "0.25 deg"
+    },
+    "era5_meteorology": {
+      "path": "53968a80e95eb41e9fe5c5f804eacbd8.nc",
+      "variables": ["u10", "v10", "d2m", "t2m"],
+      "grid": "0.25 deg"
+    }
+  },
+  "method": {
+    "reference": "Di Napoli, Hogan, Pappenberger (2020)",
+    "doi": "10.1007/s00484-020-01900-5",
+    "constants": {
+      "sigma": 5.67e-08,
+      "f_a": 0.5,
+      "alpha_ir": 0.7,
+      "epsilon_p": 0.97
+    }
+  },
+  "formula_differences": {
+    "thermofeel": {
+      "dsrp": "fdir / cossza (instantaneous)",
+      "direct_solar_term": "(0.7/0.97) * (0.5*dsw + 0.5*rsw + fp*dsrp)",
+      "fp_gamma": "arcsin(cossza) = elevation"
+    },
+    "ours": {
+      "I_star": "fdir / cos(theta_bar_0) (interval average)",
+      "direct_solar_term": "(0.7/0.97)*0.5*dsw + (0.7/0.97)*0.5*rsw + fp*I_star",
+      "fp_gamma": "90 - elevation = zenith"
+    }
+  },
+  "pairwise_metrics": {
+    "OURS_vs_THERMOFEEL": {
+      "N": 124,
+      "MAE": 1.5734,
+      "RMSE": 2.9938,
+      "Bias": 1.5652,
+      "MedianAE": 0.0041,
+      "P95": 6.3826,
+      "R2": 0.980995
+    },
+    "THERMOFEEL_vs_ERA5_HEAT": {
+      "N": 124,
+      "MAE": 2.3440,
+      "RMSE": 3.7138,
+      "Bias": 1.6687,
+      "MedianAE": 1.0066,
+      "P95": 7.7894,
+      "R2": 0.967094
+    },
+    "OURS_vs_ERA5_HEAT": {
+      "N": 124,
+      "MAE": 3.2576,
+      "RMSE": 4.4711,
+      "Bias": 3.2339,
+      "MedianAE": 1.9657,
+      "P95": 8.1060,
+      "R2": 0.952303
+    }
+  },
+  "stratified_metrics": {
+    "night": {
+      "elevation_range": "(-90, 0]",
+      "N": 62,
+      "OURS_vs_THERMOFEEL_MAE": 0.0,
+      "THERMOFEEL_vs_ERA5_MAE": 0.4652,
+      "OURS_vs_ERA5_MAE": 0.4652
+    },
+    "low_sun": {
+      "elevation_range": "(10, 25]",
+      "N": 31,
+      "OURS_vs_THERMOFEEL_MAE": 0.3390,
+      "THERMOFEEL_vs_ERA5_MAE": 7.1423,
+      "OURS_vs_ERA5_MAE": 7.4487
+    },
+    "high_sun": {
+      "elevation_range": "(50, 90]",
+      "N": 31,
+      "OURS_vs_THERMOFEEL_MAE": 5.9546,
+      "THERMOFEEL_vs_ERA5_MAE": 1.3032,
+      "OURS_vs_ERA5_MAE": 4.6514
+    }
+  },
+  "representative_examples": {
+    "nighttime_2010-03-01T00": {
+      "elevation": -22.1,
+      "OURS": 280.50,
+      "THERMOFEEL": 280.50,
+      "ERA5_HEAT": 280.26,
+      "O_T": 0.0,
+      "T_E": 0.24,
+      "O_E": 0.24
+    },
+    "high_sun_2010-03-01T06": {
+      "elevation": 53.1,
+      "OURS": 333.45,
+      "THERMOFEEL": 326.55,
+      "ERA5_HEAT": 327.73,
+      "O_T": 6.90,
+      "T_E": -1.18,
+      "O_E": 5.72
+    },
+    "low_sun_2010-03-01T12": {
+      "elevation": 15.7,
+      "OURS": 330.55,
+      "THERMOFEEL": 330.74,
+      "ERA5_HEAT": 322.47,
+      "O_T": -0.20,
+      "T_E": 8.27,
+      "O_E": 8.07
+    }
+  },
+  "root_cause": "MULTIPLE DIFFERENCES",
+  "root_cause_details": [
+    "Implementation difference in direct solar projection (dsrp vs I*)",
+    "Implementation difference in alpha_ir/epsilon_p multiplier placement on direct solar term",
+    "ERA5-HEAT uses different methodology from both implementations"
+  ],
+  "production_mrt_modified": "YES (recommendation only)",
+  "utci_unchanged": true,
+  "h_unchanged": true,
+  "v_unchanged": true,
+  "e_unchanged": true,
+  "hsri_unchanged": true,
+  "files_created": [
+    "docs/data/mrt_thermofeel_reconciliation_v1.md",
+    "data/profiles/mrt_thermofeel_reconciliation_v1.json",
+    "data/profiles/plots/mrt_thermofeel_reconciliation/ours_vs_thermofeel.png",
+    "data/profiles/plots/mrt_thermofeel_reconciliation/thermofeel_vs_era5heat.png",
+    "data/profiles/plots/mrt_thermofeel_reconciliation/ours_vs_era5heat.png",
+    "data/profiles/plots/mrt_thermofeel_reconciliation/pairwise_error_distributions.png",
+    "data/profiles/plots/mrt_thermofeel_reconciliation/error_vs_solar_elevation.png",
+    "tests/scientific_validation/test_thermofeel_reconciliation.py"
+  ]
+}
