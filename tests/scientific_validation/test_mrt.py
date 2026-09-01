@@ -1,4 +1,4 @@
-"""Unit tests for MRT module (Di Napoli et al. 2020)."""
+"""Unit tests for MRT module (ECMWF thermofeel-consistent)."""
 from __future__ import annotations
 
 import math
@@ -7,18 +7,17 @@ import numpy as np
 import pytest
 
 from scientific.thermal_comfort.mrt import (
-    SIGMA,
-    F_A,
     ALPHA_IR,
     EPSILON_P,
+    F_A,
+    SIGMA,
     QualityFlag,
     _day_of_year,
     _solar_declination,
     _solar_zenith_angle,
+    _sunlit_hour_angles,
     _sunrise_sunset_hour_angle,
     _surface_projection_factor,
-    _average_daytime_cos_zenith,
-    _sunlit_hour_angles,
     calculate_mrt_single,
     validate_mrt,
 )
@@ -28,7 +27,7 @@ class TestConstants:
     """Verify source-documented constants."""
 
     def test_sigma(self):
-        assert SIGMA == pytest.approx(5.67e-8, rel=1e-6)
+        assert pytest.approx(5.67e-8, rel=1e-6) == SIGMA
 
     def test_f_a(self):
         assert F_A == 0.5
@@ -180,7 +179,7 @@ class TestEq13DirectSolar:
         assert result.direct_radiation_projected > 200.0
 
     def test_idir_zero_at_night(self):
-        """I* should be 0 at night."""
+        """dsrp should be 0 at night (fdir=0)."""
         result = calculate_mrt_single(
             ssrd=0.0, strd=300.0, fdir=0.0, ssr=0.0, str_val=-50.0,
             latitude_deg=23.0, longitude_deg=72.5,
@@ -189,20 +188,21 @@ class TestEq13DirectSolar:
         )
         assert result.direct_radiation_projected == 0.0
 
-    def test_idir_increases_mrt(self):
-        """I* = fdir/cos_bar should give higher MRT than I* = fdir."""
-        # With I* = fdir (lower), MRT should be lower
+    def test_dsrp_increases_mrt(self):
+        """dsrp = fdir/cossza should give higher MRT than dsrp = fdir."""
         result = calculate_mrt_single(
             ssrd=600.0, strd=300.0, fdir=400.0, ssr=100.0, str_val=-50.0,
             latitude_deg=23.0, longitude_deg=72.5,
             time_utc=np.datetime64("2010-03-01T06:00:00"),
             accumulation_seconds=3600.0,
         )
-        # I* should be > fdir (400) because cos_bar < 1
-        assert result.direct_radiation_projected > 400.0
+        # dsrp = fdir/cossza, cossza ~0.8, dsrp ~500 > fdir=400
+        assert result.dsrp > 400.0
+        # direct_radiation_projected = fp * dsrp
+        assert result.direct_radiation_projected > 0.0
 
-    def test_idir_regression_high_sun(self):
-        """Regression: I* at high sun (2010-03-01T06:00, Ahmedabad)."""
+    def test_dsrp_regression_high_sun(self):
+        """Regression: dsrp at high sun (2010-03-01T06:00, Ahmedabad)."""
         result = calculate_mrt_single(
             ssrd=877.71, strd=343.41, fdir=654.31, ssr=726.07,
             str_val=-166.58,
@@ -210,11 +210,14 @@ class TestEq13DirectSolar:
             time_utc=np.datetime64("2010-03-01T06:00:00"),
             accumulation_seconds=3600.0,
         )
-        # I* = fdir / cos_bar, cos_bar ~0.748, I* ~874
-        assert result.direct_radiation_projected > 654.31
-        assert result.direct_radiation_projected < 1000.0
-        # MRT should be > 330 K
-        assert result.mrt_kelvin > 330.0
+        # dsrp = fdir / cossza, cossza ~0.8, dsrp ~818
+        assert result.dsrp > 654.31
+        assert result.dsrp < 1000.0
+        # direct_radiation_projected = fp * dsrp
+        assert result.direct_radiation_projected > 0.0
+        # MRT should match thermofeel (~326.55 K)
+        assert result.mrt_kelvin > 320.0
+        assert result.mrt_kelvin < 340.0
 
     def test_sunlit_hour_angles_full_day(self):
         """Sunlit interval for a fully sunlit hour."""

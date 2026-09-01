@@ -1,10 +1,12 @@
-"""Mean Radiant Temperature (MRT) — Di Napoli et al. (2020) implementation.
+"""Mean Radiant Temperature (MRT) — ECMWF thermofeel-consistent implementation.
 
-Implements the documented MRT methodology from:
+Implements the MRT methodology consistent with ECMWF thermofeel 2.3.0:
     Di Napoli, Hogan, Pappenberger (2020)
     "Mean radiant temperature from global-scale numerical weather
      prediction models"
     DOI: 10.1007/s00484-020-01900-5
+
+Production method: ECMWF_THERMOFEEL_COMPATIBLE_V1
 
 Constants and equations are source-documented. Do NOT modify without
 explicit scientific approval.
@@ -18,14 +20,17 @@ from enum import Enum
 import numpy as np
 from numpy.typing import NDArray
 
-
 # =============================================================================
 # CONSTANTS — Source: Di Napoli et al. (2020), equations 14-15
 # =============================================================================
+
+MRT_METHOD_VERSION = "ECMWF_THERMOFEEL_COMPATIBLE_V1"
+
 SIGMA = 5.67e-8  # Stefan-Boltzmann constant [W m^-2 K^-4]
 F_A = 0.5  # Angle factor for upper/lower hemispheres
 ALPHA_IR = 0.7  # Solar absorption coefficient of clothed human body
 EPSILON_P = 0.97  # Emissivity of clothed human body
+DSRP_COSZ_THRESHOLD = 0.1  # Minimum cossza for dsrp = fdir/cossza (thermofeel convention)
 
 
 class QualityFlag(Enum):
@@ -48,7 +53,10 @@ class MRTResult:
     quality_flag: QualityFlag
     solar_zenith_deg: float
     solar_elevation_deg: float
-    direct_radiation_projected: float  # I* in W/m2
+    cossza: float
+    dsrp: float  # direct solar radiation perpendicular to beam [W/m2]
+    f_p: float
+    direct_radiation_projected: float  # fp * dsrp in W/m2
     diffuse_shortwave: float  # S_srf_dn_diffuse in W/m2
     upward_longwave: float  # L_srf_up in W/m2
     upward_shortwave: float  # S_srf_up in W/m2
@@ -63,6 +71,9 @@ class MRTGridResult:
     quality_flags: NDArray[np.int32]
     solar_zenith_deg: NDArray[np.float64]
     solar_elevation_deg: NDArray[np.float64]
+    cossza: NDArray[np.float64]
+    dsrp: NDArray[np.float64]
+    f_p: NDArray[np.float64]
     direct_radiation_projected: NDArray[np.float64]
     diffuse_shortwave: NDArray[np.float64]
     upward_longwave: NDArray[np.float64]
@@ -264,9 +275,11 @@ def calculate_mrt_single(
     time_utc: np.datetime64,
     accumulation_seconds: float,
 ) -> MRTResult:
-    """Calculate MRT for a single point/time using Di Napoli method.
+    """Calculate MRT for a single point/time using thermofeel-consistent method.
 
     All radiation inputs must already be in W/m2 (converted from J/m2).
+
+    Production method: ECMWF_THERMOFEEL_COMPATIBLE_V1
 
     Parameters
     ----------
@@ -303,6 +316,9 @@ def calculate_mrt_single(
             quality_flag=QualityFlag.MISSING_INPUT,
             solar_zenith_deg=float("nan"),
             solar_elevation_deg=float("nan"),
+            cossza=float("nan"),
+            dsrp=0.0,
+            f_p=0.0,
             direct_radiation_projected=0.0,
             diffuse_shortwave=0.0,
             upward_longwave=0.0,
@@ -316,7 +332,6 @@ def calculate_mrt_single(
 
     # --- Solar geometry ---
     jd = _day_of_year(time_utc)
-    # More precise hour of day
     hours_since_midnight = (
         (time_utc - np.datetime64(time_utc.astype("datetime64[D]")))
         / np.timedelta64(1, "h")
@@ -328,58 +343,32 @@ def calculate_mrt_single(
     zenith = _solar_zenith_angle(delta, latitude_deg, h_end)
     elevation = 90.0 - zenith
 
-    # Sunrise/sunset hour angle
-    h0 = _sunrise_sunset_hour_angle(delta, latitude_deg)
+    # Cosine of solar zenith angle (thermofeel convention: instantaneous)
+    cossza = math.cos(math.radians(zenith))
+    cossza = max(-1.0, min(1.0, cossza))
 
-    # --- Direct solar component projection (Equation 13) ---
-    # Di Napoli et al. (2020) Eq 13:
-    #   I* = S_srf_dn_direct / cos(theta_bar_0)
-    # where cos(theta_bar_0) is the average daytime cosine of solar
-    # zenith angle over the SUNLIT PORTION of the accumulation interval.
-    #
-    # For a 1-hour accumulation ending at the valid timestamp:
-    #   interval = [T - 1 hour, T]
-    # The sunlit portion is the intersection of this interval with
-    # the daylight period [-h0, h0] in hour-angle space.
-
-    # Hour angle at start of accumulation interval (1 hour earlier)
-    h_start = _hour_angle(hours_since_midnight - 1.0, longitude_deg, tc)
-
-    # Sunlit portion of the accumulation interval
-    h_min_sunlit, h_max_sunlit = _sunlit_hour_angles(h_start, h_end, h0)
+    # --- Direct solar radiation perpendicular to beam (thermofeel convention) ---
+    # dsrp = fdir / cossza where cossza > threshold, else dsrp = fdir
+    dsrp = fdir / cossza if cossza > DSRP_COSZ_THRESHOLD else fdir
 
     nighttime = elevation < 0.0
     low_sun = elevation < 2.0  # below ~2 degrees
 
-    if nighttime or h_min_sunlit >= h_max_sunlit:
-        # No sunlit overlap: entirely nighttime interval
-        I_star = 0.0
-        cos_theta_bar_0 = 0.0
+    # --- Surface projection factor (Equation 15, thermofeel convention) ---
+    # gamma = elevation angle (thermofeel uses arcsin(cossza) = elevation)
+    if nighttime:
+        f_p = 0.0
     else:
-        # Calculate average cosine over sunlit interval (Eq. 12)
-        cos_theta_bar_0 = _average_daytime_cos_zenith(
-            delta, latitude_deg, h_min_sunlit, h_max_sunlit
-        )
-        if cos_theta_bar_0 > 1e-6:
-            I_star = fdir / cos_theta_bar_0
-        else:
-            I_star = 0.0
+        gamma = elevation  # thermofeel convention: elevation, not zenith
+        f_p = 0.308 * math.cos(math.radians(gamma * (0.998 - gamma**2 / 50000.0)))
 
-    # --- Surface projection factor (Equation 15) ---
-    f_p = _surface_projection_factor(elevation) if not nighttime else 0.0
-
-    # --- MRT equation (Equation 14) ---
-    # MRT* = [1/sigma * (f_a*L_srf_dn + f_a*L_srf_up
-    #         + (alpha_ir/epsilon_p)*f_a*S_srf_dn_diffuse
-    #         + (alpha_ir/epsilon_p)*f_a*S_srf_up
-    #         + f_p*I*)]^0.25
+    # --- MRT equation (thermofeel-consistent, Equation 14) ---
+    # rf = 0.5*strd + 0.5*L_up + (alpha_ir/epsilon_p)*(0.5*S_diff + 0.5*S_up + fp*dsrp)
     alpha_ratio = ALPHA_IR / EPSILON_P
     radiant_flux = (
-        F_A * L_srf_up
-        + F_A * strd
-        + alpha_ratio * F_A * S_srf_dn_diffuse
-        + alpha_ratio * F_A * S_srf_up
-        + f_p * I_star
+        F_A * strd
+        + F_A * L_srf_up
+        + alpha_ratio * (F_A * S_srf_dn_diffuse + F_A * S_srf_up + f_p * dsrp)
     )
 
     # Quality flag
@@ -394,7 +383,6 @@ def calculate_mrt_single(
 
     # Numerical safety: ensure non-negative before fourth root
     if radiant_flux < 0:
-        # Use absolute value and flag
         mrt_kelvin = (abs(radiant_flux) / SIGMA) ** 0.25
     else:
         mrt_kelvin = (radiant_flux / SIGMA) ** 0.25
@@ -411,7 +399,10 @@ def calculate_mrt_single(
         quality_flag=qf,
         solar_zenith_deg=zenith,
         solar_elevation_deg=elevation,
-        direct_radiation_projected=I_star,
+        cossza=cossza,
+        dsrp=dsrp,
+        f_p=f_p,
+        direct_radiation_projected=f_p * dsrp,
         diffuse_shortwave=S_srf_dn_diffuse,
         upward_longwave=L_srf_up,
         upward_shortwave=S_srf_up,
@@ -429,7 +420,9 @@ def calculate_mrt_grid(
     longitudes: NDArray[np.float64],
     accumulation_seconds: float,
 ) -> MRTGridResult:
-    """Calculate MRT for a full grid using Di Napoli method.
+    """Calculate MRT for a full grid using thermofeel-consistent method.
+
+    Production method: ECMWF_THERMOFEEL_COMPATIBLE_V1
 
     Parameters
     ----------
@@ -456,7 +449,10 @@ def calculate_mrt_grid(
     quality_flags = np.full((n_time, n_lat, n_lon), -1, dtype=np.int32)
     solar_zenith = np.full((n_time, n_lat, n_lon), np.nan)
     solar_elevation = np.full((n_time, n_lat, n_lon), np.nan)
-    I_star_grid = np.full((n_time, n_lat, n_lon), np.nan)
+    cossza_grid = np.full((n_time, n_lat, n_lon), np.nan)
+    dsrp_grid = np.full((n_time, n_lat, n_lon), np.nan)
+    fp_grid = np.full((n_time, n_lat, n_lon), np.nan)
+    fp_dsrp_grid = np.full((n_time, n_lat, n_lon), np.nan)
     diffuse_grid = np.full((n_time, n_lat, n_lon), np.nan)
     L_up_grid = np.full((n_time, n_lat, n_lon), np.nan)
     S_up_grid = np.full((n_time, n_lat, n_lon), np.nan)
@@ -480,7 +476,10 @@ def calculate_mrt_grid(
                 quality_flags[ti, la, lo] = result.quality_flag.value
                 solar_zenith[ti, la, lo] = result.solar_zenith_deg
                 solar_elevation[ti, la, lo] = result.solar_elevation_deg
-                I_star_grid[ti, la, lo] = result.direct_radiation_projected
+                cossza_grid[ti, la, lo] = result.cossza
+                dsrp_grid[ti, la, lo] = result.dsrp
+                fp_grid[ti, la, lo] = result.f_p
+                fp_dsrp_grid[ti, la, lo] = result.direct_radiation_projected
                 diffuse_grid[ti, la, lo] = result.diffuse_shortwave
                 L_up_grid[ti, la, lo] = result.upward_longwave
                 S_up_grid[ti, la, lo] = result.upward_shortwave
@@ -491,7 +490,10 @@ def calculate_mrt_grid(
         quality_flags=quality_flags,
         solar_zenith_deg=solar_zenith,
         solar_elevation_deg=solar_elevation,
-        direct_radiation_projected=I_star_grid,
+        cossza=cossza_grid,
+        dsrp=dsrp_grid,
+        f_p=fp_grid,
+        direct_radiation_projected=fp_dsrp_grid,
         diffuse_shortwave=diffuse_grid,
         upward_longwave=L_up_grid,
         upward_shortwave=S_up_grid,
@@ -541,10 +543,7 @@ def validate_mrt(
     r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0 else float("nan")
 
     # Correlation
-    if n > 1:
-        corr = np.corrcoef(o, r)[0, 1]
-    else:
-        corr = float("nan")
+    corr = np.corrcoef(o, r)[0, 1] if n > 1 else float("nan")
 
     metrics = {
         "sample_count": int(n),

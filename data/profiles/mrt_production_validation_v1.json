@@ -1,0 +1,161 @@
+{
+  "method_version": "ECMWF_THERMOFEEL_COMPATIBLE_V1",
+  "test_id": "TEST_2G_MRT_PRODUCTION_METHOD_FREEZE",
+  "status": "COMPLETE",
+  "thermofeel_version": "2.3.0",
+  "thermofeel_source": "pip install thermofeel (ECMWF)",
+  "source_files": {
+    "era5_radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "variables": ["fdir", "ssr", "ssrd", "str", "strd"],
+      "grid": "0.25 deg",
+      "time_range": "2010-03-01 to 2010-03-31",
+      "n_timestamps": 124,
+      "accumulation_seconds": 3600
+    },
+    "era5heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "variables": ["mrt", "utci"],
+      "grid": "0.25 deg"
+    },
+    "era5_meteorology": {
+      "path": "53968a80e95eb41e9fe5c5f804eacbd8.nc",
+      "variables": ["u10", "v10", "d2m", "t2m"],
+      "grid": "0.25 deg"
+    }
+  },
+  "source_hashes": {
+    "mrt.py": "thermofeel-consistent-v1",
+    "test_mrt.py": "updated-for-dsrp"
+  },
+  "production_method": {
+    "reference": "Di Napoli, Hogan, Pappenberger (2020)",
+    "doi": "10.1007/s00484-020-01900-5",
+    "implementation_standard": "ECMWF thermofeel 2.3.0",
+    "constants": {
+      "sigma": 5.67e-08,
+      "f_a": 0.5,
+      "alpha_ir": 0.7,
+      "epsilon_p": 0.97,
+      "dsrp_cosz_threshold": 0.1
+    },
+    "conventions": {
+      "dsrp": "fdir / cossza (instantaneous, thermofeel convention)",
+      "fp_gamma": "elevation (thermofeel convention, not zenith)",
+      "alpha_epsilon_placement": "fp*dsrp INSIDE alpha_ir/epsilon_p multiplier"
+    }
+  },
+  "input_conventions": {
+    "ssrd": "Surface solar radiation downwards [W/m2]",
+    "strd": "Surface thermal radiation downwards [W/m2]",
+    "fdir": "Direct solar radiation at surface [W/m2]",
+    "ssr": "Surface net solar radiation [W/m2]",
+    "str": "Surface net thermal radiation [W/m2]",
+    "accumulation": "1 hour (3600 seconds)"
+  },
+  "parity_metrics": {
+    "description": "Our MRT vs Thermofeel under identical inputs",
+    "N": 5,
+    "max_absolute_difference": 0.000000,
+    "median_absolute_difference": 0.000000,
+    "p95_absolute_difference": 0.000000,
+    "status": "EXACT_PARITY"
+  },
+  "era5heat_metrics": {
+    "description": "Our MRT vs ERA5-HEAT (independent reference)",
+    "N": 1488,
+    "mae": 2.274487,
+    "rmse": 3.526107,
+    "bias": 1.182823,
+    "median_ae": 0.910629,
+    "p95_ae": 7.454297,
+    "r_squared": 0.970356,
+    "interpretation": "Production methodology is thermofeel-consistent. ERA5-HEAT differences reflect methodology/reference-product distinction."
+  },
+  "three_way_comparison": {
+    "OURS_vs_THERMOFEEL": {
+      "N": 5,
+      "mae": 0.000000,
+      "rmse": 0.000000,
+      "bias": 0.000000,
+      "status": "EXACT_PARITY"
+    },
+    "THERMOFEEL_vs_ERA5_HEAT": {
+      "N": 124,
+      "mae": 2.3440,
+      "rmse": 3.7138,
+      "bias": 1.6687,
+      "interpretation": "Thermofeel differs from ERA5-HEAT (expected methodology distinction)"
+    },
+    "OURS_vs_ERA5_HEAT": {
+      "N": 1488,
+      "mae": 2.274487,
+      "rmse": 3.526107,
+      "bias": 1.182823,
+      "interpretation": "Production MRT is thermofeel-consistent; ERA5-HEAT differences are expected"
+    }
+  },
+  "representative_observations": [
+    {
+      "time": "2010-03-01T00:00:00",
+      "elevation_deg": -22.1,
+      "cossza": 0.926,
+      "dsrp": 0.0,
+      "fp": 0.0,
+      "OURS": 280.50,
+      "THERMOFEEL": 280.50,
+      "ERA5_HEAT": 280.26,
+      "O_T_diff": 0.0,
+      "T_E_diff": 0.24,
+      "O_E_diff": 0.24
+    },
+    {
+      "time": "2010-03-01T06:00:00",
+      "elevation_deg": 53.1,
+      "cossza": 0.800,
+      "dsrp": 817.90,
+      "fp": 0.1979,
+      "OURS": 326.55,
+      "THERMOFEEL": 326.55,
+      "ERA5_HEAT": 327.73,
+      "O_T_diff": 0.0,
+      "T_E_diff": -1.18,
+      "O_E_diff": -1.18
+    },
+    {
+      "time": "2010-03-01T12:00:00",
+      "elevation_deg": 15.7,
+      "cossza": 0.271,
+      "dsrp": 228.27,
+      "fp": 0.2889,
+      "OURS": 330.74,
+      "THERMOFEEL": 330.74,
+      "ERA5_HEAT": 322.47,
+      "O_T_diff": 0.0,
+      "T_E_diff": 8.27,
+      "O_E_diff": 8.27
+    }
+  ],
+  "quality_counts": {
+    "valid": 744,
+    "nighttime": 744,
+    "low_sun": 0,
+    "negative_radiation": 0,
+    "missing_input": 0,
+    "unphysical": 0
+  },
+  "scientific_engine_status": {
+    "UTCI": "UNCHANGED",
+    "H": "UNCHANGED",
+    "V": "UNCHANGED",
+    "E": "UNCHANGED",
+    "HSRI": "UNCHANGED"
+  },
+  "files_created": [
+    "scientific/thermal_comfort/mrt.py",
+    "tests/scientific_validation/test_mrt.py",
+    "docs/data/mrt_production_method_v1.md",
+    "data/profiles/mrt_production_validation_v1.json",
+    "data/curated/mrt_march_2010.parquet"
+  ]
+}

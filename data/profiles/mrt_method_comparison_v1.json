@@ -1,0 +1,721 @@
+{
+  "test_id": "TEST_2H_MRT_METHOD_COMPARISON",
+  "status": "COMPLETE",
+  "methods": {
+    "DiNapoli": {
+      "source": "Di Napoli et al. (2020)",
+      "doi": "10.1007/s00484-020-01900-5",
+      "conventions": {
+        "fp_gamma": "elevation",
+        "I_star": "fdir/cos_bar (interval avg)",
+        "alpha_placement": "fp*I* OUTSIDE alpha_ratio"
+      }
+    },
+    "Thermofeel": {
+      "source": "ECMWF thermofeel 2.3.0",
+      "conventions": {
+        "fp_gamma": "arcsin(cossza)=elevation",
+        "dsrp": "fdir/cossza (instantaneous)",
+        "alpha_placement": "fp*dsrp INSIDE alpha_ratio"
+      }
+    },
+    "ERA5_HEAT": {
+      "source": "ERA5-HEAT reference product",
+      "type": "loaded from NetCDF"
+    }
+  },
+  "pairwise_metrics": {
+    "DiNapoli_vs_Thermofeel": {
+      "N": 1488,
+      "MAE": 1.5669935493059055,
+      "RMSE": 2.9887602101890915,
+      "Bias": 1.5529842171617734,
+      "MedianAE": 0.00030517578125,
+      "Std": 2.553610701586281,
+      "P95": 6.382936096191406,
+      "R2": 0.9809615634226938,
+      "Corr": 0.9958143846722672
+    },
+    "DiNapoli_vs_ERA5_HEAT": {
+      "N": 1488,
+      "MAE": 2.882798820413569,
+      "RMSE": 4.0780703412677966,
+      "Bias": 2.7358067625312397,
+      "MedianAE": 1.5634765625,
+      "Std": 3.024238592838928,
+      "P95": 7.690045166015625,
+      "R2": 0.9603489974735978,
+      "Corr": 0.9980635627614937
+    },
+    "Thermofeel_vs_ERA5_HEAT": {
+      "N": 1488,
+      "MAE": 2.2744873826221754,
+      "RMSE": 3.5261072069063264,
+      "Bias": 1.182822545369466,
+      "MedianAE": 0.9106292724609375,
+      "Std": 3.3218011470830753,
+      "P95": 7.454296874999999,
+      "R2": 0.9703560704776716,
+      "Corr": 0.9891349786741807
+    }
+  },
+  "sample_intermediates": [
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.25,
+      "elev": -22.33551625309748,
+      "cossza": -0.3800296014773138,
+      "DiNapoli": {
+        "mrt": "279.9647",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "348.33423",
+        "L_up": "383.57803",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "279.9647",
+        "fp": 0.28543550695326625,
+        "dsrp": "0.0",
+        "rf": "348.33423",
+        "L_up": "383.57803",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.0389709472656
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.5,
+      "elev": -22.105841075281177,
+      "cossza": -0.37631871706780107,
+      "DiNapoli": {
+        "mrt": "280.2407",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "349.70978",
+        "L_up": "386.90692",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.2407",
+        "fp": 0.285882549554643,
+        "dsrp": "0.0",
+        "rf": "349.70978",
+        "L_up": "386.90692",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.0389709472656
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.75,
+      "elev": -21.87616062839119,
+      "cossza": -0.37260170034379125,
+      "DiNapoli": {
+        "mrt": "280.4368",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "350.68976",
+        "L_up": "388.93802",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.4368",
+        "fp": 0.28632557165671996,
+        "dsrp": "0.0",
+        "rf": "350.68976",
+        "L_up": "388.93802",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.4333190917969
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.25,
+      "lon": 73.0,
+      "elev": -21.6464756182518,
+      "cossza": -0.3688786220719257,
+      "DiNapoli": {
+        "mrt": "280.92642",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "353.14532",
+        "L_up": "392.38248",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.92642",
+        "fp": 0.2867645539596262,
+        "dsrp": "0.0",
+        "rf": "353.14532",
+        "L_up": "392.38248",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.9130859375
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.25,
+      "elev": -22.339016942489764,
+      "cossza": -0.38008611536353054,
+      "DiNapoli": {
+        "mrt": "280.20728",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "349.5431",
+        "L_up": "385.7469",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.20728",
+        "fp": 0.28542866207533246,
+        "dsrp": "0.0",
+        "rf": "349.5431",
+        "L_up": "385.7469",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.26171875
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.5,
+      "elev": -22.108908007483876,
+      "cossza": -0.37636830976000973,
+      "DiNapoli": {
+        "mrt": "280.50342",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "351.02313",
+        "L_up": "388.83136",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.50342",
+        "fp": 0.2858766065521958,
+        "dsrp": "0.0",
+        "rf": "351.02313",
+        "L_up": "388.83136",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.26171875
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.75,
+      "elev": -21.878794558068236,
+      "cossza": -0.3726443604045735,
+      "DiNapoli": {
+        "mrt": "280.78226",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "352.4209",
+        "L_up": "390.63135",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.78226",
+        "fp": 0.28632051408110837,
+        "dsrp": "0.0",
+        "rf": "352.4209",
+        "L_up": "390.63135",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.70849609375
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 23.0,
+      "lon": 73.0,
+      "elev": -21.648677283812262,
+      "cossza": -0.36891433819584935,
+      "DiNapoli": {
+        "mrt": "281.22382",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "354.6431",
+        "L_up": "393.6269",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "281.22382",
+        "fp": 0.2867603653303679,
+        "dsrp": "0.0",
+        "rf": "354.6431",
+        "L_up": "393.6269",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.94488525390625
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 22.75,
+      "lon": 72.25,
+      "elev": -22.342069459625435,
+      "cossza": -0.3801353929579935,
+      "DiNapoli": {
+        "mrt": "281.0713",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "353.87424",
+        "L_up": "392.66693",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "281.0713",
+        "fp": 0.28542269274524185,
+        "dsrp": "0.0",
+        "rf": "353.87424",
+        "L_up": "392.66693",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 281.3258361816406
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 22.75,
+      "lon": 72.5,
+      "elev": -22.11153186012085,
+      "cossza": -0.376410736942124,
+      "DiNapoli": {
+        "mrt": "280.66312",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "351.8231",
+        "L_up": "388.698",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.66312",
+        "fp": 0.28587152156463164,
+        "dsrp": "0.0",
+        "rf": "351.8231",
+        "L_up": "388.698",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 281.3258361816406
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 22.75,
+      "lon": 72.75,
+      "elev": -21.880990487380984,
+      "cossza": -0.37267992585388837,
+      "DiNapoli": {
+        "mrt": "280.8902",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "352.9631",
+        "L_up": "389.8758",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "280.8902",
+        "fp": 0.28631629713085055,
+        "dsrp": "0.0",
+        "rf": "352.9631",
+        "L_up": "389.8758",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 280.9230041503906
+      }
+    },
+    {
+      "time": "2010-03-01T00:00:00.000000000",
+      "lat": 22.75,
+      "lon": 73.0,
+      "elev": -21.650446014841677,
+      "cossza": -0.3689430307225522,
+      "DiNapoli": {
+        "mrt": "281.43506",
+        "fp": 0.0,
+        "I_star": 0.0,
+        "rf": "355.70978",
+        "L_up": "393.49356",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "Thermofeel": {
+        "mrt": "281.43506",
+        "fp": 0.28675700008066674,
+        "dsrp": "0.0",
+        "rf": "355.70978",
+        "L_up": "393.49356",
+        "S_diff": "0.0",
+        "S_up": "-9.999997e-16"
+      },
+      "ERA5_HEAT": {
+        "mrt": 281.4249572753906
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.25,
+      "elev": 52.792202616062056,
+      "cossza": 0.7964476307410845,
+      "DiNapoli": {
+        "mrt": "333.0108",
+        "fp": 0.1990309524652269,
+        "I_star": "876.4975",
+        "rf": "697.29474",
+        "L_up": "497.34674",
+        "S_diff": "128.44446",
+        "S_up": "161.72449"
+      },
+      "Thermofeel": {
+        "mrt": "326.01306",
+        "fp": 0.1990309524652269,
+        "dsrp": "819.1932",
+        "rf": "640.5058",
+        "L_up": "497.34674",
+        "S_diff": "128.44446",
+        "S_up": "161.72449"
+      },
+      "ERA5_HEAT": {
+        "mrt": 328.2608337402344
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.5,
+      "elev": 52.92630384070055,
+      "cossza": 0.7978607706915376,
+      "DiNapoli": {
+        "mrt": "333.841",
+        "fp": 0.1985737600070052,
+        "I_star": "876.9097",
+        "rf": "704.27405",
+        "L_up": "511.88007",
+        "S_diff": "128.30219",
+        "S_up": "156.97778"
+      },
+      "Thermofeel": {
+        "mrt": "326.92178",
+        "fp": 0.1985737600070052,
+        "dsrp": "820.1933",
+        "rf": "647.677",
+        "L_up": "511.88007",
+        "S_diff": "128.30219",
+        "S_up": "156.97778"
+      },
+      "ERA5_HEAT": {
+        "mrt": 328.2608337402344
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.25,
+      "lon": 72.75,
+      "elev": 53.05927633135596,
+      "cossza": 0.7992577005885438,
+      "DiNapoli": {
+        "mrt": "334.13278",
+        "fp": 0.19812013934607517,
+        "I_star": "876.8861",
+        "rf": "706.7396",
+        "L_up": "515.6045",
+        "S_diff": "129.03113",
+        "S_up": "156.78223"
+      },
+      "Thermofeel": {
+        "mrt": "327.25995",
+        "fp": 0.19812013934607517,
+        "dsrp": "820.7838",
+        "rf": "650.36096",
+        "L_up": "515.6045",
+        "S_diff": "129.03113",
+        "S_up": "156.78223"
+      },
+      "ERA5_HEAT": {
+        "mrt": 329.5091857910156
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.25,
+      "lon": 73.0,
+      "elev": 53.1911077900343,
+      "cossza": 0.8006383938365716,
+      "DiNapoli": {
+        "mrt": "334.26422",
+        "fp": 0.19767014450670503,
+        "I_star": "876.12195",
+        "rf": "707.85223",
+        "L_up": "517.48895",
+        "S_diff": "129.81335",
+        "S_up": "156.12445"
+      },
+      "Thermofeel": {
+        "mrt": "327.43298",
+        "fp": 0.19767014450670503,
+        "dsrp": "820.6784",
+        "rf": "651.7376",
+        "L_up": "517.48895",
+        "S_diff": "129.81335",
+        "S_up": "156.12445"
+      },
+      "ERA5_HEAT": {
+        "mrt": 330.09454345703125
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.25,
+      "elev": 52.994485969100126,
+      "cossza": 0.798577588878257,
+      "DiNapoli": {
+        "mrt": "332.68512",
+        "fp": 0.1983411984224265,
+        "I_star": "873.896",
+        "rf": "694.5709",
+        "L_up": "495.95117",
+        "S_diff": "129.15558",
+        "S_up": "156.85333"
+      },
+      "Thermofeel": {
+        "mrt": "325.71332",
+        "fp": 0.1983411984224265,
+        "dsrp": "816.8078",
+        "rf": "638.1533",
+        "L_up": "495.95117",
+        "S_diff": "129.15558",
+        "S_up": "156.85333"
+      },
+      "ERA5_HEAT": {
+        "mrt": 327.7304992675781
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.5,
+      "elev": 53.12946871381833,
+      "cossza": 0.7999933644849794,
+      "DiNapoli": {
+        "mrt": "333.4455",
+        "fp": 0.19788057668985803,
+        "I_star": "874.40454",
+        "rf": "700.9426",
+        "L_up": "509.9956",
+        "S_diff": "128.85333",
+        "S_up": "151.64441"
+      },
+      "Thermofeel": {
+        "mrt": "326.54684",
+        "fp": 0.19788057668985803,
+        "dsrp": "817.8957",
+        "rf": "644.7108",
+        "L_up": "509.9956",
+        "S_diff": "128.85333",
+        "S_up": "151.64441"
+      },
+      "ERA5_HEAT": {
+        "mrt": 327.7304992675781
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.0,
+      "lon": 72.75,
+      "elev": 53.26332110605913,
+      "cossza": 0.8013928998047813,
+      "DiNapoli": {
+        "mrt": "334.14658",
+        "fp": 0.19742354006991925,
+        "I_star": "873.9329",
+        "rf": "706.8562",
+        "L_up": "519.74677",
+        "S_diff": "129.15552",
+        "S_up": "151.83997"
+      },
+      "Thermofeel": {
+        "mrt": "327.32413",
+        "fp": 0.19742354006991925,
+        "dsrp": "818.0645",
+        "rf": "650.8714",
+        "L_up": "519.74677",
+        "S_diff": "129.15552",
+        "S_up": "151.83997"
+      },
+      "ERA5_HEAT": {
+        "mrt": 328.82421875
+      }
+    },
+    {
+      "time": "2010-03-01T06:00:00.000000000",
+      "lat": 23.0,
+      "lon": 73.0,
+      "elev": 53.39603068170555,
+      "cossza": 0.8027761681925282,
+      "DiNapoli": {
+        "mrt": "334.3023",
+        "fp": 0.1969701431457983,
+        "I_star": "873.0796",
+        "rf": "708.1748",
+        "L_up": "521.88007",
+        "S_diff": "129.8844",
+        "S_up": "151.37775"
+      },
+      "Thermofeel": {
+        "mrt": "327.5236",
+        "fp": 0.1969701431457983,
+        "dsrp": "817.873",
+        "rf": "652.45935",
+        "L_up": "521.88007",
+        "S_diff": "129.8844",
+        "S_up": "151.37775"
+      },
+      "ERA5_HEAT": {
+        "mrt": 329.5121154785156
+      }
+    }
+  ],
+  "files_created": [
+    "data\\profiles\\plots\\mrt_method_comparison\\error_vs_solar_elevation.png",
+    "data\\profiles\\plots\\mrt_method_comparison\\method_comparison_timeseries.png",
+    "data\\profiles\\plots\\mrt_method_comparison\\pairwise_error_distributions.png",
+    "data\\profiles\\plots\\mrt_method_comparison\\pairwise_scatter.png"
+  ],
+  "operational_scorecard": {
+    "DiNapoli": {
+      "scientific_provenance": "HIGH",
+      "independent_validation": "HIGH",
+      "reproducibility": "HIGH",
+      "input_availability": "HIGH",
+      "implementation_complexity": "LOW",
+      "operational_suitability": "HIGH",
+      "reference_product_dependence": "LOW",
+      "transparency": "HIGH"
+    },
+    "Thermofeel": {
+      "scientific_provenance": "HIGH",
+      "independent_validation": "MEDIUM",
+      "reproducibility": "HIGH",
+      "input_availability": "HIGH",
+      "implementation_complexity": "LOW",
+      "operational_suitability": "HIGH",
+      "reference_product_dependence": "LOW",
+      "transparency": "MEDIUM"
+    },
+    "ERA5_HEAT": {
+      "scientific_provenance": "MEDIUM",
+      "independent_validation": "LOW",
+      "reproducibility": "HIGH",
+      "input_availability": "HIGH",
+      "implementation_complexity": "LOW",
+      "operational_suitability": "HIGH",
+      "reference_product_dependence": "HIGH",
+      "transparency": "LOW"
+    }
+  },
+  "hybrid_analysis": {
+    "evaluated": true,
+    "hybrid_adopted": false,
+    "reason": "No source-supported hybrid exists. Di Napoli radiation budget + thermofeel solar treatment would change the physical meaning of the direct solar term. Thermofeel radiation handling + Di Napoli accumulation is mathematically inconsistent."
+  },
+  "recommendation": {
+    "method": "ECMWF thermofeel",
+    "status": "PROVISIONALLY RECOMMENDED",
+    "rationale": "Thermofeel implements Di Napoli methodology with ECMWF operational refinements. ECMWF maintains thermofeel as the reference implementation. The differences from Di Napoli are methodologically justified (instantaneous vs interval-averaged dsrp). The differences from ERA5-HEAT reflect expected methodology/reference-product distinctions.",
+    "provisional_because": "No independent Ahmedabad validation exists. Choice is based on source provenance and reproducibility, not local validation.",
+    "not_recommended": [
+      "Tuning any method to ERA5-HEAT",
+      "Creating undocumented hybrids",
+      "Using ERA5-HEAT as the sole validation source"
+    ]
+  },
+  "independent_validation": {
+    "di_napoli": {
+      "validated": true,
+      "validation_source": "11 WRMC-BSRN stations (Europe)",
+      "validation_period": "Jul 2015 - Jun 2018",
+      "r_squared": ">=0.88",
+      "avg_rmse": "4.12 K",
+      "avg_bias": "0.42 K",
+      "bias_range": "-1.6 to +6.6 K",
+      "notes": "Original paper validation against ground truth"
+    },
+    "thermofeel": {
+      "validated": false,
+      "notes": "No independent validation beyond Di Napoli paper it implements"
+    },
+    "ahmedabad_specific": {
+      "found": false,
+      "statement": "No suitable independent Ahmedabad MRT ground truth was found in the searched sources."
+    }
+  },
+  "ecmwf_claims": {
+    "thermofeel_supersedes_operational": {
+      "source": "ECMWF Technical Memorandum 824",
+      "verified": true,
+      "quote": "We suggest that the methodology in the thermofeel library supersedes the operational c code"
+    },
+    "era5_heat_official": {
+      "source": "ECMWF Technical Memorandum 82413",
+      "verified": true,
+      "quote": "ERA5-HEAT is the official historical reanalysis and forecast dataset"
+    }
+  },
+  "corrections_from_v1": {
+    "di_napoli_rmse": {
+      "previous": "1.5-3.0 K",
+      "corrected": "Avg 4.12 K (< 10 K)",
+      "source": "Di Napoli abstract"
+    },
+    "validation_type_distinction": {
+      "previous": "Not distinguished",
+      "corrected": "Accuracy vs internal consistency distinguished"
+    }
+  }
+}

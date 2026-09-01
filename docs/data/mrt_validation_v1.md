@@ -65,21 +65,21 @@ Implemented from Di Napoli et al. (2020) equations 6-12.
 | Metric | Value |
 |--------|-------|
 | N | 1488 |
-| MAE | 2.8828 K |
-| RMSE | 4.0781 K |
-| Mean bias | 2.7358 K |
-| Median AE | 1.5635 K |
-| P95 AE | 7.6900 K |
-| R-squared | 0.960349 |
-| Correlation | 0.998064 |
+| MAE | 2.2745 K |
+| RMSE | 3.5261 K |
+| Mean bias | 1.1828 K |
+| Median AE | 0.9106 K |
+| P95 AE | 7.4543 K |
+| R-squared | 0.970356 |
+| Correlation | 0.989135 |
 
 ## 10. Stratified Results
 
 | Bin | N | MAE | Bias |
 |-----|---|-----|------|
 | (-90, 0] deg | 744 | 0.27 | -0.02 |
-| (10, 20] deg | 372 | 6.93 | 6.93 |
-| (30, 90] deg | 372 | 4.06 | 4.06 |
+| (10, 20] deg | 372 | 6.66 | 6.66 |
+| (30, 90] deg | 372 | 1.89 | -1.89 |
 
 
 ## 11. Component Diagnostics
@@ -94,8 +94,8 @@ Implemented from Di Napoli et al. (2020) equations 6-12.
 | S_diffuse | 58.89 | 61.60 | 0.00 | 236.59 |
 | S_up | 57.68 | 66.62 | -0.00 | 183.20 |
 | L_up | 472.45 | 51.36 | 383.58 | 565.60 |
-| I* | 364.70 | 378.58 | 0.00 | 887.77 |
-| MRT | 310.14 | 23.18 | 279.96 | 337.75 |
+| I* | 96.97 | 105.11 | 0.00 | 273.80 |
+| MRT | 308.59 | 21.66 | 279.96 | 335.70 |
 
 
 ## 12. Production Changes
