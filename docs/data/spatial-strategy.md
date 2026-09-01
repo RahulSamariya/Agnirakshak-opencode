@@ -1,47 +1,136 @@
-# Spatial Strategy
+# Spatial Strategy: Ward Geography Reconciliation & Grid-to-Ward Aggregation
 
-**Version**: 1.0
-**Status**: ACTIVE
+**Version:** 1.0
+**Date:** 2026-09-02
+**Status:** METHODOLOGY STUDY — NO IMPLEMENTATION YET
 
-## Geographic Hierarchy
+---
 
-```
-India
-  └─ Gujarat (State Code: 24)
-       └─ Ahmedabad (District Code: 474)
-            └─ AMC Wards (48 current / 57 Census 2011)
-```
+## 1. Ahmedabad Ward Geography Reconciliation
 
-## Data Layers
+### 1.1 Known Facts
 
-| Layer | Source | Resolution | CRS |
-|-------|--------|-----------|-----|
-| Weather (ERA5-Land) | Grid cells | ~9km (0.1°) | WGS84 |
-| Ward Boundaries | GIS polygons | Ward-level | WGS84 |
-| Census 2011 | Ward-level aggregates | Ward-level | N/A |
-| AQI | City-level point | Point (single station) | N/A |
+| Fact | Status | Source |
+|------|--------|--------|
+| Census 2011 AMC has 57 wards (IDs 1–57) | VERIFIED | `data/staging/census/wards_census_2011_amc.csv` (57 rows) |
+| Current AMC operational wards = 48 | VERIFIED | `data/raw/gis/wards_ahmedabad.geojson` (48 features); AMC website; Indian Express 2015 |
+| Ward reduction: 57 → 48 via SEC delimitation order, May 2015 | VERIFIED | Indian Express (2015-05-29): "Delimitation order announced: Ahmedabad to have 48 wards" |
+| No official Census 2011 → current 48 ward crosswalk exists in repository | VERIFIED | Repository inspection |
+| No authoritative 2011 ward boundary GIS exists in repository | VERIFIED | Only 48-ward (2024) GIS present |
 
-## Spatial Relationships
+### 1.2 Ward ID Schemes
 
-### ERA5-Land → Wards
-- ERA5 grid cells (~9km) intersect multiple wards
-- Each ward may receive 0–N cells
-- **No interpolation** at profiling stage
-- Compatibility measured via point-in-polygon analysis
+**Census 2011 (57 wards):**
+- ID: `census_ward_id` (integer 1–57)
+- Name format: `Ahmadabad (M Corp.) WARD NO.-0001` through `WARD NO.-0057`
+- Source: `DDW_PCA2407_2011_MDDS with UI (1).xlsx`, sheet `EB-2407`
 
-### Census → Wards
-- Census 2011 has 57 AMC wards (2011 delimitation)
-- Current GIS has 48 wards (2024 delimitation)
-- **Crosswalk required** before joining
-- DO NOT direct join
+**Current 48-ward GIS:**
+- `sourcewardcode`: AMC ward number (e.g., "12", "48")
+- `ward_lgd_code`: LGD code (e.g., 1302512)
+- `ward_lgd_name`: e.g., `Naroda, Ahmedabad (M.Corp.) Ward No. 12`
+- CRS: EPSG:4326
 
-### AQI → Wards
-- AQI is city-level (single Ahmedabad reading)
-- No ward-level spatial assignment
-- Applied uniformly to all wards
+### 1.3 Crosswalk Status
 
-## Known Spatial Gaps
+**CASE 3 applies: Neither authoritative historical geometry nor an authoritative crosswalk can be established.**
 
-1. **Ward crosswalk missing**: Cannot join Census 2011 to current GIS
-2. **ERA5 coarse resolution**: 9km cells may not capture intra-urban variability
-3. **Single AQI station**: No spatial variability in air quality
+Reasons:
+1. The 2015 SEC delimitation merged/split/reorganized wards; the exact mapping is not documented in a machine-readable crosswalk.
+2. Ward names changed (e.g., current ward names like "Gota", "Chandlodiya" don't directly map to Census 2011 names).
+3. Many-to-one mapping (multiple Census wards → single current ward) is common but the exact geometry is unknown.
+4. Do NOT infer crosswalk from ward names alone.
+5. Do NOT manufacture overlaps based on approximate visual matching.
+
+### 1.4 Authoritative Sources Identified
+
+| Source | URL | Evidence Type | Status |
+|--------|-----|---------------|--------|
+| NYU Spatial Data Repository (Princeton) | `geo.nyu.edu/catalog/princeton-9c67wr21b` | Shapefile, restricted access | UNVERIFIED — may contain 2011 ward boundaries |
+| DataMeet Municipal Spatial Data | `github.com/datameet/Municipal_Spatial_Data` | GeoJSON, CC-BY-4.0 | UNVERIFIED — may be 2011 or later |
+| OpenCity / Oorvani Foundation | `data.opencity.in` | KML, ODbL-1.0 | VERIFIED — 48 wards (2024 delimitation) |
+| BharatAtlas | `bharatlas.com/view/wards_ahmedabad` | GeoJSON/Parquet, ODbL-1.0 | VERIFIED — 48 wards (2024) |
+| Gujarat State Election Commission | Official delimitation orders | Official documentation | UNVERIFIED — may contain ward mapping |
+| Census of India | `censusindia.gov.in` | PCA data only | NO geometry at ward level |
+
+### 1.5 Recommended Geography Strategy
+
+**Historical analysis geography:** Census 2011 57-ward PCA data (demographics, literacy, work status) — retained on original 57-ward geography.
+
+**Operational/current geography:** 48-ward GIS from OpenCity/AMC — used for current risk assessment.
+
+**Allowed transformation:** NONE until an authoritative crosswalk is established.
+
+**Limitations:**
+- Census 2011 ward-level demographics cannot be defensibly assigned to current 48 wards without a crosswalk.
+- Any crosswalk would need to be validated against the 2015 SEC delimitation order.
+
+**Condition for current-48 ward vulnerability:**
+- BLOCKED until either:
+  (a) Authoritative 2011 ward boundary GIS is acquired (e.g., from NYU/Princeton or DataMeet), OR
+  (b) Authoritative SEC 2015 delimitation order with ward mapping is acquired.
+
+**Clean fallback:** Retain vulnerability on historical Census 57-ward geography rather than inventing a transformation.
+
+---
+
+## 2. ERA5 Grid → Ward Aggregation
+
+### 2.1 ERA5 Grid Structure
+
+| Product | Resolution | Grid Size | Cell Footprint | CRS |
+|---------|-----------|-----------|----------------|-----|
+| ERA5-Land | 0.10° | 5×5 = 25 cells | ~114 km² | WGS84/EPSG:4326 |
+| ERA5 reanalysis | 0.25° | 3×4 = 12 cells | ~714 km² | WGS84/EPSG:4326 |
+| ERA5-HEAT | 0.25° | 3×4 = 12 cells | ~714 km² | WGS84/EPSG:4326 |
+
+- Latitude: descending (north to south), spacing 0.10° or 0.25°
+- Longitude: ascending (west to east), spacing 0.10° or 0.25°
+- Cell bounds: constructed programmatically (center ± half-spacing)
+- 11 of 12 ERA5 0.25° cells intersect Ahmedabad ward polygons
+
+### 2.2 Recommended Aggregation Method
+
+**Primary method: Area-weighted intersection** (Schwarzwald & Geil 2024, xagg; Auffhammer et al. 2013)
+
+For each ward polygon and each ERA5 grid cell:
+1. Compute intersection polygon area
+2. Weight = (intersection area) / (total ward area)
+3. Ward value = Σ(weight_i × grid_cell_value_i)
+
+This is the peer-reviewed standard for climate-health impact assessment (Weighted Climate Dataset, Nature 2024).
+
+**When to aggregate:** At the MRT/UTCI level, NOT at H level. Aggregating an already-normalized index loses physical meaning. Aggregate raw MRT or UTCI, then compute H from the ward-level aggregate.
+
+**For peak thermal stress:** Compute daily maximum H per grid cell, then area-weight to ward.
+
+### 2.3 Edge Cases
+
+- **Partial grid-cell overlap:** Handled by area-weighted intersection (fractional weights)
+- **Coastal/river cells:** No Ahmedabad wards are coastal; Sabarmati river runs through but doesn't create water-only cells within city limits
+- **Invalid geometries:** Validate with `geopandas.GeoSeries.is_valid` before aggregation
+- **Missing grid cells:** If a ward has no overlapping ERA5 cell, flag as UNAVAILABLE
+- **Ward spanning multiple cells:** Area-weighted mean handles this correctly
+- **No-overlap wards:** If ward polygon doesn't intersect any ERA5 cell, mark as NO_DATA
+- **Time aggregation:** 6-hourly → daily maximum for H; 6-hourly → daily mean for mean UTCI
+
+### 2.4 QA Rules for Ward Aggregation
+
+- Weights must sum to ≈1.0 (tolerance 0.01) for each ward
+- No negative weights
+- No duplicated cell contributions
+- CRS must be consistent (all WGS84/EPSG:4326)
+- Missing source cells → flag ward as INCOMPLETE
+- Reproducibility: fixed ERA5 grid, fixed ward polygons, deterministic intersection
+
+---
+
+## 3. Decision Matrix
+
+| Question | Evidence | Decision | Status | Blocking Issue |
+|----------|----------|----------|--------|----------------|
+| Can 2011 57-ward data map to current 48 wards? | No authoritative crosswalk exists | BLOCKED | Not implemented | Need SEC 2015 delimitation order or 2011 ward GIS |
+| Is there authoritative 2011 ward geometry? | NYU/Princeton may have it; DataMeet uncertain | UNVERIFIED | Need to acquire | Restricted access at NYU |
+| What aggregation method for ERA5→ward? | Peer-reviewed literature supports area-weighted intersection | DECIDED | Ready to implement | None |
+| When should aggregation occur? | Literature says aggregate at physical level, not index level | DECIDED | Ready to implement | None |
+| Current-48 ward vulnerability from 2011 Census? | No crosswalk | BLOCKED | Cannot implement | Need crosswalk or use 57-ward geography |
