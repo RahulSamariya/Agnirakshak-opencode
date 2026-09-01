@@ -1,0 +1,83 @@
+{
+  "test_id": "TEST_3",
+  "status": "COMPLETE",
+  "source_files": {
+    "radiation": {
+      "path": "97c99a12bac0f84dae69bd5460cde459.nc",
+      "hash": "ff22fd17747061c8"
+    },
+    "meteorology": {
+      "path": "53968a80e95eb41e9fe5c5f804eacbd8.nc",
+      "hash": "9e9d26c3ca07d978"
+    },
+    "era5_heat": {
+      "path": "cde4e619c080209e1ec505565f79b8e.nc",
+      "hash": "2c68117822e8ec69"
+    },
+    "raw_weather": {
+      "path": "data/raw/weather/data_0.nc",
+      "hash": "0d807637a3e74b4c"
+    }
+  },
+  "method_versions": {
+    "mrt": "ECMWF_THERMOFEEL_COMPATIBLE_V1",
+    "utci": "utci-polynomial-v1",
+    "hazard": "utci-hazard-v1"
+  },
+  "matching_statistics": {
+    "total_timestamps": 124,
+    "grid_points": 12,
+    "total_records": 1488,
+    "era5_heat_matches": 1488
+  },
+  "mrt_statistics": {
+    "N": 1488,
+    "mean": 308.5855352222523,
+    "median": 306.05396454851655,
+    "min": 279.96469640485253,
+    "max": 335.70412208453274
+  },
+  "utci_statistics": {
+    "N": 1488,
+    "mean": 28.930510752688175,
+    "median": 28.950000000000003,
+    "min": 11.6,
+    "max": 45.1,
+    "P95": 42.5
+  },
+  "utci_vs_era5heat": {
+    "N": 1488,
+    "MAE": 1.3890335041989437,
+    "RMSE": 1.6891812931033965,
+    "Bias": 1.141475788239487,
+    "MedianAE": 1.1927459716797095,
+    "P95AE": 3.0603192138671655,
+    "R2": 0.9717303863468721
+  },
+  "hazard_statistics": {
+    "N": 1488,
+    "mean": 0.45372580315728434,
+    "median": 0.37696078431372554,
+    "min": 0.038235294117647055,
+    "max": 0.971875,
+    "P95": 0.890625
+  },
+  "h_bounds": {
+    "min_ge_0": true,
+    "max_le_1": true
+  },
+  "quality_counts": {
+    "mrt_valid": 744,
+    "mrt_nighttime": 744,
+    "mrt_low_sun": 0,
+    "utci_valid": 1488,
+    "utci_errors": 0,
+    "h_valid": 1488
+  },
+  "hazard_categories": {
+    "no_thermal_stress": 744,
+    "strong_heat_stress": 344,
+    "very_strong_heat_stress": 400
+  },
+  "execution_time_seconds": 34.02
+}

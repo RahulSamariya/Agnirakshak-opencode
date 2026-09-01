@@ -1,0 +1,115 @@
+{
+  "test_id": "TEST_2H_MRT_METHOD_COMPARISON",
+  "version": "v1.1",
+  "status": "COMPLETE",
+  "corrections": {
+    "di_napoli_rmse": {
+      "previous_incorrect": "4.12 K",
+      "corrected": "RMSE < 10 °C (paper does not state average RMSE explicitly)",
+      "source": "Di Napoli et al. (2020) Results section"
+    },
+    "gamma_convention": {
+      "previous_description": "ambiguous",
+      "corrected": "gamma = solar elevation = 90° − solar zenith (unambiguous)",
+      "source": "Di Napoli et al. (2020) Eq 15, mrt.py line 261"
+    }
+  },
+  "methods": {
+    "DiNapoli": {
+      "source": "Di Napoli et al. (2020)",
+      "doi": "10.1007/s00484-020-01900-5",
+      "type": "Peer-reviewed paper",
+      "conventions": {
+        "fp_gamma": "elevation (= 90° - zenith)",
+        "I_star": "fdir/cos_bar (interval avg)",
+        "alpha_placement": "fp*I* OUTSIDE alpha_ratio"
+      }
+    },
+    "Thermofeel": {
+      "source": "ECMWF thermofeel 2.3.0",
+      "type": "Official code implementation",
+      "conventions": {
+        "fp_gamma": "arcsin(cossza)=elevation",
+        "dsrp": "fdir/cossza (instantaneous)",
+        "alpha_placement": "fp*dsrp INSIDE alpha_ratio"
+      }
+    },
+    "ERA5_HEAT": {
+      "source": "ERA5-HEAT reference product",
+      "type": "External benchmark/reference (NOT independent validation)",
+      "notes": "Uses Di Napoli methodology; cannot serve as independent validation"
+    }
+  },
+  "di_napoli_validation": {
+    "source": "Di Napoli et al. (2020)",
+    "r_squared": ">=0.88",
+    "average_bias": "0.42 °C",
+    "bias_range": "-1.6 to +6.6 °C",
+    "rmse": "< 10 °C",
+    "stations": "11 WRMC-BSRN",
+    "region": "Global",
+    "period": "2015-07 to 2018-06",
+    "notes": "Paper does not explicitly state average RMSE in abstract; truncated text suggests ~5.XX °C but not confirmed"
+  },
+  "pairwise_metrics": {
+    "DiNapoli_vs_Thermofeel": {
+      "N": 1488,
+      "MAE": 1.5669935493059055,
+      "RMSE": 2.9887602101890915,
+      "Bias": 1.5529842171617734,
+      "MedianAE": 0.00030517578125,
+      "Std": 2.553610701586281,
+      "P95": 6.382936096191406,
+      "R2": 0.9809615634226938,
+      "Corr": 0.9958143846722672,
+      "interpretation": "Internal consistency (NOT accuracy)"
+    },
+    "DiNapoli_vs_ERA5_HEAT": {
+      "N": 1488,
+      "MAE": 2.882798820413569,
+      "RMSE": 4.0780703412677966,
+      "Bias": 2.7358067625312397,
+      "MedianAE": 1.5634765625,
+      "Std": 3.024238592838928,
+      "P95": 7.690045166015625,
+      "R2": 0.9603489974735978,
+      "Corr": 0.9980635627614937,
+      "interpretation": "Method vs reference product"
+    },
+    "Thermofeel_vs_ERA5_HEAT": {
+      "N": 1488,
+      "MAE": 2.2744873826221754,
+      "RMSE": 3.5261072069063264,
+      "Bias": 1.182822545369466,
+      "MedianAE": 0.9106292724609375,
+      "Std": 3.3218011470830753,
+      "P95": 7.454296874999999,
+      "R2": 0.9703560704776716,
+      "Corr": 0.9891349786741807,
+      "interpretation": "Method vs reference product"
+    }
+  },
+  "recommendation": {
+    "method": "ECMWF thermofeel",
+    "status": "PROVISIONALLY RECOMMENDED",
+    "basis": [
+      "Source provenance (ECMWF maintains thermofeel as reference implementation)",
+      "Reproducibility (deterministic, simple equations, code available)",
+      "ECMWF support (official library with operational history)",
+      "Operational suitability (same 5 ERA5 radiation variables)"
+    ],
+    "not_based_on": [
+      "Proof of universal superiority",
+      "Lowest error against ground truth",
+      "Ahmedabad-specific validation",
+      "Evidence that thermofeel outperforms Di Napoli in accuracy"
+    ]
+  },
+  "explicit_limitations": {
+    "no_ahmedabad_ground_truth": true,
+    "no_hybrid_adopted": true,
+    "era5_heat_is_benchmark": true,
+    "european_validation_only": true,
+    "single_location_single_month": true
+  }
+}
