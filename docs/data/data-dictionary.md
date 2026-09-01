@@ -29,6 +29,56 @@
 | Date | Day number (1-31) | int | 15 |
 | 00:00:00 - 23:00:00 | Hourly AQI values | float | 142.0 |
 
+## Station AQI Fields (Curated)
+
+| Field | Description | Type | Source |
+|-------|-------------|------|--------|
+| station_name | Station name | string | "Chandkheda, Ahmedabad" |
+| agency | Operating agency | string | "IITM" or "GPCB" |
+| timestamp_local | Local timestamp | datetime | Excel date + hour |
+| aqi | AQI value (US EPA standard) | float | Excel value; NaN = missing |
+| source_file | Source filename | string | Original Excel filename |
+| year | Year | string | "2025" |
+| month | Month name | string | "January" |
+
+## Station Metadata Fields
+
+| Field | Description | Type | Source |
+|-------|-------------|------|--------|
+| station_name | Station name | string | CPCB |
+| agency | Operating agency | string | CPCB/GPCB |
+| latitude | Station latitude (deg N) | float | CPCB CAAQMS list |
+| longitude | Station longitude (deg E) | float | CPCB CAAQMS list |
+| spatial_level | STATION or CITY | string | "STATION" |
+| coordinate_source | Source of coordinates | string | "CPCB CAAQMS All India list" |
+| verification_status | Verification status | string | "VERIFIED CPCB" |
+| available_months | Months with data | string | "January" |
+| temporal_resolution | Data resolution | string | "hourly" |
+| record_count | Total records | int | 744 |
+| expected_record_count | Expected records | int | 744 |
+| completeness_pct | Data completeness % | float | 99.7 |
+| qc_status | QA status | string | "VALID" / "VALID_WITH_MISSING" / "QUARANTINED" |
+
+## Station-Month QC Fields
+
+| Field | Description | Type | Source |
+|-------|-------------|------|--------|
+| station_name | Station name | string | Derived |
+| year | Year | string | Derived |
+| month | Month name | string | Derived |
+| expected_hours | Expected hours in month | int | Calendar |
+| observed_hours | Hours with valid AQI | int | Count |
+| missing_hours | Hours with missing AQI | int | Count |
+| completeness_pct | Completeness percentage | float | observed/expected * 100 |
+| min_aqi | Minimum AQI | float | Station-month |
+| max_aqi | Maximum AQI | float | Station-month |
+| mean_aqi | Mean AQI | float | Station-month |
+| median_aqi | Median AQI | float | Station-month |
+| p95_aqi | 95th percentile AQI | float | Station-month |
+| max_consecutive_missing_hours | Longest consecutive gap | int | Gap analysis |
+| max_gap_length_hours | Maximum gap length | int | Gap analysis |
+| qc_status | QA classification | string | VALID/VALID_WITH_MISSING/QUARANTINED/INVALID |
+
 ## Staging Table: WeatherRecord
 
 | Field | Description | Type | Source |

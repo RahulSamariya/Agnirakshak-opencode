@@ -134,3 +134,59 @@ This is the peer-reviewed standard for climate-health impact assessment (Weighte
 | What aggregation method for ERA5→ward? | Peer-reviewed literature supports area-weighted intersection | DECIDED | Ready to implement | None |
 | When should aggregation occur? | Literature says aggregate at physical level, not index level | DECIDED | Ready to implement | None |
 | Current-48 ward vulnerability from 2011 Census? | No crosswalk | BLOCKED | Cannot implement | Need crosswalk or use 57-ward geography |
+
+---
+
+## 4. CPCB/GPCB Station AQI → Current 48 Ward Coverage
+
+### 4.1 Station Inventory
+
+9 Ahmedabad stations with authoritative CPCB coordinates:
+
+| Station | Agency | Lat | Lon | CPCB Code | Ward Inside |
+|---------|--------|-----|-----|-----------|-------------|
+| Chandkheda | IITM | 23.1080 | 72.5746 | #5453 | Ward 3 |
+| Gyaspur | IITM | 22.9771 | 72.5530 | #5450 | Ward 35 |
+| Maninagar | GPCB | 23.0027 | 72.5919 | #308 | Ward 36 |
+| Raikhad | IITM | 23.0205 | 72.5793 | #5452 | Ward 29 |
+| Rakhial | IITM | 23.0168 | 72.6258 | #5451 | Ward 39 |
+| SAC ISRO Bopal | IITM | 23.0411 | 72.4567 | #5454 | — |
+| SAC ISRO Satellite | IITM | 23.0234 | 72.5152 | #5455 | Ward 20 |
+| SVPI Airport Hansol | IITM | 23.0768 | 72.6279 | #5456 | — |
+| SVP Stadium | IITM | 23.0431 | 72.5630 | #5449 | Ward 10 |
+
+Source: CPCB CAAQMS All India list (cpcbccr.com/pdf/caaqms_list_All_India.pdf)
+
+### 4.2 Ward Coverage Summary
+
+| Classification | Count | % |
+|---------------|-------|---|
+| DIRECT_STATION (station inside ward) | 7 | 14.6% |
+| NEARBY_STATION (0–3 km) | 24 | 50.0% |
+| NO_DIRECT_STATION (>3 km) | 17 | 35.4% |
+| **Total** | **48** | **100%** |
+
+- Average nearest station distance: 2.54 km
+- Maximum nearest station distance: 6.67 km (Ward 47)
+- 4 wards >5 km from any station: Wards 1, 24, 47, 48
+
+### 4.3 Spatial Representativeness Assessment
+
+**Strengths:**
+- 64.6% of wards (7 direct + 24 nearby) have reasonable station coverage
+- All stations verified by CPCB with authoritative coordinates
+- Station density: 0.188 stations/ward
+
+**Limitations:**
+- 35.4% of wards have no station within 3 km
+- 4 wards are poorly represented (>5 km): peripheral/southern wards
+- Station network is biased toward central/north Ahmedabad
+- January-only data; seasonal representativeness unknown
+
+### 4.4 Recommended Station-to-Ward Aggregation
+
+**For E computation:** Use nearest-station assignment for wards within 3 km; flag wards >3 km as having limited representativeness.
+
+**DO NOT** interpolate AQI across wards without a defensible spatial method. Current recommendation: assign station AQI to the containing ward, and nearest-station AQI to nearby wards.
+
+**Next step:** Choose and document a defensible station-to-current-48-ward spatial aggregation method before creating E.

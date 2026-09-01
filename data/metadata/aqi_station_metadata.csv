@@ -1,0 +1,10 @@
+station_name,agency,spatial_level,source,source_url,year,available_months,temporal_resolution,aqi_available,record_count,expected_record_count,completeness_pct,qc_status,sha256,latitude,longitude,coordinate_source,verification_status
+"chandkheda, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.108,72.5746,CPCB CAAQMS All India list,VERIFIED CPCB
+"gyaspur, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,22.9771,72.553,CPCB CAAQMS All India list,VERIFIED CPCB
+"maninagar, ahmedabad",GPCB,STATION,GPCB Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0027,72.5919,CPCB CAAQMS All India list,VERIFIED CPCB
+"raikhad, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0205,72.5793,CPCB CAAQMS All India list,VERIFIED CPCB
+"rakhial, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0168,72.6258,CPCB CAAQMS All India list,VERIFIED CPCB
+"sac isro bopal, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0411,72.4567,CPCB CAAQMS All India list,VERIFIED CPCB
+"sac isro satellite, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0234,72.5152,CPCB CAAQMS All India list,VERIFIED CPCB
+"sardar vallabhbhai patel stadium, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,720,744,96.8,,,23.0431,72.563,CPCB CAAQMS All India list,VERIFIED CPCB
+"svpi airport hansol, ahmedabad",IITM,STATION,IITM Ahmedabad 2025,,2025,January,hourly,True,744,744,100.0,,,23.0768,72.6279,CPCB CAAQMS All India list,VERIFIED CPCB

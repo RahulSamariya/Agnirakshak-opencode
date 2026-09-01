@@ -1,0 +1,10 @@
+station_name,latitude,longitude,agency,cpcb_code,coordinate_source,verification_status
+"Chandkheda, Ahmedabad",23.108,72.5746,IITM,#5453,CPCB CAAQMS All India list,VERIFIED CPCB
+"Gyaspur, Ahmedabad",22.9771,72.553,IITM,#5450,CPCB CAAQMS All India list,VERIFIED CPCB
+"Maninagar, Ahmedabad",23.0027,72.5919,GPCB,#308,CPCB CAAQMS All India list,VERIFIED CPCB
+"Raikhad, Ahmedabad",23.0205,72.5793,IITM,#5452,CPCB CAAQMS All India list,VERIFIED CPCB
+"Rakhial, Ahmedabad",23.0168,72.6258,IITM,#5451,CPCB CAAQMS All India list,VERIFIED CPCB
+"SAC ISRO Bopal, Ahmedabad",23.0411,72.4567,IITM,#5454,CPCB CAAQMS All India list,VERIFIED CPCB
+"SAC ISRO Satellite, Ahmedabad",23.0234,72.5152,IITM,#5455,CPCB CAAQMS All India list,VERIFIED CPCB
+"SVPI Airport Hansol, Ahmedabad",23.0768,72.6279,IITM,#5456,CPCB CAAQMS All India list,VERIFIED CPCB
+"Sardar Vallabhbhai Patel Stadium, Ahmedabad",23.0431,72.563,IITM,#5449,CPCB CAAQMS All India list,VERIFIED CPCB

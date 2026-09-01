@@ -19,6 +19,9 @@
 | 8 | Census 2011 Slum Data | Census India `PC11 PCA-SLUM` | PRIMARY_OFFICIAL | UNVERIFIED | PUBLIC | UNKNOWN | Town-level slum population (not ward-level) |
 | 9 | Ahmedabad HAP (NRDC) | `heathealth.info`, `nrdc.org` | OFFICIAL_DOCUMENTATION | VERIFIED | PUBLIC | PARTIALLY_SUITABLE | Heat Action Plan methodology, vulnerability factors |
 | 10 | Tran et al. 2013 (IJERPH) | PMC3717750 | SECONDARY_RESEARCH | VERIFIED | PUBLIC | SUITABLE | Ahmedabad slum heat vulnerability factors |
+| 11 | CPCB CAAQMS Station List | `cpcbccr.com/pdf/caaqms_list_All_India.pdf` | PRIMARY_OFFICIAL | VERIFIED | PUBLIC | SUITABLE | 9 Ahmedabad station coordinates, agency, CPCB codes |
+| 12 | CPCB/GPCB Station AQI (Jan 2025) | 9 station-level Excel files (root dir) | PRIMARY_OFFICIAL | VERIFIED | PUBLIC | SUITABLE | Hourly AQI for 9 Ahmedabad stations, January 2025 |
+| 13 | CPCB City-Level AQI (Jan–May 2025) | `data/raw/aqi/aqi_hourly_city_level__*.xlsx` | PRIMARY_OFFICIAL | VERIFIED | PUBLIC | PARTIALLY_SUITABLE | City-average hourly AQI, 5 months — NOT station-level |
 
 ## Candidate Sources (Not Yet Acquired)
 

@@ -1,0 +1,15 @@
+station_name,year,month,expected_hours,observed_hours,missing_hours,completeness_pct,min_aqi,max_aqi,mean_aqi,median_aqi,p95_aqi,max_consecutive_missing_hours,max_gap_length_hours,qc_status
+Ahmedabad City,2025,April,720,712,8,98.9,75.0,222.0,115.4,110.0,158.0,1,0,VALID_WITH_MISSING
+Ahmedabad City,2025,February,672,672,0,100.0,86.0,210.0,137.9,136.0,184.4,0,0,VALID
+Ahmedabad City,2025,January,744,742,2,99.7,83.0,211.0,123.7,113.0,193.0,1,0,VALID_WITH_MISSING
+Ahmedabad City,2025,March,744,737,7,99.1,67.0,225.0,132.0,132.0,194.0,1,0,VALID_WITH_MISSING
+Ahmedabad City,2025,May,744,735,9,98.8,48.0,160.0,94.2,95.0,125.0,1,0,VALID_WITH_MISSING
+"chandkheda, ahmedabad",2025,January,744,742,2,99.7,71.0,177.0,101.1,96.0,143.0,1,0,VALID_WITH_MISSING
+"gyaspur, ahmedabad",2025,January,744,689,55,92.6,39.0,308.0,138.3,121.0,250.0,3,0,VALID_WITH_MISSING
+"maninagar, ahmedabad",2025,January,744,627,117,84.3,57.0,255.0,108.0,104.0,153.4,2,0,VALID_WITH_MISSING
+"raikhad, ahmedabad",2025,January,744,690,54,92.7,75.0,282.0,128.8,108.0,237.0,2,0,VALID_WITH_MISSING
+"rakhial, ahmedabad",2025,January,744,659,85,88.6,83.0,284.0,151.9,138.0,250.0,2,0,VALID_WITH_MISSING
+"sac isro bopal, ahmedabad",2025,January,744,659,85,88.6,64.0,215.0,114.3,108.0,170.2,4,0,VALID_WITH_MISSING
+"sac isro satellite, ahmedabad",2025,January,744,742,2,99.7,66.0,193.0,102.2,96.0,157.9,1,0,VALID_WITH_MISSING
+"sardar vallabhbhai patel stadium, ahmedabad",2025,January,744,712,8,95.7,88.0,343.0,154.2,128.0,323.4,1,0,VALID_WITH_MISSING
+"svpi airport hansol, ahmedabad",2025,January,744,604,140,81.2,60.0,216.0,109.0,106.0,146.9,5,0,VALID_WITH_MISSING
