@@ -65,21 +65,21 @@ Implemented from Di Napoli et al. (2020) equations 6-12.
 | Metric | Value |
 |--------|-------|
 | N | 1488 |
-| MAE | 2.1823 K |
-| RMSE | 3.4467 K |
+| MAE | 1.9371 K |
+| RMSE | 3.3738 K |
 | Mean bias | -1.5651 K |
-| Median AE | 0.8655 K |
-| P95 AE | 7.4981 K |
-| R-squared | 0.971676 |
-| Correlation | 0.989749 |
+| Median AE | 0.4120 K |
+| P95 AE | 7.4009 K |
+| R-squared | 0.972862 |
+| Correlation | 0.990377 |
 
 ## 10. Stratified Results
 
 | Bin | N | MAE | Bias |
 |-----|---|-----|------|
-| (-90, 0] deg | 744 | 0.57 | -0.02 |
+| (-90, 0] deg | 744 | 0.27 | -0.02 |
 | (10, 20] deg | 372 | 6.60 | -6.60 |
-| (30, 90] deg | 372 | 0.98 | 0.39 |
+| (30, 90] deg | 372 | 0.60 | 0.39 |
 
 
 ## 11. Component Diagnostics

@@ -147,6 +147,15 @@ def main():
     # Extract ERA5-HEAT MRT
     heat_mrt = ds_heat["mrt"].sel(valid_time=heat_common_mask).values
 
+    # Flip latitude axis if grids have different ordering
+    heat_lat = ds_heat["latitude"].values
+    rad_lat = ds_rad["latitude"].values
+    if not np.array_equal(heat_lat, rad_lat):
+        # Check if heat lat is reversed relative to rad lat
+        if np.array_equal(heat_lat, rad_lat[::-1]):
+            heat_mrt = heat_mrt[:, ::-1, :]
+            print(f"  NOTE: ERA5-HEAT lat grid reversed, flipping to match radiation grid")
+
     print(f"  ssrd:  [{np.nanmin(ssrd):.2f}, {np.nanmax(ssrd):.2f}] W/m2")
     print(f"  strd:  [{np.nanmin(strd):.2f}, {np.nanmax(strd):.2f}] W/m2")
     print(f"  fdir:  [{np.nanmin(fdir):.2f}, {np.nanmax(fdir):.2f}] W/m2")
