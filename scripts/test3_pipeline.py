@@ -36,7 +36,7 @@ OUT_JSON = "data/profiles/thermal_hazard_test3_v1.json"
 OUT_REPORT = "docs/data/thermal_hazard_test3_v1.md"
 OUT_PLOTS_DIR = Path("data/profiles/plots/thermal_hazard_test3")
 
-ACCUMULATION_SECONDS = 3600.0  # ERA5 hourly accumulation
+ACCUMULATION_SECONDS = 3600.0  # ERA5 accumulation period = 1 hour (stream=oper)
 
 # =============================================================================
 # STEP 1-2: LOAD AND VERIFY INPUT DATA
@@ -238,14 +238,14 @@ for t in common_sorted:
         if any(np.isnan(x) for x in [t2m, d2m, u10, v10]):
             continue
 
-        # Surface pressure from raw weather (nearest)
+        # Surface pressure from raw weather (nearest on coarser grid)
         try:
             sp = float(ds_raw.sel(valid_time=t, latitude=lat, longitude=lon, method="nearest")["sp"].values)
         except Exception:
-            sp = 101325.0  # standard pressure fallback
+            continue  # skip record if sp unavailable
 
         if np.isnan(sp):
-            sp = 101325.0
+            continue  # skip record if sp is NaN
 
         # ERA5-HEAT reference
         try:

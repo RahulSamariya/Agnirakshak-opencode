@@ -70,6 +70,9 @@
     "mrt_valid": 744,
     "mrt_nighttime": 744,
     "mrt_low_sun": 0,
+    "mrt_negative_radiation": 0,
+    "mrt_missing_input": 0,
+    "mrt_unphysical": 0,
     "utci_valid": 1488,
     "utci_errors": 0,
     "h_valid": 1488
@@ -79,5 +82,5 @@
     "strong_heat_stress": 344,
     "very_strong_heat_stress": 400
   },
-  "execution_time_seconds": 34.02
+  "execution_time_seconds": 52.55
 }

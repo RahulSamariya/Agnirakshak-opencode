@@ -54,7 +54,7 @@ Prove that the complete thermal calculation works on real observations and produ
 | Common (rad+met+raw) | 124 |
 | Common with ERA5-HEAT | 124 |
 
-**OBSERVED RESULT**: All 124 hourly timestamps from March 2010 are matched across all sources.
+**OBSERVED RESULT**: All 124 6-hourly timestamps from March 2010 are matched across all sources.
 
 ## 5. Spatial matching
 
@@ -112,7 +112,7 @@ Quality flags:
 - Missing input (qf=4): 0
 - MRT unphysical (qf=5): 0
 
-**OBSERVED RESULT**: All 1488 MRT values are valid. Nighttime MRT is longwave-only (as expected).
+**OBSERVED RESULT**: All 1488 MRT values passed quality gate (qf ≤ 2): 744 daytime (qf=0) with SW+LW, 744 nighttime (qf=1) with LW-only (as expected).
 
 ## 9. UTCI
 
@@ -222,7 +222,7 @@ All top 20 cases occur during 12:00 UTC on March 18–21, 2010:
 - H range: 0.953 – 0.972
 - Category: very_strong_heat_stress
 
-**OBSERVED RESULT**: Highest thermal stress occurs during pre-monsoon heat episodes in mid-March.
+**OBSERVED RESULT**: Highest thermal stress occurs during the highest simulated thermal-stress cases in March 2010.
 
 ## 16. Limitations
 
