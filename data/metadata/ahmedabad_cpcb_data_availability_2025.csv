@@ -1,0 +1,46 @@
+station_id,station_name,month,hourly_available,aqi_available,pollutants_available,download_available,status,source_url
+site_5453,"Chandkheda, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5453,"Chandkheda, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5453,"Chandkheda, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5453,"Chandkheda, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5453,"Chandkheda, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5450,"Gyaspur, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5450,"Gyaspur, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5450,"Gyaspur, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5450,"Gyaspur, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5450,"Gyaspur, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_308,"Maninagar, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_308,"Maninagar, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_308,"Maninagar, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_308,"Maninagar, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_308,"Maninagar, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5452,"Raikhad, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5452,"Raikhad, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5452,"Raikhad, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5452,"Raikhad, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5452,"Raikhad, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5451,"Rakhial, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5451,"Rakhial, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5451,"Rakhial, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5451,"Rakhial, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5451,"Rakhial, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5454,"SAC ISRO Bopal, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5454,"SAC ISRO Bopal, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5454,"SAC ISRO Bopal, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5454,"SAC ISRO Bopal, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5454,"SAC ISRO Bopal, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5455,"SAC ISRO Satellite, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5455,"SAC ISRO Satellite, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5455,"SAC ISRO Satellite, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5455,"SAC ISRO Satellite, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5455,"SAC ISRO Satellite, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5456,"SVPI Airport Hansol, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5456,"SVPI Airport Hansol, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5456,"SVPI Airport Hansol, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5456,"SVPI Airport Hansol, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5456,"SVPI Airport Hansol, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",January,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",February,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",March,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",April,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",May,True,True,False,True,AVAILABLE,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf

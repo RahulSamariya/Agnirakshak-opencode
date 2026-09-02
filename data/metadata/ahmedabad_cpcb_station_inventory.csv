@@ -1,0 +1,10 @@
+station_id,station_name,agency,state,city,latitude,longitude,station_status,monitoring_type,source_url,retrieval_date,verification_status,cpcb_code
+site_5453,"Chandkheda, Ahmedabad",IITM,Gujarat,Ahmedabad,23.108,72.5746,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5453
+site_5450,"Gyaspur, Ahmedabad",IITM,Gujarat,Ahmedabad,22.9771,72.553,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5450
+site_308,"Maninagar, Ahmedabad",GPCB,Gujarat,Ahmedabad,23.0027,72.5919,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#308
+site_5452,"Raikhad, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0205,72.5793,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5452
+site_5451,"Rakhial, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0168,72.6258,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5451
+site_5454,"SAC ISRO Bopal, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0411,72.4567,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5454
+site_5455,"SAC ISRO Satellite, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0234,72.5152,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5455
+site_5456,"SVPI Airport Hansol, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0768,72.6279,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5456
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",IITM,Gujarat,Ahmedabad,23.0431,72.563,LIVE,CAAQMS,https://cpcbccr.com/pdf/caaqms_list_All_India.pdf,2026-09-02,VERIFIED CPCB,#5449

@@ -1,0 +1,49 @@
+ward_code,ward_name,station_count_inside,station_names,nearest_station,nearest_station_distance_km,classification
+12,"Naroda, Ahmedabad (M.Corp.) Ward No. 12",0,,"SVPI Airport Hansol, Ahmedabad",4.58,NO_DIRECT_STATION
+8,"Thaltej, Ahmedabad (M.Corp.) Ward No. 8",0,,"SAC ISRO Bopal, Ahmedabad",4.08,NO_DIRECT_STATION
+46,"Lambha, Ahmedabad (M.Corp.) Ward No. 46",0,,"Gyaspur, Ahmedabad",3.19,NO_DIRECT_STATION
+26,"Bapurnagar, Ahmedabad (M.Corp.) Ward No. 26",0,,"Rakhial, Ahmedabad",1.8,NEARBY_STATION
+48,"Ramol Hathijan, Ahmedabad (M.Corp.) Ward No. 48",0,,"Rakhial, Ahmedabad",6.62,NO_DIRECT_STATION
+11,"Sardarnagar, Ahmedabad (M.Corp.) Ward No. 11",0,,"SVPI Airport Hansol, Ahmedabad",1.88,NEARBY_STATION
+14,"Kubernagar, Ahmedabad (M.Corp.) Ward No. 14",0,,"SVPI Airport Hansol, Ahmedabad",1.06,NEARBY_STATION
+23,"Thakkarbapa Nagar, Ahmedabad (M.Corp.) Ward No. 23",0,,"SVPI Airport Hansol, Ahmedabad",3.72,NO_DIRECT_STATION
+13,"Saijpur Bogha, Ahmedabad (M.Corp.) Ward No. 13",0,,"SVPI Airport Hansol, Ahmedabad",2.12,NEARBY_STATION
+27,"Sarsapur Rakhiyal, Ahmedabad (M.Corp.) Ward No. 27",0,,"Rakhial, Ahmedabad",1.81,NEARBY_STATION
+22,"India colony, Ahmedabad (M.Corp.) Ward No. 22",0,,"Rakhial, Ahmedabad",3.01,NO_DIRECT_STATION
+2,"Chandlodiya, Ahmedabad (M.Corp.) Ward No. 2",0,,"Chandkheda, Ahmedabad",2.44,NEARBY_STATION
+1,"Gota, Ahmedabad (M.Corp.) Ward No. 1",0,,"Chandkheda, Ahmedabad",5.8,NO_DIRECT_STATION
+7,"Ghatlodiya, Ahmedabad (M.Corp.) Ward No. 7",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",3.47,NO_DIRECT_STATION
+19,"Bodakdev, Ahmedabad (M.Corp.) Ward No. 19",0,,"SAC ISRO Satellite, Ahmedabad",1.58,NEARBY_STATION
+3,"Chandkheda, Ahmedabad (M.Corp.) Ward No. 3",1,"Chandkheda, Ahmedabad","Chandkheda, Ahmedabad",0.0,DIRECT_STATION
+33,"Vejalpur, Ahmedabad (M.Corp.) Ward No. 33",0,,"SAC ISRO Satellite, Ahmedabad",4.54,NO_DIRECT_STATION
+34,"Maktampura, Ahmedabad (M.Corp.) Ward No. 34",0,,"Gyaspur, Ahmedabad",4.45,NO_DIRECT_STATION
+20,"Jodhpur, Ahmedabad (M.Corp.) Ward No. 20",1,"SAC ISRO Satellite, Ahmedabad","SAC ISRO Satellite, Ahmedabad",0.0,DIRECT_STATION
+32,"Vejalpur, Ahmedabad (M.Corp.) Ward No. 32",0,,"SAC ISRO Satellite, Ahmedabad",2.22,NEARBY_STATION
+31,"Vasana, Ahmedabad (M.Corp.) Ward No. 31",0,,"Gyaspur, Ahmedabad",2.3,NEARBY_STATION
+30,"Paldi, Ahmedabad (M.Corp.) Ward No. 30",0,,"Raikhad, Ahmedabad",2.05,NEARBY_STATION
+18,"Navrangpura, Ahmedabad (M.Corp.) Ward No. 18",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",1.8,NEARBY_STATION
+9,"Naranpura, Ahmedabad (M.Corp.) Ward No. 9",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",1.96,NEARBY_STATION
+6,"Nava Vadaj, Ahmedabad (M.Corp.) Ward No. 6",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",3.03,NO_DIRECT_STATION
+10,"Sardar Patel Stadium, Ahmedabad (M.Corp.) Ward No. 10",1,"Sardar Vallabhbhai Patel Stadium, Ahmedabad","Sardar Vallabhbhai Patel Stadium, Ahmedabad",0.0,DIRECT_STATION
+5,"Ranip, Ahmedabad (M.Corp.) Ward No. 5",0,,"Chandkheda, Ahmedabad",2.35,NEARBY_STATION
+4,"Sabarmati, Ahmedabad (M.Corp.) Ward No. 4",0,,"Chandkheda, Ahmedabad",2.82,NEARBY_STATION
+16,"Shahibag, Ahmedabad (M.Corp.) Ward No. 16",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",3.72,NO_DIRECT_STATION
+15,"Asarva, Ahmedabad (M.Corp.) Ward No. 15",0,,"SVPI Airport Hansol, Ahmedabad",3.35,NO_DIRECT_STATION
+21,"Dariyapur, Ahmedabad (M.Corp.) Ward No. 21",0,,"Raikhad, Ahmedabad",1.38,NEARBY_STATION
+35,"Baherampura, Ahmedabad (M.Corp.) Ward No. 35",1,"Gyaspur, Ahmedabad","Gyaspur, Ahmedabad",0.0,DIRECT_STATION
+47,"Vatava, Ahmedabad (M.Corp.) Ward No. 47",0,,"Maninagar, Ahmedabad",6.67,NO_DIRECT_STATION
+37,"Maninagar, Ahmedabad (M.Corp.) Ward No. 37",0,,"Maninagar, Ahmedabad",1.09,NEARBY_STATION
+45,"Isanpur, Ahmedabad (M.Corp.) Ward No. 45",0,,"Maninagar, Ahmedabad",2.68,NEARBY_STATION
+39,"Amraivadi, Ahmedabad (M.Corp.) Ward No. 39",1,"Rakhial, Ahmedabad","Rakhial, Ahmedabad",0.0,DIRECT_STATION
+40,"Odhav, Ahmedabad (M.Corp.) Ward No. 40",0,,"Rakhial, Ahmedabad",3.71,NO_DIRECT_STATION
+41,"Vastral, Ahmedabad (M.Corp.) Ward No. 41",0,,"Rakhial, Ahmedabad",4.77,NO_DIRECT_STATION
+42,"Indrapuri, Ahmedabad (M.Corp.) Ward No. 42",0,,"Rakhial, Ahmedabad",2.22,NEARBY_STATION
+25,"Viratnagar, Ahmedabad (M.Corp.) Ward No. 25",0,,"Rakhial, Ahmedabad",2.32,NEARBY_STATION
+44,"Khokhra, Ahmedabad (M.Corp.) Ward No. 44",0,,"Rakhial, Ahmedabad",2.56,NEARBY_STATION
+17,"Shapur, Ahmedabad (M.Corp.) Ward No. 17",0,,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",2.22,NEARBY_STATION
+29,"Jamalpur, Ahmedabad (M.Corp.) Ward No. 29",1,"Raikhad, Ahmedabad","Raikhad, Ahmedabad",0.0,DIRECT_STATION
+28,"Khadiya, Ahmedabad (M.Corp.) Ward No. 28",0,,"Raikhad, Ahmedabad",1.52,NEARBY_STATION
+36,"Danilimda, Ahmedabad (M.Corp.) Ward No. 36",1,"Maninagar, Ahmedabad","Maninagar, Ahmedabad",0.0,DIRECT_STATION
+38,"Gomtipur, Ahmedabad (M.Corp.) Ward No. 38",0,,"Rakhial, Ahmedabad",0.91,NEARBY_STATION
+43,"Bhaipura Hatkeswar, Ahmedabad (M.Corp.) Ward No. 43",0,,"Rakhial, Ahmedabad",2.49,NEARBY_STATION
+24,"Nikol, Ahmedabad (M.Corp.) Ward No. 24",0,,"SVPI Airport Hansol, Ahmedabad",5.45,NO_DIRECT_STATION
