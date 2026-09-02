@@ -87,8 +87,8 @@
       "original_hash": "c5015c0cd147118e34ddf60fccce4f4c93d72118b21ae5d5dc36d1723c17043a",
       "notes": "Normalized copy with [lon, lat] coordinate order."
     },
-    "aqi": {
-      "dataset_id": "cpcb_ahmedabad_2025_01_05",
+    "aqi_city": {
+      "dataset_id": "cpcb_ahmedabad_city_2025_01_05",
       "domain": "air_quality",
       "source_name": "Central Pollution Control Board (CPCB)",
       "source_type": "PRIMARY_OFFICIAL",
@@ -123,13 +123,77 @@
       "acquired_at": "2026-08-30T11:05:26.140212+00:00",
       "original_format": "XLSX",
       "transformation_version": "v2.0.0",
-      "status": "PARTIAL",
+      "status": "READY",
       "evidence_classification": "PRIMARY_OFFICIAL",
       "source_status": "VERIFIED",
       "access_status": "PUBLIC",
       "ml_suitability": "PARTIALLY_SUITABLE",
       "file_count": 5,
-      "notes": "City-level AQI. ~5% missing values."
+      "notes": "City-level AQI, 5 months. ~1% missing values."
+    },
+    "aqi_station": {
+      "dataset_id": "cpcb_ahmedabad_station_2025_01",
+      "domain": "air_quality",
+      "source_name": "Central Pollution Control Board (CPCB) / Gujarat Pollution Control Board (GPCB)",
+      "source_type": "PRIMARY_OFFICIAL",
+      "source_url": "https://app.cpcbccr.com/ccr/#/caaqm-dashboard-all/caaqm-landing",
+      "source_files": [
+        {
+          "file": "aqi_hourly_station_level_chandkheda,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "5413b9f497e8a2c685b9295b449e401ed0614d2c12132220d75a9d1a2f5ade45",
+          "size_bytes": 8527
+        },
+        {
+          "file": "aqi_hourly_station_level_gyaspur,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "b0b306634d209caaf69c7a7d6040fbcbe3d890397970ea45aad0cd0cb7c9334d",
+          "size_bytes": 8655
+        },
+        {
+          "file": "aqi_hourly_station_level_maninagar,_ahmedabad_-_gpcb_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "cc63cb2df2ab59f83325a073f61f8ffd80bd4102376f832fd64615b838540a2c",
+          "size_bytes": 8523
+        },
+        {
+          "file": "aqi_hourly_station_level_raikhad,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "af240bfe522888de71efb10de2fab32f5bf8dd4f345b51d14095df23c04266ec",
+          "size_bytes": 8563
+        },
+        {
+          "file": "aqi_hourly_station_level_rakhial,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "8a3345bf769358ef9e76f59b3d7a8bdc16c6423f0da592d02147a711291bec50",
+          "size_bytes": 8594
+        },
+        {
+          "file": "aqi_hourly_station_level_sac_isro_bopal,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "91c30dda2b4fe33c0e2fbcb21ade87607dfa1c50bd61516e9c02bc5a6c4b937f",
+          "size_bytes": 8573
+        },
+        {
+          "file": "aqi_hourly_station_level_sac_isro_satellite,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "7a9e35c2c0f2fc57f79591fbcc93d342052678f156ddffaf86730a8b7f1960c7",
+          "size_bytes": 8491
+        },
+        {
+          "file": "aqi_hourly_station_level_sardar_vallabhbhai_patel_stadium,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "f37a845b9ab32f1392532b7a395ecacfd706397a1d6a67f5e47a81889d1673c1",
+          "size_bytes": 8526
+        },
+        {
+          "file": "aqi_hourly_station_level_svpi_airport_hansol,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+          "sha256": "8d37819d9a909a060270d34af3a1e920637ccc1312454489763e9748d80747d3",
+          "size_bytes": 8680
+        }
+      ],
+      "acquired_at": "2026-08-30T11:05:26.140212+00:00",
+      "original_format": "XLSX",
+      "transformation_version": "v2.0.0",
+      "status": "PARTIAL",
+      "evidence_classification": "PRIMARY_OFFICIAL",
+      "source_status": "VERIFIED",
+      "access_status": "PUBLIC",
+      "ml_suitability": "SUITABLE",
+      "file_count": 9,
+      "notes": "9 station-level AQI files, January 2025 only. Feb-May NOT acquired. Station coordinates verified against CPCB CAAQMS All India list."
     },
     "census": {
       "dataset_id": "census_ahmedabad_2011",

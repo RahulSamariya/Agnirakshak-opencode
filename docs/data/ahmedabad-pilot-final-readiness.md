@@ -12,7 +12,8 @@
 |---|---------|--------|-------|--------|-------|
 | 1 | ERA5-Land | CDS/Copernicus | 1 NetCDF | PASS | March 2010 sample only |
 | 2 | GIS Wards | AMC | 1 GeoJSON | PASS | 48 wards, EPSG:4326 |
-| 3 | AQI | CPCB | 5 Excel | PARTIAL | ~5% missing, city-level only |
+| 3 | AQI (city) | CPCB | 5 Excel | PASS | City-level avg, ~1% missing |
+| 4 | AQI (stations) | CPCB | 9 Excel | PARTIAL | January 2025 only; Feb–May not acquired |
 | 4 | Census 2011 | Census of India | 0 | BLOCKED | File not in repository |
 | 5 | Mortality | Health Dept | 0 | BLOCKED | Not available |
 | 6 | Hospitalization | Health Dept | 0 | BLOCKED | Not available |
@@ -35,11 +36,14 @@
 - **QC status**: 8/8 checks passed
 
 ### AQI (`data/raw/aqi/*.xlsx`)
-- **Files**: 5 monthly (Jan, Feb, Mar, Apr, May 2025)
+- **City-level files**: 5 monthly (Jan, Feb, Mar, Apr, May 2025)
+- **Station-level files**: 9 (ALL January 2025 only)
+- **Station coverage**: 7 wards DIRECT, 11 wards ≤2km, 26 wards 2-5km, 4 wards >5km
 - **Format**: Wide (Date + 24 hourly columns)
-- **AQI range**: 48-225
-- **Missing values**: ~5% (17 of 360 daily-hours across files)
+- **AQI range**: 48-225 (city), 39-343 (stations)
+- **Missing values**: ~1% city, 0.3-18.8% stations (January only)
 - **QC status**: 13/13 checks passed
+- **BLOCKER**: Feb–May station-level data NOT acquired; ward-level AQI blocked
 
 ### Census (`data/raw/census/`)
 - **Status**: BLOCKED
@@ -135,7 +139,7 @@ Full QC report: `data/profiles/qc_report.json`
 |-----------|--------|-------|
 | ERA5 available | GO | 7 variables, 0% missing |
 | GIS available | GO | 48 wards, valid geometries |
-| AQI available | PARTIAL | City-level, ~5% missing |
+| AQI available | PARTIAL | City-level (Jan-May); station-level (Jan only); ward-level blocked |
 | Census available | BLOCKED | File missing |
 | Temporal overlap | BLOCKED | No common period |
 | Spatial overlap | GO | ERA5 covers Ahmedabad |

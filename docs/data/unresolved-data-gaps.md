@@ -17,7 +17,7 @@
 
 | # | Gap | Impact | Resolution Path | Status |
 |---|-----|--------|-----------------|--------|
-| 4 | **No ward-level AQI data** | Cannot compute ward-level air_quality exposure factor | Acquire station-level AQI for Ahmedabad; use spatial interpolation if multiple stations exist | **PARTIALLY RESOLVED** — 9 station-level AQI series acquired (Jan 2025); station→ward coverage assessed; ward-level AQI not yet computed |
+| 4 | **No ward-level AQI data** | Cannot compute ward-level air_quality exposure factor | Acquire station-level AQI for Ahmedabad; use spatial interpolation if multiple stations exist | **PARTIALLY RESOLVED** — 9 station-level AQI series acquired (Jan 2025 only); Feb–May station files not locally acquired; station→ward coverage assessed (7 DIRECT, 11 NEAR_2KM, 26 NEAR_5KM, 4 FAR); ward-level AQI BLOCKED_PENDING_ACQUISITION |
 | 5 | **No ward-level occupation data** | Cannot compute outdoor_worker_share for E | Census 2011 has worker classification at ward level (TOT_WORK, MAINWORK, MARGWORK) but not outdoor vs indoor distinction | PARTIALLY Available |
 | 6 | **No ward-level housing quality data** | Cannot assess housing vulnerability | Census 2011 HH data available but limited; no cooling access, construction material at ward level | PARTIALLY Available |
 | 7 | **No ward-level healthcare access data** | Cannot assess healthcare_accessibility for E | Facility locations exist in GIS (AMC Facilities.kml) but not processed to ward-level distance metrics | UNRESOLVED |

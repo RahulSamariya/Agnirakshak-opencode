@@ -284,7 +284,8 @@ class TestProvenance:
         assert "era5land" in datasets
         assert "gis_raw" in datasets
         assert "gis_normalized" in datasets
-        assert "aqi" in datasets
+        assert "aqi_city" in datasets
+        assert "aqi_station" in datasets
         assert "census" in datasets
 
     def test_provenance_uses_sha256(self):

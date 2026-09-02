@@ -161,9 +161,10 @@ Source: CPCB CAAQMS All India list (cpcbccr.com/pdf/caaqms_list_All_India.pdf)
 
 | Classification | Count | % |
 |---------------|-------|---|
-| DIRECT_STATION (station inside ward) | 7 | 14.6% |
-| NEARBY_STATION (0–3 km) | 24 | 50.0% |
-| NO_DIRECT_STATION (>3 km) | 17 | 35.4% |
+| DIRECT (station inside ward) | 7 | 14.6% |
+| NEAR_2KM (0–2 km) | 11 | 22.9% |
+| NEAR_5KM (2–5 km) | 26 | 54.2% |
+| FAR (>5 km) | 4 | 8.3% |
 | **Total** | **48** | **100%** |
 
 - Average nearest station distance: 2.54 km
@@ -173,15 +174,16 @@ Source: CPCB CAAQMS All India list (cpcbccr.com/pdf/caaqms_list_All_India.pdf)
 ### 4.3 Spatial Representativeness Assessment
 
 **Strengths:**
-- 64.6% of wards (7 direct + 24 nearby) have reasonable station coverage
+- 37.5% of wards (7 direct + 11 near_2km) have strong station coverage within 2 km
+- 91.7% of wards (7+11+26) have station coverage within 5 km
 - All stations verified by CPCB with authoritative coordinates
 - Station density: 0.188 stations/ward
 
 **Limitations:**
-- 35.4% of wards have no station within 3 km
-- 4 wards are poorly represented (>5 km): peripheral/southern wards
+- 8.3% of wards (4) are >5 km from any station (poorly represented)
 - Station network is biased toward central/north Ahmedabad
 - January-only data; seasonal representativeness unknown
+- Ward-level AQI BLOCKED_PENDING_ACQUISITION (Feb–May station files not acquired)
 
 ### 4.4 Recommended Station-to-Ward Aggregation
 
