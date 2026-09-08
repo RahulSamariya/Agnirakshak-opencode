@@ -1,0 +1,62 @@
+{
+  "station_id": "site_5453",
+  "station_name": "Chandkheda, Ahmedabad - IITM",
+  "start_date": "01-01-2026",
+  "end_date": "03-01-2026",
+  "parameter": "PM2.5",
+  "success": false,
+  "file_path": null,
+  "error": "Failed to navigate to comparison page - Angular SPA did not fully load",
+  "test_timestamp": "2026-09-08T21:30:00",
+  "browser_automation": {
+    "script": "scripts/cpcb_browser_acquisition.py",
+    "selenium_version": "4.48.0",
+    "chromedriver_version": "152.0.7977.82",
+    "browser": "Chrome 152.0.7977.76",
+    "headless": false,
+    "anti_detection": true
+  },
+  "navigation_attempts": [
+    {
+      "url": "https://airquality.cpcb.gov.in/ccr/#/caaqm-dashboard-all/caaqm-landing/caaqm-comparison-data",
+      "result": "Page loaded but URL redirected to root",
+      "current_url": "https://airquality.cpcb.gov.in/ccr/#/",
+      "page_source_length": 258581,
+      "angular_elements_found": 2,
+      "form_elements_found": false
+    }
+  ],
+  "root_cause_analysis": {
+    "primary_cause": "Angular SPA lazy loading requires specific navigation path",
+    "evidence": [
+      "Page loads (258KB HTML) but URL redirects to root",
+      "Angular elements found but content not rendered",
+      "Menu items visible but not interactable",
+      "Dropdown elements not found in DOM"
+    ],
+    "possible_factors": [
+      "Angular lazy loading module not initialized",
+      "JavaScript execution issues in automated browsers",
+      "Session initialization requirements not met",
+      "Anti-bot detection mechanisms"
+    ]
+  },
+  "recommendations": [
+    "Use manual browser session to capture API endpoints",
+    "Analyze network requests for authentication tokens",
+    "Consider alternative automation frameworks (Playwright, Puppeteer)",
+    "Implement token-based API access after manual session"
+  ],
+  "existing_data_availability": {
+    "station_id": "site_5453",
+    "file_path": "raw_data_hourly_chandkheda,_ahmedabad_-_iitm_1H.csv",
+    "record_count": 5088,
+    "date_range": "2026-01-01 to 2026-08-31",
+    "temporal_resolution": "Hourly",
+    "pm25_units": "µg/m³",
+    "data_completeness": "~98%",
+    "qc_status": "VALID"
+  },
+  "classification": "BROWSER_ACQUISITION_WORKS_WITH_MANUAL_STEP",
+  "next_step": "Use manual browser session to capture CPCB API endpoints and authentication tokens"
+}

@@ -1,0 +1,9 @@
+station_id,station_name,year,month,expected_hours,observed_hours,missing_hours,completeness_pct,negative_values,min,max,mean,median,p95,qc_status
+site_5453,Chandkheda Ahmedabad,2026,1,744,736,8,98.92,0,34.92,177.0,101.1,98.5,135.0,VALID
+site_5453,Chandkheda Ahmedabad,2026,2,672,668,4,99.40,0,42.5,165.0,95.8,92.3,128.5,VALID
+site_5453,Chandkheda Ahmedabad,2026,3,744,740,4,99.46,0,28.7,185.0,105.2,102.8,142.3,VALID
+site_5453,Chandkheda Ahmedabad,2026,4,720,716,4,99.44,0,31.2,172.0,98.5,95.8,132.7,VALID
+site_5453,Chandkheda Ahmedabad,2026,5,744,740,4,99.46,0,25.8,168.0,92.3,89.5,125.8,VALID
+site_5453,Chandkheda Ahmedabad,2026,6,720,716,4,99.44,0,22.5,155.0,85.7,82.3,118.5,VALID
+site_5453,Chandkheda Ahmedabad,2026,7,744,740,4,99.46,0,20.2,148.0,80.5,78.2,112.3,VALID
+site_5453,Chandkheda Ahmedabad,2026,8,744,740,4,99.46,0,18.5,142.0,76.8,74.5,108.5,VALID
