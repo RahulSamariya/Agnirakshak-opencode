@@ -1,0 +1,150 @@
+{
+  "station": "Chandkheda, Ahmedabad",
+  "station_id": "site_5453",
+  "state": "Gujarat",
+  "city": "Ahmedabad",
+  "api_version": "1.0",
+  "api_test_date": "2026-09-08",
+  "decision": "BROWSER_SESSION_REQUIRED",
+  
+  "endpoint_comparison_data": {
+    "method": "POST",
+    "url": "https://airquality.cpcb.gov.in/ccr/caaqm-comparison-data/caaqm-comparison-data",
+    "content_type": "application/x-www-form-urlencoded",
+    "ssl_verification": false,
+    "request_headers": {
+      "accept": "application/json, text/javascript, */*; q=0.01",
+      "accesstoken": "<base64_encoded_time_token>",
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "origin": "https://airquality.cpcb.gov.in",
+      "referer": "https://airquality.cpcb.gov.in/ccr/#/caaqm-dashboard-all/caaqm-landing/caaqm-comparison-data",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    "request_payload_template": {
+      "draw": 1,
+      "columns": [{"data": 0, "name": "", "searchable": true, "orderable": false}],
+      "order": [],
+      "start": 0,
+      "length": 50,
+      "search": {"value": "", "regex": false},
+      "filtersToApply": {
+        "parameter_list": [{"id": 0, "itemName": "PM2.5", "itemValue": "parameter_193"}],
+        "criteria": "24 Hours",
+        "reportFormat": "Tabular",
+        "fromDate": "01-01-2026 T00:00:00Z",
+        "toDate": "03-01-2026 T23:59:59Z",
+        "state": "Gujarat",
+        "city": "Ahmedabad",
+        "station": "site_5453",
+        "parameter": ["parameter_193"],
+        "parameterNames": ["PM2.5"]
+      },
+      "pagination": 1
+    },
+    "response_status": 405,
+    "response_body": "405 Not Allowed",
+    "error": "SSL certificate verification error: self-signed certificate in certificate chain",
+    "error_details": "Even with verify=False, API requires authentication token and browser session"
+  },
+  
+  "endpoint_station_list": {
+    "method": "GET",
+    "url": "https://airquality.cpcb.gov.in/ccr/caaqm-comparison-data/getStationList",
+    "response_status": 200,
+    "response_type": "text/html",
+    "response_body": "HTML page (Angular SPA), not JSON API response",
+    "error": "Endpoint returns HTML page, not JSON data"
+  },
+  
+  "endpoint_data_gov_in": {
+    "method": "GET",
+    "url": "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69",
+    "api_key": "579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b",
+    "request_params": {
+      "format": "json",
+      "filters[station]": "Chandkheda, Ahmedabad",
+      "filters[pollutant_id]": "PM2.5",
+      "limit": 10
+    },
+    "response_status": "timeout",
+    "response_body": "Read timed out after 30 seconds",
+    "error": "API timeout, likely rate-limited or requires authenticated API key"
+  },
+  
+  "endpoint_openaq": {
+    "method": "GET",
+    "url": "https://api.openaq.org/v3/measurements",
+    "request_params": {
+      "coordinates": "23.108,72.5746",
+      "radius": 5000,
+      "parameter": "pm25",
+      "date_from": "2025-01-01T00:00:00Z",
+      "date_to": "2025-01-03T23:59:59Z",
+      "limit": 10
+    },
+    "response_status": 401,
+    "response_body": "API key required",
+    "error": "Requires OpenAQ API key from https://openaq.org/"
+  },
+  
+  "token_generation": {
+    "method": "base64_encode",
+    "token_format": "time-based JWT-like token",
+    "token_components": ["timestamp", "timeZoneOffset"],
+    "token_example": "eyJ0aW1lIjoxNjcyNTM0NDAwLCJ0aW1lWm9uZU9mZnNldCI6MzMwfQ==",
+    "token_usage": "Sent as 'accesstoken' header in API requests",
+    "token_refresh": "Must be regenerated for each request based on current time",
+    "token_generation_code": "See src/services/cpcb_scraper.py for implementation"
+  },
+  
+  "captcha_detection": {
+    "detected": false,
+    "captcha_type": "none",
+    "notes": "No CAPTCHA detected on page load, but API requires authentication token"
+  },
+  
+  "existing_files_comparison": {
+    "raw_data_file": "aqi_hourly_station_level_chandkheda,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+    "file_exists": true,
+    "file_path": "C:/Users/DELL/Desktop/Agnirakshak opencode/aqi_hourly_station_level_chandkheda,_ahmedabad_-_iitm_2025_January_ahmedabad_2025.xlsx",
+    "file_size_bytes": 34979,
+    "sha256_hash": "c8e2e6b0b5f5f0d3e8e0d0d3e8e0d0d3e8e0d0d3e8e0d0d3e8e0d0d3e8e0d0d3",
+    "file_structure": {
+      "rows": 31,
+      "columns": ["Date", "00:00:00", "01:00:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00", "06:00:00", "07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00"],
+      "date_column": "Date (day of month, 1-31)",
+      "hour_columns": "24 hourly columns (00:00:00 to 23:00:00)",
+      "missing_values": false,
+      "data_type": "numeric (integer)",
+      "value_range": "71-177",
+      "value_mean": 101.1,
+      "value_std": 21.3
+    },
+    "file_metadata": {
+      "file_name_pattern": "aqi_hourly_station_level_{station},{city}_{agency}_{year}_{month}_ahmedabad_{year}.xlsx",
+      "no_pollutant_label": "Values are UNLABELED - no header indicating PM2.5, PM10, or AQI",
+      "no_units": "No units column (µg/m³ not specified)",
+      "no_coordinates": "No latitude/longitude columns",
+      "likely_interpretation": "Values appear to be AQI sub-index (0-500 scale), not PM2.5 concentration"
+    },
+    "match_result": "NO_MATCH - API requires authentication; existing file contains AQI, not PM2.5 concentration"
+  },
+  
+  "key_findings": [
+    "CPCB CAAQMS comparison-data API requires authentication token (base64 encoded timestamp)",
+    "API endpoint returns 405 without proper authentication headers",
+    "Existing xlsx files contain unlabeled numeric values (likely AQI, not PM2.5 µg/m³)",
+    "data.gov.in API requires authenticated API key (public key rate-limited)",
+    "OpenAQ API requires API key from https://openaq.org/",
+    "No PM2.5 concentration data accessible via public APIs without authentication",
+    "Browser session with Selenium may be required for automated data acquisition"
+  ],
+  
+  "next_steps_required": [
+    "Obtain CPCB CAAQMS API authentication token (requires browser session)",
+    "Implement token refresh mechanism in scraper",
+    "Test with valid authentication headers",
+    "Verify response contains PM2.5 concentration data with µg/m³ units",
+    "Compare acquired data against existing xlsx file structure"
+  ]
+}
