@@ -1,0 +1,95 @@
+{
+  "dataset": "ahmedabad_pm25_station_day_2025_matched.parquet",
+  "created": "2026-09-09T00:17:01.219098",
+  "source_files": {
+    "site_5453": {
+      "path": "data\\PM2.5 data\\Chandkheda\\raw_data_hourly_chandkheda,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "60ebdd413a2b4743c9db3f018d3d82e0d6acc10c098e3faa898ec4600135977f"
+    },
+    "site_5450": {
+      "path": "data\\PM2.5 data\\gyaspur\\raw_data_hourly_gyaspur,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "743cf3b8c1d03a21f8a1523bc30ba7a12acb04ba67e9ec7b26dc731b1dcd5e4f"
+    },
+    "site_308": {
+      "path": "data\\PM2.5 data\\Maninagar\\raw_data_hourly_maninagar,_ahmedabad_-_gpcb_1H (1).csv",
+      "sha256": "743cf3b8c1d03a21f8a1523bc30ba7a12acb04ba67e9ec7b26dc731b1dcd5e4f"
+    },
+    "site_5452": {
+      "path": "data\\PM2.5 data\\raikhad\\raw_data_hourly_raikhad,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "676eb798b47310edf52c437498ed9fd185a75a08f33e69e6fff2b79dbe50ce0c"
+    },
+    "site_5451": {
+      "path": "data\\PM2.5 data\\rakhial\\raw_data_hourly_rakhial,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "37858885c7266d707c67c5978ec7eeadb0c917638bf9de0c18acb560769efdf7"
+    },
+    "site_5454": {
+      "path": "data\\PM2.5 data\\sac_isro_bopal\\raw_data_hourly_sac_isro_bopal,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "ae1f6a31eb91aae3bc8f2727e8a48508ab5ecedf91614d613b836431f387565d"
+    },
+    "site_5455": {
+      "path": "data\\PM2.5 data\\sac_isro_satellite\\raw_data_hourly_sac_isro_satellite,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "c6ee9f6548813d8824adbabc34af5159afa86dd889096b8dde47c3d8ef73fbc9"
+    },
+    "site_5449": {
+      "path": "data\\PM2.5 data\\sardar_vallabhbhai_patel_stadium\\raw_data_hourly_sardar_vallabhbhai_patel_stadium,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "a64ce6d8c3e9276caac5e70ab00d7c8a135e2b81fa15a8c77e884470d7122eb4"
+    },
+    "site_5456": {
+      "path": "data\\PM2.5 data\\svpi_airport_hansol\\raw_data_hourly_svpi_airport_hansol,_ahmedabad_-_iitm_1H (1).csv",
+      "sha256": "9333f2f469cb69dfe4286163bd92cd443eda8786b8683cc1078f0203d8621dcf"
+    }
+  },
+  "station_coordinates": {
+    "site_5453": {
+      "name": "Chandkheda",
+      "lat": 23.107969,
+      "lon": 72.574648
+    },
+    "site_5450": {
+      "name": "Gyaspur",
+      "lat": 22.977134,
+      "lon": 72.553024
+    },
+    "site_308": {
+      "name": "Maninagar",
+      "lat": 23.002657,
+      "lon": 72.591912
+    },
+    "site_5452": {
+      "name": "Raikhad",
+      "lat": 23.020509,
+      "lon": 72.579261
+    },
+    "site_5451": {
+      "name": "Rakhial",
+      "lat": 23.016834,
+      "lon": 72.625775
+    },
+    "site_5454": {
+      "name": "SAC ISRO Bopal",
+      "lat": 23.041137,
+      "lon": 72.456691
+    },
+    "site_5455": {
+      "name": "SAC ISRO Satellite",
+      "lat": 23.023389,
+      "lon": 72.515201
+    },
+    "site_5449": {
+      "name": "SVPS Stadium",
+      "lat": 23.04307,
+      "lon": 72.562968
+    },
+    "site_5456": {
+      "name": "SVPI Airport Hansol",
+      "lat": 23.076793,
+      "lon": 72.627874
+    }
+  },
+  "processing_notes": {
+    "pm25_aggregation": "Daily mean from valid hourly observations (\u226518 hours/day)",
+    "aod_source": "MAIAC MCD19A2.061 - NOT YET RETRIEVED",
+    "era5_source": "ERA5 reanalysis - NOT YET RETRIEVED",
+    "coordinate_source": "CPCB CAAQMS All India station list"
+  }
+}

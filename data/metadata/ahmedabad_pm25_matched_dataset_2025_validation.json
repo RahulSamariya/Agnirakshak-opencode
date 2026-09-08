@@ -1,0 +1,23 @@
+{
+  "processing_date": "2026-09-09T00:17:01.216963",
+  "target_year": 2025,
+  "minimum_valid_hours": 18,
+  "total_stations": 9,
+  "total_station_days": 3285,
+  "eligible_station_days": 2737,
+  "aod_matched_station_days": 0,
+  "fully_matched_station_days": 0,
+  "duplicate_station_days_removed": 0,
+  "maninagar_duplicate_excluded": false,
+  "checks": {
+    "no_duplicate_station_date": true,
+    "pm25_is_real_measured": true,
+    "units_are_ug_m3": true,
+    "no_target_imputation": true,
+    "station_coordinates_verified": true,
+    "all_dates_valid": true,
+    "no_future_information_leakage": true,
+    "aod_scale_factor_correct": true,
+    "meteorological_units_correct": true
+  }
+}
