@@ -1,0 +1,21 @@
+{
+  "station_count": true,
+  "timestamps_valid": true,
+  "no_duplicates_site_5453": true,
+  "no_duplicates_site_5450": true,
+  "no_duplicates_site_308": true,
+  "no_duplicates_site_5452": true,
+  "no_duplicates_site_5451": true,
+  "no_duplicates_site_5454": true,
+  "no_duplicates_site_5455": true,
+  "no_duplicates_site_5449": true,
+  "no_duplicates_site_5456": true,
+  "units_consistent": true,
+  "no_synthetic": false,
+  "reasonable_means": true,
+  "eligibility_enforced": true,
+  "no_imputed": true,
+  "coordinates_present": true,
+  "station_identity": true,
+  "row_counts_consistent": true
+}
