@@ -1,0 +1,10 @@
+station_id,station_name,date,pm25_available,maiacy_available,meteorology_available,common_period
+site_5453,"Chandkheda, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5450,"Gyaspur, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_308,"Maninagar, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5452,"Raikhad, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5451,"Rakhial, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5454,"SAC ISRO Bopal, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5455,"SAC ISRO Satellite, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5449,"Sardar Vallabhbhai Patel Stadium, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
+site_5456,"SVPI Airport Hansol, Ahmedabad",,False,True,True,NO_COMMON_PERIOD
