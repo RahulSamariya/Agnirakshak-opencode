@@ -1,10 +1,10 @@
 station_id,station_name,agency,state,city,latitude,longitude,station_status,monitoring_type,source_url,retrieval_timestamp,verification_status
-site_308,Maninagar Ahmedabad,GPCB,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5449,Sardar Vallabhbhai Patel Stadium Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5450,Gyaspur Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5451,Rakhial Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5452,Raikhad Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5453,Chandkheda Ahmedabad,IITM,Gujarat,Ahmedabad,23.108,72.5746,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Verified
-site_5454,SAC ISRO Bopal Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5455,SAC ISRO Satellite Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
-site_5456,SVPI Airport Hansol Ahmedabad,IITM,Gujarat,Ahmedabad,23.0225,72.5967,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T21:30:00,Unverified
+site_308,Maninagar Ahmedabad,GPCB,Gujarat,Ahmedabad,23.002657,72.591912,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5449,Sardar Vallabhbhai Patel Stadium Ahmedabad,IITM,Gujarat,Ahmedabad,23.04307,72.562968,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5450,Gyaspur Ahmedabad,IITM,Gujarat,Ahmedabad,22.977134,72.553024,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5451,Rakhial Ahmedabad,IITM,Gujarat,Ahmedabad,23.016834,72.625775,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5452,Raikhad Ahmedabad,IITM,Gujarat,Ahmedabad,23.020509,72.579261,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5453,Chandkheda Ahmedabad,IITM,Gujarat,Ahmedabad,23.107969,72.574648,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5454,SAC ISRO Bopal Ahmedabad,IITM,Gujarat,Ahmedabad,23.041137,72.456691,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5455,SAC ISRO Satellite Ahmedabad,IITM,Gujarat,Ahmedabad,23.023389,72.515201,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
+site_5456,SVPI Airport Hansol Ahmedabad,IITM,Gujarat,Ahmedabad,23.076793,72.627874,Active,CAAQMS,https://airquality.cpcb.gov.in/ccr/,2026-09-08T22:00:00,VERIFIED
