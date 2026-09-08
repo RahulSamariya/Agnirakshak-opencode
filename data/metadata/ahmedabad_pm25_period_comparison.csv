@@ -1,0 +1,9 @@
+candidate_period,number_of_stations,station_days,valid_pm25_records,median_station_completeness,minimum_station_completeness,seasonal_coverage,maiac_availability,era5_availability,recommendation
+2025 only,9,3285,67973,92.35,64.04,Full Year (Jan-Dec),Available,Available,PILOT YEAR
+2024-2025,9,6570,138547,92.35,38.52,Full Year (Jan-Dec 2024 + Jan-Dec 2025),Available,Available,GOOD FOR FINAL MODEL
+2023-2025,9,9855,209618,92.01,68.44,Full Year (Jan-Dec 2023 + Jan-Dec 2025),Available,Available,BEST FOR FINAL MODEL
+2023-2026,9,11955,243438,92.01,0.00,Partial (Jan-Dec 2023 + Jan-Dec 2025 + Jan-Aug 2026),Available,Available,NOT RECOMMENDED (SVPS 2026 offline)
+2024-2026,9,8670,158675,92.35,0.00,Partial (Jan-Dec 2024 + Jan-Dec 2025 + Jan-Aug 2026),Available,Available,NOT RECOMMENDED (SVPS 2026 offline)
+2022-2025,9,13140,242346,88.13,23.44,Full Year (Jan-Dec 2022 + Jan-Dec 2025),Available,Available,NOT RECOMMENDED (2022 data poor quality)
+2023-2024,9,6570,137661,92.01,38.52,Full Year (Jan-Dec 2023 + Jan-Dec 2024),Available,Available,GOOD BUT LESS DATA THAN 2023-2025
+2025-2026,9,5373,72638,92.35,0.00,Partial (Jan-Dec 2025 + Jan-Aug 2026),Available,Available,NOT RECOMMENDED (SVPS 2026 offline + incomplete 2026)
