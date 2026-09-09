@@ -18,6 +18,7 @@ OUTPUT:
     data/staging/earth_engine/maiac_500_test_2025.csv
 """
 
+import math
 import sys
 import time
 from datetime import datetime
@@ -106,7 +107,9 @@ for station in stations:
     
     # Sample with stratification across months
     months = station_df['date'].dt.month.unique()
-    samples_per_month = max(1, n_samples // len(months))
+    
+    # Distribute samples across months using ceiling division
+    samples_per_month = math.ceil(n_samples / len(months))
     
     station_samples = []
     for month in months:
