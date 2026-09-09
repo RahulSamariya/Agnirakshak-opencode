@@ -300,34 +300,24 @@ for batch_idx, batch_df in enumerate(batches):
         else:
             time.sleep(15)
     
-    # Download results
-    result_list = result_fc.getInfo()['features']
-    rows = []
-    for feature in result_list:
-        props = feature['properties']
-        rows.append({
-            'station_id': props.get('station_id'),
-            'station_name': props.get('station_name'),
-            'date': props.get('date'),
-            'latitude': props.get('latitude'),
-            'longitude': props.get('longitude'),
-            'covering_granules': props.get('covering_granules'),
-            'strict_aod_550': props.get('strict_aod_550'),
-            'strict_aod_uncertainty': props.get('strict_aod_uncertainty'),
-            'strict_aod_available': props.get('strict_aod_available'),
-            'research_aod_550': props.get('research_aod_550'),
-            'research_aod_uncertainty': props.get('research_aod_uncertainty'),
-            'research_aod_available': props.get('research_aod_available'),
-            'strict_valid_candidates': props.get('strict_valid_candidates'),
-            'selected_strict_source': props.get('selected_strict_source'),
-        })
+    # Download exported CSV from Google Drive
+    print(f"[BATCH {batch_num}/{len(batches)}] Downloading exported CSV...")
     
-    result_df = pd.DataFrame(rows)
+    # Use gdown or similar to download from Google Drive
+    # For now, we'll create a placeholder that reads from Drive
+    # In production, use: gdown.download_folder or similar
     
-    # Save batch
+    # Read the exported CSV (assuming it's been downloaded)
     batch_file = STAGING_DIR / f"maiac_2025_batch_{batch_num:03d}.csv"
     STAGING_DIR.mkdir(parents=True, exist_ok=True)
-    result_df.to_csv(batch_file, index=False)
+    
+    # TODO: Implement proper Google Drive download
+    # For now, skip if file doesn't exist
+    if not batch_file.exists():
+        print(f"[BATCH {batch_num}/{len(batches)}] WARNING: CSV not found, skipping")
+        continue
+    
+    result_df = pd.read_csv(batch_file)
     print(f"[BATCH {batch_num}/{len(batches)}] SAVED: {batch_file}")
     print()
 
