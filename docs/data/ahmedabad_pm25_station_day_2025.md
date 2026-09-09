@@ -1,3 +1,17 @@
+# Ahmedabad Pm25 Station Day 2025
+
+**STATUS: HISTORICAL / SUPERSEDED**
+**SUPERSEDED BY:** `ahmedabad_pm25_2025_canonical.md`
+**Updated:** 2026-09-09T19:34:30.178866
+
+---
+
+> **Note:** This document is retained for historical provenance. Do not use it
+> as the current implementation specification. The canonical document is
+> `ahmedabad_pm25_2025_canonical.md`.
+
+---
+
 # Ahmedabad PM2.5 Station-Day 2025 Dataset
 
 **Last Updated:** 2026-09-08  
