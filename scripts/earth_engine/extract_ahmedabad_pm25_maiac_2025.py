@@ -15,9 +15,19 @@ DATASET:
 - Variable: Optical_Depth_055
 - Scale: AOD_550 = stored_value x 0.001
 
-QA FILTERING:
-- Cloud mask bits 0-1 = 00 (clear)
-- Heavy dust flag bit 2 = 0
+QA FILTERING (OFFICIAL MAIAC AOD_QA BIT DEFINITION):
+- Bits 0-2: Cloud Mask (must be 1 = Clear)
+- Bits 3-4: Land Water Snow/Ice Mask (must be 0 = Land)
+- Bits 8-11: QA for AOD (must be 0 = Best quality)
+
+PRIMARY MODELING AOD REQUIREMENTS:
+- Bits 0-2 = 1 (Clear)
+- Bits 3-4 = 0 (Land)
+- Bits 8-11 = 0 (Best quality)
+
+NEVER use unmasked Optical_Depth_055 values.
+Missing valid AOD must remain missing.
+Do not spatially substitute a neighborhood mean for a missing station pixel.
 
 REQUIREMENTS:
 - Google Earth Engine Python API (earthengine-api)
@@ -117,30 +127,63 @@ print("[STEP 3] Defining QA filtering...")
 
 def get_qa_mask():
     """
-    Create QA mask for MAIAC AOD.
+    Create strict QA mask for MAIAC AOD.
     
-    QA Bit Interpretation:
-    - Bits 0-1: Cloud mask (00 = clear)
-    - Bit 2: Heavy dust flag (0 = no heavy dust)
+    OFFICIAL MAIAC AOD_QA BIT DEFINITION (16-bit unsigned integer):
+    - Bits 0-2: Cloud Mask
+      - 000 = Undefined
+      - 001 = Clear
+      - 010 = Possibly Cloudy
+      - 011 = Cloudy
+      - 101 = Cloud Shadow
+      - 110 = Hot spot of fire
+      - 111 = Water Sediments
     
-    Valid pixels: Bits 0-1 = 00 AND Bit 2 = 0
+    - Bits 3-4: Land Water Snow/Ice Mask
+      - 00 = Land
+      - 01 = Water
+      - 10 = Snow
+      - 11 = Ice
+    
+    - Bits 8-11: QA for AOD
+      - 0000 = Best quality
+      - 0001 = Water Sediments detected
+      - 0011 = 1 neighbor cloud
+      - 0100 = >1 neighbor clouds
+      - 0101 = No retrieval (cloudy)
+      - 0110 = No retrieval near snow
+      - 0111 = Climatology AOD (high altitude)
+      - 1000 = No retrieval due to sun glint
+      - 1001 = Very low AOD due to glint
+      - 1010 = Coastline replacement
+      - 1011 = Research quality (CM possibly cloudy)
+    
+    PRIMARY MODELING AOD REQUIREMENTS:
+    - Bits 0-2 = 1 (Clear)
+    - Bits 3-4 = 0 (Land)
+    - Bits 8-11 = 0 (Best quality)
     """
+    # Get the QA band
     qa_image = ee.ImageCollection(MAIAC_COLLECTION).select(QA_BAND).first()
     
-    # Cloud mask: bits 0-1 must be 00
-    cloud_mask = qa_image.bitwiseAnd(3).eq(0)
+    # Bits 0-2: Cloud Mask must be 1 (Clear)
+    cloud_mask = qa_image.bitwiseAnd(7).eq(1)  # 0b111 = 7
     
-    # Heavy dust: bit 2 must be 0
-    dust_mask = qa_image.bitwiseAnd(4).eq(0)
+    # Bits 3-4: Land Mask must be 0 (Land)
+    land_mask = qa_image.rightShift(3).bitwiseAnd(3).eq(0)  # 0b11 = 3
     
-    # Combined mask
-    valid_mask = cloud_mask.And(dust_mask)
+    # Bits 8-11: AOD QA must be 0 (Best quality)
+    aod_qa_mask = qa_image.rightShift(8).bitwiseAnd(15).eq(0)  # 0b1111 = 15
+    
+    # Combined mask: all conditions must be true
+    valid_mask = cloud_mask.And(land_mask).And(aod_qa_mask)
     
     return valid_mask
 
-print("  QA Filter:")
-print("    - Cloud mask bits 0-1 = 00 (clear)")
-print("    - Heavy dust flag bit 2 = 0")
+print("  Strict QA Filter (OFFICIAL MAIAC AOD_QA BIT DEFINITION):")
+print("    - Bits 0-2 = 1 (Clear)")
+print("    - Bits 3-4 = 0 (Land)")
+print("    - Bits 8-11 = 0 (Best quality)")
 print()
 
 # ============================================================
@@ -166,7 +209,7 @@ def extract_maiac_for_date(date_str, station_coords):
     # Filter MAIAC collection to single day
     maiac_daily = ee.ImageCollection(MAIAC_COLLECTION) \
         .filterDate(date, next_date) \
-        .select(AOD_BAND)
+        .select([AOD_BAND, QA_BAND])
     
     # Check if any images exist
     image_count = maiac_daily.size().getInfo()
@@ -179,19 +222,21 @@ def extract_maiac_for_date(date_str, station_coords):
             "aod_550": None,
             "aod_available": False,
             "aod_quality_status": "NO_DATA",
+            "aod_total_granules": 0,
             "aod_valid_pixel_count": 0,
+            "aod_station_pixel_qa": None,
+            "aod_neighborhood_valid_count": 0,
+            "aod_neighborhood_mean": None,
             "aod_source_date": None,
         } for sid, _, _ in station_coords]
     
-    # Get the daily composite (mean of available overpasses)
-    daily_composite = maiac_daily.mean()
+    # Use composite of all granules for the day
+    # This ensures we capture data from all overpasses
+    composite_image = maiac_daily.median()
     
     # Apply QA mask
     qa_mask = get_qa_mask()
-    masked_composite = daily_composite.updateMask(qa_mask)
-    
-    # Scale AOD
-    scaled_composite = masked_composite.multiply(SCALE_FACTOR)
+    masked_composite = composite_image.select(AOD_BAND).multiply(SCALE_FACTOR).updateMask(qa_mask)
     
     # Extract at station points
     results = []
@@ -199,13 +244,47 @@ def extract_maiac_for_date(date_str, station_coords):
         point = ee.Geometry.Point([lon, lat])
         
         try:
-            value = scaled_composite.reduceRegion(
+            # Get masked AOD at station pixel
+            value = masked_composite.reduceRegion(
                 ee.Reducer.first(),
                 point,
                 EXTRACTION_RADIUS
             ).getInfo()
             
             aod_value = value.get(AOD_BAND)
+            
+            # Get raw QA value for diagnostics
+            qa_value = composite_image.select(QA_BAND).reduceRegion(
+                ee.Reducer.first(),
+                point,
+                EXTRACTION_RADIUS
+            ).getInfo().get(QA_BAND)
+            
+            # Count valid neighborhood pixels
+            neighborhood_radius = 1500  # meters
+            neighborhood_values = composite_image.select([AOD_BAND, QA_BAND]).reduceRegion(
+                ee.Reducer.toList(),
+                point.buffer(neighborhood_radius),
+                EXTRACTION_RADIUS
+            ).getInfo()
+            
+            qa_values = neighborhood_values.get(QA_BAND, [])
+            valid_count = 0
+            masked_aod_values = []
+            
+            for i, qa in enumerate(qa_values):
+                # Check if pixel is valid (strict QA)
+                cloud = (qa & 7) == 1  # Bits 0-2 = 1 (Clear)
+                land = ((qa >> 3) & 3) == 0  # Bits 3-4 = 0 (Land)
+                aod_qa = ((qa >> 8) & 15) == 0  # Bits 8-11 = 0 (Best quality)
+                
+                if cloud and land and aod_qa:
+                    valid_count += 1
+                    aod_val = neighborhood_values.get(AOD_BAND, [])[i]
+                    if aod_val is not None:
+                        masked_aod_values.append(aod_val * SCALE_FACTOR)
+            
+            neighborhood_mean = sum(masked_aod_values) / len(masked_aod_values) if masked_aod_values else None
             
             if aod_value is not None:
                 results.append({
@@ -214,7 +293,11 @@ def extract_maiac_for_date(date_str, station_coords):
                     "aod_550": aod_value,
                     "aod_available": True,
                     "aod_quality_status": "VALID",
+                    "aod_total_granules": image_count,
                     "aod_valid_pixel_count": 1,
+                    "aod_station_pixel_qa": qa_value,
+                    "aod_neighborhood_valid_count": valid_count,
+                    "aod_neighborhood_mean": neighborhood_mean,
                     "aod_source_date": date_str,
                 })
             else:
@@ -224,7 +307,11 @@ def extract_maiac_for_date(date_str, station_coords):
                     "aod_550": None,
                     "aod_available": False,
                     "aod_quality_status": "MASKED",
+                    "aod_total_granules": image_count,
                     "aod_valid_pixel_count": 0,
+                    "aod_station_pixel_qa": qa_value,
+                    "aod_neighborhood_valid_count": valid_count,
+                    "aod_neighborhood_mean": neighborhood_mean,
                     "aod_source_date": None,
                 })
         except Exception as e:
@@ -234,7 +321,11 @@ def extract_maiac_for_date(date_str, station_coords):
                 "aod_550": None,
                 "aod_available": False,
                 "aod_quality_status": f"ERROR: {str(e)[:50]}",
+                "aod_total_granules": image_count,
                 "aod_valid_pixel_count": 0,
+                "aod_station_pixel_qa": None,
+                "aod_neighborhood_valid_count": 0,
+                "aod_neighborhood_mean": None,
                 "aod_source_date": None,
             })
     
