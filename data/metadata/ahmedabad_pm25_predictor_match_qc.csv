@@ -1,10 +1,10 @@
-station_id,station_name,total_days,eligible_pm25_days,aod_matched_days,era5_matched_days,fully_matched_days,aod_match_pct,era5_match_pct,full_match_pct,mean_pm25,std_pm25
-site_308,Maninagar,365,308,0,0,0,0.0,0.0,0.0,36.619875988206616,19.490397510029503
-site_5449,SVPS Stadium,365,231,0,0,0,0.0,0.0,0.0,44.389227644884755,20.913404315262973
-site_5450,Gyaspur,365,308,0,0,0,0.0,0.0,0.0,36.619875988206616,19.490397510029503
-site_5451,Rakhial,365,325,0,0,0,0.0,0.0,0.0,51.96083161996915,29.339355814680296
-site_5452,Raikhad,365,292,0,0,0,0.0,0.0,0.0,48.72049996829681,25.52284792377576
-site_5453,Chandkheda,365,351,0,0,0,0.0,0.0,0.0,43.803201226935535,23.96537063745078
-site_5454,SAC ISRO Bopal,365,288,0,0,0,0.0,0.0,0.0,44.893989008986516,23.561924434731754
-site_5455,SAC ISRO Satellite,365,306,0,0,0,0.0,0.0,0.0,39.75893497330282,16.96856831820613
-site_5456,SVPI Airport Hansol,365,328,0,0,0,0.0,0.0,0.0,38.77532230475315,23.55199795546462
+station_id,station_name,total_days,eligible_pm25_days,aod_matched_days,era5_matched_days,fully_matched_days,aod_match_pct,era5_match_pct,full_match_pct
+site_308,Maninagar,365,308,0,0,0,0.0,0.0,0.0
+site_5449,SVPS Stadium,365,231,0,0,0,0.0,0.0,0.0
+site_5450,Gyaspur,365,308,0,0,0,0.0,0.0,0.0
+site_5451,Rakhial,365,325,0,0,0,0.0,0.0,0.0
+site_5452,Raikhad,365,292,0,0,0,0.0,0.0,0.0
+site_5453,Chandkheda,365,351,0,0,0,0.0,0.0,0.0
+site_5454,SAC ISRO Bopal,365,288,0,0,0,0.0,0.0,0.0
+site_5455,SAC ISRO Satellite,365,306,0,0,0,0.0,0.0,0.0
+site_5456,SVPI Airport Hansol,365,328,0,0,0,0.0,0.0,0.0
