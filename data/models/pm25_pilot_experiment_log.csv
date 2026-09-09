@@ -1,0 +1,10 @@
+experiment,features,model,mae,rmse,r2,bias,n,notes
+baseline,ERA5,Ridge,14.56,18.72,0.335,-0.0,500,Frozen baseline - do not overwrite
+baseline,ERA5,RandomForest,12.17,15.75,0.5,0.37,500,Frozen baseline - do not overwrite
+baseline,ERA5,GradientBoosting,12.53,16.39,0.446,0.51,500,Frozen baseline - do not overwrite
+baseline,ERA5-subset,Ridge,15.79,18.72,-0.456,-2.82,92,Frozen baseline - do not overwrite
+baseline,ERA5-subset,RandomForest,17.58,21.27,-0.852,-3.97,92,Frozen baseline - do not overwrite
+baseline,ERA5-subset,GradientBoosting,18.96,23.02,-1.17,-3.83,92,Frozen baseline - do not overwrite
+baseline,ERA5+AOD,Ridge,15.75,18.51,-0.409,-2.9,92,Frozen baseline - do not overwrite
+baseline,ERA5+AOD,RandomForest,17.83,20.91,-0.816,-3.79,92,Frozen baseline - do not overwrite
+baseline,ERA5+AOD,GradientBoosting,20.89,24.4,-1.609,-3.37,92,Frozen baseline - do not overwrite
