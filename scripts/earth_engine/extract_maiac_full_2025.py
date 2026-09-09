@@ -7,10 +7,12 @@ automatic batching with the validated BATCH_EXPORT architecture.
 
 ARCHITECTURE:
 - driver FeatureCollection → server-side computation → compact FeatureCollection
-- Export.table.toDrive → local CSV → local parquet merge
+- Export.table.toDrive → Google Drive → local CSV via Drive API → local parquet
 - Automatic batching: ~500 station-days per batch
 - Checkpointing: each batch saved separately
 - Resumable: skips completed batches
+
+CRITICAL: No FeatureCollection.getInfo() calls on large collections.
 
 USAGE:
     python scripts/earth_engine/extract_maiac_full_2025.py
@@ -21,6 +23,7 @@ OUTPUT:
 """
 
 import math
+import os
 import sys
 import time
 from datetime import datetime
@@ -48,6 +51,88 @@ OUTPUT_PARQUET = Path("data/curated/air_quality/ahmedabad_pm25_maiac_station_day
 
 # Batch configuration
 BATCH_SIZE = 500
+DRIVE_FOLDER_NAME = "agnirakshak_maiac"
+
+# ============================================================
+# GOOGLE DRIVE DOWNLOAD HELPER
+# ============================================================
+
+def get_drive_service():
+    """Build Google Drive API service using EE credentials."""
+    import ee
+    from googleapiclient.discovery import build
+    
+    cred = ee.data.get_persistent_credentials()
+    service = build('drive', 'v3', credentials=cred)
+    return service
+
+
+def find_drive_folder(service, folder_name):
+    """Find a folder by name in Google Drive."""
+    query = f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+    results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+    folders = results.get('files', [])
+    return folders[0]['id'] if folders else None
+
+
+def download_drive_file(service, file_id, local_path):
+    """Download a file from Google Drive by its ID."""
+    import io
+    from googleapiclient.http import MediaIoBaseDownload
+    
+    request = service.files().get_media(fileId=file_id)
+    with io.FileIO(str(local_path), 'wb') as f:
+        downloader = MediaIoBaseDownload(f, request)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+
+
+def download_batch_from_drive(batch_num, staging_dir):
+    """Download a batch CSV from Google Drive."""
+    filename = f"maiac_2025_batch_{batch_num:03d}.csv"
+    local_path = staging_dir / filename
+    
+    if local_path.exists():
+        return local_path
+    
+    try:
+        service = get_drive_service()
+        
+        # Find the folder
+        query = f"name='{DRIVE_FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+        results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+        folders = results.get('files', [])
+        
+        if not folders:
+            print(f"    Folder '{DRIVE_FOLDER_NAME}' not found")
+            return None
+        
+        folder_id = folders[0]['id']
+        
+        # Find the file in the folder
+        query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
+        results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+        files = results.get('files', [])
+        
+        if not files:
+            print(f"    File '{filename}' not found in Drive folder")
+            return None
+        
+        # Download the file
+        staging_dir.mkdir(parents=True, exist_ok=True)
+        download_drive_file(service, files[0]['id'], local_path)
+        
+        return local_path if local_path.exists() else None
+        
+    except Exception as e:
+        print(f"    Drive download error: {e}")
+        return None
+
+
+# ============================================================
+# MAIN
+# ============================================================
 
 print("=" * 70)
 print("BATCHED EARTH ENGINE MAIAC EXTRACTION — FULL 2025 DATASET")
@@ -100,7 +185,8 @@ for i in range(0, len(driver_df), BATCH_SIZE):
     batch = driver_df.iloc[i:i + BATCH_SIZE].copy()
     batches.append(batch)
 
-print(f"[BATCH] Total batches: {len(batches)}")
+total_batches = len(batches)
+print(f"[BATCH] Total batches: {total_batches}")
 for i, batch in enumerate(batches):
     print(f"[BATCH] Batch {i + 1}: {len(batch)} rows")
 print()
@@ -112,16 +198,16 @@ print()
 print("[CHECK] Checking for completed batches...")
 
 completed_batches = []
-for i, batch in enumerate(batches):
+for i in range(total_batches):
     batch_file = STAGING_DIR / f"maiac_2025_batch_{i + 1:03d}.csv"
     if batch_file.exists():
         completed_batches.append(i + 1)
         print(f"[CHECK] Batch {i + 1}: COMPLETED")
 
-if len(completed_batches) == len(batches):
+if len(completed_batches) == total_batches:
     print("[CHECK] All batches already completed!")
 else:
-    print(f"[CHECK] {len(completed_batches)}/{len(batches)} batches completed")
+    print(f"[CHECK] {len(completed_batches)}/{total_batches} batches completed")
 print()
 
 # ============================================================
@@ -136,11 +222,8 @@ def extract_maiac_batch(feature):
     
     This function runs entirely on Earth Engine servers.
     """
-    # Get station coordinates and date
     point = feature.geometry()
     date_str = feature.get('date')
-    station_id = feature.get('station_id')
-    station_name = feature.get('station_name')
     
     # Filter MAIAC collection to single day
     date = ee.Date(date_str)
@@ -151,20 +234,19 @@ def extract_maiac_batch(feature):
         .filterBounds(point) \
         .select([AOD_BAND, UNCERTAINTY_BAND, QA_BAND])
     
-    # Get number of granules
     image_count = maiac_daily.size()
     
-    # Create QA masks - convert to integer first
+    # Create QA masks
     qa_image = maiac_daily.select(QA_BAND).median().toInt()
     
-    # TIER 1 mask: cloud_mask=1, land_mask=0, aod_quality=0, glint_mask=0
+    # TIER 1: cloud_mask=1, land_mask=0, aod_quality=0, glint_mask=0
     tier1_cloud = qa_image.bitwiseAnd(7).eq(1)
     tier1_land = qa_image.rightShift(3).bitwiseAnd(3).eq(0)
     tier1_aod_qa = qa_image.rightShift(8).bitwiseAnd(15).eq(0)
     tier1_glint = qa_image.rightShift(12).bitwiseAnd(1).eq(0)
     tier1_mask = tier1_cloud.And(tier1_land).And(tier1_aod_qa).And(tier1_glint)
     
-    # TIER 2 mask: land_mask=0, aod_quality=11, glint_mask=0
+    # TIER 2: land_mask=0, aod_quality=11, glint_mask=0
     tier2_land = qa_image.rightShift(3).bitwiseAnd(3).eq(0)
     tier2_aod_qa = qa_image.rightShift(8).bitwiseAnd(15).eq(11)
     tier2_glint = qa_image.rightShift(12).bitwiseAnd(1).eq(0)
@@ -210,7 +292,6 @@ def extract_maiac_batch(feature):
     research_unc_default = ee.Algorithms.If(research_unc_val, research_unc_val, -999)
     strict_candidates_default = ee.Algorithms.If(strict_candidates, strict_candidates, 0)
     
-    # Add results to feature
     return feature.set({
         'covering_granules': image_count,
         'strict_aod_550': strict_aod_default,
@@ -235,15 +316,17 @@ print()
 print("[PROCESS] Processing batches...")
 print()
 
+failed_batches = []
+
 for batch_idx, batch_df in enumerate(batches):
     batch_num = batch_idx + 1
     
     # Skip completed batches
     if batch_num in completed_batches:
-        print(f"[BATCH {batch_num}/{len(batches)}] SKIPPED (already completed)")
+        print(f"[BATCH {batch_num}/{total_batches}] SKIPPED (already completed)")
         continue
     
-    print(f"[BATCH {batch_num}/{len(batches)}] START")
+    print(f"[BATCH {batch_num}/{total_batches}] START")
     
     # Create Earth Engine FeatureCollection
     features = []
@@ -269,7 +352,7 @@ for batch_idx, batch_df in enumerate(batches):
     task = ee.batch.Export.table.toDrive(
         collection=result_fc,
         description=f'maiac_2025_batch_{batch_num:03d}',
-        folder='agnirakshak_maiac',
+        folder=DRIVE_FOLDER_NAME,
         fileNamePrefix=f'maiac_2025_batch_{batch_num:03d}',
         fileFormat='CSV',
         selectors=[
@@ -281,7 +364,7 @@ for batch_idx, batch_df in enumerate(batches):
     )
     
     task.start()
-    print(f"[BATCH {batch_num}/{len(batches)}] TASK CREATED: {task.status()['id']}")
+    print(f"[BATCH {batch_num}/{total_batches}] TASK CREATED: {task.status()['id']}")
     
     # Monitor task
     while True:
@@ -289,36 +372,31 @@ for batch_idx, batch_df in enumerate(batches):
         state = status['state']
         
         if state == 'COMPLETED':
-            print(f"[BATCH {batch_num}/{len(batches)}] COMPLETE")
+            print(f"[BATCH {batch_num}/{total_batches}] COMPLETE")
             break
         elif state == 'FAILED':
-            print(f"[BATCH {batch_num}/{len(batches)}] FAILED: {status.get('error_message', 'Unknown error')}")
+            error_msg = status.get('error_message', 'Unknown error')
+            print(f"[BATCH {batch_num}/{total_batches}] FAILED: {error_msg}")
+            failed_batches.append(batch_num)
             break
         elif state == 'CANCELLED':
-            print(f"[BATCH {batch_num}/{len(batches)}] CANCELLED")
+            print(f"[BATCH {batch_num}/{total_batches}] CANCELLED")
+            failed_batches.append(batch_num)
             break
         else:
             time.sleep(15)
     
-    # Download exported CSV from Google Drive
-    print(f"[BATCH {batch_num}/{len(batches)}] Downloading exported CSV...")
+    # Download from Google Drive if completed
+    if state == 'COMPLETED':
+        print(f"[BATCH {batch_num}/{total_batches}] Downloading from Drive...")
+        
+        local_path = download_batch_from_drive(batch_num, STAGING_DIR)
+        if local_path:
+            print(f"[BATCH {batch_num}/{total_batches}] SAVED: {local_path}")
+        else:
+            print(f"[BATCH {batch_num}/{total_batches}] Download failed")
+            failed_batches.append(batch_num)
     
-    # Use gdown or similar to download from Google Drive
-    # For now, we'll create a placeholder that reads from Drive
-    # In production, use: gdown.download_folder or similar
-    
-    # Read the exported CSV (assuming it's been downloaded)
-    batch_file = STAGING_DIR / f"maiac_2025_batch_{batch_num:03d}.csv"
-    STAGING_DIR.mkdir(parents=True, exist_ok=True)
-    
-    # TODO: Implement proper Google Drive download
-    # For now, skip if file doesn't exist
-    if not batch_file.exists():
-        print(f"[BATCH {batch_num}/{len(batches)}] WARNING: CSV not found, skipping")
-        continue
-    
-    result_df = pd.read_csv(batch_file)
-    print(f"[BATCH {batch_num}/{len(batches)}] SAVED: {batch_file}")
     print()
 
 # ============================================================
@@ -328,12 +406,18 @@ for batch_idx, batch_df in enumerate(batches):
 print("[MERGE] Merging all batches...")
 
 all_batches = []
-for i in range(len(batches)):
+for i in range(total_batches):
     batch_file = STAGING_DIR / f"maiac_2025_batch_{i + 1:03d}.csv"
     if batch_file.exists():
         batch_df = pd.read_csv(batch_file)
         all_batches.append(batch_df)
         print(f"[MERGE] Loaded batch {i + 1}: {len(batch_df)} rows")
+    else:
+        print(f"[MERGE] Batch {i + 1}: NOT FOUND (skipping)")
+
+if not all_batches:
+    print("[MERGE] ERROR: No batches found!")
+    sys.exit(1)
 
 merged_df = pd.concat(all_batches, ignore_index=True)
 print(f"[MERGE] Total rows: {len(merged_df)}")
@@ -345,24 +429,26 @@ print()
 
 print("[VALIDATE] Validating merged results...")
 
-# Check requested vs returned
 requested = len(driver_df)
 returned = len(merged_df)
 print(f"[VALIDATE] Requested rows: {requested}")
 print(f"[VALIDATE] Returned rows: {returned}")
 print(f"[VALIDATE] Row count match: {requested == returned}")
 
-# Check duplicates
 duplicates = merged_df.duplicated(subset=['station_id', 'date']).sum()
 print(f"[VALIDATE] Duplicate station/date: {duplicates}")
 print()
 
-# Calculate metrics
 strict_valid = merged_df['strict_aod_available'].sum()
 strict_coverage = strict_valid / len(merged_df) * 100
 
+research_valid = merged_df['research_aod_available'].sum() if 'research_aod_available' in merged_df.columns else 0
+research_coverage = research_valid / len(merged_df) * 100
+
 print(f"[VALIDATE] Strict AOD valid: {strict_valid}")
 print(f"[VALIDATE] Strict AOD coverage: {strict_coverage:.1f}%")
+print(f"[VALIDATE] Research AOD valid: {research_valid}")
+print(f"[VALIDATE] Research AOD coverage: {research_coverage:.1f}%")
 print()
 
 # ============================================================
@@ -388,6 +474,8 @@ runtime_per_row = runtime / len(merged_df) if len(merged_df) > 0 else 0
 print(f"[METRICS] Total rows: {len(merged_df)}")
 print(f"[METRICS] Strict AOD valid: {strict_valid}")
 print(f"[METRICS] Strict AOD coverage: {strict_coverage:.1f}%")
+print(f"[METRICS] Research AOD valid: {research_valid}")
+print(f"[METRICS] Research AOD coverage: {research_coverage:.1f}%")
 print(f"[METRICS] Runtime: {runtime:.1f} seconds")
 print(f"[METRICS] Runtime per row: {runtime_per_row:.2f} seconds")
 print()
@@ -437,14 +525,19 @@ print("=" * 70)
 print()
 print("FULL EXTRACTION: COMPLETE")
 print()
-print(f"REQUESTED: {requested}")
-print(f"RETURNED: {returned}")
+print(f"TOTAL ELIGIBLE: {requested}")
+print(f"TOTAL EXTRACTED: {returned}")
 print()
 print(f"STRICT AOD VALID: {strict_valid}")
-print(f"STRICT AOD COVERAGE: {strict_coverage:.1f}%")
+print(f"STRICT COVERAGE: {strict_coverage:.1f}%")
+print()
+print(f"RESEARCH QA=11 VALID: {research_valid}")
+print(f"RESEARCH COVERAGE: {research_coverage:.1f}%")
 print()
 print(f"RUNTIME: {runtime:.1f} seconds")
 print(f"RUNTIME PER ROW: {runtime_per_row:.2f} seconds")
+print()
+print(f"FAILED BATCHES: {len(failed_batches)} {failed_batches if failed_batches else ''}")
 print()
 print(f"OUTPUT: {OUTPUT_PARQUET}")
 print()
