@@ -1,0 +1,444 @@
+station_id,station_name,date,latitude,longitude,covering_granules,strict_aod_550,strict_aod_uncertainty,strict_aod_available,strict_valid_candidates,selected_strict_source
+site_5453,Chandkheda,2025-01-28,23.107969,72.574648,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-01-16,23.107969,72.574648,100,0.213,0.0063,1,1.0509803921568628,median_composite_valid
+site_5453,Chandkheda,2025-01-24,23.107969,72.574648,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-01-18,23.107969,72.574648,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-02-09,23.107969,72.574648,99,0.292,0.0206,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-02-17,23.107969,72.574648,91,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-02-01,23.107969,72.574648,98,-999.0,-999.0,0,0.24705882352941178,median_composite_missing
+site_5453,Chandkheda,2025-02-27,23.107969,72.574648,85,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-03-28,23.107969,72.574648,52,-999.0,-999.0,0,1.003921568627451,median_composite_missing
+site_5453,Chandkheda,2025-03-16,23.107969,72.574648,38,0.3005,0.025900000000000003,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-03-24,23.107969,72.574648,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-03-18,23.107969,72.574648,9,0.405,0.054,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-04-10,23.107969,72.574648,68,-999.0,-999.0,0,0.25882352941176473,median_composite_missing
+site_5453,Chandkheda,2025-04-27,23.107969,72.574648,66,-999.0,-999.0,0,1.003921568627451,median_composite_missing
+site_5453,Chandkheda,2025-04-09,23.107969,72.574648,67,0.5700000000000001,0.0541,1,1.2980392156862746,median_composite_valid
+site_5453,Chandkheda,2025-04-23,23.107969,72.574648,68,0.3695,0.031100000000000003,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-05-29,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-05-17,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-05-25,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-05-19,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-06-09,23.107969,72.574648,67,-999.0,-999.0,0,0.24705882352941178,median_composite_missing
+site_5453,Chandkheda,2025-06-20,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-06-01,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-06-29,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-07-28,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-07-16,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-07-24,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-07-18,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-08-28,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-08-16,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-08-24,23.107969,72.574648,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-08-18,23.107969,72.574648,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-09-28,23.107969,72.574648,40,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-09-16,23.107969,72.574648,49,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-09-24,23.107969,72.574648,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-09-18,23.107969,72.574648,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-10-10,23.107969,72.574648,76,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-10-26,23.107969,72.574648,95,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-10-09,23.107969,72.574648,78,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-10-22,23.107969,72.574648,86,-999.0,-999.0,0,0.06666666666666667,median_composite_missing
+site_5453,Chandkheda,2025-11-29,23.107969,72.574648,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-11-17,23.107969,72.574648,99,0.624,0.0145,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-11-13,23.107969,72.574648,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-11-23,23.107969,72.574648,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-12-29,23.107969,72.574648,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-12-17,23.107969,72.574648,98,-999.0,-999.0,0,0.6392156862745098,median_composite_missing
+site_5453,Chandkheda,2025-12-25,23.107969,72.574648,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-12-19,23.107969,72.574648,99,0.178,0.0117,1,1.0509803921568628,median_composite_valid
+site_5450,Gyaspur,2025-01-10,22.977134,72.553024,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-01-22,22.977134,72.553024,98,0.5635,0.0281,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-01-01,22.977134,72.553024,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-01-25,22.977134,72.553024,99,0.3725,0.019450000000000002,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-02-01,22.977134,72.553024,98,0.28800000000000003,0.032850000000000004,1,1.0313725490196077,median_composite_valid
+site_5450,Gyaspur,2025-02-13,22.977134,72.553024,95,-999.0,-999.0,0,1.1333333333333333,median_composite_missing
+site_5450,Gyaspur,2025-02-19,22.977134,72.553024,85,-999.0,-999.0,0,0.32941176470588235,median_composite_missing
+site_5450,Gyaspur,2025-02-02,22.977134,72.553024,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-03-10,22.977134,72.553024,58,-999.0,-999.0,0,0.21568627450980393,median_composite_missing
+site_5450,Gyaspur,2025-03-16,22.977134,72.553024,38,0.2595,0.0184,1,1.3490196078431373,median_composite_valid
+site_5450,Gyaspur,2025-03-11,22.977134,72.553024,55,0.4025,0.0176,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-03-26,22.977134,72.553024,48,0.392,0.0205,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-04-12,22.977134,72.553024,66,0.3935,0.03955,1,1.3372549019607844,median_composite_valid
+site_5450,Gyaspur,2025-04-23,22.977134,72.553024,68,0.311,0.018500000000000003,1,0.8156862745098039,median_composite_valid
+site_5450,Gyaspur,2025-04-01,22.977134,72.553024,65,-999.0,-999.0,0,0.03137254901960784,median_composite_missing
+site_5450,Gyaspur,2025-04-25,22.977134,72.553024,68,0.2945,0.0287,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-05-29,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-05-17,22.977134,72.553024,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-05-25,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-05-19,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-06-10,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-06-28,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-06-09,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-06-24,22.977134,72.553024,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-07-22,22.977134,72.553024,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-07-10,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-07-01,22.977134,72.553024,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-07-09,22.977134,72.553024,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-08-10,22.977134,72.553024,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-08-29,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-08-09,22.977134,72.553024,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-08-24,22.977134,72.553024,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-09-23,22.977134,72.553024,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-09-14,22.977134,72.553024,55,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-09-01,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-09-13,22.977134,72.553024,57,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-10-12,22.977134,72.553024,80,0.644,0.02535,1,1.6588235294117648,median_composite_valid
+site_5450,Gyaspur,2025-10-22,22.977134,72.553024,86,1.108,0.024550000000000002,1,0.8156862745098039,median_composite_valid
+site_5450,Gyaspur,2025-10-01,22.977134,72.553024,54,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-10-24,22.977134,72.553024,91,1.684,0.0098,1,1.588235294117647,median_composite_valid
+site_5450,Gyaspur,2025-11-10,22.977134,72.553024,100,0.2705,0.00575,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-11-28,22.977134,72.553024,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-11-09,22.977134,72.553024,98,0.429,0.024200000000000003,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-11-22,22.977134,72.553024,98,0.8280000000000001,0.014450000000000001,1,1.9058823529411766,median_composite_valid
+site_5450,Gyaspur,2025-12-29,22.977134,72.553024,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-12-17,22.977134,72.553024,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-12-25,22.977134,72.553024,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-12-19,22.977134,72.553024,99,0.1765,0.011550000000000001,1,1.588235294117647,median_composite_valid
+site_308,Maninagar,2025-01-10,23.002657,72.591912,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-01-22,23.002657,72.591912,98,0.651,0.02885,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-01-01,23.002657,72.591912,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-01-25,23.002657,72.591912,99,0.3905,0.0201,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-02-01,23.002657,72.591912,98,0.341,0.0342,1,1.611764705882353,median_composite_valid
+site_308,Maninagar,2025-02-13,23.002657,72.591912,95,0.365,0.02295,1,1.5882352941176472,median_composite_valid
+site_308,Maninagar,2025-02-19,23.002657,72.591912,85,-999.0,-999.0,0,0.4274509803921569,median_composite_missing
+site_308,Maninagar,2025-02-02,23.002657,72.591912,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-03-10,23.002657,72.591912,58,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-03-16,23.002657,72.591912,38,0.2585,0.020200000000000003,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-03-11,23.002657,72.591912,55,0.34600000000000003,0.01915,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-03-26,23.002657,72.591912,48,0.34650000000000003,0.024800000000000003,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-04-12,23.002657,72.591912,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-04-23,23.002657,72.591912,68,0.3335,0.02445,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-04-01,23.002657,72.591912,65,-999.0,-999.0,0,0.5529411764705883,median_composite_missing
+site_308,Maninagar,2025-04-25,23.002657,72.591912,68,0.3075,0.032350000000000004,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-05-29,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-05-17,23.002657,72.591912,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-05-25,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-05-19,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-06-10,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-06-28,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-06-09,23.002657,72.591912,67,-999.0,-999.0,0,0.023529411764705882,median_composite_missing
+site_308,Maninagar,2025-06-24,23.002657,72.591912,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-07-22,23.002657,72.591912,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-07-10,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-07-01,23.002657,72.591912,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-07-09,23.002657,72.591912,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-08-10,23.002657,72.591912,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-08-29,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-08-09,23.002657,72.591912,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-08-24,23.002657,72.591912,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-09-23,23.002657,72.591912,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-09-14,23.002657,72.591912,55,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-09-01,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-09-13,23.002657,72.591912,57,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-10-12,23.002657,72.591912,80,0.6925,0.029500000000000002,1,1.4980392156862745,median_composite_valid
+site_308,Maninagar,2025-10-22,23.002657,72.591912,86,1.1455,0.0263,1,1.6823529411764706,median_composite_valid
+site_308,Maninagar,2025-10-01,23.002657,72.591912,54,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-10-24,23.002657,72.591912,91,1.7165000000000001,0.0106,1,1.3254901960784315,median_composite_valid
+site_308,Maninagar,2025-11-10,23.002657,72.591912,100,0.2405,0.0066,1,1.8784313725490196,median_composite_valid
+site_308,Maninagar,2025-11-28,23.002657,72.591912,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-11-09,23.002657,72.591912,98,0.456,0.0253,1,1.8549019607843138,median_composite_valid
+site_308,Maninagar,2025-11-22,23.002657,72.591912,98,-999.0,-999.0,0,0.047058823529411764,median_composite_missing
+site_308,Maninagar,2025-12-29,23.002657,72.591912,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-12-17,23.002657,72.591912,98,0.358,0.00855,1,1.8313725490196078,median_composite_valid
+site_308,Maninagar,2025-12-25,23.002657,72.591912,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-12-19,23.002657,72.591912,99,0.17350000000000002,0.01135,1,1.8784313725490196,median_composite_valid
+site_5452,Raikhad,2025-01-12,23.020509,72.579261,98,0.6065,0.0234,1,1.5450980392156861,median_composite_valid
+site_5452,Raikhad,2025-01-29,23.020509,72.579261,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-01-10,23.020509,72.579261,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-01-25,23.020509,72.579261,99,0.3605,0.019700000000000002,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-02-10,23.020509,72.579261,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-02-20,23.020509,72.579261,89,0.307,0.0115,1,1.749019607843137,median_composite_valid
+site_5452,Raikhad,2025-02-01,23.020509,72.579261,98,0.319,0.031650000000000005,1,1.5294117647058822,median_composite_valid
+site_5452,Raikhad,2025-02-27,23.020509,72.579261,85,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-03-28,23.020509,72.579261,52,0.2205,0.04345,1,1.749019607843137,median_composite_valid
+site_5452,Raikhad,2025-03-16,23.020509,72.579261,38,0.23950000000000002,0.02025,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-03-24,23.020509,72.579261,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-03-18,23.020509,72.579261,9,0.278,0.041100000000000005,1,1.749019607843137,median_composite_valid
+site_5452,Raikhad,2025-04-09,23.020509,72.579261,67,0.501,0.04075,1,1.8588235294117645,median_composite_valid
+site_5452,Raikhad,2025-04-22,23.020509,72.579261,66,0.2445,0.036250000000000004,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-04-01,23.020509,72.579261,65,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-04-24,23.020509,72.579261,67,0.2265,0.039900000000000005,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-05-02,23.020509,72.579261,67,0.383,0.03065,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-06-29,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-06-23,23.020509,72.579261,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-06-27,23.020509,72.579261,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-06-18,23.020509,72.579261,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-07-29,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-07-17,23.020509,72.579261,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-07-25,23.020509,72.579261,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-07-19,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-08-28,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-08-16,23.020509,72.579261,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-08-24,23.020509,72.579261,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-08-18,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-09-28,23.020509,72.579261,40,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-09-16,23.020509,72.579261,49,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-09-24,23.020509,72.579261,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-09-18,23.020509,72.579261,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-10-29,23.020509,72.579261,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-10-17,23.020509,72.579261,82,0.546,0.025500000000000002,1,1.423529411764706,median_composite_valid
+site_5452,Raikhad,2025-10-25,23.020509,72.579261,91,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-10-19,23.020509,72.579261,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-11-11,23.020509,72.579261,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-11-28,23.020509,72.579261,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-11-10,23.020509,72.579261,100,0.23550000000000001,0.00685,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-11-24,23.020509,72.579261,98,-999.0,-999.0,0,0.43529411764705883,median_composite_missing
+site_5452,Raikhad,2025-12-10,23.020509,72.579261,100,0.187,0.010700000000000001,1,1.8431372549019607,median_composite_valid
+site_5452,Raikhad,2025-12-20,23.020509,72.579261,99,0.2225,0.0108,1,1.8313725490196078,median_composite_valid
+site_5452,Raikhad,2025-12-01,23.020509,72.579261,99,-999.0,-999.0,0,0.8901960784313725,median_composite_missing
+site_5452,Raikhad,2025-12-27,23.020509,72.579261,100,0.4615,0.00645,1,1.8705882352941174,median_composite_valid
+site_5451,Rakhial,2025-01-10,23.016834,72.625775,99,-999.0,-999.0,0,0.6235294117647059,median_composite_missing
+site_5451,Rakhial,2025-01-29,23.016834,72.625775,99,-999.0,-999.0,0,0.023529411764705882,median_composite_missing
+site_5451,Rakhial,2025-01-09,23.016834,72.625775,99,-999.0,-999.0,0,0.054901960784313725,median_composite_missing
+site_5451,Rakhial,2025-01-25,23.016834,72.625775,99,0.3675,0.0211,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-02-10,23.016834,72.625775,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-02-26,23.016834,72.625775,86,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-02-09,23.016834,72.625775,99,0.2485,0.02065,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-02-22,23.016834,72.625775,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-03-09,23.016834,72.625775,61,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-03-17,23.016834,72.625775,34,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-03-01,23.016834,72.625775,82,0.1875,0.02155,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-03-25,23.016834,72.625775,47,0.523,0.045200000000000004,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-04-11,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-04-22,23.016834,72.625775,66,0.2645,0.04175,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-04-03,23.016834,72.625775,68,0.2695,0.02135,1,1.9058823529411766,median_composite_valid
+site_5451,Rakhial,2025-04-29,23.016834,72.625775,67,0.361,0.043500000000000004,1,1.8823529411764703,median_composite_valid
+site_5451,Rakhial,2025-05-30,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-05-19,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-05-13,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-05-25,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-06-01,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-06-24,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-06-22,23.016834,72.625775,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-06-02,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-07-12,23.016834,72.625775,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-07-20,23.016834,72.625775,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-07-03,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-07-22,23.016834,72.625775,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-08-28,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-08-16,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-08-24,23.016834,72.625775,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-08-18,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-09-15,23.016834,72.625775,53,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-09-23,23.016834,72.625775,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-09-01,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-09-25,23.016834,72.625775,19,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-10-30,23.016834,72.625775,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-10-17,23.016834,72.625775,82,-999.0,-999.0,0,0.28627450980392155,median_composite_missing
+site_5451,Rakhial,2025-10-13,23.016834,72.625775,85,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-10-23,23.016834,72.625775,91,-999.0,-999.0,0,0.28627450980392155,median_composite_missing
+site_5451,Rakhial,2025-11-28,23.016834,72.625775,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-11-16,23.016834,72.625775,99,-999.0,-999.0,0,1.0313725490196077,median_composite_missing
+site_5451,Rakhial,2025-11-24,23.016834,72.625775,98,-999.0,-999.0,0,0.17647058823529413,median_composite_missing
+site_5451,Rakhial,2025-11-18,23.016834,72.625775,100,-999.0,-999.0,0,1.1098039215686275,median_composite_missing
+site_5451,Rakhial,2025-12-28,23.016834,72.625775,100,0.7495,0.013850000000000001,1,0.8509803921568627,median_composite_valid
+site_5451,Rakhial,2025-12-16,23.016834,72.625775,99,-999.0,-999.0,0,0.4627450980392157,median_composite_missing
+site_5451,Rakhial,2025-12-24,23.016834,72.625775,99,0.2245,0.01105,1,0.9725490196078431,median_composite_valid
+site_5451,Rakhial,2025-12-18,23.016834,72.625775,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-09,23.041137,72.456691,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-18,23.041137,72.456691,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-10,23.041137,72.456691,99,-999.0,-999.0,0,0.10196078431372549,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-26,23.041137,72.456691,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-01,23.041137,72.456691,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-02-12,23.041137,72.456691,95,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-02-10,23.041137,72.456691,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-02-01,23.041137,72.456691,98,-999.0,-999.0,0,0.06274509803921569,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-02-09,23.041137,72.456691,99,0.2255,0.0171,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-02-06,23.041137,72.456691,98,0.362,0.0307,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-04-02,23.041137,72.456691,62,-999.0,-999.0,0,0.8352941176470587,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-04-24,23.041137,72.456691,67,0.274,0.035050000000000005,1,1.6980392156862745,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-04-22,23.041137,72.456691,66,0.296,0.032600000000000004,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-04-03,23.041137,72.456691,68,0.34950000000000003,0.0135,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-04-11,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-30,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-19,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-15,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-25,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-09,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-29,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-18,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-14,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-24,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-10,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-28,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-16,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-24,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-18,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-09,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-08-29,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-08-16,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-08-25,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-08-18,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-08-09,23.041137,72.456691,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-09-28,23.041137,72.456691,40,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-09-16,23.041137,72.456691,49,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-09-24,23.041137,72.456691,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-09-18,23.041137,72.456691,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-09-09,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-10-29,23.041137,72.456691,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-10-16,23.041137,72.456691,88,-999.0,-999.0,0,0.6666666666666666,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-10-24,23.041137,72.456691,91,-999.0,-999.0,0,0.10196078431372549,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-10-18,23.041137,72.456691,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-10-09,23.041137,72.456691,78,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-11-10,23.041137,72.456691,100,-999.0,-999.0,0,0.10588235294117647,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-11-17,23.041137,72.456691,99,0.603,0.012750000000000001,1,1.796078431372549,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-11-11,23.041137,72.456691,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-11-25,23.041137,72.456691,100,0.892,0.00685,1,1.7333333333333334,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-11-01,23.041137,72.456691,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-12-01,23.041137,72.456691,99,-999.0,-999.0,0,0.1411764705882353,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-12-25,23.041137,72.456691,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-12-23,23.041137,72.456691,100,0.2575,0.010450000000000001,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-12-03,23.041137,72.456691,100,0.749,0.0066500000000000005,1,1.9019607843137256,median_composite_valid
+site_5454,SAC ISRO Bopal,2025-12-10,23.041137,72.456691,100,-999.0,-999.0,0,1.0784313725490196,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-01-28,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-01-16,23.023389,72.515201,100,0.2155,0.006200000000000001,1,1.9058823529411766,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-01-24,23.023389,72.515201,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-01-18,23.023389,72.515201,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-01-09,23.023389,72.515201,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-15,23.023389,72.515201,92,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-02,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-13,23.023389,72.515201,95,-999.0,-999.0,0,0.3686274509803922,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-01,23.023389,72.515201,98,-999.0,-999.0,0,0.29803921568627456,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-16,23.023389,72.515201,91,0.28800000000000003,0.043000000000000003,1,1.9058823529411766,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-04-23,23.023389,72.515201,68,0.3075,0.028550000000000002,1,1.9058823529411766,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-04-17,23.023389,72.515201,66,0.34600000000000003,0.04295,1,1.9058823529411766,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-04-08,23.023389,72.515201,68,0.2705,0.021,1,1.8352941176470587,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-04-16,23.023389,72.515201,67,-999.0,-999.0,0,0.6392156862745098,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-04-25,23.023389,72.515201,68,0.3075,0.037000000000000005,1,1.6745098039215687,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-05-28,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-05-16,23.023389,72.515201,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-05-24,23.023389,72.515201,67,-999.0,-999.0,0,0.047058823529411764,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-05-18,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-05-09,23.023389,72.515201,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-29,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-17,23.023389,72.515201,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-13,23.023389,72.515201,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-24,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-09,23.023389,72.515201,67,-999.0,-999.0,0,0.13725490196078433,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-28,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-16,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-24,23.023389,72.515201,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-18,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-09,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-08-28,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-08-16,23.023389,72.515201,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-08-24,23.023389,72.515201,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-08-18,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-08-09,23.023389,72.515201,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-09-28,23.023389,72.515201,40,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-09-16,23.023389,72.515201,49,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-09-24,23.023389,72.515201,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-09-18,23.023389,72.515201,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-09-09,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-10-29,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-10-17,23.023389,72.515201,82,0.5615,0.0269,1,1.5372549019607844,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-10-25,23.023389,72.515201,91,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-10-19,23.023389,72.515201,88,-999.0,-999.0,0,0.29803921568627456,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-10-09,23.023389,72.515201,78,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-11-28,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-11-16,23.023389,72.515201,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-11-24,23.023389,72.515201,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-11-18,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-11-09,23.023389,72.515201,98,-999.0,-999.0,0,0.23137254901960785,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-12-28,23.023389,72.515201,100,0.7575000000000001,0.013550000000000001,1,1.1529411764705881,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-12-16,23.023389,72.515201,99,-999.0,-999.0,0,0.9137254901960783,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-12-24,23.023389,72.515201,99,0.255,0.01115,1,1.6274509803921569,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-12-18,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-12-09,23.023389,72.515201,98,0.188,0.0054,1,1.9058823529411766,median_composite_valid
+site_5449,SVPS Stadium,2025-01-28,23.04307,72.562968,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-01-17,23.04307,72.562968,98,-999.0,-999.0,0,0.19607843137254902,median_composite_missing
+site_5449,SVPS Stadium,2025-01-13,23.04307,72.562968,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-01-23,23.04307,72.562968,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-01-09,23.04307,72.562968,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-01-10,23.04307,72.562968,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-02-10,23.04307,72.562968,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-02-26,23.04307,72.562968,86,-999.0,-999.0,0,0.19607843137254902,median_composite_missing
+site_5449,SVPS Stadium,2025-02-09,23.04307,72.562968,99,0.2315,0.020050000000000002,1,1.8784313725490196,median_composite_valid
+site_5449,SVPS Stadium,2025-02-22,23.04307,72.562968,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-02-01,23.04307,72.562968,98,0.35000000000000003,0.035250000000000004,1,1.8039215686274508,median_composite_valid
+site_5449,SVPS Stadium,2025-02-13,23.04307,72.562968,95,0.366,0.0239,1,1.8784313725490196,median_composite_valid
+site_5449,SVPS Stadium,2025-03-29,23.04307,72.562968,61,0.20450000000000002,0.018250000000000002,1,1.8784313725490196,median_composite_valid
+site_5449,SVPS Stadium,2025-03-17,23.04307,72.562968,34,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-03-25,23.04307,72.562968,47,-999.0,-999.0,0,0.8980392156862744,median_composite_missing
+site_5449,SVPS Stadium,2025-03-19,23.04307,72.562968,4,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-03-10,23.04307,72.562968,58,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-03-11,23.04307,72.562968,55,-999.0,-999.0,0,0.972549019607843,median_composite_missing
+site_5449,SVPS Stadium,2025-04-28,23.04307,72.562968,68,0.4465,0.028200000000000003,1,1.3019607843137253,median_composite_valid
+site_5449,SVPS Stadium,2025-04-16,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-04-24,23.04307,72.562968,67,0.253,0.03975,1,1.784313725490196,median_composite_valid
+site_5449,SVPS Stadium,2025-04-18,23.04307,72.562968,68,0.399,0.02525,1,1.0745098039215686,median_composite_valid
+site_5449,SVPS Stadium,2025-04-09,23.04307,72.562968,67,-999.0,-999.0,0,0.30196078431372547,median_composite_missing
+site_5449,SVPS Stadium,2025-04-10,23.04307,72.562968,68,-999.0,-999.0,0,0.03137254901960784,median_composite_missing
+site_5449,SVPS Stadium,2025-05-28,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-05-16,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-05-24,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-05-18,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-05-09,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-05-10,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-09,23.04307,72.562968,67,-999.0,-999.0,0,0.03137254901960784,median_composite_missing
+site_5449,SVPS Stadium,2025-06-17,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-01,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-29,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-12,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-10,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-29,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-17,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-25,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-19,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-10,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-07-11,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-09,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-14,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-10,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-24,23.04307,72.562968,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-01,23.04307,72.562968,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-08-12,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-01-09,23.076793,72.627874,99,0.2685,0.0122,1,1.4313725490196079,median_composite_valid
+site_5456,SVPI Airport Hansol,2025-01-23,23.076793,72.627874,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-01-01,23.076793,72.627874,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-01-30,23.076793,72.627874,98,-999.0,-999.0,0,0.25098039215686274,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-02-01,23.076793,72.627874,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-02-25,23.076793,72.627874,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-02-23,23.076793,72.627874,87,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-02-02,23.076793,72.627874,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-03-11,23.076793,72.627874,55,0.3985,0.01705,1,1.8588235294117645,median_composite_valid
+site_5456,SVPI Airport Hansol,2025-03-28,23.076793,72.627874,52,-999.0,-999.0,0,0.25098039215686274,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-03-10,23.076793,72.627874,58,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-03-24,23.076793,72.627874,42,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-04-10,23.076793,72.627874,68,-999.0,-999.0,0,0.23529411764705882,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-04-23,23.076793,72.627874,68,-999.0,-999.0,0,0.25098039215686274,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-04-02,23.076793,72.627874,62,-999.0,-999.0,0,0.25098039215686274,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-04-25,23.076793,72.627874,68,-999.0,-999.0,0,0.23529411764705882,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-05-28,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-05-16,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-05-24,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-05-18,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-06-10,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-06-18,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-06-01,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-06-29,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-07-10,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-07-29,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-07-09,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-07-25,23.076793,72.627874,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-08-29,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-08-17,23.076793,72.627874,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-08-25,23.076793,72.627874,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-08-19,23.076793,72.627874,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-09-29,23.076793,72.627874,41,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-09-17,23.076793,72.627874,48,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-09-13,23.076793,72.627874,57,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-09-23,23.076793,72.627874,3,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-10-29,23.076793,72.627874,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-10-16,23.076793,72.627874,88,0.36,0.00615,1,1.7333333333333334,median_composite_valid
+site_5456,SVPI Airport Hansol,2025-10-25,23.076793,72.627874,91,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-10-18,23.076793,72.627874,88,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-11-11,23.076793,72.627874,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-11-19,23.076793,72.627874,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-11-01,23.076793,72.627874,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-11-29,23.076793,72.627874,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-12-29,23.076793,72.627874,98,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-12-17,23.076793,72.627874,98,0.3385,0.00835,1,1.8745098039215686,median_composite_valid
+site_5456,SVPI Airport Hansol,2025-12-25,23.076793,72.627874,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-12-19,23.076793,72.627874,99,-999.0,-999.0,0,0.5647058823529412,median_composite_missing
