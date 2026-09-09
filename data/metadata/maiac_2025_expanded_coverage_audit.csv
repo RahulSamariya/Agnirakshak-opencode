@@ -1,0 +1,151 @@
+station_id,station_name,date,latitude,longitude,covering_granules,raw_station_aod,raw_station_qa,cloud_mask,cloud_mask_name,land_mask,land_mask_name,adjacency_mask,adjacency_mask_name,aod_quality,aod_quality_name,glint_mask,glint_mask_name,aerosol_model,aerosol_model_name,rule_a_valid,rule_a_neighborhood_valid_count,rule_a_neighborhood_mean_aod,rule_b_valid,rule_b_neighborhood_valid_count,rule_b_neighborhood_mean_aod,rule_c_valid,rule_c_neighborhood_valid_count,rule_c_neighborhood_mean_aod
+site_5453,Chandkheda,2025-08-16,23.107969,72.574648,1420,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-05-17,23.107969,72.574648,1479,668.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-11-28,23.016834,72.625775,1273,3303.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-04-09,23.020509,72.579261,1449,501.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.49875,False,0,,True,2,0.49875
+site_308,Maninagar,2025-10-12,23.002657,72.591912,1385,692.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.6925,False,0,,True,1,0.6925
+site_5450,Gyaspur,2025-11-28,22.977134,72.553024,1273,,1282.0,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-02-15,23.023389,72.515201,1387,158.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-08-09,23.04307,72.562968,1363,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-11-19,23.076793,72.627874,1276,629.5,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,1,0.6295000000000001,False,0,,True,1,0.6295000000000001
+site_5456,SVPI Airport Hansol,2025-01-23,23.076793,72.627874,1362,394.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-11-28,23.002657,72.591912,1273,3232.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-12-16,23.023389,72.515201,1258,420.0,865.0,1,Clear,0,Land,3,Adjacent to single cloudy pixel,3,1 neighbor cloud,0,No glint,0,Background (regional),False,1,0.42,False,0,,True,2,0.42
+site_5449,SVPS Stadium,2025-02-26,23.04307,72.562968,1451,336.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-05-28,23.076793,72.627874,1363,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-05-29,23.002657,72.591912,1485,,1282.0,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-06-18,23.076793,72.627874,1503,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-10-10,23.107969,72.574648,1335,1172.0,1282.0,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-04-22,23.020509,72.579261,1460,244.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.2445,False,0,,True,2,0.2445
+site_308,Maninagar,2025-04-23,23.002657,72.591912,1453,333.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.3335,False,0,,True,1,0.3335
+site_5455,SAC ISRO Satellite,2025-04-23,23.023389,72.515201,1453,307.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.3305,False,0,,True,2,0.3305
+site_5449,SVPS Stadium,2025-07-17,23.04307,72.562968,1440,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-02-10,23.016834,72.625775,1388,311.5,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-01-10,23.016834,72.625775,1271,885.0,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,1,0.873,False,0,,False,1,0.873
+site_5450,Gyaspur,2025-04-12,22.977134,72.553024,1454,393.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.3935,False,0,,True,1,0.3935
+site_5454,SAC ISRO Bopal,2025-05-19,23.041137,72.456691,1481,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-09-28,23.107969,72.574648,1434,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-06-09,23.04307,72.562968,1488,981.0,865.0,1,Clear,0,Land,3,Adjacent to single cloudy pixel,3,1 neighbor cloud,0,No glint,0,Background (regional),False,0,,False,0,,True,1,0.981
+site_5452,Raikhad,2025-08-16,23.020509,72.579261,1420,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-01-28,23.04307,72.562968,1369,167.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-04-24,23.041137,72.456691,1465,274.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.28175,False,0,,True,2,0.28175
+site_308,Maninagar,2025-09-14,23.002657,72.591912,1478,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-11-10,23.002657,72.591912,1374,240.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.2405,False,0,,True,1,0.2405
+site_5454,SAC ISRO Bopal,2025-06-29,23.041137,72.456691,1493,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-10-22,23.002657,72.591912,1345,1145.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,1.1455,False,0,,True,1,1.1455
+site_5452,Raikhad,2025-03-28,23.020509,72.579261,1450,220.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.22225,False,0,,True,2,0.22225
+site_5451,Rakhial,2025-03-17,23.016834,72.625775,1437,580.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-12-01,23.041137,72.456691,1246,964.5,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.9610000000000001,False,0,,True,2,0.9610000000000001
+site_5454,SAC ISRO Bopal,2025-11-10,23.041137,72.456691,1374,303.5,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-02-10,23.04307,72.562968,1388,297.5,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-07-17,23.020509,72.579261,1440,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-06-23,23.020509,72.579261,1507,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-10-16,23.076793,72.627874,1408,360.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.36,False,0,,True,1,0.36
+site_5452,Raikhad,2025-12-10,23.020509,72.579261,1282,187.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.18675,False,0,,True,2,0.18675
+site_5450,Gyaspur,2025-08-10,22.977134,72.553024,1467,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-01-10,22.977134,72.553024,1271,982.0,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-01-29,23.016834,72.625775,1336,500.5,4529.0,1,Clear,2,Snow,5,Snow previously detected,1,Water Sediments detected,1,Glint detected,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-09-15,23.016834,72.625775,1454,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-03-16,22.977134,72.553024,1484,259.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.2595,False,0,,True,1,0.2595
+site_5453,Chandkheda,2025-10-26,23.107969,72.574648,1379,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-07-22,23.002657,72.591912,1433,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-08-16,23.023389,72.515201,1420,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-03-29,23.04307,72.562968,1470,204.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.20475000000000002,False,0,,True,2,0.20475000000000002
+site_5452,Raikhad,2025-10-17,23.020509,72.579261,1388,546.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.5607500000000001,False,0,,True,2,0.5607500000000001
+site_5453,Chandkheda,2025-03-16,23.107969,72.574648,1484,300.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.29874999999999996,False,0,,True,2,0.29874999999999996
+site_5454,SAC ISRO Bopal,2025-06-18,23.041137,72.456691,1503,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-12-16,23.016834,72.625775,1258,461.5,865.0,1,Clear,0,Land,3,Adjacent to single cloudy pixel,3,1 neighbor cloud,0,No glint,0,Background (regional),False,0,,False,0,,True,2,0.46725000000000005
+site_5456,SVPI Airport Hansol,2025-07-29,23.076793,72.627874,1467,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-01-16,23.023389,72.515201,1305,215.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.2185,False,0,,True,2,0.2185
+site_5456,SVPI Airport Hansol,2025-06-10,23.076793,72.627874,1484,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-07-29,23.04307,72.562968,1467,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-01-29,23.020509,72.579261,1336,356.5,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.36124999999999996,False,0,,True,2,0.36124999999999996
+site_5449,SVPS Stadium,2025-05-16,23.04307,72.562968,1449,,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-02-26,23.016834,72.625775,1451,302.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-04-23,22.977134,72.553024,1453,311.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.311,False,0,,True,1,0.311
+site_5453,Chandkheda,2025-07-28,23.107969,72.574648,1499,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-06-28,22.977134,72.553024,1503,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-01-18,23.041137,72.456691,1260,972.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-10-12,22.977134,72.553024,1385,644.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.641,False,0,,True,2,0.641
+site_5452,Raikhad,2025-02-20,23.020509,72.579261,1370,307.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.30974999999999997,False,0,,True,2,0.30974999999999997
+site_5455,SAC ISRO Satellite,2025-06-17,23.023389,72.515201,1457,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-11-17,23.041137,72.456691,1304,603.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.60275,False,0,,True,2,0.60275
+site_308,Maninagar,2025-02-13,23.002657,72.591912,1296,365.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.365,False,0,,True,1,0.365
+site_5454,SAC ISRO Bopal,2025-02-10,23.041137,72.456691,1388,362.5,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-01-17,23.04307,72.562968,1262,1494.0,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-09-14,22.977134,72.553024,1478,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-01-09,23.041137,72.456691,1270,326.0,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.31725000000000003,False,0,,True,2,0.31725000000000003
+site_5451,Rakhial,2025-10-17,23.016834,72.625775,1388,627.0,529.0,1,Clear,2,Snow,0,Normal/Clear,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-02-01,22.977134,72.553024,1348,288.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.28800000000000003,False,0,,True,1,0.28800000000000003
+site_5454,SAC ISRO Bopal,2025-10-29,23.041137,72.456691,1368,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-04-11,23.016834,72.625775,1419,635.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-09-23,23.016834,72.625775,1397,456.0,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-02-09,23.107969,72.574648,1324,292.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.27625,False,0,,True,2,0.27625
+site_5452,Raikhad,2025-03-16,23.020509,72.579261,1484,239.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.23900000000000002,False,0,,True,2,0.23900000000000002
+site_5450,Gyaspur,2025-12-29,22.977134,72.553024,1232,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-12-28,23.016834,72.625775,1278,749.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.77125,False,0,,True,2,0.77125
+site_5455,SAC ISRO Satellite,2025-02-02,23.023389,72.515201,1402,188.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-08-28,23.020509,72.579261,1416,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-10-16,23.041137,72.456691,1408,335.5,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.33875,False,0,,True,2,0.33875
+site_5450,Gyaspur,2025-07-22,22.977134,72.553024,1433,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-08-28,23.016834,72.625775,1416,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-07-10,23.002657,72.591912,1473,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-12-29,23.107969,72.574648,1232,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-01-28,23.023389,72.515201,1369,159.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-08-17,23.076793,72.627874,1456,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-05-17,22.977134,72.553024,1479,597.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-06-20,23.107969,72.574648,1489,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-10-29,23.076793,72.627874,1368,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-12-28,23.023389,72.515201,1278,757.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.74375,False,0,,True,2,0.74375
+site_5453,Chandkheda,2025-04-10,23.107969,72.574648,1467,477.0,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.4685,False,0,,True,2,0.4685
+site_5450,Gyaspur,2025-02-13,22.977134,72.553024,1296,364.0,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.3715,False,0,,True,2,0.3715
+site_5456,SVPI Airport Hansol,2025-08-29,23.076793,72.627874,1441,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-03-28,23.107969,72.574648,1450,329.0,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,1,0.2765,False,0,,False,1,0.2765
+site_5450,Gyaspur,2025-05-29,22.977134,72.553024,1485,948.0,1282.0,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-05-19,23.016834,72.625775,1481,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-05-28,23.023389,72.515201,1363,,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-07-16,23.023389,72.515201,1515,2582.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-04-17,23.023389,72.515201,1462,346.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.35625,False,0,,True,2,0.35625
+site_5453,Chandkheda,2025-06-09,23.107969,72.574648,1488,953.0,529.0,1,Clear,2,Snow,0,Normal/Clear,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-08-10,23.002657,72.591912,1467,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-10-30,23.016834,72.625775,1342,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-05-16,23.023389,72.515201,1449,1018.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-03-17,23.04307,72.562968,1437,489.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-01-28,23.107969,72.574648,1369,162.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-02-25,23.076793,72.627874,1398,445.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5455,SAC ISRO Satellite,2025-09-28,23.023389,72.515201,1434,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-12-29,23.002657,72.591912,1232,,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5454,SAC ISRO Bopal,2025-05-30,23.041137,72.456691,1489,743.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-09-23,23.002657,72.591912,1397,,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-11-10,22.977134,72.553024,1374,270.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.27925,False,0,,True,2,0.27925
+site_5454,SAC ISRO Bopal,2025-08-16,23.041137,72.456691,1420,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-03-10,22.977134,72.553024,1431,407.0,642.0,2,Possibly Cloudy,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-09-23,22.977134,72.553024,1397,402.0,1170.0,2,Possibly Cloudy,2,Snow,4,Adjacent to snow,4,>1 neighbor clouds,0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-07-20,23.016834,72.625775,1471,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-02-01,23.076793,72.627874,1348,384.0,1057.0,1,Clear,0,Land,1,Adjacent to clouds,4,>1 neighbor clouds,0,No glint,0,Background (regional),False,0,,False,0,,True,1,0.384
+site_5454,SAC ISRO Bopal,2025-04-02,23.041137,72.456691,1433,459.5,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,1,0.454,False,0,,False,1,0.454
+site_5455,SAC ISRO Satellite,2025-10-17,23.023389,72.515201,1388,561.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.5365,False,0,,True,2,0.5365
+site_5450,Gyaspur,2025-01-22,22.977134,72.553024,1313,563.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.58925,False,0,,True,2,0.58925
+site_5453,Chandkheda,2025-12-17,23.107969,72.574648,1267,317.0,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.3185,False,0,,True,2,0.3185
+site_5455,SAC ISRO Satellite,2025-08-28,23.023389,72.515201,1416,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-04-10,23.076793,72.627874,1467,520.5,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5452,Raikhad,2025-06-29,23.020509,72.579261,1493,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-08-29,22.977134,72.553024,1441,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5449,SVPS Stadium,2025-04-16,23.04307,72.562968,1432,524.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-12-17,22.977134,72.553024,1267,354.5,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.3695,False,0,,True,2,0.3695
+site_5452,Raikhad,2025-12-20,23.020509,72.579261,1287,222.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.2205,False,0,,True,2,0.2205
+site_5455,SAC ISRO Satellite,2025-09-16,23.023389,72.515201,1468,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5450,Gyaspur,2025-10-22,22.977134,72.553024,1345,1108.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,1.108,False,0,,True,1,1.108
+site_5454,SAC ISRO Bopal,2025-12-25,23.041137,72.456691,1198,336.0,4097.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,1,Glint detected,0,Background (regional),True,2,0.33575,False,0,,True,2,0.33575
+site_5453,Chandkheda,2025-02-17,23.107969,72.574648,1398,223.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5451,Rakhial,2025-06-01,23.016834,72.625775,1491,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-03-16,23.002657,72.591912,1484,258.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.2585,False,0,,True,1,0.2585
+site_5454,SAC ISRO Bopal,2025-09-28,23.041137,72.456691,1434,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-03-11,23.076793,72.627874,1491,398.5,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.3985,False,0,,True,1,0.3985
+site_5455,SAC ISRO Satellite,2025-11-28,23.023389,72.515201,1273,3278.0,1280.0,0,Undefined,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5456,SVPI Airport Hansol,2025-09-17,23.076793,72.627874,1389,,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_308,Maninagar,2025-01-22,23.002657,72.591912,1313,651.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,1,0.651,False,0,,True,1,0.651
+site_5452,Raikhad,2025-05-02,23.020509,72.579261,1452,383.0,1.0,1,Clear,0,Land,0,Normal/Clear,0,Best quality,0,No glint,0,Background (regional),True,2,0.38275000000000003,False,0,,True,2,0.38275000000000003
+site_5450,Gyaspur,2025-06-10,22.977134,72.553024,1484,,1282.5,2,Possibly Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
+site_5453,Chandkheda,2025-04-27,23.107969,72.574648,1463,490.5,641.5,1,Clear,0,Land,4,Adjacent to snow,2,Unknown (2),0,No glint,0,Background (regional),False,1,0.47300000000000003,False,0,,False,1,0.47300000000000003
+site_5451,Rakhial,2025-08-16,23.016834,72.625775,1420,,1283.0,3,Cloudy,0,Land,0,Normal/Clear,5,No retrieval (cloudy),0,No glint,0,Background (regional),False,0,,False,0,,False,0,
