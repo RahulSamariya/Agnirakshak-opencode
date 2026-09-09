@@ -207,7 +207,7 @@ STATUS: PARTIALLY_READY
 3. **Populate AOD and ERA5 columns** in dataset
 4. **Re-run validation** after data population
 
-### blockers
+### Blockers
 - MAIAC MCD19A2.061 data not yet retrieved from Earth Engine
 - ERA5 reanalysis data not yet retrieved for 2025
 
@@ -219,3 +219,19 @@ STATUS: PARTIALLY_READY
 **Report Generated:** 2026-09-09  
 **Status:** PARTIALLY_READY  
 **Next Step:** Retrieve MAIAC AOD and ERA5 data, then populate dataset columns.
+
+---
+
+## Appendix: Validation Checks
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| No duplicate station/date rows | PASS | 0 duplicates |
+| PM2.5 target is real measured data | PASS | Direct aggregation from hourly observations |
+| Units are µg/m³ | PASS | Consistent across all stations |
+| No target imputation | PASS | 0 imputed values |
+| Station coordinates are verified | PASS | From CPCB CAAQMS All India list |
+| All dates are valid | PASS | No invalid dates |
+| No future information leakage | PASS | Only 2025 data used |
+| AOD scale factor is correct | N/A | AOD not yet retrieved |
+| Meteorological units are correct | N/A | ERA5 not yet retrieved |
