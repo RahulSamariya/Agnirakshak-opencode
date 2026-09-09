@@ -1,0 +1,11 @@
+station_id,station_name,date,latitude,longitude,covering_granules,raw_station_AOD,raw_station_QA,decoded_cloud_mask,decoded_cloud_mask_name,decoded_land_mask,decoded_land_mask_name,decoded_aod_qa,decoded_aod_qa_name,strict_best_quality_station_AOD,strict_best_quality_valid_pixel_count,strict_best_quality_neighborhood_mean,clear_retrieval_valid_pixel_count,clear_retrieval_neighborhood_mean
+site_5450,Gyaspur,2025-01-03,22.977134,72.553024,1293,311.5,1280,0,Undefined,0,Land,5,No retrieval (cloudy),,0,,0,
+site_5456,SVPI Airport Hansol,2025-02-24,23.076793,72.627874,1380,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_308,Maninagar,2025-03-29,23.002657,72.591912,1470,235.5,1,1,Clear,0,Land,0,Best quality,0.23550000000000001,1,0.23550000000000001,1,0.23550000000000001
+site_5453,Chandkheda,2025-04-10,23.107969,72.574648,1467,477.0,4097,1,Clear,0,Land,0,Best quality,0.47700000000000004,2,0.4685,2,0.4685
+site_5453,Chandkheda,2025-05-26,23.107969,72.574648,1441,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_5455,SAC ISRO Satellite,2025-06-14,23.023389,72.515201,1494,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_5454,SAC ISRO Bopal,2025-07-25,23.041137,72.456691,1462,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_308,Maninagar,2025-08-29,23.002657,72.591912,1441,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_5454,SAC ISRO Bopal,2025-09-25,23.041137,72.456691,1411,,1283,3,Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
+site_5453,Chandkheda,2025-10-10,23.107969,72.574648,1335,1172.0,1282,2,Possibly Cloudy,0,Land,5,No retrieval (cloudy),,0,,0,
