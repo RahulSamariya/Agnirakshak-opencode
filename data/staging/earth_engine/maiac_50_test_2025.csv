@@ -1,0 +1,51 @@
+station_id,station_name,date,latitude,longitude,covering_granules,strict_aod_550,strict_aod_uncertainty,strict_aod_available,strict_valid_candidates,selected_strict_source
+site_5453,Chandkheda,2025-01-28,23.107969,72.574648,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-02-09,23.107969,72.574648,99,0.292,0.0206,1,1.8627450980392155,median_composite_valid
+site_5453,Chandkheda,2025-03-28,23.107969,72.574648,52,-999.0,-999.0,0,1.003921568627451,median_composite_missing
+site_5453,Chandkheda,2025-04-10,23.107969,72.574648,68,-999.0,-999.0,0,0.25882352941176473,median_composite_missing
+site_5453,Chandkheda,2025-05-29,23.107969,72.574648,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5453,Chandkheda,2025-06-09,23.107969,72.574648,67,-999.0,-999.0,0,0.24705882352941178,median_composite_missing
+site_5450,Gyaspur,2025-01-10,22.977134,72.553024,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-02-01,22.977134,72.553024,98,0.28800000000000003,0.032850000000000004,1,1.0313725490196077,median_composite_valid
+site_5450,Gyaspur,2025-03-10,22.977134,72.553024,58,-999.0,-999.0,0,0.21568627450980393,median_composite_missing
+site_5450,Gyaspur,2025-04-12,22.977134,72.553024,66,0.3935,0.03955,1,1.3372549019607844,median_composite_valid
+site_5450,Gyaspur,2025-05-29,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5450,Gyaspur,2025-06-10,22.977134,72.553024,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-01-10,23.002657,72.591912,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-02-01,23.002657,72.591912,98,0.341,0.0342,1,1.611764705882353,median_composite_valid
+site_308,Maninagar,2025-03-10,23.002657,72.591912,58,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-04-12,23.002657,72.591912,66,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-05-29,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_308,Maninagar,2025-06-10,23.002657,72.591912,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-01-12,23.020509,72.579261,98,0.6065,0.0234,1,1.5450980392156861,median_composite_valid
+site_5452,Raikhad,2025-02-10,23.020509,72.579261,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5452,Raikhad,2025-03-28,23.020509,72.579261,52,0.2205,0.04345,1,1.749019607843137,median_composite_valid
+site_5452,Raikhad,2025-04-09,23.020509,72.579261,67,0.501,0.04075,1,1.8588235294117645,median_composite_valid
+site_5452,Raikhad,2025-05-02,23.020509,72.579261,67,0.383,0.03065,1,1.8705882352941174,median_composite_valid
+site_5452,Raikhad,2025-06-29,23.020509,72.579261,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-01-10,23.016834,72.625775,99,-999.0,-999.0,0,0.6235294117647059,median_composite_missing
+site_5451,Rakhial,2025-02-10,23.016834,72.625775,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-03-09,23.016834,72.625775,61,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-04-11,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-05-30,23.016834,72.625775,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5451,Rakhial,2025-06-01,23.016834,72.625775,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-01-09,23.041137,72.456691,99,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-02-12,23.041137,72.456691,95,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-04-02,23.041137,72.456691,62,-999.0,-999.0,0,0.8352941176470587,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-05-30,23.041137,72.456691,67,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-06-29,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5454,SAC ISRO Bopal,2025-07-28,23.041137,72.456691,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-01-28,23.023389,72.515201,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-02-15,23.023389,72.515201,92,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-04-23,23.023389,72.515201,68,0.3075,0.028550000000000002,1,1.9058823529411766,median_composite_valid
+site_5455,SAC ISRO Satellite,2025-05-28,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-06-29,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5455,SAC ISRO Satellite,2025-07-28,23.023389,72.515201,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-01-28,23.04307,72.562968,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-02-10,23.04307,72.562968,100,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-03-29,23.04307,72.562968,61,0.20450000000000002,0.018250000000000002,1,1.8784313725490196,median_composite_valid
+site_5449,SVPS Stadium,2025-04-28,23.04307,72.562968,68,0.4465,0.028200000000000003,1,1.3019607843137253,median_composite_valid
+site_5449,SVPS Stadium,2025-05-28,23.04307,72.562968,68,-999.0,-999.0,0,0.0,median_composite_missing
+site_5449,SVPS Stadium,2025-06-09,23.04307,72.562968,67,-999.0,-999.0,0,0.03137254901960784,median_composite_missing
+site_5456,SVPI Airport Hansol,2025-01-09,23.076793,72.627874,99,0.2685,0.0122,1,1.4313725490196079,median_composite_valid
+site_5456,SVPI Airport Hansol,2025-02-01,23.076793,72.627874,98,-999.0,-999.0,0,0.0,median_composite_missing
