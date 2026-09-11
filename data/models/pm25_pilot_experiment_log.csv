@@ -8,3 +8,6 @@ baseline,ERA5-subset,GradientBoosting,18.96,23.02,-1.17,-3.83,92,Frozen baseline
 baseline,ERA5+AOD,Ridge,15.75,18.51,-0.409,-2.9,92,Frozen baseline - do not overwrite
 baseline,ERA5+AOD,RandomForest,17.83,20.91,-0.816,-3.79,92,Frozen baseline - do not overwrite
 baseline,ERA5+AOD,GradientBoosting,20.89,24.4,-1.609,-3.37,92,Frozen baseline - do not overwrite
+V2,ERA5+engineered,Ridge,13.69,18.37,0.437,-0.04,500,Feature engineering experiment
+V2,ERA5+engineered,RandomForest,12.09,16.26,0.559,0.35,500,Feature engineering experiment
+V2,ERA5+engineered,GradientBoosting,12.41,16.29,0.557,0.27,500,Feature engineering experiment
