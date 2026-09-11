@@ -172,3 +172,15 @@ No test-set information may influence preprocessing.
 ---
 
 **Status:** CANONICAL - This is the authoritative description of the first model experiment.
+
+---
+
+## 15. Git Version History
+
+| Commit | Stage | Description |
+|--------|-------|-------------|
+| 96962e2 | Stage 5 | Implement 500-row PM2.5 pilot model with ERA5 extraction and LOSO validation |
+| 179a074 | Stage 6 | Freeze baseline and resolve data version discrepancy |
+
+**Baseline frozen in commit:** 179a074
+**Do not overwrite these results.**

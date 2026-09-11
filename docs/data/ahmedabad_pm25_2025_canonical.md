@@ -161,3 +161,21 @@ All source files have SHA-256 hashes recorded in:
 ---
 
 **Status:** CANONICAL - This is the primary source of truth for 2025 PM2.5 data.
+
+---
+
+## 15. Git Version History
+
+| Commit | Stage | Description |
+|--------|-------|-------------|
+| 6be4027 | Stage 1 | Build 2025 Ahmedabad PM2.5 station-day modeling dataset |
+| fb7fbeb | Stage 1 | Verify station coordinates and raw PM2.5 file integrity |
+| 7fd6999 | Stage 1 | Build 2025 Ahmedabad station-day matched dataset |
+| faefc28 | Stage 1 | Build 2025 Ahmedabad station-day matched dataset with predictor methodology |
+| 43b1e6d | Stage 1 | Add raw PM2.5 hourly data files for 9 Ahmedabad stations |
+| 12cc2a1 | Stage 1 | Complete 2025 Ahmedabad PM2.5 modeling data pipeline |
+| 179a074 | Stage 6 | Freeze baseline and resolve data version discrepancy |
+
+**Current canonical version:** 2780 eligible station-days
+**Historical version:** 2737 eligible station-days
+**Version change commit:** 179a074
