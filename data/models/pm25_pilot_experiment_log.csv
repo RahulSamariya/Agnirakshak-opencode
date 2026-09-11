@@ -11,3 +11,9 @@ baseline,ERA5+AOD,GradientBoosting,20.89,24.4,-1.609,-3.37,92,Frozen baseline - 
 V2,ERA5+engineered,Ridge,13.69,18.37,0.437,-0.04,500,Feature engineering experiment
 V2,ERA5+engineered,RandomForest,12.09,16.26,0.559,0.35,500,Feature engineering experiment
 V2,ERA5+engineered,GradientBoosting,12.41,16.29,0.557,0.27,500,Feature engineering experiment
+V2_corrected,ERA5+engineered,Ridge,13.694868798476934,18.337448225317857,0.4391666174683796,-0.0367105639020574,500,Corrected protocol: StandardScaler + max_depth=10
+V2_corrected,ERA5+engineered,RandomForest,12.087873244262616,16.222459433311037,0.5610758784698824,0.3477819838837431,500,Corrected protocol: StandardScaler + max_depth=10
+V2_corrected,ERA5+engineered,GradientBoosting,12.59412820464006,16.962344930042583,0.5201253198035423,0.5259254100129465,500,Corrected protocol: StandardScaler + max_depth=10
+V2_corrected_v2,ERA5+engineered,Ridge,13.675946874004156,17.799697841935874,0.39960735711309137,-0.027193766445984972,500,Corrected protocol: StandardScaler + max_depth=10 + station-level averaging
+V2_corrected_v2,ERA5+engineered,RandomForest,12.078365164407334,15.672938682635126,0.5056693584700737,0.35779315637662823,500,Corrected protocol: StandardScaler + max_depth=10 + station-level averaging
+V2_corrected_v2,ERA5+engineered,GradientBoosting,12.587388372349672,16.4591657372671,0.44086251885108546,0.5333997182710463,500,Corrected protocol: StandardScaler + max_depth=10 + station-level averaging

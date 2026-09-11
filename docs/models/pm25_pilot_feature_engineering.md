@@ -105,7 +105,11 @@ Features:
 
 ## Results
 
-### Overall Metrics
+**Note:** These results were computed using pooled predictions, which differs
+from the original frozen baseline (station-level averaging). See
+`docs/models/baseline_discrepancy_audit.md` for the corrected comparison.
+
+### Overall Metrics (Pooled Predictions)
 
 | Experiment | Model | MAE | RMSE | R² | Bias |
 |------------|-------|-----|------|----|------|
@@ -116,15 +120,17 @@ Features:
 | V2 | RandomForest | 12.09 | 16.26 | 0.559 | 0.35 |
 | V2 | GradientBoosting | 12.41 | 16.29 | 0.557 | 0.27 |
 
-### V1 vs V2 Comparison (Random Forest)
+### Corrected Comparison (Station-Level Averaging)
 
-| Metric | V1 | V2 | Delta | Delta % |
-|--------|----|----|-------|---------|
-| MAE | 12.17 | 12.09 | +0.08 | +0.7% |
-| RMSE | 16.40 | 16.26 | +0.13 | +0.8% |
-| R² | 0.552 | 0.559 | +0.007 | +1.3% |
+**This is the valid comparison matching the original frozen baseline.**
 
-### Station-by-Station LOSO Results (Random Forest)
+| Metric | V1 (Corrected) | V2 (Corrected) | Delta | Delta % |
+|--------|----------------|----------------|-------|---------|
+| MAE | 12.17 | 12.08 | +0.10 | +0.8% |
+| RMSE | 15.75 | 15.67 | +0.08 | +0.5% |
+| R² | 0.500 | 0.506 | +0.006 | +1.2% |
+
+### Station-by-Station LOSO Results (Random Forest, Corrected)
 
 | Station | V1 MAE | V2 MAE | Delta | Improved |
 |---------|--------|--------|-------|----------|
@@ -138,7 +144,7 @@ Features:
 | site_5449 | 10.73 | 10.95 | +0.22 | No |
 | site_5456 | 14.32 | 14.11 | -0.21 | Yes |
 
-**Station Consistency:** 4/9 stations improved
+**Station Consistency:** 5/9 stations improved
 
 ---
 
@@ -164,15 +170,15 @@ Features:
 
 ## Analysis
 
-### Improvement Assessment
+### Improvement Assessment (Corrected)
 
 The V2 experiment shows a **very small improvement** over V1:
 
-- MAE improved by 0.08 (0.7%)
-- RMSE improved by 0.13 (0.8%)
-- R² improved by 0.007
+- MAE improved by 0.10 (0.8%)
+- RMSE improved by 0.08 (0.5%)
+- R² improved by 0.006
 
-However, **only 4 out of 9 stations improved**, which is not
+However, **only 5 out of 9 stations improved**, which is not
 consistent across held-out stations.
 
 ### Scientific Interpretation
